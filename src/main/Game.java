@@ -1,23 +1,41 @@
 package main;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
-public class Game  extends JFrame {
+
+public class Game extends JFrame {
 
     private GameScreen gameScreen;
 
-    public Game() {
-       setSize(1296,1320);
-       setVisible(true);
-       setDefaultCloseOperation(EXIT_ON_CLOSE);
-       setLocationRelativeTo(null);
+    private BufferedImage img;
 
-       gameScreen = new GameScreen();
-       add(gameScreen);
+    public Game() {
+        importImg();
+
+        setSize(1296, 1320);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        gameScreen = new GameScreen(img);
+        add(gameScreen);
     }
 
-    public static void main(String[] args){
-        System.out.println("tak");
+    private void importImg() {
+        InputStream is = getClass().getResourceAsStream("/tak.png");
+        try {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+
         Game game = new Game();
     }
 }

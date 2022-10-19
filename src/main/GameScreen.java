@@ -2,24 +2,38 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class GameScreen extends JPanel {
 
     private Random random;
+    private BufferedImage img;
 
-    public GameScreen() {
+    public GameScreen(BufferedImage img) {
         random = new Random();
+        this.img = img;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int y = 0; y < 20; y++) {
-            for (int x = 0; x < 20; x++) {
-                g.setColor(getRandColor());
-                g.fillRect(x * 64, y * 64, 64, 64);
-            }
-        }
+        g.drawImage(img.getSubimage(64*1,64,64,64),0,0,null);
+
+
+
+
+
+
+
+
+
+
+//        for (int y = 0; y < 20; y++) {
+//            for (int x = 0; x < 20; x++) {
+//                g.setColor(getRandColor());
+//                g.fillRect(x * 64, y * 64, 64, 64);
+//            }
+//        }
 
     }
 
