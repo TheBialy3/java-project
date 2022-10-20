@@ -1,49 +1,48 @@
 package main;
 
-import javax.imageio.ImageIO;
+import inputs.KeyboardListener;
+import inputs.MyMouseListener;
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+
 
 
 public class Game extends JFrame implements Runnable {
 
-    private BufferedImage img;
+
     private GameScreen gameScreen;
     private Thread threadGame;
 
     private final double FPS_SET=120;
     private final double UPS_SET=60;
 
+    private MyMouseListener myMouseListener;
+    private KeyboardListener keyboardListener;
+
     public Game() {
-
-        importImg();
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        gameScreen = new GameScreen(img);
+        gameScreen = new GameScreen(this);
         add(gameScreen);
-
         pack();
         setVisible(true);
     }
 
+    private void initInputs(){
+        myMouseListener= new MyMouseListener();
+        keyboardListener= new KeyboardListener();
 
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(keyboardListener);
+
+        requestFocus();
+    }
 
     private void updateGame() {
         // System.out.println("UPS: ");
     }
 
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/tak.png");
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private void start() {
         threadGame = new Thread(this) {
@@ -54,6 +53,7 @@ public class Game extends JFrame implements Runnable {
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.initInputs();
         game.start();
     }
 
