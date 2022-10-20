@@ -11,15 +11,22 @@ public class GameScreen extends JPanel {
     private Random random;
     private BufferedImage img;
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
-    private int frames;
-    private long lastTime;
 
+    private Dimension size;
 
     public GameScreen(BufferedImage img) {
         random = new Random();
         this.img = img;
-        loadSprites();
 
+        setPanelSize();
+        loadSprites();
+    }
+
+    private void setPanelSize() {
+        size=new Dimension(1280,1280);//1296, 1320
+        setMaximumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 
     private void loadSprites() {
@@ -43,21 +50,13 @@ public class GameScreen extends JPanel {
             }
         }
 
-        callFps();
+
 
     }
 
-    private void callFps() {
-        frames++;
-        if(System.currentTimeMillis()-lastTime>=1000){
-            System.out.println("FPS: "+frames);
-            frames=0;
-            lastTime=System.currentTimeMillis();
-        }
-    }
+
 
     private int getRandInt() {
-
         return random.nextInt(10);
     }
 
