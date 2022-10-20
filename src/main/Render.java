@@ -10,14 +10,14 @@ import java.util.Random;
 
 public class Render {
 
-    private GameScreen gameScreen;
+    private Game game;
     private BufferedImage img;
 
     private Random random;
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
-    public Render(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
+    public Render(Game game) {
+        this.game = game;
         random = new Random();
         importImg();
         loadSprites();
