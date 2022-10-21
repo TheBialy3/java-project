@@ -1,9 +1,9 @@
 package inputs;
 
 import main.GameStates;
-import scenes.Settings;
 
-import java.awt.*;
+
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
