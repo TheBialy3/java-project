@@ -11,16 +11,12 @@ import java.util.Random;
 public class Render {
 
     private Game game;
-    private BufferedImage img;
 
-    private Random random;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
     public Render(Game game) {
         this.game = game;
-        random = new Random();
-        importImg();
-        loadSprites();
+
+
 
 
 
@@ -30,41 +26,17 @@ public class Render {
 
         switch (GameStates.gameStates) {
             case MENU:
-                for (int y = 0; y < 20; y++) {
-                    for (int x = 0; x < 20; x++) {
-
-                        g.drawImage(sprites.get(getRandInt()), x * 64, y * 64, null);
-                    }
-                }
+                game.getMenu().render(g);
                 break;
             case PLAYING:
-
+                game.getPlaying().render(g);
                 break;
             case SETTINGS:
-
+                game.getSettings().render(g);
                 break;
         }
     }
 
-    private void loadSprites() {
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                sprites.add(img.getSubimage(64 * x, 64 * y, 64, 64));
-            }
-        }
-    }
 
-    private int getRandInt() {
-        return random.nextInt(10);
-    }
-
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/tak.png");
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

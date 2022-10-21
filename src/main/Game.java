@@ -33,11 +33,21 @@ public class Game extends JFrame implements Runnable {
     public Game() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        gameScreen = new GameScreen(this);
-        render = new Render(this);
+
+        initClasses();
+
         add(gameScreen);
         pack();
+
         setVisible(true);
+    }
+
+    private void initClasses(){
+        gameScreen = new GameScreen(this);
+        render = new Render(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
     }
 
     private void initInputs(){
@@ -115,4 +125,27 @@ public class Game extends JFrame implements Runnable {
         return render;
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(Playing playing) {
+        this.playing = playing;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
 }

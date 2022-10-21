@@ -1,7 +1,13 @@
 package inputs;
 
+import main.GameStates;
+import scenes.Settings;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import static main.GameStates.*;
 
 public class KeyboardListener implements KeyListener {
     @Override
@@ -13,6 +19,12 @@ public class KeyboardListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_UP){
             System.out.println("up");
+        }else if (e.getKeyCode()==KeyEvent.VK_A){
+            GameStates.gameStates= MENU;
+        }else if (e.getKeyCode()==KeyEvent.VK_S){
+            GameStates.gameStates= SETTINGS;
+        }else if (e.getKeyCode()==KeyEvent.VK_D){
+            GameStates.gameStates= PLAYING;
         }
     }
 
