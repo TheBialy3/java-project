@@ -21,9 +21,9 @@ public class KeyboardListener implements KeyListener {
             System.out.println("up");
         }else if (e.getKeyCode()==KeyEvent.VK_A){
             GameStates.gameStates= MENU;
-        }else if (e.getKeyCode()==KeyEvent.VK_S){
-            GameStates.gameStates= SETTINGS;
         }else if (e.getKeyCode()==KeyEvent.VK_D){
+            GameStates.gameStates= SETTINGS;
+        }else if (e.getKeyCode()==KeyEvent.VK_S){
             GameStates.gameStates= PLAYING;
         }
     }

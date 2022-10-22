@@ -15,4 +15,9 @@ public class Settings extends GameScene implements SceneMethods{
         g.setColor(Color.blue);
         g.fillRect(0,0,111,111);
     }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+
+    }
 }
