@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import static main.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods{
 
@@ -39,7 +40,17 @@ public class Menu extends GameScene implements SceneMethods{
 
     @Override
     public void mouseClicked(int x, int y) {
+        if (bPlaing.getBounds().contains(x,y)){
+            SetGameState(PLAYING);
+        }
+    }
 
+    @Override
+    public void mouseMoved(int x, int y) {
+        bPlaing.setMouseOver(false);
+        if (bPlaing.getBounds().contains(x,y)){
+            bPlaing.setMouseOver(true);
+        }
     }
 
     private void drawButtons(Graphics g) {
