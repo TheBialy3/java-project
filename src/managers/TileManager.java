@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class TileManager {
 
-    public Tile GRASS,WATER,ROAD,GRASS_Dark;
+    public Tile GRASS,WATER,ROAD,GRASS_DARK,GRASS_ORANGE;
     private BufferedImage atlas;
-    private ArrayList<Tile>  tiles= new ArrayList<>();
+    public ArrayList<Tile>  tiles= new ArrayList<>();
 
     public TileManager() {
 
@@ -21,10 +21,12 @@ public class TileManager {
 
 
     private void createTiles() {
-        tiles.add(GRASS=new Tile(getSprite(1,2)));
-        tiles.add(WATER=new Tile(getSprite(1,0)));
-        tiles.add(ROAD=new Tile(getSprite(4,3)));
-        tiles.add(GRASS_Dark=new Tile(getSprite(2,3)));
+        int id=0;
+        tiles.add(ROAD=new Tile(getSprite(4,3),id++,"Road"));
+        tiles.add(GRASS=new Tile(getSprite(1,2),id++,"Grass"));
+        tiles.add(WATER=new Tile(getSprite(1,0),id++,"Water"));
+        tiles.add(GRASS_DARK=new Tile(getSprite(2,3),id++,"GrassDark"));
+        tiles.add(GRASS_ORANGE=new Tile(getSprite(0,3),id++,"GrassOrange"));
     }
 
     private void loadAtlas() {

@@ -18,21 +18,16 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON1){
             switch(GameStates.gameStates){
                 case MENU :
-                        game.getMenu().mouseMoved(e.getX(),e.getY());
+                    game.getMenu().mouseClicked(e.getX(),e.getY());
                     break;
                 case PLAYING:
-
+                    game.getPlaying().mouseClicked(e.getX(),e.getY());
                     break;
                 case SETTINGS:
-
+                    game.getSettings().mouseClicked(e.getX(),e.getY());
                     break;
             }
         }else if (e.getButton() == MouseEvent.BUTTON3){
@@ -41,8 +36,33 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {
+        switch(GameStates.gameStates){
+            case MENU :
+                game.getMenu().mousePressed(e.getX(),e.getY());
+                break;
+            case PLAYING:
+                game.getPlaying().mousePressed(e.getX(),e.getY());
+                break;
+            case SETTINGS:
+                game.getSettings().mousePressed(e.getX(),e.getY());
+                break;
+        }
+    }
 
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        switch(GameStates.gameStates){
+            case MENU :
+                game.getMenu().mouseReleased(e.getX(),e.getY());
+                break;
+            case PLAYING:
+                game.getPlaying().mouseReleased(e.getX(),e.getY());
+                break;
+            case SETTINGS:
+                game.getSettings().mouseReleased(e.getX(),e.getY());
+                break;
+        }
     }
 
     @Override
@@ -67,10 +87,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 game.getMenu().mouseMoved(e.getX(),e.getY());
                 break;
             case PLAYING:
-
+                game.getPlaying().mouseMoved(e.getX(),e.getY());
                 break;
             case SETTINGS:
-
+                game.getSettings().mouseMoved(e.getX(),e.getY());
                 break;
         }
     }

@@ -3,23 +3,35 @@ package scenes;
 import helpz.LevelBuild;
 import main.Game;
 import managers.TileManager;
+import ui.SideBar;
+import ui.MyButton;
 
 import java.awt.*;
+
+import static main.GameStates.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
     private int[][] lvl;
     private TileManager tileManager;
 
+    private SideBar sideBar;
+
     public Playing(Game game) {
         super(game);
 
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
+        sideBar = new SideBar(1280,0,200,1280, this);
+
 
         //The lvl
         //tileManager
 
+    }
+
+    public TileManager getTileManager(){
+        return tileManager;
     }
 
     @Override
@@ -31,15 +43,37 @@ public class Playing extends GameScene implements SceneMethods {
             }
         }
 
+        sideBar.draw(g);
     }
+
+
 
     @Override
     public void mouseClicked(int x, int y) {
-
+        if (x >= 1280){
+            sideBar.mouseClicked(x,y);
+        }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        if (x >= 1280){
+            sideBar.mouseMoved(x,y);
+        }
+    }
 
+    @Override
+    public void mouseReleased(int x, int y) {
+        if (x >= 1280){
+            sideBar.mouseReleased(x,y);
+        }
+    }
+
+
+    @Override
+    public void mousePressed(int x, int y) {
+        if (x >= 1280){
+            sideBar.mousePressed(x,y);
+        }
     }
 }
