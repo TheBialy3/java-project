@@ -2,6 +2,7 @@ package helpz;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,6 +17,12 @@ public class LoadSave {
             e.printStackTrace();
         }
         return img;
+    }
+
+
+    //txt file
+    public static void CreateFile(){
+        File text = new File("res/test.txt");
     }
 
 }

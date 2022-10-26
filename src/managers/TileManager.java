@@ -29,6 +29,10 @@ public class TileManager {
         tiles.add(GRASS_ORANGE=new Tile(getSprite(0,3),id++,"GrassOrange"));
     }
 
+    public Tile getTile(int id) {
+        return tiles.get(id);
+    }
+
     private void loadAtlas() {
         atlas= LoadSave.getSpriteAtlas();
     }

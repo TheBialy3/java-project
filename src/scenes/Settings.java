@@ -112,5 +112,9 @@ public class Settings extends GameScene implements SceneMethods {
         bSound.draw(g);
         bMenu.draw(g);
     }
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
 
 }

@@ -130,4 +130,8 @@ public class Menu extends GameScene implements SceneMethods{
             e.printStackTrace();
         }
     }
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
 }
