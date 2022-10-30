@@ -14,7 +14,7 @@ public class SideBar {
 
     private int x, y, width, height;
     private Playing playing;
-    private MyButton bMenu;
+    private MyButton bMenu, bSave;
     private Tile selectedTile;
 
     private ArrayList<MyButton> tileButtons = new ArrayList<>();
@@ -46,14 +46,15 @@ public class SideBar {
         int diff = 100;
         int i = 0;
         int ii = 0;
-        bMenu = new MyButton("Menu", 1300, 10, 160, 40);
+        bMenu = new MyButton("Menu", 1295, 10, 80, 40);
+        bSave = new MyButton("Save", 1390, 10, 80, 40);
 
         for (Tile tile : playing.getTileManager().tiles) {
-            if (tile.getId() % 2 == 1 ) {
-                tileButtons.add(new MyButton(tile.getName(), x+ diff, y + diff * ii, w, h, i));
+            if (tile.getId() % 2 == 1) {
+                tileButtons.add(new MyButton(tile.getName(), x + diff, y + diff * ii, w, h, i));
                 i++;
                 ii++;
-            }else{
+            } else {
                 tileButtons.add(new MyButton(tile.getName(), x, y + diff * ii, w, h, i));
                 i++;
             }
@@ -62,15 +63,16 @@ public class SideBar {
 
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
+        bSave.draw(g);
         drawTileButtons(g);
         drawSelectedTile(g);
     }
 
     private void drawSelectedTile(Graphics g) {
-        if(selectedTile != null){
-            g.drawImage(selectedTile.getSprite(),1300,1200,64,64,null);
+        if (selectedTile != null) {
+            g.drawImage(selectedTile.getSprite(), 1300, 1200, 64, 64, null);
             g.setColor(Color.black);
-            g.drawRect(1300,1200,64,64);
+            g.drawRect(1300, 1200, 64, 64);
         }
     }
 
@@ -87,9 +89,9 @@ public class SideBar {
             //Border
             g.drawRect(b.x, b.y, b.width, b.height);
             //MousePressed
-            if(b.isMousePressed()){
-                g.drawRect(b.x+1, b.y+1, b.width-2, b.height-2);
-                g.drawRect(b.x+2, b.y+2, b.width-4, b.height-4);
+            if (b.isMousePressed()) {
+                g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
+                g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
             }
         }
     }
@@ -101,9 +103,11 @@ public class SideBar {
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
-        }else{
-            for(MyButton b : tileButtons){
-                if(b.getBounds().contains(x,y)){
+        } else if (bSave.getBounds().contains(x, y)) {
+            saveLevel();
+        } else {
+            for (MyButton b : tileButtons) {
+                if (b.getBounds().contains(x, y)) {
                     selectedTile = playing.getTileManager().getTile(b.id);
                     playing.setSelectedTile(selectedTile);
                     return;
@@ -112,13 +116,20 @@ public class SideBar {
         }
     }
 
+    private void saveLevel() {
+        Playing.saveLevel();
+    }
+
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+        bSave.setMouseOver(false);
         for (MyButton b : tileButtons) {
             b.setMouseOver(false);
         }
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
+        } else if (bSave.getBounds().contains(x, y)) {
+            bSave.setMouseOver(true);
         } else {
             for (MyButton b : tileButtons) {
                 if (b.getBounds().contains(x, y)) {
@@ -136,7 +147,9 @@ public class SideBar {
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePressed(true);
-        }else{
+        }else if (bSave.getBounds().contains(x, y)) {
+            bSave.setMousePressed(true);
+        }else {
             for (MyButton b : tileButtons) {
                 if (b.getBounds().contains(x, y)) {
                     b.setMousePressed(true);
@@ -148,6 +161,7 @@ public class SideBar {
 
     private void resetButtons() {
         bMenu.resetBooleans();
+        bSave.resetBooleans();
         for (MyButton b : tileButtons) {
             b.resetBooleans();
         }

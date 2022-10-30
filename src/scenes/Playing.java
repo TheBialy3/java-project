@@ -1,6 +1,7 @@
 package scenes;
 
 import helpz.LevelBuild;
+import helpz.LoadSave;
 import main.Game;
 import managers.TileManager;
 import objects.Tile;
@@ -10,12 +11,13 @@ import ui.MyButton;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import static helpz.LoadSave.CreateLevel;
 import static main.GameStates.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
 
-    private int[][] lvl;
+    private static int[][] lvl;
     public TileManager tileManager;
     private Tile selectedTile;
     private int mouseX, mouseY;
@@ -32,10 +34,19 @@ public class Playing extends GameScene implements SceneMethods {
         sideBar = new SideBar(1280, 0, 200, 1280, this);
 
 
-        //The lvl
-        //tileManager
-
+        LongDefoultLevel();
     }
+
+    public static void saveLevel() {
+        LoadSave.SaveLevel("newlevel", lvl);
+    }
+
+
+    private void LongDefoultLevel() {
+        lvl = LoadSave.GetLevelData("newlevel");
+    }
+
+
 
     public TileManager getTileManager() {
         return tileManager;
