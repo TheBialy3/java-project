@@ -1,6 +1,7 @@
 package ui;
 
 import objects.Tile;
+import scenes.Editing;
 import scenes.Playing;
 
 import java.awt.*;
@@ -10,24 +11,44 @@ import java.util.ArrayList;
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
-public class SideBar {
+public class ToolBar extends Bar {
 
-    private int x, y, width, height;
-    private Playing playing;
     private MyButton bMenu, bSave;
     private Tile selectedTile;
-
+    private Editing editing;
     private ArrayList<MyButton> tileButtons = new ArrayList<>();
 
-    public SideBar(int x, int y, int width, int height, Playing playing) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.playing = playing;
-
-
+    public ToolBar(int x, int y, int width, int height, Editing editing) {
+        super(x, y, width, height);
+        this.editing = editing;
         initButtons();
+    }
+
+    private void initButtons() {
+        int w = 64;
+        int h = 64;
+        int x = 1293;
+        int y = 64;
+        int diff = 84;
+        int i = 0;
+        int ii = 0;
+        bMenu = new MyButton("Menu", 1293, 10, 108, 40);
+        bSave = new MyButton("Save", 1417, 10, 108, 40);
+
+        for (Tile tile : editing.getGame().getTileManager().tiles) {
+            int reszta=tile.getId() % 3;
+            if (reszta == 2) {
+                tileButtons.add(new MyButton(tile.getName(), x+diff*reszta, y + diff * ii, w, h, i));
+                i++;
+                ii++;
+            } else if (reszta == 1) {
+                tileButtons.add(new MyButton(tile.getName(), x+diff*reszta, y + diff * ii, w, h, i));
+                i++;
+            }else {
+                tileButtons.add(new MyButton(tile.getName(), x, y + diff * ii, w, h, i));
+                i++;
+            }
+        }
     }
 
     public void draw(Graphics g) {
@@ -36,29 +57,6 @@ public class SideBar {
         g.fillRect(x, y, width, height);
         //buttons
         drawButtons(g);
-    }
-
-    private void initButtons() {
-        int w = 64;
-        int h = 64;
-        int x = 1300;
-        int y = 64;
-        int diff = 100;
-        int i = 0;
-        int ii = 0;
-        bMenu = new MyButton("Menu", 1295, 10, 80, 40);
-        bSave = new MyButton("Save", 1390, 10, 80, 40);
-
-        for (Tile tile : playing.getTileManager().tiles) {
-            if (tile.getId() % 2 == 1) {
-                tileButtons.add(new MyButton(tile.getName(), x + diff, y + diff * ii, w, h, i));
-                i++;
-                ii++;
-            } else {
-                tileButtons.add(new MyButton(tile.getName(), x, y + diff * ii, w, h, i));
-                i++;
-            }
-        }
     }
 
     private void drawButtons(Graphics g) {
@@ -97,7 +95,7 @@ public class SideBar {
     }
 
     public BufferedImage getButtImg(int id) {
-        return playing.getTileManager().getSprite(id);
+        return editing.getGame().getTileManager().getSprite(id);
     }
 
     public void mouseClicked(int x, int y) {
@@ -108,8 +106,8 @@ public class SideBar {
         } else {
             for (MyButton b : tileButtons) {
                 if (b.getBounds().contains(x, y)) {
-                    selectedTile = playing.getTileManager().getTile(b.id);
-                    playing.setSelectedTile(selectedTile);
+                    selectedTile = editing.getGame().getTileManager().getTile(b.id);
+                    editing.setSelectedTile(selectedTile);
                     return;
                 }
             }
@@ -117,7 +115,7 @@ public class SideBar {
     }
 
     private void saveLevel() {
-        Playing.saveLevel();
+        editing.saveLevel();
     }
 
     public void mouseMoved(int x, int y) {

@@ -4,13 +4,9 @@ import helpz.LevelBuild;
 import main.Game;
 import managers.TileManager;
 import ui.MyButton;
-import ui.SideBar;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -38,7 +34,7 @@ public class Settings extends GameScene implements SceneMethods {
     private void initButtons() {
         int w = 400;
         int h = w / 4;
-        int x = 1280 / 2 - w / 2;
+        int x = 1536 / 2 - w / 2;
         int y = 300;
         int yOffset = 200;
 
