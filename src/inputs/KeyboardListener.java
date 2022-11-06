@@ -1,14 +1,21 @@
 package inputs;
 
+import main.Game;
 import main.GameStates;
-
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static main.GameStates.*;
 
 public class KeyboardListener implements KeyListener {
+    private Game game;
+
+    public KeyboardListener(Game game){
+        this.game=game;
+
+    }
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -16,17 +23,10 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("up");
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            GameStates.gameStates = MENU;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            GameStates.gameStates = SETTINGS;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            GameStates.gameStates = PLAYING;
-        } else if (e.getKeyCode() == KeyEvent.VK_F) {
-            GameStates.gameStates = EDITING;
-        }
+       if(GameStates.gameStates==EDITING){
+            game.getEditing().keyPressed(e);
+       }
+
     }
 
     @Override

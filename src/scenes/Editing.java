@@ -7,6 +7,7 @@ import ui.ActionBar;
 import ui.ToolBar;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Editing extends GameScene implements SceneMethods {
@@ -128,6 +129,12 @@ public class Editing extends GameScene implements SceneMethods {
             changedTile(x, y);
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
+        }
+    }
+
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode()== KeyEvent.VK_R){
+            toolBar.rotateSprite();
         }
     }
 

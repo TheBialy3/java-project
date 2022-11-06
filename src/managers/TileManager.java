@@ -1,5 +1,6 @@
 package managers;
 
+import helpz.ImgFix;
 import helpz.LoadSave;
 import objects.Tile;
 
@@ -8,9 +9,19 @@ import java.util.ArrayList;
 
 public class TileManager {
 
-    public Tile GRASS,WATER,ROAD,GRASS_DARK,GRASS_ORANGE;
+    public Tile GRASS,WATER,ROAD,ROAD_TB,GRASS_DARK,GRASS_ORANGE;
+    public Tile TL_WATER_CORNER,TR_WATER_CORNER,BR_WATER_CORNER,BL_WATER_CORNER;
+    public Tile TL_ROAD,TR_ROAD,BR_ROAD,BL_ROAD;
+    public Tile TL_WATER_ISLE,TR_WATER_ISLE,BR_WATER_ISLE,BL_WATER_ISLE;
+    public Tile L_WATER,R_WATER,B_WATER,T_WATER;
     private BufferedImage atlas;
+    public ArrayList<Tile>  grassT= new ArrayList<>();
     public ArrayList<Tile>  tiles= new ArrayList<>();
+    public ArrayList<Tile>  roadS= new ArrayList<>();
+    public ArrayList<Tile>  roadC= new ArrayList<>();
+    public ArrayList<Tile>  waterC= new ArrayList<>();
+    public ArrayList<Tile>  waterB= new ArrayList<>();
+    public ArrayList<Tile>  waterI= new ArrayList<>();
 
     public TileManager() {
 
@@ -22,11 +33,48 @@ public class TileManager {
 
     private void createTiles() {
         int id=0;
-        tiles.add(ROAD=new Tile(getSprite(4,3),id++,"Road"));
-        tiles.add(GRASS=new Tile(getSprite(1,2),id++,"Grass"));
+
+
         tiles.add(WATER=new Tile(getSprite(1,0),id++,"Water"));
-        tiles.add(GRASS_DARK=new Tile(getSprite(2,3),id++,"GrassDark"));
-        tiles.add(GRASS_ORANGE=new Tile(getSprite(0,3),id++,"GrassOrange"));
+        grassT.add(GRASS=new Tile(getSprite(1,2),id++,"Grass"));
+        grassT.add(GRASS_DARK=new Tile(getSprite(2,3),id++,"GrassDark"));
+        grassT.add(GRASS_ORANGE=new Tile(getSprite(0,3),id++,"GrassOrange"));
+
+        waterC.add(TL_WATER_CORNER=new Tile(ImgFix.buildImg(getImgs(1,0, 5, 2)),id++,"Water corner TL"));
+        waterC.add(TR_WATER_CORNER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 2),90,1),id++,"Water corner TR"));
+        waterC.add(BR_WATER_CORNER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 2),180,1),id++,"Water corner BR"));
+        waterC.add(BL_WATER_CORNER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 2),270,1),id++,"Water corner BL"));
+
+        waterI.add(TL_WATER_ISLE=new Tile(ImgFix.buildImg(getImgs(1,0, 6, 1)),id++,"Water island TL"));
+        waterI.add(TR_WATER_ISLE=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 6, 1),90,1),id++,"Water island TR"));
+        waterI.add(BR_WATER_ISLE=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 6, 1),180,1),id++,"Water island BR"));
+        waterI.add(BL_WATER_ISLE=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 6, 1),270,1),id++,"Water island BL"));
+
+        waterB.add(T_WATER=new Tile(ImgFix.buildImg(getImgs(1,0, 5, 4)),id++,"Water T"));
+        waterB.add(R_WATER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 4),90,1),id++,"Water R"));
+        waterB.add(B_WATER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 4),180,1),id++,"Water B"));
+        waterB.add(L_WATER=new Tile(ImgFix.getBuildRotImg(getImgs(1,0, 5, 4),270,1),id++,"Water L"));
+
+        roadS.add(ROAD=new Tile(getSprite(4,3),id++,"Road"));
+        roadS.add(ROAD_TB=new Tile(ImgFix.getRotImg(getSprite(4,3),90),id++,"Road TB"));
+
+        roadC.add(TL_ROAD=new Tile(getSprite(5,0),id++,"Road TL"));
+        roadC.add(TR_ROAD=new Tile(ImgFix.getRotImg(getSprite(5,0),90),id++,"Road TR"));
+        roadC.add(BR_ROAD=new Tile(ImgFix.getRotImg(getSprite(5,0),180),id++,"Road BR"));
+        roadC.add(BL_ROAD=new Tile(ImgFix.getRotImg(getSprite(5,0),270),id++,"Road BL"));
+
+        tiles.addAll(grassT);
+        tiles.addAll(waterC);
+        tiles.addAll(waterI);
+        tiles.addAll(waterB);
+        tiles.addAll(roadS);
+
+        tiles.addAll(roadC);
+
+    }
+
+    private BufferedImage[] getImgs(int fX,int fY,int sX,int sY){
+        return new BufferedImage[]{getSprite(fX,fY),getSprite(sX,sY)};
     }
 
     public Tile getTile(int id) {
@@ -43,5 +91,29 @@ public class TileManager {
 
     private BufferedImage getSprite(int xCord,int yCord){
         return atlas.getSubimage(xCord * 64,yCord * 64,64,64);
+    }
+
+    public ArrayList<Tile> getRoadS() {
+        return roadS;
+    }
+
+    public ArrayList<Tile> getRoadC() {
+        return roadC;
+    }
+
+    public ArrayList<Tile> getWaterC() {
+        return waterC;
+    }
+
+    public ArrayList<Tile> getWaterB() {
+        return waterB;
+    }
+
+    public ArrayList<Tile> getWaterI() {
+        return waterI;
+    }
+
+    public ArrayList<Tile> getGrassT() {
+        return grassT;
     }
 }
