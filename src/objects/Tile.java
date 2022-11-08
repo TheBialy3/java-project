@@ -4,20 +4,21 @@ import java.awt.image.BufferedImage;
 
 public class Tile {
 
-    private BufferedImage[] sprite;
-    private int id;
-    private String name;
 
-    public Tile(BufferedImage sprite, int id, String name) {
+    private BufferedImage[] sprite;
+    private int id, tileType;
+
+
+    public Tile(BufferedImage sprite, int id, int tileType) {
         this.sprite = new BufferedImage[1];
         this.sprite[0] = sprite;
         this.id = id;
-        this.name = name;
+        this.tileType = tileType;
     }
-    public Tile(BufferedImage[] sprite, int id, String name) {
+    public Tile(BufferedImage[] sprite, int id, int tileType) {
         this.sprite = sprite;
         this.id = id;
-        this.name = name;
+        this.tileType = tileType;
     }
 
     public BufferedImage getSprite(int animationIndex){
@@ -36,7 +37,7 @@ public class Tile {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public int getTileType() {
+        return tileType;
     }
 }
