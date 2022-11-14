@@ -1,15 +1,16 @@
 package managers;
 
-import enemies.Enemy;
+import enemies.*;
 import helpz.LoadSave;
 import scenes.Playing;
-
-import static helpz.Constants.Direction.*;
-import static helpz.Constants.Tiles.*;
-
+import static helpz.Constants.EnemyType.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
+import static helpz.Constants.Direction.*;
+import static helpz.Constants.EnemyType.ORC;
+import static helpz.Constants.Tiles.ROAD_TILE;
 
 public class EnemyMenager {
 
@@ -22,7 +23,10 @@ public class EnemyMenager {
     public EnemyMenager(Playing playing) {
         this.playing = playing;
         enemyImages = new BufferedImage[4];
-        addEnemy(64 * 3, 64 * 9);
+        addEnemy(64 * 1, 64 * 1,SLIME);
+        addEnemy(64 * 19, 64 * 1,ORC);
+        addEnemy(64 * 1, 64 * 19,BALL);
+        addEnemy(64 * 19, 64 * 19,TENTACLE);
         loadEnemyImages();
 
     }
@@ -35,20 +39,31 @@ public class EnemyMenager {
         enemyImages[3] = atlas.getSubimage(1 * 64, 4 * 64, 64, 64);
     }
 
-    public void addEnemy(int x, int y) {
-        enemies.add(new Enemy(x, y, 0, 0));
+    public void addEnemy(int x, int y, int enemyType) {
+        switch(enemyType){
+            case ORC:
+                enemies.add(new Orc(x, y, 0));
+                 break;
+            case SLIME:
+                enemies.add(new Slime(x, y, 0));
+                break;
+            case TENTACLE:
+                enemies.add(new Tentacle(x, y, 0));
+                break;
+            case BALL:
+                enemies.add(new Ball(x, y, 0));
+                break;
+        }
+
     }
 
     public void update() {
         for (Enemy e : enemies) {
-            // is next tile road(pos. dir)
-            if (isNextTileRoad(e)) {
-                //move enemy
-            }
+            updateEnemyMove(e);
         }
     }
 
-    private boolean isNextTileRoad(Enemy e) {
+    private void updateEnemyMove(Enemy e) {
         //e pos
         //e dir
         //tile at new possible pos
@@ -63,8 +78,6 @@ public class EnemyMenager {
         } else {
             setNewDirectionAndMove(e);
         }
-
-        return false;
     }
 
     private void setNewDirectionAndMove(Enemy e) {
@@ -136,7 +149,6 @@ public class EnemyMenager {
         } else if (dir == DOWN) {
             return speed + 64;
         }
-
         return 0;
     }
 
@@ -144,11 +156,10 @@ public class EnemyMenager {
         for (Enemy e : enemies) {
             drawEnemy(e, g);
         }
-
     }
 
     public void drawEnemy(Enemy e, Graphics g) {
-        g.drawImage(enemyImages[0], (int) e.getX(), (int) e.getY(), null);
+        g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
     }
 
 }

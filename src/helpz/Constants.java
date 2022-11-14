@@ -9,6 +9,13 @@ public class Constants {
         public static final int DOWN = 3;
     }
 
+    public static class EnemyType{
+        public static final int ORC = 0;
+        public static final int SLIME = 1;
+        public static final int TENTACLE = 2;
+        public static final int BALL = 3;
+    }
+
     public static class Tiles{
         public static final int WATER_TILE = 0;
         public static final int GRASS_TILE = 1;
