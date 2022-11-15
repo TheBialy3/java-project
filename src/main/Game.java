@@ -1,49 +1,79 @@
 package main;
 
-import javax.imageio.ImageIO;
+import helpz.LoadSave;
+import managers.TileManager;
+import scenes.Editing;
+import scenes.Menu;
+import scenes.Playing;
+import scenes.Settings;
+
 import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 
 public class Game extends JFrame implements Runnable {
 
-    private BufferedImage img;
     private GameScreen gameScreen;
     private Thread threadGame;
 
-    private final double FPS_SET=120;
-    private final double UPS_SET=60;
+    private final double FPS_SET = 120;
+    private final double UPS_SET = 60;
+
+    //Classes
+    private Render render;
+    private Menu menu;
+    private Playing playing;
+    private Settings settings;
+    private Editing editing;
+    private TileManager tileManager;
 
     public Game() {
-
-        importImg();
-
+        initClasses();
+        createDefoultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        gameScreen = new GameScreen(img);
+//        setLocationRelativeTo(null);
+        setResizable(false);
         add(gameScreen);
-
         pack();
         setVisible(true);
     }
 
+    private void createDefoultLevel() {
+        int[] arr = new int[400];
+        for (int i = 0; i < arr.length; ++i) {
+            arr[i] = 0;
+        }
+        LoadSave.CreateLevel("new_lvl", arr);
+    }
+
+    private void initClasses() {
+        tileManager = new TileManager();
+        gameScreen = new GameScreen(this);
+        render = new Render(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
+        editing = new Editing(this);
+
+    }
 
 
     private void updateGame() {
-        // System.out.println("UPS: ");
-    }
+        switch (GameStates.gameStates) {
 
-    private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/tak.png");
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
+            case PLAYING:
+                playing.update();
+                break;
+
+            case EDITING:
+                editing.update();
+                break;
+            case MENU:
+                break;
+            case SETTINGS:
+                break;
         }
     }
+
 
     private void start() {
         threadGame = new Thread(this) {
@@ -54,6 +84,7 @@ public class Game extends JFrame implements Runnable {
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.gameScreen.initInputs();
         game.start();
     }
 
@@ -63,17 +94,17 @@ public class Game extends JFrame implements Runnable {
         double timePerFrame = 1000000000.0 / FPS_SET;
         double timePerUpdate = 1000000000.0 / UPS_SET;
 
-        long lastFrame= System.nanoTime();
-        long lastUpdate= System.nanoTime();
-        long lastTimeCheck=System.currentTimeMillis();
+        long lastFrame = System.nanoTime();
+        long lastUpdate = System.nanoTime();
+        long lastTimeCheck = System.currentTimeMillis();
 
-        int frames=0;
-        int updates=0;
+        int frames = 0;
+        int updates = 0;
 
         long now;
 
         while (true) {
-            now=System.nanoTime();
+            now = System.nanoTime();
             //Render
             if (now - lastFrame >= timePerFrame) {
                 repaint();
@@ -83,18 +114,43 @@ public class Game extends JFrame implements Runnable {
             //Update
             if (now - lastUpdate >= timePerUpdate) {
                 updateGame();
-                lastUpdate= now;
+                lastUpdate = now;
                 updates++;
             }
-            if(System.currentTimeMillis()-lastTimeCheck>=1000){
+            if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 
-                if(System.currentTimeMillis()-lastTimeCheck>=1000){
-                    System.out.println("FPS: "+frames+"| UPS:"+ updates);
-                    frames=0;
-                    updates=0;
-                    lastTimeCheck=System.currentTimeMillis();
+                if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
+                    System.out.println("FPS: " + frames + "| UPS:" + updates);
+                    frames = 0;
+                    updates = 0;
+                    lastTimeCheck = System.currentTimeMillis();
                 }
             }
         }
+    }
+
+    //Geters and Setters:
+    public Render getRender() {
+        return render;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public Editing getEditing() {
+        return editing;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 }
