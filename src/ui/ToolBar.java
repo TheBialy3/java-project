@@ -146,21 +146,7 @@ public class ToolBar extends Bar {
         return editing.getGame().getTileManager().getSprite(id);
     }
 
-    private void drawButtonFeedback(Graphics g, MyButton b) {
-        //MouseOver
-        if (b.isMouseOver()) {
-            g.setColor(Color.WHITE);
-        } else {
-            g.setColor(Color.BLACK);
-        }
-        //Border
-        g.drawRect(b.x, b.y, b.width, b.height);
-        //MousePressed
-        if (b.isMousePressed()) {
-            g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
-            g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
-        }
-    }
+
 
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
