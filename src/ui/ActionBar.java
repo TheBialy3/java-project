@@ -13,6 +13,8 @@ public class ActionBar extends Bar {
     private MyButton bMenu;
 
 
+
+
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;

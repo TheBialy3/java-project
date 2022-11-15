@@ -2,6 +2,7 @@ package scenes;
 
 import helpz.LoadSave;
 import main.Game;
+import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
 import ui.ToolBar;
@@ -9,6 +10,9 @@ import ui.ToolBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import static helpz.Constants.Tiles.*;
 
 public class Editing extends GameScene implements SceneMethods {
 
@@ -21,8 +25,8 @@ public class Editing extends GameScene implements SceneMethods {
     private boolean drawSelect;
     private int tileXLast, tileYLast, lastTileId;
 
-
     private ToolBar toolBar;
+    private PathPoint start, end;
 
     public Editing(Game game) {
         super(game);
@@ -32,9 +36,12 @@ public class Editing extends GameScene implements SceneMethods {
 
     private void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData("newlevel");
+        ArrayList<PathPoint> points = LoadSave.getPathPoints("newlevel");
+        start=points.get(0);
+        end=points.get(1);
     }
 
-    public void update(){
+    public void update() {
         updateTick();
     }
 
@@ -44,6 +51,16 @@ public class Editing extends GameScene implements SceneMethods {
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
+        drawPathPoint(g);
+    }
+
+    private void drawPathPoint(Graphics g) {
+        if(start!=null){
+            g.drawImage(toolBar.getPathStartImg(),start.getxCord()*64, start.getyCord()*64,64,64, null);
+        }
+        if(end!=null){
+            g.drawImage(toolBar.getPathEndImg(),end.getxCord()*64, end.getyCord()*64,64,64, null);
+        }
     }
 
     private void drawLevel(Graphics g) {
@@ -51,15 +68,13 @@ public class Editing extends GameScene implements SceneMethods {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
                 if (isAnimation(id)) {
-                    g.drawImage(getSprite(id,animationIndex), x * 64, y * 64, null);
+                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
                 } else {
                     g.drawImage(getSprite(id), x * 64, y * 64, null);
                 }
             }
         }
     }
-
-
 
 
     private void drawSelectedTile(Graphics g) {
@@ -71,7 +86,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("newlevel", lvl);
+        LoadSave.SaveLevel("newlevel", lvl, start, end);
         game.getPlaying().setLevel(lvl);
     }
 
@@ -84,13 +99,25 @@ public class Editing extends GameScene implements SceneMethods {
         if (selectedTile != null) {
             int tileX = x / 64;
             int tileY = y / 64;
-            if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
-                return;
+            if (selectedTile.getId() >= 0) {
+
+                if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
+                    return;
+                }
+                tileXLast = tileX;
+                tileYLast = tileY;
+                lastTileId = selectedTile.getId();
+                lvl[tileY][tileX] = selectedTile.getId();
+            } else {
+                int id = lvl[tileY][tileX];
+                if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
+                    if (selectedTile.getId() == -1) {
+                        start = new PathPoint(tileX, tileY);
+                    } else {
+                        end = new PathPoint(tileX, tileY);
+                    }
+                }
             }
-            tileXLast = tileX;
-            tileYLast = tileY;
-            lastTileId = selectedTile.getId();
-            lvl[tileY][tileX] = selectedTile.getId();
         }
     }
 
@@ -132,7 +159,7 @@ public class Editing extends GameScene implements SceneMethods {
     @Override
     public void mouseDragged(int x, int y) {
         if (x >= 1280) {
-
+            toolBar.mouseDragged(x, y);
         } else {
             changedTile(x, y);
             mouseX = (x / 64) * 64;

@@ -3,10 +3,13 @@ package scenes;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyMenager;
+import managers.TowerManager;
+import objects.PathPoint;
 import ui.ActionBar;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -14,13 +17,15 @@ public class Playing extends GameScene implements SceneMethods {
     private ActionBar actionBar;
     private int mouseX, mouseY;
     private EnemyMenager enemyMenager;
+    private TowerManager towerManager;
+    private PathPoint start, end;
 
     public Playing(Game game) {
         super(game);
         LoadDefoultLevel();
         actionBar = new ActionBar(1280, 0, 256, 1280, this);
-
-        enemyMenager = new EnemyMenager(this);
+        enemyMenager = new EnemyMenager(this, start, end);
+        towerManager = new TowerManager(this);
     }
 
     public void setLevel(int[][] lvl){
@@ -30,11 +35,14 @@ public class Playing extends GameScene implements SceneMethods {
     public void update(){
         updateTick();
         enemyMenager.update();
-
+        towerManager.update();
     }
 
     private void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData("newlevel");
+        ArrayList<PathPoint> points = LoadSave.getPathPoints("newlevel");
+        start=points.get(0);
+        end=points.get(1);
     }
 
     @Override
@@ -42,6 +50,7 @@ public class Playing extends GameScene implements SceneMethods {
         drawLevel(g);
         actionBar.draw(g);
         enemyMenager.draw(g);
+        towerManager.draw(g);
     }
 
     private void drawLevel(Graphics g) {
@@ -57,6 +66,8 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
+
+
     public int getTileType(int x, int y) {
         int xCord = x/64;
         int yCord = y/64;
@@ -65,7 +76,6 @@ public class Playing extends GameScene implements SceneMethods {
             return 0;
         }else if(yCord >19||xCord <0){
             return 0;}
-
         int id = lvl[y/64][x/64];
         return game.getTileManager().getTile(id).getTileType();
     }
