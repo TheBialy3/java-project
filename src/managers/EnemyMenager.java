@@ -22,6 +22,7 @@ public class EnemyMenager {
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
     private PathPoint start, end;
+    private int HPbarWidth = 50;
 
     public EnemyMenager(Playing playing, PathPoint start, PathPoint end) {
         this.playing = playing;
@@ -42,6 +43,7 @@ public class EnemyMenager {
         enemyImages[2] = atlas.getSubimage(4 * 64, 2 * 64, 64, 64);
         enemyImages[3] = atlas.getSubimage(1 * 64, 4 * 64, 64, 64);
     }
+
 
     public void addEnemy(int enemyType) {
         int x = start.getxCord() * 64;
@@ -65,7 +67,18 @@ public class EnemyMenager {
 
     public void update() {
         for (Enemy e : enemies) {
-            updateEnemyMove(e);
+            if (e.isAlive()) {
+                updateEnemyMove(e);
+            }
+        }
+    }
+
+    public void draw(Graphics g) {
+        for (Enemy e : enemies) {
+            if (e.isAlive()) {
+                drawEnemy(e, g);
+                drawHealthBar(e, g);
+            }
         }
     }
 
@@ -73,8 +86,8 @@ public class EnemyMenager {
         if (e.getLastDir() == -1) {
             setNewDirectionAndMove(e);
         }
-        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(),e.getEnemyType()));
-        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(),e.getEnemyType()));
+        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
+        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
 
         if (getTileType(newX, newY) == ROAD_TILE) {
             //keep moving
@@ -100,14 +113,14 @@ public class EnemyMenager {
         }
 
         if (dir == LEFT || dir == RIGHT) {
-            int newY = (int) (e.getY() + getSpeedAndHeight(UP,e.getEnemyType()));
+            int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
             if (getTileType((int) e.getX(), newY) == ROAD_TILE) {
                 e.move(GetSpeed(e.getEnemyType()), UP);
             } else {
                 e.move(GetSpeed(e.getEnemyType()), DOWN);
             }
         } else {
-            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT,e.getEnemyType()));
+            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
             if (getTileType(newX, (int) e.getY()) == ROAD_TILE) {
                 e.move(GetSpeed(e.getEnemyType()), RIGHT);
             } else {
@@ -148,7 +161,7 @@ public class EnemyMenager {
     }
 
 
-    private float getSpeedAndWidth(int dir,int enemyType) {
+    private float getSpeedAndWidth(int dir, int enemyType) {
         if (dir == LEFT) {
             return -GetSpeed(enemyType);
         } else if (dir == RIGHT) {
@@ -158,7 +171,7 @@ public class EnemyMenager {
         return 0;
     }
 
-    private float getSpeedAndHeight(int dir,int enemyType) {
+    private float getSpeedAndHeight(int dir, int enemyType) {
         if (dir == UP) {
             return -GetSpeed(enemyType);
         } else if (dir == DOWN) {
@@ -167,14 +180,23 @@ public class EnemyMenager {
         return 0;
     }
 
-    public void draw(Graphics g) {
-        for (Enemy e : enemies) {
-            drawEnemy(e, g);
-        }
+
+    private void drawHealthBar(Enemy e, Graphics g) {
+        g.setColor(Color.RED);
+        g.fillRect((int) e.getX() + 32 - (getNewHealthBar(e) / 2), (int) e.getY() - 10, getNewHealthBar(e), 6);
+        getNewHealthBar(e);
+    }
+
+    private int getNewHealthBar(Enemy e) {
+        return (int) (HPbarWidth * e.getHealthBar());
     }
 
     public void drawEnemy(Enemy e, Graphics g) {
         g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
 }

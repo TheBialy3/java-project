@@ -9,6 +9,7 @@ import objects.Tower;
 import ui.ActionBar;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
@@ -55,6 +56,12 @@ public class Playing extends GameScene implements SceneMethods {
         enemyMenager.draw(g);
         towerManager.draw(g);
         drawSelectedTower(g);
+        drawHighlight(g);
+    }
+
+    private void drawHighlight(Graphics g) {
+        g.setColor(Color.white);
+        g.drawRect(mouseX,mouseY,64,64);
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -163,5 +170,15 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void setSelectedTower(Tower selectedTower) {
         this.selectedTower = selectedTower;
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setSelectedTower(null);
+        }
+    }
+
+    public EnemyMenager enemyMenager(){
+        return enemyMenager;
     }
 }

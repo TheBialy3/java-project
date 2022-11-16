@@ -1,5 +1,6 @@
 package ui;
 
+import helpz.Constants;
 import objects.Tower;
 import scenes.Playing;
 
@@ -11,7 +12,7 @@ import static main.GameStates.SetGameState;
 public class ActionBar extends Bar {
 
     private Playing playing;
-    private MyButton bMenu, bPause;
+    private MyButton bMenu, bBestiary;
 
     private MyButton[] towerButtons;
     private Tower selectedTower;
@@ -33,10 +34,33 @@ public class ActionBar extends Bar {
         drawDispalyTower(g);
     }
 
+    //256, 1280,
     private void drawDispalyTower(Graphics g) {
-        if(displayedTower!=null){
-            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()],)
+        if (displayedTower != null) {
+            g.setColor(new Color(100, 45, 15));
+            g.fillRect(1290, 1090, 236, 180);
+            g.setColor(Color.black);
+            g.drawRect(1300, 1100, 64, 64);
+            g.drawRect(1290, 1090, 236, 180);
+            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1300, 1100, 64, 64, null);
+            g.setFont(new Font("Serif", Font.BOLD, 20));
+            g.setColor(new Color(15, 15, 15));
+            g.drawString("" + Constants.TowerType.GetName(displayedTower.getTowerType()), 1375, 1118);
+            g.drawString("ID:" + displayedTower.getId(), 1375, 1138);
+
+            drawDisplayedTower(g);
+            drawDisplayedTowerRange(g);
         }
+    }
+
+    private void drawDisplayedTowerRange(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawOval((int)(displayedTower.getX()-displayedTower.getRange())+32,(int)(displayedTower.getY()-displayedTower.getRange())+32,(int)(displayedTower.getRange()*2),(int)(displayedTower.getRange())*2);
+    }
+
+    private void drawDisplayedTower(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawRect(displayedTower.getX(),displayedTower.getY(),64,64);
     }
 
     private void initButtons() {
@@ -47,7 +71,7 @@ public class ActionBar extends Bar {
         int diff = 84;
 
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
-        bPause = new MyButton("Pause", 1417, 10, 108, 40);
+        bBestiary = new MyButton("Bestiary", 1417, 10, 108, 40);
         towerButtons = new MyButton[4];
 
 
@@ -61,9 +85,9 @@ public class ActionBar extends Bar {
 
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
-        bPause.draw(g);
+        bBestiary.draw(g);
         for (MyButton b : towerButtons) {
-            g.setColor(new Color(22, 125, 211));
+            g.setColor(new Color(200, 200, 200));
             g.fillRect(b.x, b.y, b.width, b.height);
             g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
             drawButtonFeedback(g, b);
@@ -73,12 +97,12 @@ public class ActionBar extends Bar {
     public void mouseClicked(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
-        } else if (bPause.getBounds().contains(x, y)) {
+        } else if (bBestiary.getBounds().contains(x, y)) {
             SetGameState(MENU);
-        }else {
+        } else {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
-                    selectedTower = new Tower(0,0,-1,b.getId());
+                    selectedTower = new Tower(0, 0, -1, b.getId());
                     playing.setSelectedTower(selectedTower);
                     return;
                 }
@@ -88,14 +112,14 @@ public class ActionBar extends Bar {
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
-        bPause.setMouseOver(false);
+        bBestiary.setMouseOver(false);
         for (MyButton b : towerButtons) {
             b.setMouseOver(false);
         }
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
-        } else if (bPause.getBounds().contains(x, y)) {
-            bPause.setMouseOver(true);
+        } else if (bBestiary.getBounds().contains(x, y)) {
+            bBestiary.setMouseOver(true);
         } else {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
@@ -114,8 +138,8 @@ public class ActionBar extends Bar {
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePressed(true);
-        } else if (bPause.getBounds().contains(x, y)) {
-            bPause.setMousePressed(true);
+        } else if (bBestiary.getBounds().contains(x, y)) {
+            bBestiary.setMousePressed(true);
         } else {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
@@ -128,13 +152,13 @@ public class ActionBar extends Bar {
 
     private void resetButtons() {
         bMenu.resetBooleans();
-        bPause.resetBooleans();
+        bBestiary.resetBooleans();
         for (MyButton b : towerButtons) {
             b.resetBooleans();
         }
     }
 
     public void displayTower(Tower t) {
-displayedTower=t;
+        displayedTower = t;
     }
 }
