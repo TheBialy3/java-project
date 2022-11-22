@@ -48,22 +48,17 @@ public class ProjectileManager {
     }
 
     private int getProjType(Tower t) {
-        switch (t.getTowerType()){
+        switch (t.getTowerType()) {
             case ARCHER:
                 return ARROW;
-                break;
             case CANNON:
                 return BOMB;
-                break;
             case MAGE:
                 return BEEM;
-                break;
             case YES:
                 return ELSE;
-                break;
-
-            return 0;
         }
+        return 0;
     }
 
 }
