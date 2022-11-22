@@ -3,6 +3,7 @@ package scenes;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyMenager;
+import managers.ProjectileManager;
 import managers.TowerManager;
 import objects.PathPoint;
 import objects.Tower;
@@ -20,6 +21,7 @@ public class Playing extends GameScene implements SceneMethods {
     private ActionBar actionBar;
     private int mouseX, mouseY;
     private EnemyMenager enemyMenager;
+    private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private PathPoint start, end;
     private Tower selectedTower;
@@ -30,6 +32,7 @@ public class Playing extends GameScene implements SceneMethods {
         actionBar = new ActionBar(1280, 0, 256, 1280, this);
         enemyMenager = new EnemyMenager(this, start, end);
         towerManager = new TowerManager(this);
+        projectileManager = new ProjectileManager(this);
     }
 
     public void setLevel(int[][] lvl) {
@@ -40,6 +43,7 @@ public class Playing extends GameScene implements SceneMethods {
         updateTick();
         enemyMenager.update();
         towerManager.update();
+        projectileManager.update();
     }
 
     private void LoadDefoultLevel() {
@@ -55,6 +59,8 @@ public class Playing extends GameScene implements SceneMethods {
         actionBar.draw(g);
         enemyMenager.draw(g);
         towerManager.draw(g);
+        projectileManager.draw(g);
+
         drawSelectedTower(g);
         drawHighlight(g);
     }

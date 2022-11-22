@@ -13,17 +13,19 @@ public class Constants {
         public static final int ARROW = 0;
         public static final int BOMB = 1;
         public static final int BEEM = 2;
-        // public static final int ELSE = 3;
+        public static final int ELSE = 3;
 
 
-        public static float GetSpeed(int enemyType) {
-            switch (enemyType) {
+        public static float GetSpeed(int projectileType) {
+            switch (projectileType) {
                 case ARROW:
                     return 3f;
                 case BOMB:
                     return 2f;
                 case BEEM:
                     return 4f;
+                case ELSE:
+                    return 10f;
             }
             return 0;
         }
