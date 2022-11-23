@@ -5,18 +5,24 @@ import java.awt.geom.Point2D;
 public class Projectile {
 
     private Point2D.Float pos;
-    private int id, projectileType;
+    private int id, projectileType, dmg;
     private boolean active = true;
+    private float speedx, speedy , rotation;
 
-    public Projectile(float x, float y,int id, int projectileType){
-pos= new Point2D.Float(x, y);
-this.id=id;
-this.projectileType=projectileType;
+
+    public Projectile(float x, float y, float speedx, float speedy, int dmg,float rotation, int id, int projectileType) {
+        pos = new Point2D.Float(x, y);
+        this.speedx = speedx;
+        this.speedy = speedy;
+        this.dmg = dmg;
+        this.rotation = rotation;
+        this.id = id;
+        this.projectileType = projectileType;
     }
 
-    public void move(float x, float y){
-        pos.x+=x;
-        pos.y+=y;
+    public void move() {
+        pos.x += speedx;
+        pos.y += speedy;
     }
 
     public Point2D.Float getPos() {
@@ -49,5 +55,13 @@ this.projectileType=projectileType;
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getDmg(){
+        return dmg;
+    }
+
+    public float getRotation(){
+        return rotation;
     }
 }

@@ -21,7 +21,7 @@ public class Constants {
                 case ARROW:
                     return 3f;
                 case BOMB:
-                    return 2f;
+                    return 6f;
                 case BEEM:
                     return 4f;
                 case ELSE:
@@ -92,11 +92,11 @@ public class Constants {
                 case ARCHER:
                     return 15;
                 case CANNON:
-                    return 50;
-                case MAGE:
                     return 5;
+                case MAGE:
+                    return 100;
                 case YES:
-                    return 500;
+                    return 5;
             }
             return 0;
         }
@@ -106,25 +106,25 @@ public class Constants {
                 case ARCHER:
                     return 200;
                 case CANNON:
-                    return 200;
+                    return 1100;
                 case MAGE:
-                    return 200;
+                    return 300;
                 case YES:
                     return 500;
             }
             return 0;
         }
 
-        public static float GetDefaultDmg(int towerType) {
+        public static int GetDefaultDmg(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 15;
-                case CANNON:
-                    return 50;
-                case MAGE:
                     return 5;
+                case CANNON:
+                    return 1;
+                case MAGE:
+                    return 50;
                 case YES:
-                    return 500;
+                    return 5;
             }
             return 0;
         }

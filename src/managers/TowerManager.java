@@ -9,8 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import static helpz.Constants.TowerType.*;
-
 public class TowerManager {
 
     private Playing playing;
@@ -39,18 +37,22 @@ public class TowerManager {
     }
 
     public void update() {
-        attackEnemyIfClose();
+        for (Tower t : towers) {
+            t.update();
+            attackEnemyIfClose(t);
+        }
     }
 
-    private void attackEnemyIfClose() {
-        for (Tower t : towers) {
-            for (Enemy e : playing.enemyMenager().getEnemies()) {
-                if (e.isAlive()) {
-                    if (isEnemyInRange(t, e)) {
-                        e.hurt(1);
-                    } else {
-                        //nothing
+    private void attackEnemyIfClose(Tower t) {
+        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+            if (e.isAlive()) {
+                if (isEnemyInRange(t, e)) {
+                    if (t.isCooldownOver()) {
+                        playing.shootEnemy(t, e);
+                        t.resetCooldown();
                     }
+                } else {
+                    //nothing
                 }
             }
         }

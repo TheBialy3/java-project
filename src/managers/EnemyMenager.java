@@ -62,7 +62,6 @@ public class EnemyMenager {
                 enemies.add(new Ball(x, y, 0));
                 break;
         }
-
     }
 
     public void update() {
@@ -148,8 +147,8 @@ public class EnemyMenager {
 
 
     private boolean isAtEnd(Enemy e) {
-        if (e.getX() == end.getxCord() * 32) {
-            if (e.getY() == end.getyCord() * 32) {
+        if (e.getX() == end.getxCord() * 32){
+            if (e.getY() == end.getyCord() * 32){
                 return true;
             }
         }

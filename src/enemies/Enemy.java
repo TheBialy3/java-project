@@ -44,7 +44,13 @@ public abstract class Enemy {
                 this.y += speed;
                 break;
         }
+        updateHitbox();
     }
+
+    private void updateHitbox(){
+        bounds.x=(int)x;
+        bounds.y=(int)y;
+    };
 
     public float getHealthBar() {
         return (float) health / maxHealth;
@@ -59,6 +65,8 @@ public abstract class Enemy {
         this.health -= dmg;
         if (health <= 0) {
             alive = false;
+            bounds.x=22;
+            bounds.y=22;
         }
     }
 

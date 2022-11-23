@@ -1,5 +1,6 @@
 package scenes;
 
+import enemies.Enemy;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyMenager;
@@ -96,7 +97,7 @@ public class Playing extends GameScene implements SceneMethods {
 
         if (xCord > 19 || xCord < 0) {
             return 0;
-        } else if (yCord > 19 || xCord < 0) {
+        } else if (yCord > 19 || yCord < 0) {
             return 0;
         }
         int id = lvl[y / 64][x / 64];
@@ -184,7 +185,11 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    public EnemyMenager enemyMenager(){
+    public EnemyMenager getEnemyMenager(){
         return enemyMenager;
+    }
+
+    public void shootEnemy(Tower t, Enemy e) {
+        projectileManager.newProjectile(t,e);
     }
 }
