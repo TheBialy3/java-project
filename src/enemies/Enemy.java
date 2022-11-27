@@ -2,6 +2,7 @@ package enemies;
 
 import helpz.Constants;
 
+
 import java.awt.*;
 
 import static helpz.Constants.Direction.*;
@@ -10,12 +11,13 @@ public abstract class Enemy {
 
     protected float x, y;
     protected Rectangle bounds;
-    protected int health;
+    protected int health, slowTickLimit = 120, slowTick = slowTickLimit;
     protected int maxHealth;
     protected int ID;
     protected int enemyType;
     protected int lastDir;
     protected boolean alive = true;
+    protected float slowPower=1f;
 
 
     public Enemy(float x, float y, int ID, int enemyType) {
@@ -30,6 +32,10 @@ public abstract class Enemy {
 
     public void move(float speed, int dir) {
         lastDir = dir;
+        if (slowTick < slowTickLimit) {
+            slowTick++;
+            speed *= slowPower;
+        }
         switch (dir) {
             case LEFT:
                 this.x -= speed;
@@ -47,10 +53,12 @@ public abstract class Enemy {
         updateHitbox();
     }
 
-    private void updateHitbox(){
-        bounds.x=(int)x;
-        bounds.y=(int)y;
-    };
+    private void updateHitbox() {
+        bounds.x = (int) x;
+        bounds.y = (int) y;
+    }
+
+
 
     public float getHealthBar() {
         return (float) health / maxHealth;
@@ -65,12 +73,13 @@ public abstract class Enemy {
         this.health -= dmg;
         if (health <= 0) {
             alive = false;
-            bounds.x=22;
-            bounds.y=22;
         }
     }
 
-    ;
+    public void slow(float powerOfSlow) {
+        slowTick = 0;
+        slowPower=powerOfSlow;
+    }
 
     public void setPos(int x, int y) {
         //posfix
@@ -108,5 +117,10 @@ public abstract class Enemy {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public boolean isSlowd() {
+
+        return  slowTick < slowTickLimit;
     }
 }

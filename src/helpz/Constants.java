@@ -12,29 +12,96 @@ public class Constants {
     public static class ProjectileType {
         public static final int ARROW = 0;
         public static final int BOMB = 1;
-        public static final int BEEM = 2;
-        public static final int ELSE = 3;
+        public static final int FROST_BEEM = 2;
+        public static final int MINE = 3;
 
 
         public static float GetSpeed(int projectileType) {
             switch (projectileType) {
                 case ARROW:
-                    return 3f;
+                    return 8f;
                 case BOMB:
-                    return 6f;
-                case BEEM:
                     return 4f;
-                case ELSE:
-                    return 10f;
+                case FROST_BEEM:
+                    return 6f;
+                case MINE:
+                    return 3f;
             }
             return 0;
         }
 
+        public static boolean isRorating(int projectileType) {
+            switch (projectileType) {
+                case ARROW:
+                    return true;
+                case BOMB:
+                    return false;
+                case FROST_BEEM:
+                    return true;
+                case MINE:
+                    return false;
+            }
+            return false;
+        }
+
+        public static boolean isAoe(int projectileType) {
+            switch (projectileType) {
+                case ARROW:
+                    return false;
+                case BOMB:
+                    return true;
+                case FROST_BEEM:
+                    return true;
+                case MINE:
+                    return true;
+            }
+            return false;
+        }
+
+        public static float GetRadiusExplosion(int projectileType) {
+            if (isAoe(projectileType)) {
+                switch (projectileType) {
+                    case BOMB:
+                        return 40f;
+                    case FROST_BEEM:
+                        return 50f;
+                    case MINE:
+                        return 50f;
+                }
+            }
+            return 0;
+        }
+
+        public static boolean isSlow(int projectileType) {
+            switch (projectileType) {
+                case ARROW:
+                    return false;
+                case BOMB:
+                    return false;
+                case FROST_BEEM:
+                    return true;
+                case MINE:
+                    return true;
+            }
+            return false;
+        }
+
+        public static float GetPowerOfSlow(int projectileType) {
+            if (isSlow(projectileType)) {
+                switch (projectileType) {
+                    case FROST_BEEM:
+                        return 0.5f;
+                    case MINE:
+                        return 0.8f;
+                }
+            }
+            return 1f;
+        }
     }
 
     public static class EnemyType {
         public static final int ORC = 0;
-        public static final int SLIME = 1;
+        public static final int ANIMATED_ORK = 1;
         public static final int TENTACLE = 2;
         public static final int BALL = 3;
 
@@ -42,7 +109,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 0.5f;
-                case SLIME:
+                case ANIMATED_ORK:
                     return 0.3f;
                 case TENTACLE:
                     return 0.4f;
@@ -56,7 +123,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 100;
-                case SLIME:
+                case ANIMATED_ORK:
                     return 200;
                 case TENTACLE:
                     return 150;
@@ -70,8 +137,8 @@ public class Constants {
     public static class TowerType {
         public static final int ARCHER = 0;
         public static final int CANNON = 1;
-        public static final int MAGE = 2;
-        public static final int YES = 3;
+        public static final int FROST_MAGE = 2;
+        public static final int MINE_FACTORY = 3;
 
         public static String GetName(int towerType) {
             switch (towerType) {
@@ -79,9 +146,9 @@ public class Constants {
                     return "Archer";
                 case CANNON:
                     return "Cannon";
-                case MAGE:
-                    return "Mage";
-                case YES:
+                case FROST_MAGE:
+                    return "Frost Mage";
+                case MINE_FACTORY:
                     return "Yes";
             }
             return "";
@@ -90,13 +157,13 @@ public class Constants {
         public static float GetDefaultCooldown(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 15;
+                    return 25;
                 case CANNON:
-                    return 5;
-                case MAGE:
                     return 100;
-                case YES:
-                    return 5;
+                case FROST_MAGE:
+                    return 40;
+                case MINE_FACTORY:
+                    return 100;
             }
             return 0;
         }
@@ -104,12 +171,12 @@ public class Constants {
         public static float GetDefaultRange(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 200;
+                    return 400;
                 case CANNON:
-                    return 1100;
-                case MAGE:
+                    return 200;
+                case FROST_MAGE:
                     return 300;
-                case YES:
+                case MINE_FACTORY:
                     return 500;
             }
             return 0;
@@ -120,11 +187,11 @@ public class Constants {
                 case ARCHER:
                     return 5;
                 case CANNON:
+                    return 15;
+                case FROST_MAGE:
                     return 1;
-                case MAGE:
-                    return 50;
-                case YES:
-                    return 5;
+                case MINE_FACTORY:
+                    return 10;
             }
             return 0;
         }
