@@ -28,10 +28,12 @@ public class EnemyMenager {
         this.playing = playing;
         this.start = start;
         this.end = end;
-        addEnemy(ANIMATED_ORK);
-        addEnemy(ORC);
-        addEnemy(BALL);
-        addEnemy(TENTACLE);
+
+//        addEnemy(ANIMATED_ORK);
+//        addEnemy(ORC);
+//        addEnemy(BALL);
+//        addEnemy(TENTACLE);
+
         loadEnemyImages();
         loadEfectsImages();
     }
@@ -73,11 +75,33 @@ public class EnemyMenager {
     }
 
     public void update() {
+        updateWaveManager();
+        if (isTimeForNewWave()) {
+            spawnEnemy();
+        }
+
         for (Enemy e : enemies) {
             if (e.isAlive()) {
                 updateEnemyMove(e);
             }
         }
+    }
+
+    private void updateWaveManager() {
+        playing.getWaveManager().update();
+    }
+
+    private void spawnEnemy() {
+        addEnemy(playing.getWaveManager().getNextEnemy());
+    }
+
+    private boolean isTimeForNewWave() {
+        if(playing.getWaveManager().isTimeForNewWave()){
+            if(playing.getWaveManager().isTherMoreEnemysInWave()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void draw(Graphics g) {
@@ -92,7 +116,7 @@ public class EnemyMenager {
 
     private void drawEfects(Enemy e, Graphics g) {
         if (e.isSlowd()) {
-            g.drawImage(enemyEfects[0],(int)e.getX(),(int)e.getY(),null);
+            g.drawImage(enemyEfects[0], (int) e.getX(), (int) e.getY(), null);
         }
     }
 
@@ -217,7 +241,7 @@ public class EnemyMenager {
                     tick = 0;
                 }
             }
-        }else {
+        } else {
             g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
         }
     }

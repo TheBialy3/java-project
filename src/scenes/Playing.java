@@ -6,6 +6,7 @@ import main.Game;
 import managers.EnemyMenager;
 import managers.ProjectileManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.PathPoint;
 import objects.Tower;
 import ui.ActionBar;
@@ -24,6 +25,7 @@ public class Playing extends GameScene implements SceneMethods {
     private EnemyMenager enemyMenager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
+    private WaveManager waveManager;
     private PathPoint start, end;
     private Tower selectedTower;
 
@@ -34,6 +36,7 @@ public class Playing extends GameScene implements SceneMethods {
         enemyMenager = new EnemyMenager(this, start, end);
         towerManager = new TowerManager(this);
         projectileManager = new ProjectileManager(this);
+        waveManager= new WaveManager(this);
     }
 
     public void setLevel(int[][] lvl) {
@@ -136,6 +139,10 @@ public class Playing extends GameScene implements SceneMethods {
         return tileType == GRASS_TILE;
     }
 
+    public void shootEnemy(Tower t, Enemy e) {
+        projectileManager.newProjectile(t,e);
+    }
+
     @Override
     public void mouseMoved(int x, int y) {
         if (x >= 1280) {
@@ -189,7 +196,9 @@ public class Playing extends GameScene implements SceneMethods {
         return enemyMenager;
     }
 
-    public void shootEnemy(Tower t, Enemy e) {
-        projectileManager.newProjectile(t,e);
+    public WaveManager getWaveManager(){
+        return waveManager;
     }
+
+
 }
