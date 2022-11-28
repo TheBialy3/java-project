@@ -5,6 +5,7 @@ import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
@@ -18,9 +19,15 @@ public class ActionBar extends Bar {
     private Tower selectedTower;
     private Tower displayedTower;
 
+    private int gold=100;
+
+    private DecimalFormat formatter;
+
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
+        formatter = new DecimalFormat("0.0");
+
         initButtons();
     }
 
@@ -32,21 +39,60 @@ public class ActionBar extends Bar {
         drawButtons(g);
         //displayTower
         drawDispalyTower(g);
+        //waveInfo
+        drawWaveInfo(g);
+        //GoldInfo
+        drawGoldAmount(g);
+    }
+
+    private void drawWaveInfo(Graphics g) {
+        g.setFont(new Font("Monospaced", Font.BOLD, 20));
+        drawWaveTimerInfo(g);
+        drawEnemisLeftInfo(g);
+        drawWaveLeftInfo(g);
+    }
+
+    private void drawGoldAmount(Graphics g) {
+        g.setFont(new Font("Serif", Font.BOLD, 20));
+        g.setColor(new Color(196, 174, 0));
+        g.drawString("Gold:" + gold, 1285, 1210);
+    }
+
+    private void drawEnemisLeftInfo(Graphics g) {
+        g.setColor(new Color(9, 255, 255));
+        int currentWave = playing.getEnemyMenager().getAmountOfAliveEnemies();
+        g.drawString("Enemies alive:" + currentWave, 1285, 1250);
+    }
+
+    private void drawWaveLeftInfo(Graphics g) {
+        g.setColor(new Color(9, 255, 255));
+        int currentWave = playing.getWaveManager().getWaveIndex();
+        int allWaves = playing.getWaveManager().getWaveMax();
+        g.drawString("Waves:" + currentWave + "/" + allWaves, 1285, 1270);
+    }
+
+    private void drawWaveTimerInfo(Graphics g) {
+        if (playing.getWaveManager().isWaveTimerStarted()) {
+            g.setColor(new Color(1, 24, 87));
+            float timeLeft = playing.getWaveManager().getTimeLeft();
+            String formattedText = formatter.format(timeLeft);
+            g.drawString("Time Left:" + formattedText, 1285, 1230);
+        }
     }
 
     //256, 1280,
     private void drawDispalyTower(Graphics g) {
         if (displayedTower != null) {
             g.setColor(new Color(100, 45, 15));
-            g.fillRect(1290, 1090, 236, 180);
+            g.fillRect(1290, 990, 236, 180);
             g.setColor(Color.black);
-            g.drawRect(1300, 1100, 64, 64);
-            g.drawRect(1290, 1090, 236, 180);
-            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1300, 1100, 64, 64, null);
+            g.drawRect(1300, 1000, 64, 64);
+            g.drawRect(1290, 990, 236, 180);
+            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1300, 1000, 64, 64, null);
             g.setFont(new Font("Serif", Font.BOLD, 20));
             g.setColor(new Color(15, 15, 15));
-            g.drawString("" + Constants.TowerType.GetName(displayedTower.getTowerType()), 1375, 1118);
-            g.drawString("ID:" + displayedTower.getId(), 1375, 1138);
+            g.drawString("" + Constants.TowerType.GetName(displayedTower.getTowerType()), 1375, 1018);
+            g.drawString("ID:" + displayedTower.getId(), 1375, 1038);
 
             drawDisplayedTower(g);
             drawDisplayedTowerRange(g);
@@ -55,12 +101,12 @@ public class ActionBar extends Bar {
 
     private void drawDisplayedTowerRange(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawOval((int)(displayedTower.getX()-displayedTower.getRange())+32,(int)(displayedTower.getY()-displayedTower.getRange())+32,(int)(displayedTower.getRange()*2),(int)(displayedTower.getRange())*2);
+        g.drawOval((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
     }
 
     private void drawDisplayedTower(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawRect(displayedTower.getX(),displayedTower.getY(),64,64);
+        g.drawRect(displayedTower.getX(), displayedTower.getY(), 64, 64);
     }
 
     private void initButtons() {

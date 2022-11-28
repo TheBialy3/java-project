@@ -76,6 +76,11 @@ public abstract class Enemy {
         }
     }
 
+    public void kill() {
+        health=0;
+        alive=false;
+    }
+
     public void slow(float powerOfSlow) {
         slowTick = 0;
         slowPower=powerOfSlow;

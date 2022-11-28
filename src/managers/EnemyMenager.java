@@ -54,6 +54,9 @@ public class EnemyMenager {
         enemyImages[4] = atlas.getSubimage(1 * 64, 6 * 64, 64, 64);
     }
 
+    public void spawnEnemy(int nextEnemy) {
+        addEnemy(nextEnemy);
+    }
 
     public void addEnemy(int enemyType) {
         int x = start.getxCord() * 64;
@@ -75,33 +78,11 @@ public class EnemyMenager {
     }
 
     public void update() {
-        updateWaveManager();
-        if (isTimeForNewWave()) {
-            spawnEnemy();
-        }
-
         for (Enemy e : enemies) {
             if (e.isAlive()) {
                 updateEnemyMove(e);
             }
         }
-    }
-
-    private void updateWaveManager() {
-        playing.getWaveManager().update();
-    }
-
-    private void spawnEnemy() {
-        addEnemy(playing.getWaveManager().getNextEnemy());
-    }
-
-    private boolean isTimeForNewWave() {
-        if(playing.getWaveManager().isTimeForNewWave()){
-            if(playing.getWaveManager().isTherMoreEnemysInWave()){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void draw(Graphics g) {
@@ -122,7 +103,7 @@ public class EnemyMenager {
 
     private void updateEnemyMove(Enemy e) {
         if (e.getLastDir() == -1) {
-            setNewDirectionAndMove(e);
+            setNewStartDirectionAndMove(e);
         }
         int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
         int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
@@ -131,11 +112,30 @@ public class EnemyMenager {
             //keep moving
             e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         } else if (isAtEnd(e)) {
-            System.out.println("over");
+            e.kill();
         } else {
             setNewDirectionAndMove(e);
         }
     }
+
+    private void setNewStartDirectionAndMove(Enemy e) {
+        int xCord = (int) (e.getX() / 64);
+        int yCord = (int) (e.getY() / 64);
+         xCord -= 1;
+         yCord -= 1;
+
+        if (getTileType( xCord, yCord-1) == ROAD_TILE) {
+            e.move(GetSpeed(e.getEnemyType()), UP);
+        } else if (getTileType( xCord, yCord+1) == ROAD_TILE)  {
+            e.move(GetSpeed(e.getEnemyType()), DOWN);
+        } else if (getTileType( xCord+1, yCord) == ROAD_TILE) {
+            e.move(GetSpeed(e.getEnemyType()), RIGHT);
+        } else {
+            e.move(GetSpeed(e.getEnemyType()), LEFT);
+        }
+    }
+
+
 
     private void setNewDirectionAndMove(Enemy e) {
         int dir = e.getLastDir();
@@ -186,16 +186,16 @@ public class EnemyMenager {
 
 
     private boolean isAtEnd(Enemy e) {
-        if (e.getX() == end.getxCord() * 32) {
-            if (e.getY() == end.getyCord() * 32) {
+        if (e.getX() == end.getxCord() * 64) {
+            if (e.getY() == end.getyCord() * 64) {
                 return true;
             }
         }
         return false;
     }
 
-    public int getTileType(int newX, int newY) {
-        return playing.getTileType(newX, newY);
+    public int getTileType(int x, int y) {
+        return playing.getTileType(x, y);
     }
 
 
@@ -250,4 +250,13 @@ public class EnemyMenager {
         return enemies;
     }
 
+    public int getAmountOfAliveEnemies() {
+        int size = 0;
+        for (Enemy e : enemies) {
+            if (e.isAlive()) {
+                size++;
+            }
+        }
+        return size;
+    }
 }
