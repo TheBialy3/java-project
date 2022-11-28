@@ -149,9 +149,23 @@ public class Constants {
                 case FROST_MAGE:
                     return "Frost Mage";
                 case MINE_FACTORY:
-                    return "Yes";
+                    return "Mine Factory";
             }
             return "";
+        }
+
+        public static int GetCost(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return 100;
+                case CANNON:
+                    return 150;
+                case FROST_MAGE:
+                    return 125;
+                case MINE_FACTORY:
+                    return 200;
+            }
+            return 0;
         }
 
         public static float GetDefaultCooldown(int towerType) {

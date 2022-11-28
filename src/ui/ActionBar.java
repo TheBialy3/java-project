@@ -19,7 +19,9 @@ public class ActionBar extends Bar {
     private Tower selectedTower;
     private Tower displayedTower;
 
-    private int gold=100;
+    private int gold = 100;
+    private boolean showTowerCost;
+    private int towerCostType;
 
     private DecimalFormat formatter;
 
@@ -43,6 +45,48 @@ public class ActionBar extends Bar {
         drawWaveInfo(g);
         //GoldInfo
         drawGoldAmount(g);
+        //towerInfo
+        if (showTowerCost) {
+            drawTowerCost(g);
+        }
+
+    }
+
+    private void drawTowerCost(Graphics g) {
+        if (getTowerCost(towerCostType) > gold) {
+            g.setColor(new Color(171, 0, 0));
+        } else {
+            g.setColor(new Color(3, 132, 0));
+        }
+        g.fillRect(1290, 890, 236, 90);
+        g.setColor(Color.black);
+        g.drawRect(1290, 890, 236, 90);
+        g.setFont(new Font("Serif", Font.BOLD, 30));
+        g.setColor(new Color(15, 15, 15));
+        String text = "Cost: " + getTowerCost(towerCostType) + "g";
+        int w = g.getFontMetrics().stringWidth(text);
+        g.drawString(text, 1408 - (w / 2), 960);
+        g.setFont(new Font("Serif", Font.BOLD, 28));
+        text = getTowerName(towerCostType);
+        w = g.getFontMetrics().stringWidth(text);
+        g.drawString(text, 1408 - (w / 2), 923);
+
+
+        //drawDisplayedTower(g);
+        // drawDisplayedTowerRange(g);
+
+    }
+
+    public void goldSpend(int getCost) {
+        gold -= getCost;
+    }
+
+    private int getTowerCost(int towerCostType) {
+        return Constants.TowerType.GetCost(towerCostType);
+    }
+
+    private String getTowerName(int towerCostType) {
+        return Constants.TowerType.GetName(towerCostType);
     }
 
     private void drawWaveInfo(Graphics g) {
@@ -148,9 +192,11 @@ public class ActionBar extends Bar {
         } else {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
-                    selectedTower = new Tower(0, 0, -1, b.getId());
-                    playing.setSelectedTower(selectedTower);
-                    return;
+                    if (isEnoughGold(Constants.TowerType.GetCost(b.getId()))) {
+                        selectedTower = new Tower(0, 0, -1, b.getId());
+                        playing.setSelectedTower(selectedTower);
+                        return;
+                    }
                 }
             }
         }
@@ -159,6 +205,7 @@ public class ActionBar extends Bar {
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
         bBestiary.setMouseOver(false);
+        showTowerCost = false;
         for (MyButton b : towerButtons) {
             b.setMouseOver(false);
         }
@@ -170,6 +217,8 @@ public class ActionBar extends Bar {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
                     b.setMouseOver(true);
+                    showTowerCost = true;
+                    towerCostType = b.getId();
                     return;
                 }
             }
@@ -204,7 +253,13 @@ public class ActionBar extends Bar {
         }
     }
 
+    private boolean isEnoughGold(int cost){
+        return gold >= cost;
+    }
+
     public void displayTower(Tower t) {
         displayedTower = t;
     }
+
+
 }

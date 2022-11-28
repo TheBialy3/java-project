@@ -103,7 +103,7 @@ public class EnemyMenager {
 
     private void updateEnemyMove(Enemy e) {
         if (e.getLastDir() == -1) {
-            setNewStartDirectionAndMove(e);
+            setNewDirectionAndMove(e);
         }
         int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
         int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
@@ -117,25 +117,6 @@ public class EnemyMenager {
             setNewDirectionAndMove(e);
         }
     }
-
-    private void setNewStartDirectionAndMove(Enemy e) {
-        int xCord = (int) (e.getX() / 64);
-        int yCord = (int) (e.getY() / 64);
-         xCord -= 1;
-         yCord -= 1;
-
-        if (getTileType( xCord, yCord-1) == ROAD_TILE) {
-            e.move(GetSpeed(e.getEnemyType()), UP);
-        } else if (getTileType( xCord, yCord+1) == ROAD_TILE)  {
-            e.move(GetSpeed(e.getEnemyType()), DOWN);
-        } else if (getTileType( xCord+1, yCord) == ROAD_TILE) {
-            e.move(GetSpeed(e.getEnemyType()), RIGHT);
-        } else {
-            e.move(GetSpeed(e.getEnemyType()), LEFT);
-        }
-    }
-
-
 
     private void setNewDirectionAndMove(Enemy e) {
         int dir = e.getLastDir();
@@ -194,8 +175,8 @@ public class EnemyMenager {
         return false;
     }
 
-    public int getTileType(int x, int y) {
-        return playing.getTileType(x, y);
+    public int getTileType(int newX, int newY) {
+        return playing.getTileType(newX, newY);
     }
 
 

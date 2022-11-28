@@ -1,6 +1,7 @@
 package scenes;
 
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyMenager;
@@ -174,7 +175,10 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isTileGrass(mouseX, mouseY)) {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
+                        actionBar.goldSpend(Constants.TowerType.GetCost(selectedTower.getTowerType()));
                         selectedTower = null;
+
+
                     }
                 }
             } else {
