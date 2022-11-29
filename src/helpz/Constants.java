@@ -103,7 +103,7 @@ public class Constants {
         public static final int ORC = 0;
         public static final int ANIMATED_ORK = 1;
         public static final int TENTACLE = 2;
-        public static final int BALL = 3;
+        public static final int SLIME = 3;
 
         public static float GetSpeed(int enemyType) {
             switch (enemyType) {
@@ -113,7 +113,7 @@ public class Constants {
                     return 0.3f;
                 case TENTACLE:
                     return 0.4f;
-                case BALL:
+                case SLIME:
                     return 0.7f;
             }
             return 0;
@@ -127,8 +127,22 @@ public class Constants {
                     return 200;
                 case TENTACLE:
                     return 150;
-                case BALL:
+                case SLIME:
                     return 70;
+            }
+            return 0;
+        }
+
+        public static int GetGoldWorth(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 10;
+                case ANIMATED_ORK:
+                    return 12;
+                case TENTACLE:
+                    return 15;
+                case SLIME:
+                    return 8;
             }
             return 0;
         }

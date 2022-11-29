@@ -4,8 +4,8 @@ import helpz.Constants;
 
 public class Tower {
 
-    private int x, y, id, towerType,cdTick,dmg;
-    private float  range, cooldown;
+    private int x, y, id, towerType, cdTick, dmg, worthGold;
+    private float range, cooldown;
 
     public Tower(int x, int y, int id, int towerType) {
         this.x = x;
@@ -15,18 +15,27 @@ public class Tower {
         setDefaultDmg();
         setDefaultRange();
         setDefaultCooldown();
+        this.worthGold = Constants.TowerType.GetCost(towerType);
     }
 
-    public void update(){
+    public void update() {
         cdTick++;
     }
 
+    public int getWorthGold() {
+        return worthGold;
+    }
+
+    public void updateTowerWorthGold(int worthGold) {
+        this.worthGold += worthGold;
+    }
+
     public boolean isCooldownOver() {
-        return cdTick>=cooldown;
+        return cdTick >= cooldown;
     }
 
     public void resetCooldown() {
-        cdTick=0;
+        cdTick = 0;
     }
 
     private void setDefaultCooldown() {

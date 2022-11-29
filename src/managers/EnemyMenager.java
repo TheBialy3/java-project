@@ -63,16 +63,16 @@ public class EnemyMenager {
         int y = start.getyCord() * 64;
         switch (enemyType) {
             case ORC:
-                enemies.add(new Orc(x, y, 0));
+                enemies.add(new Orc(x, y, 0, this));
                 break;
             case ANIMATED_ORK:
-                enemies.add(new Slime(x, y, 0));
+                enemies.add(new Slime(x, y, 0, this));
                 break;
             case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0));
+                enemies.add(new Tentacle(x, y, 0, this));
                 break;
-            case BALL:
-                enemies.add(new Ball(x, y, 0));
+            case SLIME:
+                enemies.add(new Ball(x, y, 0, this));
                 break;
         }
     }
@@ -239,5 +239,9 @@ public class EnemyMenager {
             }
         }
         return size;
+    }
+
+    public void rewardPlayer(int enemyType) {
+        playing.rewardPlayer(enemyType);
     }
 }
