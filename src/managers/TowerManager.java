@@ -94,6 +94,9 @@ public class TowerManager {
         return null;
     }
 
-
+public void reset(){
+        towers.clear();
+        towerAmount=0;
+}
 
 }

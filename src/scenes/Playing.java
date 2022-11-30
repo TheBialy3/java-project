@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
+import static main.GameStates.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -33,7 +34,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int passiveIncomGold = 5;
     private int goldTickLimit = 60 * 13;
     private int goldTick = 0;
-    private boolean paused,gameOver;
+    private boolean paused, gameOver;
 
     public Playing(Game game) {
         super(game);
@@ -52,38 +53,39 @@ public class Playing extends GameScene implements SceneMethods {
     public void update() {
         if (!gameOver) {
             if (!paused) {
-            updateTick();
-            getWaveManager().update();
+                updateTick();
+                getWaveManager().update();
 
 
-            //passiveIncom
-            passiveIncom();
+                //passiveIncom
+                passiveIncom();
 
-            if (isAllEnemysDead()) {
-                if (isThereMoreWaves()) {
-                    //start timer albo inicjuj karty
-                    waveManager.startWaveTimer();
-                    //timer lub wybór karty
-                    if (isWaveTimerOver()) {
-                        waveManager.increaseWaveIndex();
-                        enemyMenager.getEnemies().clear();
-                        waveManager.resetEnemyIndex();
+                if (isAllEnemysDead()) {
+                    if (isThereMoreWaves()) {
+                        //start timer albo inicjuj karty
+                        waveManager.startWaveTimer();
+                        //timer lub wybór karty
+                        if (isWaveTimerOver()) {
+                            waveManager.increaseWaveIndex();
+                            enemyMenager.getEnemies().clear();
+                            waveManager.resetEnemyIndex();
+                        }
                     }
                 }
-            }
 
-            if (isTimeForNewWave()) {
-                spawnEnemy();
+                if (isTimeForNewWave()) {
+                    spawnEnemy();
+                }
+                enemyMenager.update();
+                towerManager.update();
+                projectileManager.update();
+                if (actionBar.getLives() <= 0) {
+                    gameOver = true;
+                }
+            } else {
+                actionBar.Pause();
             }
-            enemyMenager.update();
-            towerManager.update();
-            projectileManager.update();
-            if(ActionBar.getLives()<=0){
-                gameOver=true;
-            }
-        } else {
-            ActionBar.Pause();
-        }}
+        }
     }
 
 
@@ -303,11 +305,27 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void mouseClickedR() {
         setSelectedTower(null);
-        ActionBar.unpouse();
+        actionBar.unpouse();
         paused = false;
     }
 
     public void removeOneLive() {
-        ActionBar.removeOneLive();
+        actionBar.removeOneLive();
+    }
+
+    public void resetEvrything() {
+        actionBar.resetEvrything();
+
+        enemyMenager.reset();
+        projectileManager.reset();
+        towerManager.reset();
+        waveManager.reset();
+
+        mouseX=0;
+        mouseY=0;
+
+        selectedTower=null;
+        goldTick=0;
+        paused=false;
     }
 }

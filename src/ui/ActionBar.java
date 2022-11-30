@@ -2,14 +2,12 @@ package ui;
 
 import helpz.Constants;
 import objects.Tower;
-import scenes.GameOver;
+
 import scenes.Playing;
 
 import java.awt.*;
-import java.text.DecimalFormat;
 
-import static main.GameStates.MENU;
-import static main.GameStates.SetGameState;
+import static main.GameStates.*;
 
 public class ActionBar extends Bar {
 
@@ -22,22 +20,28 @@ public class ActionBar extends Bar {
 
     private int gold = 300;
     private boolean showTowerCost;
-    private static boolean paused, gameOver;
+    private static boolean paused;
     private int towerCostId;
 
 
-    private static int lives = 25;
+    private int lives = 5;
 
-    private DecimalFormat formatter;
+
 
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
-        formatter = new DecimalFormat("0.0");
-
         initButtons();
     }
 
+    public void resetEvrything() {
+        lives = 5;
+        towerCostId=0;
+        showTowerCost=false;
+        gold=300;
+        selectedTower=null;
+        displayedTower=null;
+    }
 
     public void draw(Graphics g) {
         //backGround
@@ -59,10 +63,7 @@ public class ActionBar extends Bar {
         if (bSell.isMouseOver()) {
             drawTowerSellCost(g);
         }
-
-        if (gameOver) {
-            GameOver.drawGameOver(g);
-        } else if (paused) {
+        if (paused) {
             drawPause(g);
         }
 
@@ -196,10 +197,10 @@ public class ActionBar extends Bar {
         }
     }
 
-    public static void removeOneLive() {
+    public void removeOneLive() {
         lives--;
         if (lives <= 0) {
-            gameOver=true;
+            SetGameState(GAME_OVER);
         }
     }
 
@@ -423,12 +424,13 @@ public class ActionBar extends Bar {
         return gold >= cost;
     }
 
-    public static int getLives() {
+    public int getLives() {
         return lives;
     }
 
     public void displayTower(Tower t) {
         displayedTower = t;
     }
+
 
 }

@@ -2,7 +2,9 @@ package scenes;
 
 import helpz.LevelBuild;
 import main.Game;
+import managers.EnemyMenager;
 import managers.TileManager;
+import objects.PathPoint;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -16,9 +18,10 @@ import static main.GameStates.*;
 public class Menu extends GameScene implements SceneMethods{
 
     private BufferedImage img;
-
+    private PathPoint start, end;
     private int[][] lvl;
     private TileManager tileManager;
+    private EnemyMenager enemyMenager;
 
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
@@ -28,7 +31,9 @@ public class Menu extends GameScene implements SceneMethods{
         super(game);
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
-
+         start =new PathPoint(1,10);
+         end = new PathPoint(19,10);
+        enemyMenager = new EnemyMenager(game.getPlaying(), start, end);
         importImg();
         loadSprites();
         initButtons();
@@ -56,6 +61,7 @@ public class Menu extends GameScene implements SceneMethods{
             }
         }
         drawButtons(g);
+        //enemyMenager.update();
     }
 
     @Override

@@ -2,10 +2,7 @@ package main;
 
 import helpz.LoadSave;
 import managers.TileManager;
-import scenes.Editing;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 import javax.swing.*;
 
@@ -25,12 +22,13 @@ public class Game extends JFrame implements Runnable {
     private Settings settings;
     private Editing editing;
     private TileManager tileManager;
+    private GameOver gameOver;
 
     public Game() {
         initClasses();
         createDefoultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
+        setTitle("gtd vi");
         setResizable(false);
         add(gameScreen);
         pack();
@@ -53,7 +51,7 @@ public class Game extends JFrame implements Runnable {
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
-
+        gameOver = new GameOver(this);
     }
 
 
@@ -148,6 +146,10 @@ public class Game extends JFrame implements Runnable {
 
     public Editing getEditing() {
         return editing;
+    }
+
+    public GameOver getGameOver() {
+        return gameOver;
     }
 
     public TileManager getTileManager() {

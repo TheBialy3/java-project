@@ -74,13 +74,6 @@ public class ProjectileManager {
                 rotate += 180;
         }
 
-//        for (Projectile p : projectiles)
-//            if (!p.isActive())
-//                if (p.getProjectileType() == type) {
-//                  p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate);
-//                    return;
-//                }
-
         projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
 
     }
@@ -98,9 +91,9 @@ public class ProjectileManager {
                         explosions.add(new Explosion(p.getPos()));
 
                     }
-                } else {
-                    // do nothing
                 }
+            }else if (isProjOutOfBounds(p)) {
+                p.setActive(false);
             }
         }
         for (Explosion e : explosions) {
@@ -108,6 +101,19 @@ public class ProjectileManager {
                 e.update();
             }
         }
+    }
+
+    private boolean isProjOutOfBounds(Projectile p) {
+        if (p.getPos().x <=0) {
+            if (p.getPos().x >=1280) {
+                if (p.getPos().y <=0) {
+                    if (p.getPos().y >=1280) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private void explodeOnEnemys(Projectile p) {
@@ -208,6 +214,12 @@ public class ProjectileManager {
         public Point2D.Float getPos() {
             return pos;
         }
+    }
+
+    public void reset(){
+        projectiles.clear();
+        explosions.clear();
+        proj_id=0;
     }
 }
 
