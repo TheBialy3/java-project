@@ -33,7 +33,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int passiveIncomGold = 5;
     private int goldTickLimit = 60 * 13;
     private int goldTick = 0;
-    private boolean paused;
+    private boolean paused,gameOver;
 
     public Playing(Game game) {
         super(game);
@@ -50,9 +50,11 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void update() {
-        if (!paused) {
+        if (!gameOver) {
+            if (!paused) {
             updateTick();
             getWaveManager().update();
+
 
             //passiveIncom
             passiveIncom();
@@ -76,9 +78,12 @@ public class Playing extends GameScene implements SceneMethods {
             enemyMenager.update();
             towerManager.update();
             projectileManager.update();
+            if(ActionBar.getLives()<=0){
+                gameOver=true;
+            }
         } else {
             ActionBar.Pause();
-        }
+        }}
     }
 
 
@@ -300,5 +305,9 @@ public class Playing extends GameScene implements SceneMethods {
         setSelectedTower(null);
         ActionBar.unpouse();
         paused = false;
+    }
+
+    public void removeOneLive() {
+        ActionBar.removeOneLive();
     }
 }

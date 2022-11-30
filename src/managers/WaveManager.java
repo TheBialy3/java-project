@@ -77,8 +77,12 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0, 0, 0, 0, 1))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0, 0, 0,3, 1,3, 1, 0, 1))));
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1, 3, 1, 3, 1, 2))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1, 3, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0,3, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1))));
+        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1, 3,3, 1, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1))));
     }
 
     public int getWaveIndex() {

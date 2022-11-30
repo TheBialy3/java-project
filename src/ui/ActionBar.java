@@ -2,6 +2,7 @@ package ui;
 
 import helpz.Constants;
 import objects.Tower;
+import scenes.GameOver;
 import scenes.Playing;
 
 import java.awt.*;
@@ -21,9 +22,11 @@ public class ActionBar extends Bar {
 
     private int gold = 300;
     private boolean showTowerCost;
-    private static boolean paused;
+    private static boolean paused, gameOver;
     private int towerCostId;
 
+
+    private static int lives = 25;
 
     private DecimalFormat formatter;
 
@@ -34,7 +37,6 @@ public class ActionBar extends Bar {
 
         initButtons();
     }
-
 
 
     public void draw(Graphics g) {
@@ -58,9 +60,12 @@ public class ActionBar extends Bar {
             drawTowerSellCost(g);
         }
 
-        if(paused){
-            drawPause( g);
+        if (gameOver) {
+            GameOver.drawGameOver(g);
+        } else if (paused) {
+            drawPause(g);
         }
+
 
     }
 
@@ -71,7 +76,7 @@ public class ActionBar extends Bar {
         g.drawRect(1290, 890, 236, 90);
         g.setFont(new Font("Serif", Font.BOLD, 30));
         g.setColor(new Color(15, 15, 15));
-        String text = "Gold Worth: " +(int) (getTowerCost()*0.8) + "g";
+        String text = "Gold Worth: " + (int) (getTowerCost() * 0.8) + "g";
         int w = g.getFontMetrics().stringWidth(text);
         g.drawString(text, 1408 - (w / 2), 960);
         g.setFont(new Font("Serif", Font.BOLD, 28));
@@ -80,12 +85,12 @@ public class ActionBar extends Bar {
         g.drawString(text, 1408 - (w / 2), 923);
     }
 
-    public static void Pause(){
-        paused=true;
+    public static void Pause() {
+        paused = true;
     }
 
     public static void unpouse() {
-        paused=false;
+        paused = false;
     }
 
     public void drawPause(Graphics g) {
@@ -94,7 +99,7 @@ public class ActionBar extends Bar {
         String text = "PAUSED";
         int h = g.getFontMetrics().getHeight();
         int w = g.getFontMetrics().stringWidth(text);
-        g.drawString(text,640-w/2,15+640-h/2);
+        g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
     }
 
     private void drawTowerCost(Graphics g) {
@@ -133,7 +138,7 @@ public class ActionBar extends Bar {
 
     private void drawWaveInfo(Graphics g) {
         g.setFont(new Font("Monospaced", Font.BOLD, 20));
-        drawWaveTimerInfo(g);
+        drawLives(g);
         drawEnemisLeftInfo(g);
         drawWaveLeftInfo(g);
     }
@@ -157,13 +162,11 @@ public class ActionBar extends Bar {
         g.drawString("Waves:" + currentWave + "/" + allWaves, 1285, 1270);
     }
 
-    private void drawWaveTimerInfo(Graphics g) {
-        if (playing.getWaveManager().isWaveTimerStarted()) {
-            g.setColor(new Color(1, 24, 87));
-            float timeLeft = playing.getWaveManager().getTimeLeft();
-            String formattedText = formatter.format(timeLeft);
-            g.drawString("Time Left:" + formattedText, 1285, 1230);
-        }
+    private void drawLives(Graphics g) {
+
+            g.setColor(new Color(171, 0, 0));
+            g.drawString("Time Left:" + lives, 1285, 1230);
+
     }
 
     //256, 1280,
@@ -193,6 +196,12 @@ public class ActionBar extends Bar {
         }
     }
 
+    public static void removeOneLive() {
+        lives--;
+        if (lives <= 0) {
+            gameOver=true;
+        }
+    }
 
     private void drawDisplayedTowerRange(Graphics g) {
         g.setColor(Color.BLACK);
@@ -412,6 +421,10 @@ public class ActionBar extends Bar {
 
     private boolean isEnoughGold(int cost) {
         return gold >= cost;
+    }
+
+    public static int getLives() {
+        return lives;
     }
 
     public void displayTower(Tower t) {

@@ -113,6 +113,7 @@ public class EnemyMenager {
             e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         } else if (isAtEnd(e)) {
             e.kill();
+            playing.removeOneLive();
         } else {
             setNewDirectionAndMove(e);
         }
