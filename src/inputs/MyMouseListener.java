@@ -34,7 +34,20 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                     break;
             }
         }else if (e.getButton() == MouseEvent.BUTTON3){
-
+            switch(GameStates.gameStates){
+                case MENU :
+                   // game.getMenu().mouseClickedR(e.getX(),e.getY());
+                    break;
+                case PLAYING:
+                    game.getPlaying().mouseClickedR();
+                    break;
+                case EDITING:
+                  //  game.getEditing().mouseClickedR(e.getX(),e.getY());
+                    break;
+                case SETTINGS:
+                   // game.getSettings().mouseClickedR(e.getX(),e.getY());
+                    break;
+            }
         }
     }
 
