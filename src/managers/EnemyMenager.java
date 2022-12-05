@@ -28,12 +28,6 @@ public class EnemyMenager {
         this.playing = playing;
         this.start = start;
         this.end = end;
-
-//        addEnemy(ANIMATED_ORK);
-//        addEnemy(ORC);
-//        addEnemy(BALL);
-//        addEnemy(TENTACLE);
-
         loadEnemyImages();
         loadEfectsImages();
     }

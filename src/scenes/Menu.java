@@ -52,14 +52,34 @@ public class Menu extends GameScene implements SceneMethods{
         bQuit = new MyButton("Quit",x,y+(yOffset*3),w,h);
     }
 
+    protected void updateTick() {
+        tick++;
+        if(tick>=ANIMATION_SPEED){
+            tick=0;
+            animationIndex++;
+            if(animationIndex>=30){
+                animationIndex=0;
+            }
+        }
+    }
+
+    public void update() {
+        updateTick();
+    }
+
     @Override
     public void render(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
-                g.drawImage(tileManager.getSprite(id), x * 64, y * 64, null);
+                if (isAnimation(id)) {
+                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
+                } else {
+                    g.drawImage(getSprite(id), x * 64, y * 64, null);
+                }
             }
         }
+
         drawButtons(g);
         //enemyMenager.update();
     }
@@ -148,6 +168,7 @@ public class Menu extends GameScene implements SceneMethods{
             e.printStackTrace();
         }
     }
+
     @Override
     public void mouseDragged(int x, int y) {
 

@@ -41,8 +41,8 @@ public class ProjectileManager {
     }
 
     private void implortExplosion(BufferedImage atlas) {
-        explo_imgs = new BufferedImage[9];
-        for (int i = 0; i < 9; i++) {
+        explo_imgs = new BufferedImage[10];
+        for (int i = 0; i < 10; i++) {
             explo_imgs[i] = atlas.getSubimage(i * 64, 5 * 64, 64, 64);
         }
     }
@@ -97,7 +97,7 @@ public class ProjectileManager {
             }
         }
         for (Explosion e : explosions) {
-            if (e.getIndex() < 9) {
+            if (e.getIndex() < 10) {
                 e.update();
             }
         }
@@ -170,9 +170,9 @@ public class ProjectileManager {
 
     private void drawExplosions(Graphics2D g2d) {
         for (Explosion e : explosions) {
-            if (e.getIndex() < 9) {
+            if (e.getIndex() < 10) {
                 g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
-            }//else if (e.getIndex() == 9){ aoeExplosionsdamageSet =false; }
+            }//else if (e.getIndex() == 10){ aoeExplosionsdamageSet =false; }
         }
     }
 

@@ -28,7 +28,7 @@ public class TowerManager {
         towerImgs = new BufferedImage[4];
         towerImgs[0] = atlas.getSubimage(7 * 64, 2 * 64, 64, 64);
         towerImgs[1] = atlas.getSubimage(8 * 64, 2 * 64, 64, 64);
-        towerImgs[2] = atlas.getSubimage(9 * 64, 1 * 64, 64, 64);
+        towerImgs[2] = atlas.getSubimage(0 * 64, 7 * 64, 64, 64);
         towerImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
     }
 

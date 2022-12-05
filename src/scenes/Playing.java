@@ -34,7 +34,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int passiveIncomGold = 5;
     private int goldTickLimit = 60 * 13;
     private int goldTick = 0;
-    private boolean paused, gameOver;
+    private boolean paused, gameOver,startOfGame=true;
 
     public Playing(Game game) {
         super(game);
@@ -55,6 +55,9 @@ public class Playing extends GameScene implements SceneMethods {
             if (!paused) {
                 updateTick();
                 getWaveManager().update();
+                if(startOfGame) {
+                    waveManager.startWaveTimer();
+                }
 
 
                 //passiveIncom
@@ -323,7 +326,8 @@ public class Playing extends GameScene implements SceneMethods {
 
         mouseX=0;
         mouseY=0;
-
+        gameOver=false;
+        startOfGame=true;
         selectedTower=null;
         goldTick=0;
         paused=false;

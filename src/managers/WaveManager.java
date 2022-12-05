@@ -44,17 +44,6 @@ public class WaveManager {
         enemyIndex = 0;
     }
 
-//    public void reset() {
-//        waves.clear();
-//        createWaves();
-//        enemyIndex = 0;
-//        waveIndex = 0;
-//        waveStartTimer = false;
-//        waveTickTimerOver = false;
-//        waveTick = 0;
-//        enemySpawnTick = enemySpawnTickLimit;
-//    }
-
     public void increaseWaveIndex() {
         waveIndex++;
         waveTick =0;
@@ -66,6 +55,8 @@ public class WaveManager {
     public boolean isWaveTimerOver() {
         return waveTickTimerOver;
     }
+
+
 
     public void startWaveTimer() {
         waveStartTimer = true;
@@ -106,15 +97,6 @@ public class WaveManager {
 
     public boolean isThereMoreWaves() {
         return waveIndex + 1 < waves.size();
-    }
-
-    public float getTimeLeft() {
-        float TimeLeft = waveTickLimit - waveTick;
-        return TimeLeft / 60;
-    }
-
-    public boolean isWaveTimerStarted() {
-        return waveStartTimer;
     }
 
     public void reset(){
