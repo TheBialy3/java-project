@@ -73,7 +73,14 @@ public class ProjectileManager {
             if (xDist > 0)
                 rotate += 180;
         }
-
+        for(Projectile p:projectiles){
+            if(!p.isActive()){
+                if (p.getProjectileType()==type){
+                    p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
+                    return;
+                }
+            }
+        }
         projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
 
     }
