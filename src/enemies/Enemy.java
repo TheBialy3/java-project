@@ -132,4 +132,8 @@ public abstract class Enemy {
 
         return  slowTick < slowTickLimit;
     }
+
+    public void setLastDir(int newDir) {
+        this.lastDir = newDir;
+    }
 }

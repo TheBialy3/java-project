@@ -33,7 +33,7 @@ public class Menu extends GameScene implements SceneMethods{
         tileManager = new TileManager();
          start =new PathPoint(1,10);
          end = new PathPoint(19,10);
-        enemyMenager = new EnemyMenager(game.getPlaying(), start, end);
+
         importImg();
         loadSprites();
         initButtons();

@@ -26,7 +26,7 @@ public class Projectile {
         this.speedy = speedy;
         this.dmg = dmg;
         this.rotation = rotation;
-
+        this.active=true;
     }
 
     public void move() {
