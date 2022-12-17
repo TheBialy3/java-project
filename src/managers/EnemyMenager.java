@@ -30,12 +30,9 @@ public class EnemyMenager {
         this.playing = playing;
         this.start = start;
         this.end = end;
-
         loadEnemyImages();
         loadEfectsImages();
         loadRoadDirArr();
-
-
     }
 
 
@@ -301,5 +298,9 @@ public class EnemyMenager {
 
     public void reset(){
         enemies.clear();
+    }
+
+    public int[][] getRoadDirArr(){
+        return roadDirArr;
     }
 }

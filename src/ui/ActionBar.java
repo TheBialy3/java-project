@@ -1,12 +1,15 @@
 package ui;
 
+
 import helpz.Constants;
-import objects.Tower;
+import towers.*;
 
 import scenes.Playing;
 
 import java.awt.*;
 
+
+import static helpz.Constants.TowerType.*;
 import static main.GameStates.*;
 
 public class ActionBar extends Bar {
@@ -20,7 +23,7 @@ public class ActionBar extends Bar {
 
     private int gold = 300;
     private boolean showTowerCost;
-    private static boolean paused;
+
     private int towerCostId;
 
 
@@ -63,9 +66,7 @@ public class ActionBar extends Bar {
         if (bSell.isMouseOver()) {
             drawTowerSellCost(g);
         }
-        if (paused) {
-            drawPause(g);
-        }
+
 
 
     }
@@ -86,22 +87,9 @@ public class ActionBar extends Bar {
         g.drawString(text, 1408 - (w / 2), 923);
     }
 
-    public static void Pause() {
-        paused = true;
-    }
 
-    public static void unpouse() {
-        paused = false;
-    }
 
-    public void drawPause(Graphics g) {
-        g.setColor(new Color(171, 0, 0));
-        g.setFont(new Font("Serif", Font.BOLD, 50));
-        String text = "PAUSED";
-        int h = g.getFontMetrics().getHeight();
-        int w = g.getFontMetrics().stringWidth(text);
-        g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
-    }
+
 
     private void drawTowerCost(Graphics g) {
         if (getTowerCost(towerCostId) > gold) {
@@ -121,8 +109,6 @@ public class ActionBar extends Bar {
         text = getTowerName(towerCostId);
         w = g.getFontMetrics().stringWidth(text);
         g.drawString(text, 1408 - (w / 2), 923);
-
-
     }
 
     private int getTowerCost(int towerCostId) {
@@ -256,7 +242,7 @@ public class ActionBar extends Bar {
             String text = "Cost: " + getTowerCost() + "g";
             g.drawString(text, 794, 1022);
             g.setFont(new Font("Serif", Font.BOLD, 28));
-            text = getTowerName(towerCostId);
+            text = Constants.TowerType.GetName(displayedTower.getTowerType());
             g.drawString(text, 794, 1064);
         }
     }
@@ -341,14 +327,64 @@ public class ActionBar extends Bar {
             for (MyButton b : towerButtons) {
                 if (b.getBounds().contains(x, y)) {
                     if (isEnoughGold(Constants.TowerType.GetCost(b.getId()))) {
-                        selectedTower = new Tower(0, 0, -1, b.getId());
+                        switch (b.getId()) {
+                            case ARCHER:
+                                selectedTower =new Archer(x, y, 0, b.getId());
+                                break;
+                            case CANNON:
+                                selectedTower =new Cannon(x, y, 0, b.getId());
+                                break;
+                            case FROST_MAGE:
+                                selectedTower =new FrostMage(x, y, 0, b.getId());
+                                break;
+                            case MINE_FACTORY:
+                                selectedTower =new MineFactory(x, y, 0, b.getId());
+                                break;
+                        }
                         playing.setSelectedTower(selectedTower);
                         return;
                     }
                 }
             }
         }
+    }
 
+    public void mouseDragged(int x, int y) {
+        if (bMenu.getBounds().contains(x, y)) {
+            SetGameState(MENU);
+        } else if (bBestiary.getBounds().contains(x, y)) {
+            SetGameState(MENU);
+        } else {
+            if (displayedTower != null) {
+                if (bSell.getBounds().contains(x, y)) {
+                    sellTowerClicked();
+                } else if (bUpgrate1.getBounds().contains(x, y)) {
+                    upgrade1TowerClicked();
+                }
+            }
+            for (MyButton b : towerButtons) {
+                if (b.getBounds().contains(x, y)) {
+                    if (isEnoughGold(Constants.TowerType.GetCost(b.getId()))) {
+                        switch (b.getId()) {
+                            case ARCHER:
+                                selectedTower =new Archer(x, y, 0, b.getId());
+                                break;
+                            case CANNON:
+                                selectedTower =new Cannon(x, y, 0, b.getId());
+                                break;
+                            case FROST_MAGE:
+                                selectedTower =new FrostMage(x, y, 0, b.getId());
+                                break;
+                            case MINE_FACTORY:
+                                selectedTower =new MineFactory(x, y, 0, b.getId());
+                                break;
+                        }
+                        playing.setSelectedTower(selectedTower);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     public void mouseMoved(int x, int y) {

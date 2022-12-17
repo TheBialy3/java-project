@@ -3,8 +3,9 @@ package managers;
 import enemies.Enemy;
 import helpz.Constants;
 import helpz.LoadSave;
+import objects.PathPoint;
 import objects.Projectile;
-import objects.Tower;
+import towers.Tower;
 import scenes.Playing;
 
 import java.awt.*;
@@ -82,7 +83,43 @@ public class ProjectileManager {
             }
         }
         projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
+    }
 
+    public void newMine(Tower t, PathPoint e) {
+        int type = getProjType(t);
+
+        int xDist = (int) (t.getX() - e.getxCord());
+        int yDist = (int) (t.getY() - e.getyCord());
+        int totDist = Math.abs(xDist) + Math.abs(yDist);
+
+        float xPer = (float) Math.abs(xDist) / totDist;
+
+        float xSpeed = xPer * helpz.Constants.ProjectileType.GetSpeed(type);
+        float ySpeed = helpz.Constants.ProjectileType.GetSpeed(type) - xSpeed;
+
+        if (t.getX() > e.getxCord())
+            xSpeed *= -1;
+        if (t.getY() > e.getyCord())
+            ySpeed *= -1;
+
+        float rotate = 0;
+
+        if (helpz.Constants.ProjectileType.isRorating(type)) {
+            float arcValue = (float) Math.atan(yDist / (float) xDist);
+            rotate = (float) Math.toDegrees(arcValue);
+
+            if (xDist > 0)
+                rotate += 180;
+        }
+        for(Projectile p:projectiles){
+            if(!p.isActive()){
+                if (p.getProjectileType()==type){
+                    p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
+                    return;
+                }
+            }
+        }
+        projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
 
     public void update() {
@@ -94,7 +131,7 @@ public class ProjectileManager {
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
                         explodeOnEnemys(p);
                     }
-                    if (p.getProjectileType() == BOMB) {
+                    if (p.getProjectileType() == BOMB||p.getProjectileType() == MINE) {
                         explosions.add(new Explosion(p.getPos()));
 
                     }

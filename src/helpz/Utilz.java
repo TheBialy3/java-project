@@ -11,6 +11,11 @@ public class Utilz {
 
     public static int[][] GetRoadDirArr(int[][] lvlTypeArr, PathPoint start, PathPoint end) {
         int[][] roadDirArr = new int[lvlTypeArr.length][lvlTypeArr[0].length];
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                roadDirArr[j][i]=-1;
+            }
+        }
 
         PathPoint currTile = start;
         int lastDir = -1;
@@ -57,14 +62,19 @@ public class Utilz {
     }
 
     private static boolean IsTileRoad(PathPoint testTile, int[][] lvlTypeArr) {
-        if (testTile != null)
-            if (testTile.getyCord() >= 0)
-                if (testTile.getyCord() < lvlTypeArr.length)
-                    if (testTile.getxCord() >= 0)
-                        if (testTile.getxCord() < lvlTypeArr[0].length)
-                            if (lvlTypeArr[testTile.getyCord()][testTile.getxCord()] == ROAD_TILE)
+        if (testTile != null) {
+            if (testTile.getyCord() >= 0) {
+                if (testTile.getyCord() < lvlTypeArr.length) {
+                    if (testTile.getxCord() >= 0) {
+                        if (testTile.getxCord() < lvlTypeArr[0].length) {
+                            if (lvlTypeArr[testTile.getyCord()][testTile.getxCord()] == ROAD_TILE) {
                                 return true;
-
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 

@@ -9,7 +9,7 @@ import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
-import objects.Tower;
+import towers.Tower;
 import ui.ActionBar;
 
 import java.awt.*;
@@ -17,7 +17,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
-import static main.GameStates.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -86,17 +85,25 @@ public class Playing extends GameScene implements SceneMethods {
                     gameOver = true;
                 }
             } else {
-                actionBar.Pause();
+
             }
         }
     }
-
 
     private void passiveIncom() {
         goldTick++;
         if (goldTick % goldTickLimit == 0) {
             actionBar.earnGold(passiveIncomGold);
         }
+    }
+
+    public void drawPause(Graphics g) {
+        g.setColor(new Color(171, 0, 0));
+        g.setFont(new Font("Serif", Font.BOLD, 50));
+        String text = "PAUSED";
+        int h = g.getFontMetrics().getHeight();
+        int w = g.getFontMetrics().stringWidth(text);
+        g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
     }
 
 
@@ -152,6 +159,10 @@ public class Playing extends GameScene implements SceneMethods {
 
         drawSelectedTower(g);
         drawHighlight(g);
+
+        if(paused){
+            drawPause(g);
+        }
     }
 
 
@@ -216,7 +227,7 @@ public class Playing extends GameScene implements SceneMethods {
 
             }
         }
-        ActionBar.unpouse();
+
         paused = false;
     }
 
@@ -268,7 +279,7 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void mouseDragged(int x, int y) {
         if (x >= 1280) {
-
+            actionBar.mouseDragged(x, y);
         } else {
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
@@ -305,10 +316,9 @@ public class Playing extends GameScene implements SceneMethods {
         return waveManager;
     }
 
-
     public void mouseClickedR() {
         setSelectedTower(null);
-        actionBar.unpouse();
+
         paused = false;
     }
 
@@ -331,5 +341,13 @@ public class Playing extends GameScene implements SceneMethods {
         selectedTower=null;
         goldTick=0;
         paused=false;
+    }
+
+    public void setMine(Tower t, PathPoint e) {
+        projectileManager.newMine(t, e);
+    }
+
+    public int[][] getRoadDirArr(){
+        return enemyMenager.getRoadDirArr();
     }
 }

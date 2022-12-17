@@ -1,8 +1,8 @@
-package objects;
+package towers;
 
 import helpz.Constants;
 
-public class Tower {
+public abstract class Tower {
 
     private int x, y, id, towerType, cdTick, dmg, worthGold;
     private float range, cooldown;
