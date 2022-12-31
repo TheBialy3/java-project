@@ -33,6 +33,7 @@ public class Game extends JFrame implements Runnable {
         add(gameScreen);
         pack();
         setVisible(true);
+
     }
 
     private void createDefoultLevel() {

@@ -12,17 +12,20 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static helpz.Constants.ProjectileType.*;
 import static helpz.Constants.TowerType.*;
 
 public class ProjectileManager {
 
+    private Random random= new Random();
+
     private Playing playing;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs;
-    private int proj_id = 0;
+    private int proj_id = 0,ranx,rany;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -74,9 +77,9 @@ public class ProjectileManager {
             if (xDist > 0)
                 rotate += 180;
         }
-        for(Projectile p:projectiles){
-            if(!p.isActive()){
-                if (p.getProjectileType()==type){
+        for (Projectile p : projectiles) {
+            if (!p.isActive()) {
+                if (p.getProjectileType() == type) {
                     p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
                     return;
                 }
@@ -87,39 +90,9 @@ public class ProjectileManager {
 
     public void newMine(Tower t, PathPoint e) {
         int type = getProjType(t);
-
-        int xDist = (int) (t.getX() - e.getxCord());
-        int yDist = (int) (t.getY() - e.getyCord());
-        int totDist = Math.abs(xDist) + Math.abs(yDist);
-
-        float xPer = (float) Math.abs(xDist) / totDist;
-
-        float xSpeed = xPer * helpz.Constants.ProjectileType.GetSpeed(type);
-        float ySpeed = helpz.Constants.ProjectileType.GetSpeed(type) - xSpeed;
-
-        if (t.getX() > e.getxCord())
-            xSpeed *= -1;
-        if (t.getY() > e.getyCord())
-            ySpeed *= -1;
-
-        float rotate = 0;
-
-        if (helpz.Constants.ProjectileType.isRorating(type)) {
-            float arcValue = (float) Math.atan(yDist / (float) xDist);
-            rotate = (float) Math.toDegrees(arcValue);
-
-            if (xDist > 0)
-                rotate += 180;
-        }
-        for(Projectile p:projectiles){
-            if(!p.isActive()){
-                if (p.getProjectileType()==type){
-                    p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
-                    return;
-                }
-            }
-        }
-        projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
+        ranx = random.nextInt(44);
+        rany = random.nextInt(44);
+        projectiles.add(new Projectile(e.getxCord() +10+ ranx, e.getyCord() +10+ rany, 0, 0, t.getDmg(), 0, proj_id++, type));
     }
 
     public void update() {
@@ -131,12 +104,12 @@ public class ProjectileManager {
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
                         explodeOnEnemys(p);
                     }
-                    if (p.getProjectileType() == BOMB||p.getProjectileType() == MINE) {
+                    if (p.getProjectileType() == BOMB || p.getProjectileType() == MINE) {
                         explosions.add(new Explosion(p.getPos()));
 
                     }
                 }
-            }else if (isProjOutOfBounds(p)) {
+            } else if (isProjOutOfBounds(p)) {
                 p.setActive(false);
             }
         }
@@ -148,10 +121,10 @@ public class ProjectileManager {
     }
 
     private boolean isProjOutOfBounds(Projectile p) {
-        if (p.getPos().x <=0) {
-            if (p.getPos().x >=1280) {
-                if (p.getPos().y <=0) {
-                    if (p.getPos().y >=1280) {
+        if (p.getPos().x <= 0) {
+            if (p.getPos().x >= 1280) {
+                if (p.getPos().y <= 0) {
+                    if (p.getPos().y >= 1280) {
                         return false;
                     }
                 }
@@ -195,7 +168,6 @@ public class ProjectileManager {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
         for (Projectile p : projectiles)
             if (p.isActive()) {
                 if (helpz.Constants.ProjectileType.isRorating(p.getProjectileType())) {
@@ -209,7 +181,6 @@ public class ProjectileManager {
                 }
             }
         drawExplosions(g2d);
-
     }
 
     private void drawExplosions(Graphics2D g2d) {
@@ -232,6 +203,10 @@ public class ProjectileManager {
                 return MINE;
         }
         return 0;
+    }
+
+    public void endOfWave() {
+        projectiles.clear();
     }
 
     public class Explosion {
@@ -260,10 +235,10 @@ public class ProjectileManager {
         }
     }
 
-    public void reset(){
+    public void reset() {
         projectiles.clear();
         explosions.clear();
-        proj_id=0;
+        proj_id = 0;
     }
 }
 

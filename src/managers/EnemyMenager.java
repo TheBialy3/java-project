@@ -30,9 +30,10 @@ public class EnemyMenager {
         this.playing = playing;
         this.start = start;
         this.end = end;
+        loadRoadDirArr();
         loadEnemyImages();
         loadEfectsImages();
-        loadRoadDirArr();
+
     }
 
 

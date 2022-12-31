@@ -81,7 +81,7 @@ public class Constants {
                 case FROST_BEEM:
                     return true;
                 case MINE:
-                    return true;
+                    return false;
             }
             return false;
         }
@@ -91,8 +91,6 @@ public class Constants {
                 switch (projectileType) {
                     case FROST_BEEM:
                         return 0.5f;
-                    case MINE:
-                        return 0.8f;
                 }
             }
             return 1f;
@@ -191,7 +189,7 @@ public class Constants {
                 case FROST_MAGE:
                     return 40;
                 case MINE_FACTORY:
-                    return 100;
+                    return 22;
             }
             return 0;
         }
@@ -205,7 +203,7 @@ public class Constants {
                 case FROST_MAGE:
                     return 300;
                 case MINE_FACTORY:
-                    return 500;
+                    return 96;
             }
             return 0;
         }
@@ -220,6 +218,37 @@ public class Constants {
                     return 1;
                 case MINE_FACTORY:
                     return 10;
+            }
+            return 0;
+        }
+    }
+
+    public static class Upgrades {
+        public static final int ONE1 = 0;
+        public static final int ONE2 = 1;
+        public static final int ONE3 = 2;
+        // public static final int ELSE = 3;
+
+        public static int GetCost(int upgrade) {
+            switch (upgrade) {
+                case ONE1:
+                    return 100;
+                case ONE2:
+                    return 150;
+                case ONE3:
+                    return 125;
+            }
+            return 0;
+        }
+
+        public static int GetBuff(int upgrade) {
+            switch (upgrade) {
+                case ONE1:
+                    return 100;
+                case ONE2:
+                    return 150;
+                case ONE3:
+                    return 125;
             }
             return 0;
         }

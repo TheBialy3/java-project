@@ -12,7 +12,7 @@ public class WaveManager {
 
     private Playing playing;
     private ArrayList<Wave> waves = new ArrayList<>();
-
+    private ProjectileManager projectileManager;
     private int enemySpownTickLimit = 60 * 1;
     private int enemySpownTick = enemySpownTickLimit;
     private int enemyIndex, waveIndex;
@@ -23,6 +23,7 @@ public class WaveManager {
     public WaveManager(Playing playing) {
         this.playing = playing;
         createWaves();
+        this.projectileManager=playing.getProjectileManager();
     }
 
     public void update() {
@@ -50,6 +51,7 @@ public class WaveManager {
         waveStartTimer = false;
         waveTickTimerOver = false;
         playing.rewardPlayerAfterWave();
+        projectileManager.endOfWave();
     }
 
     public boolean isWaveTimerOver() {

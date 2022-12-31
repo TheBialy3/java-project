@@ -17,16 +17,29 @@ import static helpz.Constants.TowerType.MINE_FACTORY;
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImgs;
+    private BufferedImage[] towerImgs,upgradeImgs;
+
     private ArrayList<Tower> towers = new ArrayList<>();
-    private int towerAmount = 0;
-    private Random rand;
+    private ArrayList<Integer> arr = new ArrayList<>();
+    private int towerAmount = 0, ran;
+    private Random random = new Random();
+    private PathPoint e;
     private int[][] road;
+
 
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
+        loadUpgradeImgs();
+    }
 
+    private void loadUpgradeImgs() {
+        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        upgradeImgs = new BufferedImage[3];
+        upgradeImgs[0] = atlas.getSubimage(9 * 64, 0 * 64, 64, 64);
+        upgradeImgs[1] = atlas.getSubimage(9 * 64, 1 * 64, 64, 64);
+        upgradeImgs[2] = atlas.getSubimage(9 * 64, 2 * 64, 64, 64);
+        //upgradeImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
     }
 
     private void loadTowerImages() {
@@ -36,27 +49,23 @@ public class TowerManager {
         towerImgs[1] = atlas.getSubimage(8 * 64, 2 * 64, 64, 64);
         towerImgs[2] = atlas.getSubimage(0 * 64, 7 * 64, 64, 64);
         towerImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
-        road=playing.getRoadDirArr();
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                System.out.print(road[i][j]);
-            }System.out.println();
-        }
+        road = playing.getRoadDirArr();
     }
 
     public void addTower(Tower selectedTower, int x, int y) {
         switch (selectedTower.getTowerType()) {
             case ARCHER:
-                towers.add(new Archer(x, y, towerAmount++, ARCHER));
+                towers.add(new Archer(x, y, towerAmount++, ARCHER, road));
                 break;
             case CANNON:
-                towers.add(new Cannon(x, y, towerAmount++,CANNON));
+                towers.add(new Cannon(x, y, towerAmount++, CANNON, road));
                 break;
             case FROST_MAGE:
-                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE));
+                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, road));
                 break;
             case MINE_FACTORY:
-                towers.add(new MineFactory(x, y, towerAmount++, MINE_FACTORY));
+                towers.add(new MineFactory(x, y, towerAmount++, MINE_FACTORY, road));
+                towers.get(towerAmount - 1).isRoadNextTot();
                 break;
         }
     }
@@ -72,7 +81,7 @@ public class TowerManager {
     public void update() {
         for (Tower t : towers) {
             t.update();
-            if (t.getTowerType() == 3) {
+            if (t.getTowerType() == MINE_FACTORY) {
                 setMine(t);
             } else {
                 attackEnemyIfClose(t);
@@ -96,27 +105,56 @@ public class TowerManager {
     }
 
     private void setMine(Tower t) {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-             //   if(road[i][j])
-               // PathPoint e = new PathPoint(j, i);
-           //     if (isRoadInRange(t, e)) {
-                    if (t.isCooldownOver()) {
-                        int l = rand.nextInt(1000);
-             //           playing.setMine(t, e);
-                        t.resetCooldown();
+        int a = t.arrSize();
+        if (a != 0) {
+            if (!playing.isAllEnemysDead()) {
+                if (t.isCooldownOver()) {
+                    arr = t.getArr();
+                    ran = random.nextInt(a);
+                    switch (arr.get(ran)) {
+                        case 1:
+                            PathPoint a1 = new PathPoint(t.getX() - 64, t.getY() - 64);
+                            e = a1;
+                            break;
+                        case 2:
+                            PathPoint a2 = new PathPoint(t.getX() - 64, t.getY());
+                            e = a2;
+                            break;
+                        case 3:
+                            PathPoint a3 = new PathPoint(t.getX() - 64, t.getY() + 64);
+                            e = a3;
+                            break;
+                        case 4:
+                            PathPoint a4 = new PathPoint(t.getX(), t.getY() - 64);
+                            e = a4;
+                            break;
+                        case 5:
+                            PathPoint a5 = new PathPoint(t.getX(), t.getY() + 64);
+                            e = a5;
+                            break;
+                        case 6:
+                            PathPoint a6 = new PathPoint(t.getX() + 64, t.getY() - 64);
+                            e = a6;
+                            break;
+                        case 7:
+                            PathPoint a7 = new PathPoint(t.getX() + 64, t.getY());
+                            e = a7;
+                            break;
+                        case 8:
+                            PathPoint a8 = new PathPoint(t.getX() + 64, t.getY() + 64);
+                            e = a8;
+                            break;
                     }
-         //       } else {
-                    //nothing
+
+                    playing.setMine(t, e);
+                    t.resetCooldown();
                 }
             }
+        } else {
+            System.out.print(a);
         }
-  //  }
-
-    private boolean isRoadInRange(Tower t, PathPoint p) {
-        int range = helpz.Utilz.GetHypoDistance(t.getX(), t.getY(), p.getxCord(), p.getyCord());
-        return range < t.getRange();
     }
+
 
     private boolean isEnemyInRange(Tower t, Enemy e) {
         int range = helpz.Utilz.GetHypoDistance(t.getX(), t.getY(), e.getX(), e.getY());
@@ -131,6 +169,10 @@ public class TowerManager {
 
     public BufferedImage[] getTowerImgs() {
         return towerImgs;
+    }
+
+    public BufferedImage[] getUpgradeImgs() {
+        return upgradeImgs;
     }
 
     public Tower getTowerAt(int x, int y) {
@@ -148,5 +190,6 @@ public class TowerManager {
         towers.clear();
         towerAmount = 0;
     }
+
 
 }

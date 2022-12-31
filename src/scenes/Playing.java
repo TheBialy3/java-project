@@ -9,6 +9,7 @@ import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
+
 import towers.Tower;
 import ui.ActionBar;
 
@@ -17,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
+import static helpz.Constants.TowerType.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -33,7 +35,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int passiveIncomGold = 5;
     private int goldTickLimit = 60 * 13;
     private int goldTick = 0;
-    private boolean paused, gameOver,startOfGame=true;
+    private boolean paused, gameOver, startOfGame = true;
 
     public Playing(Game game) {
         super(game);
@@ -54,7 +56,7 @@ public class Playing extends GameScene implements SceneMethods {
             if (!paused) {
                 updateTick();
                 getWaveManager().update();
-                if(startOfGame) {
+                if (startOfGame) {
                     waveManager.startWaveTimer();
                 }
 
@@ -116,7 +118,7 @@ public class Playing extends GameScene implements SceneMethods {
         return waveManager.isThereMoreWaves();
     }
 
-    private boolean isAllEnemysDead() {
+    public boolean isAllEnemysDead() {
         if (waveManager.isTherMoreEnemysInWave()) {
             return false;
         }
@@ -160,7 +162,7 @@ public class Playing extends GameScene implements SceneMethods {
         drawSelectedTower(g);
         drawHighlight(g);
 
-        if(paused){
+        if (paused) {
             drawPause(g);
         }
     }
@@ -173,7 +175,9 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void drawSelectedTower(Graphics g) {
         if (selectedTower != null) {
-            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+             
+                g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+
         }
     }
 
@@ -215,6 +219,7 @@ public class Playing extends GameScene implements SceneMethods {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
                         actionBar.goldSpend(Constants.TowerType.GetCost(selectedTower.getTowerType()));
+
                         selectedTower = null;
 
 
@@ -334,20 +339,24 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager.reset();
         waveManager.reset();
 
-        mouseX=0;
-        mouseY=0;
-        gameOver=false;
-        startOfGame=true;
-        selectedTower=null;
-        goldTick=0;
-        paused=false;
+        mouseX = 0;
+        mouseY = 0;
+        gameOver = false;
+        startOfGame = true;
+        selectedTower = null;
+        goldTick = 0;
+        paused = false;
     }
 
     public void setMine(Tower t, PathPoint e) {
         projectileManager.newMine(t, e);
     }
 
-    public int[][] getRoadDirArr(){
+    public ProjectileManager getProjectileManager() {
+        return projectileManager;
+    }
+
+    public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
     }
 }
