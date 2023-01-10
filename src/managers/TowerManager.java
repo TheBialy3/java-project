@@ -78,6 +78,8 @@ public class TowerManager {
         }
     }
 
+
+
     public void update() {
         for (Tower t : towers) {
             t.update();

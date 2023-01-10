@@ -189,7 +189,7 @@ public class Constants {
                 case FROST_MAGE:
                     return 40;
                 case MINE_FACTORY:
-                    return 22;
+                    return 100;
             }
             return 0;
         }
@@ -236,21 +236,21 @@ public class Constants {
                 case ONE2:
                     return 150;
                 case ONE3:
-                    return 125;
+                    return 200;
             }
             return 0;
         }
 
-        public static int GetBuff(int upgrade) {
+        public static String GetName(int upgrade) {
             switch (upgrade) {
                 case ONE1:
-                    return 100;
+                    return "Atack speed +";
                 case ONE2:
-                    return 150;
+                    return "Atack damage +";
                 case ONE3:
-                    return 125;
+                    return "Bonus";
             }
-            return 0;
+            return "";
         }
     }
 

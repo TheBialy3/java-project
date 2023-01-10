@@ -10,7 +10,7 @@ import managers.TowerManager;
 import managers.WaveManager;
 import objects.PathPoint;
 
-import towers.Tower;
+import towers.*;
 import ui.ActionBar;
 
 import java.awt.*;
@@ -18,7 +18,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
-import static helpz.Constants.TowerType.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -175,8 +174,8 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void drawSelectedTower(Graphics g) {
         if (selectedTower != null) {
-             
-                g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+
+            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
 
         }
     }
@@ -358,5 +357,41 @@ public class Playing extends GameScene implements SceneMethods {
 
     public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
+    }
+
+    public void upgrate1(Tower displayedTower) {
+        if(displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrate1();
+        }else if(displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrate1();
+        }else if(displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrate1();
+        }else if(displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrate1();
+        }
+    }
+
+    public void upgrate2(Tower displayedTower) {
+        if(displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrate2();
+        }else if(displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrate2();
+        }else if(displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrate2();
+        }else if(displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrate2();
+        }
+    }
+
+    public void upgrate3(Tower displayedTower) {
+        if(displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrate3();
+        }else if(displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrate3();
+        }else if(displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrate3();
+        }else if(displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrate3();
+        }
     }
 }

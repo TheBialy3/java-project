@@ -14,10 +14,15 @@ public class MineFactory extends Tower {
 
     }
 
-//    public boolean isRoadInRange(Tower t, PathPoint p) {
-//        int range = helpz.Utilz.GetHypoDistance(t.getX(), t.getY(), p.getxCord(), p.getyCord());
-//        return range < t.getRange();
-//    }
+    public void upgrate1() {
+        this.setCooldown(50);
+    }
 
+    public void upgrate2() {
+        this.addDmg(10);
+    }
 
+    public void upgrate3() {
+        //   this.addDmg(10);
+    }
 }

@@ -21,10 +21,7 @@ public abstract class Tower {
         setDefaultCooldown();
         this.worthGold = Constants.TowerType.GetCost(towerType);
         this.road = road;
-
     }
-
-
 
     public void update() {
         cdTick++;
@@ -132,10 +129,6 @@ public abstract class Tower {
         return dmg;
     }
 
-    public void setDmg(int dmg) {
-        this.dmg = dmg;
-    }
-
     public float getRange() {
         return range;
     }
@@ -144,4 +137,11 @@ public abstract class Tower {
         return cooldown;
     }
 
+    public void setCooldown(float cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public void addDmg(int dmg) {
+        this.dmg =+ dmg;
+    }
 }
