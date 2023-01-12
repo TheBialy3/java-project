@@ -23,7 +23,7 @@ public class ActionBar extends Bar {
     private Tower displayedTower;
     private String textUp1, textUp2, textUp3;
 
-    private int gold = 3100, costUp1, costUp2, costUp3;
+    private int gold = 300, costUp1, costUp2, costUp3;
     private boolean showTowerCost;
 
     private int towerCostId;
