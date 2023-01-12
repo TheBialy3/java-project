@@ -10,6 +10,7 @@ public abstract class Tower {
     private float range, cooldown;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
+    private boolean U1 = false, U2 = false, U3 = false;
 
     public Tower(int x, int y, int id, int towerType, int[][] road) {
         this.x = x;
@@ -19,7 +20,7 @@ public abstract class Tower {
         setDefaultDmg();
         setDefaultRange();
         setDefaultCooldown();
-        this.worthGold = Constants.TowerType.GetCost(towerType);
+        this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
     }
 
@@ -44,15 +45,15 @@ public abstract class Tower {
     }
 
     private void setDefaultCooldown() {
-        cooldown = Constants.TowerType.GetDefaultCooldown(towerType);
+        cooldown = Constants.TowerType.getDefaultCooldown(towerType);
     }
 
     private void setDefaultRange() {
-        range = Constants.TowerType.GetDefaultRange(towerType);
+        range = Constants.TowerType.getDefaultRange(towerType);
     }
 
     private void setDefaultDmg() {
-        dmg = Constants.TowerType.GetDefaultDmg(towerType);
+        dmg = Constants.TowerType.getDefaultDmg(towerType);
     }
 
     public int getX() {
@@ -137,11 +138,40 @@ public abstract class Tower {
         return cooldown;
     }
 
-    public void setCooldown(float cooldown) {
-        this.cooldown = cooldown;
+    public void reduceCooldown(float cooldown) {
+        this.cooldown -= cooldown;
+        System.out.println(this.cooldown);
+    }
+
+    public void addRange(float range) {
+        this.range += range;
     }
 
     public void addDmg(int dmg) {
-        this.dmg =+ dmg;
+        this.dmg += dmg;
+    }
+
+    public boolean isUpgrade1Active() {
+        return U1;
+    }
+
+    public boolean isUpgrade2Active() {
+        return U2;
+    }
+
+    public boolean isUpgrade3Active() {
+        return U3;
+    }
+
+    public void Upgrade1Activate() {
+        U1 = true;
+    }
+
+    public void Upgrade2Activate() {
+        U2 = true;
+    }
+
+    public void Upgrade3Activate() {
+        U3 = true;
     }
 }

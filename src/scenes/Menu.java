@@ -90,8 +90,8 @@ public class Menu extends GameScene implements SceneMethods{
             SetGameState(PLAYING);
         }else if (bEditing.getBounds().contains(x,y)){
             SetGameState(EDITING);
-        }else if (bSettings.getBounds().contains(x,y)){
-            SetGameState(SETTINGS);
+//        }else if (bSettings.getBounds().contains(x,y)){
+//            SetGameState(SETTINGS);
         }else if (bQuit.getBounds().contains(x,y)){
             System.exit(0);
         }
@@ -107,10 +107,10 @@ public class Menu extends GameScene implements SceneMethods{
         if (bEditing.getBounds().contains(x,y)){
             bEditing.setMouseOver(true);
         }
-        bSettings.setMouseOver(false);
-        if (bSettings.getBounds().contains(x,y)){
-            bSettings.setMouseOver(true);
-        }
+//        bSettings.setMouseOver(false);
+//        if (bSettings.getBounds().contains(x,y)){
+//            bSettings.setMouseOver(true);
+//        }
         bQuit.setMouseOver(false);
         if (bQuit.getBounds().contains(x,y)){
             bQuit.setMouseOver(true);
@@ -125,7 +125,7 @@ public class Menu extends GameScene implements SceneMethods{
     private void resetButtons() {
         bPlaing.resetBooleans();
         bEditing.resetBooleans();
-        bSettings.resetBooleans();
+//        bSettings.resetBooleans();
         bQuit.resetBooleans();
     }
 
@@ -137,9 +137,9 @@ public class Menu extends GameScene implements SceneMethods{
         else if (bEditing.getBounds().contains(x,y)){
             bEditing.setMousePressed(true);
         }
-        else if (bSettings.getBounds().contains(x,y)){
-            bSettings.setMousePressed(true);
-        }
+//        else if (bSettings.getBounds().contains(x,y)){
+//            bSettings.setMousePressed(true);
+//        }
         else if (bQuit.getBounds().contains(x,y)){
             bQuit.setMousePressed(true);
         }
@@ -148,7 +148,7 @@ public class Menu extends GameScene implements SceneMethods{
     private void drawButtons(Graphics g) {
         bPlaing.draw(g);
         bEditing.draw(g);
-        bSettings.draw(g);
+//        bSettings.draw(g);
         bQuit.draw(g);
     }
 

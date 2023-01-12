@@ -110,7 +110,7 @@ public class EnemyMenager {
         PathPoint currTile = getEnemyTile(e);
         int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
 
-        e.move(GetSpeed(e.getEnemyType()), dir);
+        e.move(getSpeed(e.getEnemyType()), dir);
 
         PathPoint newTile = getEnemyTile(e);
 
@@ -161,7 +161,7 @@ public class EnemyMenager {
 
         if (getTileType(newX, newY) == ROAD_TILE) {
             //keep moving
-            e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
+            e.move(getSpeed(e.getEnemyType()), e.getLastDir());
         } else if (isAtEnd(e)) {
             e.kill();
             playing.removeOneLive();
@@ -186,16 +186,16 @@ public class EnemyMenager {
         if (dir == LEFT || dir == RIGHT) {
             int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
             if (getTileType((int) e.getX(), newY) == ROAD_TILE) {
-                e.move(GetSpeed(e.getEnemyType()), UP);
+                e.move(getSpeed(e.getEnemyType()), UP);
             } else {
-                e.move(GetSpeed(e.getEnemyType()), DOWN);
+                e.move(getSpeed(e.getEnemyType()), DOWN);
             }
         } else {
             int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
             if (getTileType(newX, (int) e.getY()) == ROAD_TILE) {
-                e.move(GetSpeed(e.getEnemyType()), RIGHT);
+                e.move(getSpeed(e.getEnemyType()), RIGHT);
             } else {
-                e.move(GetSpeed(e.getEnemyType()), LEFT);
+                e.move(getSpeed(e.getEnemyType()), LEFT);
             }
         }
     }
@@ -234,9 +234,9 @@ public class EnemyMenager {
 
     private float getSpeedAndWidth(int dir, int enemyType) {
         if (dir == LEFT) {
-            return -GetSpeed(enemyType);
+            return -getSpeed(enemyType);
         } else if (dir == RIGHT) {
-            return GetSpeed(enemyType) + 64;
+            return getSpeed(enemyType) + 64;
         }
 
         return 0;
@@ -244,9 +244,9 @@ public class EnemyMenager {
 
     private float getSpeedAndHeight(int dir, int enemyType) {
         if (dir == UP) {
-            return -GetSpeed(enemyType);
+            return -getSpeed(enemyType);
         } else if (dir == DOWN) {
-            return GetSpeed(enemyType) + 64;
+            return getSpeed(enemyType) + 64;
         }
         return 0;
     }

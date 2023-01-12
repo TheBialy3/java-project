@@ -10,23 +10,23 @@ import java.awt.*;
 
 
 import static helpz.Constants.TowerType.*;
-import static helpz.Constants.Upgrades.*;
+
 import static main.GameStates.*;
 
 public class ActionBar extends Bar {
 
     private Playing playing;
     private MyButton bMenu, bBestiary;
-    private MyButton bUpgrate1, bUpgrate2, bUpgrate3, bSell;
+    private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
     private Tower selectedTower;
     private Tower displayedTower;
+    private String textUp1, textUp2, textUp3;
 
-    private int gold = 300;
-    private boolean showTowerCost, U1 = false, U2 = false, U3 = false;
+    private int gold = 3100, costUp1, costUp2, costUp3;
+    private boolean showTowerCost;
 
     private int towerCostId;
-
 
     private int lives = 5;
 
@@ -35,6 +35,7 @@ public class ActionBar extends Bar {
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
         this.playing = playing;
+
         initButtons();
     }
 
@@ -45,9 +46,6 @@ public class ActionBar extends Bar {
         gold = 300;
         selectedTower = null;
         displayedTower = null;
-        U1 = false;
-        U2 = false;
-        U3 = false;
     }
 
     public void draw(Graphics g) {
@@ -112,11 +110,7 @@ public class ActionBar extends Bar {
     }
 
     private int getTowerCost(int towerCostId) {
-        return Constants.TowerType.GetCost(towerCostId);
-    }
-
-    private int getBuffCost(int upgradeCost) {
-        return Constants.Upgrades.GetCost(upgradeCost);
+        return Constants.TowerType.getCost(towerCostId);
     }
 
     private int getTowerCost() {
@@ -124,7 +118,7 @@ public class ActionBar extends Bar {
     }
 
     private String getTowerName(int towerCostId) {
-        return Constants.TowerType.GetName(towerCostId);
+        return Constants.TowerType.getName(towerCostId);
     }
 
     private void drawWaveInfo(Graphics g) {
@@ -162,34 +156,49 @@ public class ActionBar extends Bar {
 
     //256, 1280,
     private void drawDispalyTower(Graphics g) {
-        if (displayedTower != null) {
+        if (displayedTower != null || showTowerCost) {
             g.setColor(new Color(100, 45, 15));
             g.fillRect(1290, 990, 236, 180);
             g.setColor(Color.black);
+//            if (displayedTower != null){g.drawString("" + displayedTower.getId(), 111, 111);}
             g.drawRect(1301, 1000, 64, 64);
             g.drawRect(1290, 990, 236, 180);
             g.setColor(new Color(45, 45, 45, 109));
             g.fillRect(1301, 1000, 64, 64);
-            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1301, 1000, 64, 64, null);
+            if (displayedTower == null) {
+                g.drawImage(playing.getTowerManager().getTowerImgs()[towerCostId], 1301, 1000, 64, 64, null);
+            } else {
+                g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1301, 1000, 64, 64, null);
+            }
             g.setFont(new Font("Serif", Font.BOLD, 20));
             g.setColor(new Color(15, 15, 15));
-            g.drawString("" + Constants.TowerType.GetName(displayedTower.getTowerType()), 1375, 1018);
-            g.drawString("ID:" + displayedTower.getId(), 1375, 1038);
-
-            bSell.draw(g);
-            if (!isUpgrate3Active()) {
-                bUpgrate1.draw(g);
+            if (displayedTower == null) {
+                g.drawString("" + Constants.TowerType.getName(towerCostId), 1375, 1018);
+                g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
+                g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
+                g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCooldown(towerCostId), 1375, 1078);
+            } else {
+                g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
+                g.drawString("Range:" + displayedTower.getRange(), 1375, 1038);
+                g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
+                g.drawString("AS:" + 60 / displayedTower.getCooldown(), 1375, 1078);
             }
-            if (!isUpgrate3Active()) {
-                bUpgrate2.draw(g);
+            if (displayedTower != null) {
+                bSell.draw(g);
+                if (!displayedTower.isUpgrade1Active()) {
+                    bUpgrade1.draw(g);
+                }
+                if (!displayedTower.isUpgrade2Active()) {
+                    bUpgrade2.draw(g);
+                }
+                if (!displayedTower.isUpgrade3Active()) {
+                    bUpgrade3.draw(g);
+                }
+                drawUpgrade(g);
+                drawDisplayedTower(g);
+                drawDisplayedTowerRange(g);
+                upgradeDescryption(g);
             }
-            if (!isUpgrate3Active()) {
-                bUpgrate3.draw(g);
-            }
-            drawUpgrade(g);
-            drawDisplayedTower(g);
-            drawDisplayedTowerRange(g);
-            upgrate1Descryption(g);
         }
     }
 
@@ -224,7 +233,7 @@ public class ActionBar extends Bar {
         int diff = 84;
 
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
-        bBestiary = new MyButton("Bestiary", 1417, 10, 108, 40);
+        bBestiary = new MyButton("Reset", 1417, 10, 108, 40);
 
         towerButtons = new MyButton[4];
 
@@ -235,15 +244,14 @@ public class ActionBar extends Bar {
         }
 
         bSell = new MyButton("Sell ", 1401, 1180, 125, 27);
-//+ Constants.TowerType.GetCost(displayedTower.getTowerType())
-        bUpgrate1 = new MyButton("", 1301, 1095, 64, 64);
-        bUpgrate2 = new MyButton("", 1376, 1095, 64, 64);
-        bUpgrate3 = new MyButton("", 1451, 1095, 64, 64);
+        bUpgrade1 = new MyButton("", 1301, 1095, 64, 64);
+        bUpgrade2 = new MyButton("", 1376, 1095, 64, 64);
+        bUpgrade3 = new MyButton("", 1451, 1095, 64, 64);
 
     }
 
-    public void upgrate1Descryption(Graphics g) {
-        if (bUpgrate1.isMouseOver() || bUpgrate2.isMouseOver() || bUpgrate3.isMouseOver()) {
+    public void upgradeDescryption(Graphics g) {
+        if (bUpgrade1.isMouseOver() || bUpgrade2.isMouseOver() || bUpgrade3.isMouseOver()) {
             g.setColor(new Color(100, 45, 15));
             g.fillRect(700, 990, 566, 280);
             g.setColor(Color.black);
@@ -254,29 +262,29 @@ public class ActionBar extends Bar {
             g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 710, 1000, 64, 64, null);
             g.setFont(new Font("Serif", Font.BOLD, 30));
             String text;
-            if (bUpgrate1.isMouseOver()) {
-                text = "Cost: " + getBuffCost(0) + "g";
-            } else if (bUpgrate2.isMouseOver()) {
-                text = "Cost: " + getBuffCost(1) + "g";
+            if (bUpgrade1.isMouseOver()) {
+                text = "Cost: " + costUp1 + "g";
+            } else if (bUpgrade2.isMouseOver()) {
+                text = "Cost: " + costUp2 + "g";
             } else {
-                text = "Cost: " + getBuffCost(2) + "g";
+                text = "Cost: " + costUp3 + "g";
             }
             g.drawString(text, 794, 1022);
             g.setFont(new Font("Serif", Font.BOLD, 28));
-            if (bUpgrate1.isMouseOver()) {
-                text = Constants.Upgrades.GetName(0);
-            } else if (bUpgrate2.isMouseOver()) {
-                text = Constants.Upgrades.GetName(1);
+            if (bUpgrade1.isMouseOver()) {
+                g.drawString(textUp1, 794, 1064);
+            } else if (bUpgrade2.isMouseOver()) {
+                g.drawString(textUp2, 794, 1064);
             } else {
-                text = Constants.Upgrades.GetName(2);
+                g.drawString(textUp3, 794, 1064);
             }
-            g.drawString(text, 794, 1064);
+
         }
     }
 
     private void drawUpgrade(Graphics g) {
-        if (!isUpgrate1Active()) {
-            if (getBuffCost(0) > gold) {
+        if (!displayedTower.isUpgrade1Active()) {
+            if (!isEnoughGold(costUp1)) {
                 g.setColor(new Color(171, 0, 0));
             } else {
                 g.setColor(new Color(3, 132, 0));
@@ -284,8 +292,8 @@ public class ActionBar extends Bar {
             g.fillRect(1301, 1095, 64, 64);
             g.drawImage(playing.getTowerManager().getUpgradeImgs()[0], 1301, 1095, 64, 64, null);
         }
-        if (!isUpgrate2Active()) {
-            if (getBuffCost(1) > gold) {
+        if (!displayedTower.isUpgrade2Active()) {
+            if (!isEnoughGold(costUp2)) {
                 g.setColor(new Color(171, 0, 0));
             } else {
                 g.setColor(new Color(3, 132, 0));
@@ -293,8 +301,8 @@ public class ActionBar extends Bar {
             g.fillRect(1376, 1095, 64, 64);
             g.drawImage(playing.getTowerManager().getUpgradeImgs()[1], 1376, 1095, 64, 64, null);
         }
-        if (!isUpgrate3Active()) {
-            if (getBuffCost(2) > gold) {
+        if (!displayedTower.isUpgrade3Active()) {
+            if (!isEnoughGold(costUp3)) {
                 g.setColor(new Color(171, 0, 0));
             } else {
                 g.setColor(new Color(3, 132, 0));
@@ -302,30 +310,6 @@ public class ActionBar extends Bar {
             g.fillRect(1451, 1095, 64, 64);
             g.drawImage(playing.getTowerManager().getUpgradeImgs()[2], 1451, 1095, 64, 64, null);
         }
-    }
-
-    private boolean isUpgrate1Active() {
-        return U1;
-    }
-
-    private boolean isUpgrate2Active() {
-        return U2;
-    }
-
-    private boolean isUpgrate3Active() {
-        return U3;
-    }
-
-    private void Upgrate1Activate() {
-        U1 = true;
-    }
-
-    private void Upgrate2Activate() {
-        U2 = true;
-    }
-
-    private void Upgrate3Activate() {
-        U3 = true;
     }
 
 
@@ -355,18 +339,43 @@ public class ActionBar extends Bar {
     }
 
     private void upgrade1TowerClicked() {
-        Upgrate1Activate();
-        playing.upgrate1(displayedTower);
+        displayedTower.Upgrade1Activate();
+        if (displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrade(1);
+        } else if (displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrade(1);
+        } else if (displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrade(1);
+        } else if (displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrade(1);
+        }
     }
 
     private void upgrade2TowerClicked() {
-        Upgrate2Activate();
-        playing.upgrate2(displayedTower);
+        displayedTower.Upgrade2Activate();
+        if (displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrade(2);
+        } else if (displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrade(2);
+        } else if (displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrade(2);
+        } else if (displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrade(2);
+        }
     }
 
     private void upgrade3TowerClicked() {
-        Upgrate3Activate();
-        playing.upgrate3(displayedTower);
+        displayedTower.Upgrade3Activate();
+        if (displayedTower instanceof Archer) {
+            ((Archer) displayedTower).upgrade(3);
+        } else if (displayedTower instanceof Cannon) {
+            ((Cannon) displayedTower).upgrade(3);
+        } else if (displayedTower instanceof FrostMage) {
+            ((FrostMage) displayedTower).upgrade(3);
+        } else if (displayedTower instanceof MineFactory) {
+            ((MineFactory) displayedTower).upgrade(3);
+        }
+
     }
 
     public void mouseClicked(int x, int y) {
@@ -374,83 +383,114 @@ public class ActionBar extends Bar {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
         } else if (bBestiary.getBounds().contains(x, y)) {
-            SetGameState(MENU);
+            playing.resetEvrything();
         } else {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {
                     sellTowerClicked();
-                } if (isEnoughGold(Constants.Upgrades.GetCost(ONE1))) { if (bUpgrate1.getBounds().contains(x, y)) {
-                    upgrade1TowerClicked();
-                }} if (isEnoughGold(Constants.Upgrades.GetCost(ONE2))) { if (bUpgrate2.getBounds().contains(x, y)) {
-                    upgrade2TowerClicked();
-                }}if (isEnoughGold(Constants.Upgrades.GetCost(ONE3))) {  if (bUpgrate3.getBounds().contains(x, y)) {
-                    upgrade3TowerClicked();
-                }}
-            }
-            for (MyButton b : towerButtons) {
-                if (b.getBounds().contains(x, y)) {
-                    if (isEnoughGold(Constants.TowerType.GetCost(b.getId()))) {
-                        switch (b.getId()) {
-                            case ARCHER:
-                                selectedTower = new Archer(x, y, 0, b.getId(), road);
-                                break;
-                            case CANNON:
-                                selectedTower = new Cannon(x, y, 0, b.getId(), road);
-                                break;
-                            case FROST_MAGE:
-                                selectedTower = new FrostMage(x, y, 0, b.getId(), road);
-                                break;
-                            case MINE_FACTORY:
-                                road = playing.getRoadDirArr();
-                                selectedTower = new MineFactory(x, y, 0, b.getId(), road);
-                                break;
-                        }
-                        playing.setSelectedTower(selectedTower);
-                        return;
+                }
+                if (bUpgrade1.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp1)) {
+                        upgrade1TowerClicked();
+                        goldSpend(costUp1);
+                        displayedTower.updateTowerWorthGold(costUp1);
                     }
+                }
+                if (bUpgrade2.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp2)) {
+                        upgrade2TowerClicked();
+                        goldSpend(costUp2);
+                        displayedTower.updateTowerWorthGold(costUp2);
+                    }
+                }
+                if (bUpgrade3.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp3)) {
+                        upgrade3TowerClicked();
+                        goldSpend(costUp3);
+                        displayedTower.updateTowerWorthGold(costUp3);
+                    }
+                }
+            }
+        }
+        for (MyButton b : towerButtons) {
+            if (b.getBounds().contains(x, y)) {
+                if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
+                    switch (b.getId()) {
+                        case ARCHER:
+                            selectedTower = new Archer(x, y, 0, b.getId(), road);
+                            break;
+                        case CANNON:
+                            selectedTower = new Cannon(x, y, 0, b.getId(), road);
+                            break;
+                        case FROST_MAGE:
+                            selectedTower = new FrostMage(x, y, 0, b.getId(), road);
+                            break;
+                        case MINE_FACTORY:
+                            road = playing.getRoadDirArr();
+                            selectedTower = new MineFactory(x, y, 0, b.getId(), road);
+                            break;
+                    }
+                    playing.setSelectedTower(selectedTower);
+                    return;
                 }
             }
         }
     }
 
+
     public void mouseDragged(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
         } else if (bBestiary.getBounds().contains(x, y)) {
-            SetGameState(MENU);
+            playing.resetEvrything();
         } else {
             if (displayedTower != null) {
-
                 if (bSell.getBounds().contains(x, y)) {
                     sellTowerClicked();
-                } if (isEnoughGold(Constants.Upgrades.GetCost(ONE1))) { if (bUpgrate1.getBounds().contains(x, y)) {
-                    upgrade1TowerClicked();
-                }} if (isEnoughGold(Constants.Upgrades.GetCost(ONE2))) { if (bUpgrate2.getBounds().contains(x, y)) {
-                    upgrade2TowerClicked();
-                }}if (isEnoughGold(Constants.Upgrades.GetCost(ONE3))) {  if (bUpgrate3.getBounds().contains(x, y)) {
-                    upgrade3TowerClicked();
-                }}
-            }
-            for (MyButton b : towerButtons) {
-                if (b.getBounds().contains(x, y)) {
-                    if (isEnoughGold(Constants.TowerType.GetCost(b.getId()))) {
-                        switch (b.getId()) {
-                            case ARCHER:
-                                selectedTower = new Archer(x, y, 0, b.getId(), road);
-                                break;
-                            case CANNON:
-                                selectedTower = new Cannon(x, y, 0, b.getId(), road);
-                                break;
-                            case FROST_MAGE:
-                                selectedTower = new FrostMage(x, y, 0, b.getId(), road);
-                                break;
-                            case MINE_FACTORY:
-                                selectedTower = new MineFactory(x, y, 0, b.getId(), road);
-                                break;
-                        }
-                        playing.setSelectedTower(selectedTower);
-                        return;
+                }
+                if (bUpgrade1.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp1)) {
+                        upgrade1TowerClicked();
+                        goldSpend(costUp1);
+                        displayedTower.updateTowerWorthGold(costUp1);
                     }
+                }
+                if (bUpgrade2.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp2)) {
+                        upgrade2TowerClicked();
+                        goldSpend(costUp2);
+                        displayedTower.updateTowerWorthGold(costUp2);
+                    }
+                }
+                if (bUpgrade3.getBounds().contains(x, y)) {
+                    if (isEnoughGold(costUp3)) {
+                        upgrade3TowerClicked();
+                        goldSpend(costUp3);
+                        displayedTower.updateTowerWorthGold(costUp3);
+                    }
+                }
+            }
+        }
+        for (MyButton b : towerButtons) {
+            if (b.getBounds().contains(x, y)) {
+                if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
+                    switch (b.getId()) {
+                        case ARCHER:
+                            selectedTower = new Archer(x, y, 0, b.getId(), road);
+                            break;
+                        case CANNON:
+                            selectedTower = new Cannon(x, y, 0, b.getId(), road);
+                            break;
+                        case FROST_MAGE:
+                            selectedTower = new FrostMage(x, y, 0, b.getId(), road);
+                            break;
+                        case MINE_FACTORY:
+                            road = playing.getRoadDirArr();
+                            selectedTower = new MineFactory(x, y, 0, b.getId(), road);
+                            break;
+                    }
+                    playing.setSelectedTower(selectedTower);
+                    return;
                 }
             }
         }
@@ -461,9 +501,9 @@ public class ActionBar extends Bar {
         bBestiary.setMouseOver(false);
         showTowerCost = false;
         bSell.setMouseOver(false);
-        bUpgrate1.setMouseOver(false);
-        bUpgrate2.setMouseOver(false);
-        bUpgrate3.setMouseOver(false);
+        bUpgrade1.setMouseOver(false);
+        bUpgrade2.setMouseOver(false);
+        bUpgrade3.setMouseOver(false);
         for (MyButton b : towerButtons) {
             b.setMouseOver(false);
         }
@@ -475,12 +515,12 @@ public class ActionBar extends Bar {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {
                     bSell.setMouseOver(true);
-                } else if (bUpgrate1.getBounds().contains(x, y)) {
-                    bUpgrate1.setMouseOver(true);
-                } else if (bUpgrate2.getBounds().contains(x, y)) {
-                    bUpgrate2.setMouseOver(true);
-                } else if (bUpgrate3.getBounds().contains(x, y)) {
-                    bUpgrate3.setMouseOver(true);
+                } else if (bUpgrade1.getBounds().contains(x, y)) {
+                    bUpgrade1.setMouseOver(true);
+                } else if (bUpgrade2.getBounds().contains(x, y)) {
+                    bUpgrade2.setMouseOver(true);
+                } else if (bUpgrade3.getBounds().contains(x, y)) {
+                    bUpgrade3.setMouseOver(true);
                 }
             }
             for (MyButton b : towerButtons) {
@@ -507,12 +547,12 @@ public class ActionBar extends Bar {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {
                     bSell.setMousePressed(true);
-                } else if (bUpgrate1.getBounds().contains(x, y)) {
-                    bUpgrate1.setMousePressed(true);
-                } else if (bUpgrate2.getBounds().contains(x, y)) {
-                    bUpgrate2.setMousePressed(true);
-                } else if (bUpgrate3.getBounds().contains(x, y)) {
-                    bUpgrate3.setMousePressed(true);
+                } else if (bUpgrade1.getBounds().contains(x, y)) {
+                    bUpgrade1.setMousePressed(true);
+                } else if (bUpgrade2.getBounds().contains(x, y)) {
+                    bUpgrade2.setMousePressed(true);
+                } else if (bUpgrade3.getBounds().contains(x, y)) {
+                    bUpgrade3.setMousePressed(true);
                 }
             }
             for (MyButton b : towerButtons) {
@@ -528,9 +568,9 @@ public class ActionBar extends Bar {
         bMenu.resetBooleans();
         bBestiary.resetBooleans();
         bSell.resetBooleans();
-        bUpgrate1.resetBooleans();
-        bUpgrate2.resetBooleans();
-        bUpgrate3.resetBooleans();
+        bUpgrade1.resetBooleans();
+        bUpgrade2.resetBooleans();
+        bUpgrade3.resetBooleans();
         for (MyButton b : towerButtons) {
             b.resetBooleans();
         }
@@ -546,6 +586,52 @@ public class ActionBar extends Bar {
 
     public void displayTower(Tower t) {
         displayedTower = t;
+        if (displayedTower instanceof Archer) {
+            costUp1 = ((Archer) displayedTower).getCost(1);
+            textUp1 = ((Archer) displayedTower).getName(1);
+        } else if (displayedTower instanceof Cannon) {
+            costUp1 = ((Cannon) displayedTower).getCost(1);
+            textUp1 = ((Cannon) displayedTower).getName(1);
+        } else if (displayedTower instanceof FrostMage) {
+            costUp1 = ((FrostMage) displayedTower).getCost(1);
+            textUp1 = ((FrostMage) displayedTower).getName(1);
+        } else if (displayedTower instanceof MineFactory) {
+            costUp1 = ((MineFactory) displayedTower).getCost(1);
+            textUp1 = ((MineFactory) displayedTower).getName(1);
+        } else {
+            System.out.println("cost error 1");
+        }
+        if (displayedTower instanceof Archer) {
+            costUp2 = ((Archer) displayedTower).getCost(2);
+            textUp2 = ((Archer) displayedTower).getName(2);
+        } else if (displayedTower instanceof Cannon) {
+            costUp2 = ((Cannon) displayedTower).getCost(2);
+            textUp2 = ((Cannon) displayedTower).getName(2);
+        } else if (displayedTower instanceof FrostMage) {
+            costUp2 = ((FrostMage) displayedTower).getCost(2);
+            textUp2 = ((FrostMage) displayedTower).getName(2);
+        } else if (displayedTower instanceof MineFactory) {
+            costUp2 = ((MineFactory) displayedTower).getCost(2);
+            textUp2 = ((MineFactory) displayedTower).getName(2);
+        } else {
+            System.out.println("cost error 2");
+        }
+        if (displayedTower instanceof Archer) {
+            costUp3 = ((Archer) displayedTower).getCost(3);
+            textUp3 = ((Archer) displayedTower).getName(3);
+        } else if (displayedTower instanceof Cannon) {
+            costUp3 = ((Cannon) displayedTower).getCost(3);
+            textUp3 = ((Cannon) displayedTower).getName(3);
+        } else if (displayedTower instanceof FrostMage) {
+            costUp3 = ((FrostMage) displayedTower).getCost(3);
+            textUp3 = ((FrostMage) displayedTower).getName(3);
+        } else if (displayedTower instanceof MineFactory) {
+            costUp3 = ((MineFactory) displayedTower).getCost(3);
+            textUp3 = ((MineFactory) displayedTower).getName(3);
+        } else {
+            System.out.println("cost error 3");
+        }
+
     }
 
 

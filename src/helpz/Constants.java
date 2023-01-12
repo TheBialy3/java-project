@@ -16,7 +16,7 @@ public class Constants {
         public static final int MINE = 3;
 
 
-        public static float GetSpeed(int projectileType) {
+        public static float getSpeed(int projectileType) {
             switch (projectileType) {
                 case ARROW:
                     return 8f;
@@ -58,7 +58,7 @@ public class Constants {
             return false;
         }
 
-        public static float GetRadiusExplosion(int projectileType) {
+        public static float getRadiusExplosion(int projectileType) {
             if (isAoe(projectileType)) {
                 switch (projectileType) {
                     case BOMB:
@@ -86,7 +86,7 @@ public class Constants {
             return false;
         }
 
-        public static float GetPowerOfSlow(int projectileType) {
+        public static float getPowerOfSlow(int projectileType) {
             if (isSlow(projectileType)) {
                 switch (projectileType) {
                     case FROST_BEEM:
@@ -103,7 +103,7 @@ public class Constants {
         public static final int TENTACLE = 2;
         public static final int SLIME = 3;
 
-        public static float GetSpeed(int enemyType) {
+        public static float getSpeed(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 0.5f;
@@ -117,7 +117,7 @@ public class Constants {
             return 0;
         }
 
-        public static int GetStartHealth(int enemyType) {
+        public static int getStartHealth(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 100;
@@ -131,7 +131,7 @@ public class Constants {
             return 0;
         }
 
-        public static int GetGoldWorth(int enemyType) {
+        public static int getGoldWorth(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 10;
@@ -152,7 +152,7 @@ public class Constants {
         public static final int FROST_MAGE = 2;
         public static final int MINE_FACTORY = 3;
 
-        public static String GetName(int towerType) {
+        public static String getName(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return "Archer";
@@ -166,7 +166,7 @@ public class Constants {
             return "";
         }
 
-        public static int GetCost(int towerType) {
+        public static int getCost(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return 100;
@@ -180,35 +180,35 @@ public class Constants {
             return 0;
         }
 
-        public static float GetDefaultCooldown(int towerType) {
+        public static float getDefaultCooldown(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 25;
+                    return 30;
                 case CANNON:
-                    return 100;
+                    return 90;
                 case FROST_MAGE:
-                    return 40;
+                    return 45;
                 case MINE_FACTORY:
-                    return 100;
+                    return 90;
             }
             return 0;
         }
 
-        public static float GetDefaultRange(int towerType) {
+        public static float getDefaultRange(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 400;
-                case CANNON:
-                    return 200;
-                case FROST_MAGE:
                     return 300;
+                case CANNON:
+                    return 250;
+                case FROST_MAGE:
+                    return 200;
                 case MINE_FACTORY:
                     return 96;
             }
             return 0;
         }
 
-        public static int GetDefaultDmg(int towerType) {
+        public static int getDefaultDmg(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return 5;
@@ -220,37 +220,6 @@ public class Constants {
                     return 10;
             }
             return 0;
-        }
-    }
-
-    public static class Upgrades {
-        public static final int ONE1 = 0;
-        public static final int ONE2 = 1;
-        public static final int ONE3 = 2;
-        // public static final int ELSE = 3;
-
-        public static int GetCost(int upgrade) {
-            switch (upgrade) {
-                case ONE1:
-                    return 100;
-                case ONE2:
-                    return 150;
-                case ONE3:
-                    return 200;
-            }
-            return 0;
-        }
-
-        public static String GetName(int upgrade) {
-            switch (upgrade) {
-                case ONE1:
-                    return "Atack speed +";
-                case ONE2:
-                    return "Atack damage +";
-                case ONE3:
-                    return "Bonus";
-            }
-            return "";
         }
     }
 

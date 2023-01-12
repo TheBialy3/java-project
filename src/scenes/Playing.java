@@ -28,13 +28,11 @@ public class Playing extends GameScene implements SceneMethods {
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
+    //private GameOver gameOver;
     private PathPoint start, end;
     private Tower selectedTower;
-    private int endWaveGold = 150;
-    private int passiveIncomGold = 5;
-    private int goldTickLimit = 60 * 13;
-    private int goldTick = 0;
-    private boolean paused, gameOver, startOfGame = true;
+    private int endWaveGold = 150,goldTick = 0,goldTickLimit = 60 * 13,passiveIncomGold = 5;
+    private boolean paused, gameOver, startOfGame = false;
 
     public Playing(Game game) {
         super(game);
@@ -44,6 +42,7 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager = new TowerManager(this);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
+
     }
 
     public void setLevel(int[][] lvl) {
@@ -217,7 +216,7 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isTileGrass(mouseX, mouseY)) {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
-                        actionBar.goldSpend(Constants.TowerType.GetCost(selectedTower.getTowerType()));
+                        actionBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
 
                         selectedTower = null;
 
@@ -285,9 +284,25 @@ public class Playing extends GameScene implements SceneMethods {
         if (x >= 1280) {
             actionBar.mouseDragged(x, y);
         } else {
-            mouseX = (x / 64) * 64;
-            mouseY = (y / 64) * 64;
+            if (selectedTower != null) {
+                if (isTileGrass(mouseX, mouseY)) {
+                    if (getTowerAt(mouseX, mouseY) == null) {
+                        towerManager.addTower(selectedTower, mouseX, mouseY);
+                        actionBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
+                        selectedTower = null;
+
+
+                    }
+                }
+            } else {
+                //check tower on map
+                Tower t = getTowerAt(mouseX, mouseY);
+                actionBar.displayTower(t);
+
+            }
         }
+
+        paused = false;
     }
 
     public void rewardPlayerAfterWave() {
@@ -295,7 +310,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void rewardPlayer(int enemyType) {
-        actionBar.earnGold(Constants.EnemyType.GetGoldWorth(enemyType));
+        actionBar.earnGold(Constants.EnemyType.getGoldWorth(enemyType));
     }
 
     public TowerManager getTowerManager() {
@@ -341,7 +356,7 @@ public class Playing extends GameScene implements SceneMethods {
         mouseX = 0;
         mouseY = 0;
         gameOver = false;
-        startOfGame = true;
+        startOfGame = false;
         selectedTower = null;
         goldTick = 0;
         paused = false;
@@ -359,39 +374,8 @@ public class Playing extends GameScene implements SceneMethods {
         return enemyMenager.getRoadDirArr();
     }
 
-    public void upgrate1(Tower displayedTower) {
-        if(displayedTower instanceof Archer) {
-            ((Archer) displayedTower).upgrate1();
-        }else if(displayedTower instanceof Cannon) {
-            ((Cannon) displayedTower).upgrate1();
-        }else if(displayedTower instanceof FrostMage) {
-            ((FrostMage) displayedTower).upgrate1();
-        }else if(displayedTower instanceof MineFactory) {
-            ((MineFactory) displayedTower).upgrate1();
-        }
-    }
 
-    public void upgrate2(Tower displayedTower) {
-        if(displayedTower instanceof Archer) {
-            ((Archer) displayedTower).upgrate2();
-        }else if(displayedTower instanceof Cannon) {
-            ((Cannon) displayedTower).upgrate2();
-        }else if(displayedTower instanceof FrostMage) {
-            ((FrostMage) displayedTower).upgrate2();
-        }else if(displayedTower instanceof MineFactory) {
-            ((MineFactory) displayedTower).upgrate2();
-        }
-    }
 
-    public void upgrate3(Tower displayedTower) {
-        if(displayedTower instanceof Archer) {
-            ((Archer) displayedTower).upgrate3();
-        }else if(displayedTower instanceof Cannon) {
-            ((Cannon) displayedTower).upgrate3();
-        }else if(displayedTower instanceof FrostMage) {
-            ((FrostMage) displayedTower).upgrate3();
-        }else if(displayedTower instanceof MineFactory) {
-            ((MineFactory) displayedTower).upgrate3();
-        }
-    }
+
+
 }

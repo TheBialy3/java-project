@@ -65,7 +65,7 @@ public class TowerManager {
                 break;
             case MINE_FACTORY:
                 towers.add(new MineFactory(x, y, towerAmount++, MINE_FACTORY, road));
-                towers.get(towerAmount - 1).isRoadNextTot();
+                towers.get(towers.size()-1).isRoadNextTot();
                 break;
         }
     }
@@ -78,7 +78,13 @@ public class TowerManager {
         }
     }
 
-
+    public void roadNextTo(Tower displayedTower) {
+        for (int i = 0; i < towers.size(); i++) {
+            if (towers.get(i).getId() == displayedTower.getId()) {
+                towers.get(i).isRoadNextTot();
+            }
+        }
+    }
 
     public void update() {
         for (Tower t : towers) {
@@ -119,27 +125,27 @@ public class TowerManager {
                             e = a1;
                             break;
                         case 2:
-                            PathPoint a2 = new PathPoint(t.getX() - 64, t.getY());
+                            PathPoint a2 = new PathPoint(t.getX() , t.getY()- 64);
                             e = a2;
                             break;
                         case 3:
-                            PathPoint a3 = new PathPoint(t.getX() - 64, t.getY() + 64);
+                            PathPoint a3 = new PathPoint(t.getX() + 64, t.getY() - 64);
                             e = a3;
                             break;
                         case 4:
-                            PathPoint a4 = new PathPoint(t.getX(), t.getY() - 64);
+                            PathPoint a4 = new PathPoint(t.getX()- 64, t.getY() );
                             e = a4;
                             break;
                         case 5:
-                            PathPoint a5 = new PathPoint(t.getX(), t.getY() + 64);
+                            PathPoint a5 = new PathPoint(t.getX()+ 64, t.getY() );
                             e = a5;
                             break;
                         case 6:
-                            PathPoint a6 = new PathPoint(t.getX() + 64, t.getY() - 64);
+                            PathPoint a6 = new PathPoint(t.getX() - 64, t.getY() + 64);
                             e = a6;
                             break;
                         case 7:
-                            PathPoint a7 = new PathPoint(t.getX() + 64, t.getY());
+                            PathPoint a7 = new PathPoint(t.getX() , t.getY()+ 64);
                             e = a7;
                             break;
                         case 8:

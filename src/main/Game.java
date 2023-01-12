@@ -13,7 +13,7 @@ public class Game extends JFrame implements Runnable {
     private Thread threadGame;
 
     private final double FPS_SET = 120;
-    private final double UPS_SET = 60;
+    private final double UPS_SET =60;
 
     //Classes
     private Render render;
@@ -120,15 +120,15 @@ public class Game extends JFrame implements Runnable {
                 lastUpdate = now;
                 updates++;
             }
-//            if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-//
-//                if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-//                    System.out.println("FPS: " + frames + "| UPS:" + updates);
-//                    frames = 0;
-//                    updates = 0;
-//                    lastTimeCheck = System.currentTimeMillis();
-//                }
-//            }
+            if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
+
+                if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
+                    System.out.println("FPS: " + frames + "| UPS:" + updates);
+                    frames = 0;
+                    updates = 0;
+                    lastTimeCheck = System.currentTimeMillis();
+                }
+            }
         }
     }
 

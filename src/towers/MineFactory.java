@@ -1,28 +1,47 @@
 package towers;
 
-import managers.TowerManager;
-import objects.PathPoint;
-
-import java.util.ArrayList;
-
 public class MineFactory extends Tower {
-
-
-
     public MineFactory(int x, int y, int id, int towerType , int[][] road) {
         super(x, y, id, towerType,road);
 
     }
 
-    public void upgrate1() {
-        this.setCooldown(50);
+    public void upgrade(int upgrade) {
+        switch (upgrade) {
+            case 1:
+                this.reduceCooldown(10);
+                return;
+            case 2:
+                this.addDmg(5);
+                return;
+            case 3:
+                this.reduceCooldown(20);
+                return;
+        }
+        return;
     }
 
-    public void upgrate2() {
-        this.addDmg(10);
+    public int getCost(int upgrade) {
+        switch (upgrade) {
+            case 1:
+                return 100;
+            case 2:
+                return 150;
+            case 3:
+                return 200;
+        }
+        return 0;
     }
 
-    public void upgrate3() {
-        //   this.addDmg(10);
+    public String getName(int upgrade) {
+        switch (upgrade) {
+            case 1:
+                return "Attack speed +";
+            case 2:
+                return "Attack damage +";
+            case 3:
+                return "Attack speed ++";
+        }
+        return "";
     }
 }

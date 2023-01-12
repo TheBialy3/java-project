@@ -54,10 +54,6 @@ public class Projectile {
         return projectileType;
     }
 
-    public void setProjectileType(int projectileType) {
-        this.projectileType = projectileType;
-    }
-
     public boolean isActive() {
         return active;
     }

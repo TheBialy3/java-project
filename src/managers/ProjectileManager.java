@@ -60,8 +60,8 @@ public class ProjectileManager {
 
         float xPer = (float) Math.abs(xDist) / totDist;
 
-        float xSpeed = xPer * helpz.Constants.ProjectileType.GetSpeed(type);
-        float ySpeed = helpz.Constants.ProjectileType.GetSpeed(type) - xSpeed;
+        float xSpeed = xPer * helpz.Constants.ProjectileType.getSpeed(type);
+        float ySpeed = helpz.Constants.ProjectileType.getSpeed(type) - xSpeed;
 
         if (t.getX() > e.getX())
             xSpeed *= -1;
@@ -139,10 +139,10 @@ public class ProjectileManager {
                 float xDist = Math.abs(p.getPos().x - e.getX());
                 float yDist = Math.abs(p.getPos().y - e.getY());
                 float realDist = (float) Math.hypot(xDist, yDist);
-                if (realDist <= Constants.ProjectileType.GetRadiusExplosion(p.getProjectileType())) {
+                if (realDist <= Constants.ProjectileType.getRadiusExplosion(p.getProjectileType())) {
                     e.hurt(p.getDmg());
                     if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                        e.slow(helpz.Constants.ProjectileType.GetPowerOfSlow(p.getProjectileType()));
+                        e.slow(helpz.Constants.ProjectileType.getPowerOfSlow(p.getProjectileType()));
                     }
                 }
             }
@@ -156,7 +156,7 @@ public class ProjectileManager {
                     if (e.getBounds().contains(p.getPos())) {
                         e.hurt(p.getDmg());
                         if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                            e.slow(helpz.Constants.ProjectileType.GetPowerOfSlow(p.getProjectileType()));
+                            e.slow(helpz.Constants.ProjectileType.getPowerOfSlow(p.getProjectileType()));
                         }
                         return true;
                     }

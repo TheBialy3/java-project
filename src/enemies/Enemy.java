@@ -68,7 +68,7 @@ public abstract class Enemy {
     }
 
     protected void setStartHealth() {
-        health = Constants.EnemyType.GetStartHealth(enemyType);
+        health = Constants.EnemyType.getStartHealth(enemyType);
         maxHealth = health;
     }
 
