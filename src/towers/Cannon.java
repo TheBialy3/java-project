@@ -37,9 +37,9 @@ public class Cannon extends Tower {
             case 1:
                 return "Attack speed +";
             case 2:
-                return "Attack damage +";
+                return "Attack damage +5";
             case 3:
-                return "Attack damage ++";
+                return "Attack damage +15";
         }
         return "";
     }

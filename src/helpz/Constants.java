@@ -53,7 +53,7 @@ public class Constants {
                 case FROST_BEEM:
                     return true;
                 case MINE:
-                    return true;
+                    return false;
             }
             return false;
         }
@@ -64,9 +64,7 @@ public class Constants {
                     case BOMB:
                         return 40f;
                     case FROST_BEEM:
-                        return 50f;
-                    case MINE:
-                        return 50f;
+                        return 100f;
                 }
             }
             return 0;
@@ -136,7 +134,7 @@ public class Constants {
                 case ORC:
                     return 10;
                 case ANIMATED_ORK:
-                    return 12;
+                    return 15;
                 case TENTACLE:
                     return 15;
                 case SLIME:

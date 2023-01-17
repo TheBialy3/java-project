@@ -2,15 +2,20 @@ package enemies;
 
 import helpz.Constants;
 import managers.EnemyMenager;
+import managers.WaveManager;
 
 
 import java.awt.*;
 
 import static helpz.Constants.Direction.*;
+import static helpz.Constants.EnemyType.*;
 
 public abstract class Enemy {
 
+    private int tick=0;
+
     protected EnemyMenager enemyMenager;
+    protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
     protected int health, slowTickLimit = 120, slowTick = slowTickLimit;
@@ -21,15 +26,39 @@ public abstract class Enemy {
     protected boolean alive = true;
     protected float slowPower=1f;
 
-
-    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager) {
+    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager, WaveManager waveManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
         this.enemyMenager=enemyMenager;
+        this.waveManager=waveManager;
         bounds = new Rectangle((int) x, (int) y, 64, 64);
         lastDir = -1;
+        setStartHealth();
+    }
+
+    public void tickUp(){
+        tick++;
+    }
+
+    public void tickZero(){
+        tick=0;
+    }
+
+    public int getTick(){
+        return tick;
+    }
+
+    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager, WaveManager waveManager,int lastDir) {
+        this.x = x;
+        this.y = y;
+        this.ID = ID;
+        this.enemyType = enemyType;
+        this.enemyMenager=enemyMenager;
+        this.waveManager=waveManager;
+        bounds = new Rectangle((int) x, (int) y, 64, 64);
+        this.lastDir = lastDir;
         setStartHealth();
     }
 
@@ -61,22 +90,26 @@ public abstract class Enemy {
         bounds.y = (int) y;
     }
 
-
-
     public float getHealthBar() {
         return (float) health / maxHealth;
     }
 
     protected void setStartHealth() {
-        health = Constants.EnemyType.getStartHealth(enemyType);
+        int a=waveManager.getWaveIndex();
+        health = Constants.EnemyType.getStartHealth(enemyType)*(5+a)/10;
         maxHealth = health;
+        System.out.println(health);
     }
 
     public void hurt(int dmg) {
         this.health -= dmg;
         if (health <= 0) {
-            alive = false;
-            enemyMenager.rewardPlayer(enemyType);
+            if(enemyType==ANIMATED_ORK){
+                enemyMenager.addEnemy( ORC, (int)x,(int) y, lastDir);
+            }
+                alive = false;
+                enemyMenager.rewardPlayer(enemyType);
+
         }
     }
 

@@ -22,18 +22,19 @@ public class EnemyMenager {
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
-    private int HPbarWidth = 50, tick = 0;
+    private int HPbarWidth = 50;
     private BufferedImage[] enemyEfects;
     private int[][] roadDirArr;
+    protected WaveManager waveManager;
 
-    public EnemyMenager(Playing playing, PathPoint start, PathPoint end) {
+    public EnemyMenager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
         this.playing = playing;
         this.start = start;
         this.end = end;
         loadRoadDirArr();
         loadEnemyImages();
         loadEfectsImages();
-
+        this.waveManager=waveManager;
     }
 
 
@@ -68,16 +69,33 @@ public class EnemyMenager {
         int y = start.getyCord() * 64;
         switch (enemyType) {
             case ORC:
-                enemies.add(new Orc(x, y, 0, this));
-                break;
-            case ANIMATED_ORK:
-                enemies.add(new Slime(x, y, 0, this));
-                break;
-            case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0, this));
+                enemies.add(new Orc(x, y, 0, this,waveManager));
                 break;
             case SLIME:
-                enemies.add(new Ball(x, y, 0, this));
+                enemies.add(new Slime(x, y, 0, this,waveManager));
+                break;
+            case TENTACLE:
+                enemies.add(new Tentacle(x, y, 0, this,waveManager));
+                break;
+            case ANIMATED_ORK:
+                enemies.add(new Ball(x, y, 0, this,waveManager));
+                break;
+        }
+    }
+
+    public void addEnemy(int enemyType,int x, int y,int lastDir) {
+        switch (enemyType) {
+            case ORC:
+                enemies.add(new Orc(x, y, 0, this,waveManager));
+                break;
+            case SLIME:
+                enemies.add(new Slime(x, y, 0, this,waveManager));
+                break;
+            case TENTACLE:
+                enemies.add(new Tentacle(x, y, 0, this,waveManager));
+                break;
+            case ANIMATED_ORK:
+                enemies.add(new Ball(x, y, 0, this,waveManager));
                 break;
         }
     }
@@ -265,13 +283,13 @@ public class EnemyMenager {
     public void drawEnemy(Enemy e, Graphics g) {
 
         if (e.getEnemyType() == ANIMATED_ORK) {
-            tick++;
-            if (tick < 50) {
+            e.tickUp();
+            if (e.getTick() < 50) {
                 g.drawImage(enemyImages[1], (int) e.getX(), (int) e.getY(), null);
             } else {
                 g.drawImage(enemyImages[4], (int) e.getX(), (int) e.getY(), null);
-                if (tick > 100) {
-                    tick = 0;
+                if (e.getTick() > 100) {
+                    e.tickZero();
                 }
             }
         } else {

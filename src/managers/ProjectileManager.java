@@ -19,13 +19,13 @@ import static helpz.Constants.TowerType.*;
 
 public class ProjectileManager {
 
-    private Random random= new Random();
+    private Random random = new Random();
 
     private Playing playing;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs;
-    private int proj_id = 0,ranx,rany;
+    private int proj_id = 0, ranx, rany;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -92,7 +92,7 @@ public class ProjectileManager {
         int type = getProjType(t);
         ranx = random.nextInt(44);
         rany = random.nextInt(44);
-        projectiles.add(new Projectile(e.getxCord() +10+ ranx, e.getyCord() +10+ rany, 0, 0, t.getDmg(), 0, proj_id++, type));
+        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type));
     }
 
     public void update() {
@@ -104,13 +104,13 @@ public class ProjectileManager {
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
                         explodeOnEnemys(p);
                     }
-                    if (p.getProjectileType() == BOMB || p.getProjectileType() == MINE) {
+                    if (p.getProjectileType() == BOMB ) {
                         explosions.add(new Explosion(p.getPos()));
 
                     }
+                }else if (isProjOutOfBounds(p)) {
+                    p.setActive(false);
                 }
-            } else if (isProjOutOfBounds(p)) {
-                p.setActive(false);
             }
         }
         for (Explosion e : explosions) {
@@ -122,15 +122,20 @@ public class ProjectileManager {
 
     private boolean isProjOutOfBounds(Projectile p) {
         if (p.getPos().x <= 0) {
-            if (p.getPos().x >= 1280) {
-                if (p.getPos().y <= 0) {
-                    if (p.getPos().y >= 1280) {
-                        return false;
-                    }
-                }
-            }
+            return true;
         }
-        return true;
+        if (p.getPos().x >= 1280) {
+            return true;
+        }
+        if (p.getPos().y <= 0) {
+            return true;
+        }
+        if (p.getPos().y >= 1280) {
+            return true;
+        }
+        return false;
+
+
     }
 
     private void explodeOnEnemys(Projectile p) {

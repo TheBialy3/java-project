@@ -28,7 +28,7 @@ public class Playing extends GameScene implements SceneMethods {
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
-    //private GameOver gameOver;
+
     private PathPoint start, end;
     private Tower selectedTower;
     private int endWaveGold = 150,goldTick = 0,goldTickLimit = 60 * 13,passiveIncomGold = 5;
@@ -38,10 +38,12 @@ public class Playing extends GameScene implements SceneMethods {
         super(game);
         LoadDefoultLevel();
         actionBar = new ActionBar(1280, 0, 256, 1280, this);
-        enemyMenager = new EnemyMenager(this, start, end);
-        towerManager = new TowerManager(this);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
+        enemyMenager = new EnemyMenager(this, start, end, waveManager);
+        towerManager = new TowerManager(this);
+
+
 
     }
 
@@ -57,11 +59,8 @@ public class Playing extends GameScene implements SceneMethods {
                 if (startOfGame) {
                     waveManager.startWaveTimer();
                 }
-
-
                 //passiveIncom
                 passiveIncom();
-
                 if (isAllEnemysDead()) {
                     if (isThereMoreWaves()) {
                         //start timer albo inicjuj karty
@@ -74,7 +73,6 @@ public class Playing extends GameScene implements SceneMethods {
                         }
                     }
                 }
-
                 if (isTimeForNewWave()) {
                     spawnEnemy();
                 }
@@ -152,9 +150,10 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void render(Graphics g) {
         drawLevel(g);
-        actionBar.draw(g);
+
         enemyMenager.draw(g);
         towerManager.draw(g);
+        actionBar.draw(g);
         projectileManager.draw(g);
 
         drawSelectedTower(g);
