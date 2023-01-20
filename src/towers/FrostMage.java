@@ -7,13 +7,13 @@ public class FrostMage extends Tower{
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(15);
+                this.addRange(40);
                 return;
             case 2:
-                this.addDmg(5);
+                this.addRange(50);
                 return;
             case 3:
-                this.addRange(100);
+                this.addRange(60);
                 return;
             default:
                 return ;
@@ -36,11 +36,11 @@ public class FrostMage extends Tower{
     public String getName(int upgrade) {
         switch (upgrade) {
             case 1:
-                return "Attack speed +";
+                return "Range +40";
             case 2:
-                return "Attack damage +5";
+                return "Range +50";
             case 3:
-                return "Range +100";
+                return "Range +60";
             default:
                 return "null";
         }

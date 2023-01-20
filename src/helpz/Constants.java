@@ -51,7 +51,7 @@ public class Constants {
                 case BOMB:
                     return true;
                 case FROST_BEEM:
-                    return true;
+                    return false;
                 case MINE:
                     return false;
             }
@@ -63,8 +63,6 @@ public class Constants {
                 switch (projectileType) {
                     case BOMB:
                         return 40f;
-                    case FROST_BEEM:
-                        return 100f;
                 }
             }
             return 0;
@@ -84,15 +82,7 @@ public class Constants {
             return false;
         }
 
-        public static float getPowerOfSlow(int projectileType) {
-            if (isSlow(projectileType)) {
-                switch (projectileType) {
-                    case FROST_BEEM:
-                        return 0.5f;
-                }
-            }
-            return 1f;
-        }
+
     }
 
     public static class EnemyType {
@@ -164,6 +154,30 @@ public class Constants {
             return "";
         }
 
+        public static boolean isSlow(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return false;
+                case CANNON:
+                    return false;
+                case FROST_MAGE:
+                    return true;
+                case MINE_FACTORY:
+                    return false;
+            }
+            return false;
+        }
+
+        public static float getPowerOfSlow(int towerType) {
+            if (isSlow(towerType)) {
+                switch (towerType) {
+                    case FROST_MAGE:
+                        return 0.5f;
+                }
+            }
+            return 1f;
+        }
+
         public static int getCost(int towerType) {
             switch (towerType) {
                 case ARCHER:
@@ -185,7 +199,7 @@ public class Constants {
                 case CANNON:
                     return 90;
                 case FROST_MAGE:
-                    return 45;
+                    return 0;
                 case MINE_FACTORY:
                     return 90;
             }
@@ -199,7 +213,7 @@ public class Constants {
                 case CANNON:
                     return 250;
                 case FROST_MAGE:
-                    return 200;
+                    return 100;
                 case MINE_FACTORY:
                     return 96;
             }
@@ -213,7 +227,7 @@ public class Constants {
                 case CANNON:
                     return 15;
                 case FROST_MAGE:
-                    return 1;
+                    return 0;
                 case MINE_FACTORY:
                     return 10;
             }

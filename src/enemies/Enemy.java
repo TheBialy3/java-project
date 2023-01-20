@@ -18,7 +18,7 @@ public abstract class Enemy {
     protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
-    protected int health, slowTickLimit = 120, slowTick = slowTickLimit;
+    protected int health, slowTickLimit = 3, slowTick = slowTickLimit;
     protected int maxHealth;
     protected int ID;
     protected int enemyType;

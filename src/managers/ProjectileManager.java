@@ -146,9 +146,6 @@ public class ProjectileManager {
                 float realDist = (float) Math.hypot(xDist, yDist);
                 if (realDist <= Constants.ProjectileType.getRadiusExplosion(p.getProjectileType())) {
                     e.hurt(p.getDmg());
-                    if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                        e.slow(helpz.Constants.ProjectileType.getPowerOfSlow(p.getProjectileType()));
-                    }
                 }
             }
         }
@@ -160,9 +157,6 @@ public class ProjectileManager {
                 if (e.isAlive()) {
                     if (e.getBounds().contains(p.getPos())) {
                         e.hurt(p.getDmg());
-                        if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                            e.slow(helpz.Constants.ProjectileType.getPowerOfSlow(p.getProjectileType()));
-                        }
                         return true;
                     }
                 }

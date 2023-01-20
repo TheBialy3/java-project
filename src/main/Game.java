@@ -13,7 +13,7 @@ public class Game extends JFrame implements Runnable {
     private Thread threadGame;
 
     private final double FPS_SET = 120;
-    private final double UPS_SET =60;
+    private final double UPS_SET =180;
 
     //Classes
     private Render render;

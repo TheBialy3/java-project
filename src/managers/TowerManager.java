@@ -1,6 +1,7 @@
 package managers;
 
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import objects.PathPoint;
 import towers.*;
@@ -17,7 +18,7 @@ import static helpz.Constants.TowerType.MINE_FACTORY;
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImgs,upgradeImgs;
+    private BufferedImage[] towerImgs, upgradeImgs;
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arr = new ArrayList<>();
@@ -65,7 +66,7 @@ public class TowerManager {
                 break;
             case MINE_FACTORY:
                 towers.add(new MineFactory(x, y, towerAmount++, MINE_FACTORY, road));
-                towers.get(towers.size()-1).isRoadNextTot();
+                towers.get(towers.size() - 1).isRoadNextTot();
                 break;
         }
     }
@@ -78,24 +79,33 @@ public class TowerManager {
         }
     }
 
-    public void roadNextTo(Tower displayedTower) {
-        for (int i = 0; i < towers.size(); i++) {
-            if (towers.get(i).getId() == displayedTower.getId()) {
-                towers.get(i).isRoadNextTot();
-            }
-        }
-    }
-
     public void update() {
         for (Tower t : towers) {
             t.update();
             if (t.getTowerType() == MINE_FACTORY) {
                 setMine(t);
+            } else if (t.getTowerType() == FROST_MAGE) {
+                slowEnemyIfClose(t);
             } else {
                 attackEnemyIfClose(t);
             }
         }
     }
+
+    private void slowEnemyIfClose(Tower t) {
+        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+            if (e.isAlive()) {
+                if (isEnemyInRange(t, e)) {
+
+                        e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
+
+                    }
+                } else {
+                    //nothing
+                }
+            }
+        }
+
 
     private void attackEnemyIfClose(Tower t) {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
@@ -125,7 +135,7 @@ public class TowerManager {
                             e = a1;
                             break;
                         case 2:
-                            PathPoint a2 = new PathPoint(t.getX() , t.getY()- 64);
+                            PathPoint a2 = new PathPoint(t.getX(), t.getY() - 64);
                             e = a2;
                             break;
                         case 3:
@@ -133,11 +143,11 @@ public class TowerManager {
                             e = a3;
                             break;
                         case 4:
-                            PathPoint a4 = new PathPoint(t.getX()- 64, t.getY() );
+                            PathPoint a4 = new PathPoint(t.getX() - 64, t.getY());
                             e = a4;
                             break;
                         case 5:
-                            PathPoint a5 = new PathPoint(t.getX()+ 64, t.getY() );
+                            PathPoint a5 = new PathPoint(t.getX() + 64, t.getY());
                             e = a5;
                             break;
                         case 6:
@@ -145,7 +155,7 @@ public class TowerManager {
                             e = a6;
                             break;
                         case 7:
-                            PathPoint a7 = new PathPoint(t.getX() , t.getY()+ 64);
+                            PathPoint a7 = new PathPoint(t.getX(), t.getY() + 64);
                             e = a7;
                             break;
                         case 8:
@@ -172,6 +182,10 @@ public class TowerManager {
     public void draw(Graphics g) {
         for (Tower t : towers) {
             g.drawImage(towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
+            if(t.getTowerType()==FROST_MAGE){
+                g.setColor(new Color(0, 254, 255, 38));
+                g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+            }
         }
     }
 
