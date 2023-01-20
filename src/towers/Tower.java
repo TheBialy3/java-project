@@ -139,6 +139,8 @@ public abstract class Tower {
     }
 
     public void reduceCooldown(float cooldown) {
+        System.out.println(this.cooldown);
+        System.out.println(cooldown);
         this.cooldown -= cooldown;
         System.out.println(this.cooldown);
     }
@@ -164,14 +166,50 @@ public abstract class Tower {
     }
 
     public void Upgrade1Activate() {
+        if (!U1) {
+
+            if (this instanceof Archer) {
+                ((Archer) this).upgrade(1);
+            } else if (this instanceof Cannon) {
+                ((Cannon) this).upgrade(1);
+            } else if (this instanceof FrostMage) {
+                ((FrostMage) this).upgrade(1);
+            } else if (this instanceof MineFactory) {
+                ((MineFactory) this).upgrade(1);
+            }
+        }
         U1 = true;
     }
 
     public void Upgrade2Activate() {
+        if (!U2) {
+
+            if (this instanceof Archer) {
+                ((Archer) this).upgrade(2);
+            } else if (this instanceof Cannon) {
+                ((Cannon) this).upgrade(2);
+            } else if (this instanceof FrostMage) {
+                ((FrostMage) this).upgrade(2);
+            } else if (this instanceof MineFactory) {
+                ((MineFactory) this).upgrade(2);
+            }
+        }
         U2 = true;
     }
 
     public void Upgrade3Activate() {
+        if (!U3) {
+
+            if (this instanceof Archer) {
+                ((Archer) this).upgrade(3);
+            } else if (this instanceof Cannon) {
+                ((Cannon) this).upgrade(3);
+            } else if (this instanceof FrostMage) {
+                ((FrostMage) this).upgrade(3);
+            } else if (this instanceof MineFactory) {
+                ((MineFactory) this).upgrade(3);
+            }
+        }
         U3 = true;
     }
 }
