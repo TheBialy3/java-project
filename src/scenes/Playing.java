@@ -12,6 +12,7 @@ import objects.PathPoint;
 
 import towers.*;
 import ui.ActionBar;
+import ui.MyButton;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -28,11 +29,11 @@ public class Playing extends GameScene implements SceneMethods {
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
-
+    private MyButton bReplay;
     private PathPoint start, end;
     private Tower selectedTower;
-    private int endWaveGold = 150,goldTick = 0,goldTickLimit = 60 * 13,passiveIncomGold = 5;
-    private boolean paused, gameOver, startOfGame = false;
+    private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomGold = 5;
+    private boolean paused, gameOver, startOfGame = false, win = false;
 
     public Playing(Game game) {
         super(game);
@@ -43,8 +44,6 @@ public class Playing extends GameScene implements SceneMethods {
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
 
-
-
     }
 
     public void setLevel(int[][] lvl) {
@@ -52,29 +51,38 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void update() {
-        if (!gameOver) {
-            if (!paused) {
-                updateTick();
-                getWaveManager().update();
-                if (startOfGame) {
-                    waveManager.startWaveTimer();
-                }
-                //passiveIncom
-                passiveIncom();
-                if (isAllEnemysDead()) {
-                    if (isThereMoreWaves()) {
-                        //start timer albo inicjuj karty
+        if (!win) {
+            if (!gameOver) {
+                if (!paused) {
+                    updateTick();
+                    getWaveManager().update();
+                    if (startOfGame) {
                         waveManager.startWaveTimer();
-                        //timer lub wybór karty
-                        if (isWaveTimerOver()) {
-                            waveManager.increaseWaveIndex();
-                            enemyMenager.getEnemies().clear();
-                            waveManager.resetEnemyIndex();
+                    }
+                    //passiveIncom
+                    passiveIncom();
+
+                    if (isAllEnemysDead()) {
+                        if (isThereMoreWaves()) {
+
+                            //start timer albo inicjuj karty
+                            waveManager.startWaveTimer();
+                            //timer lub wybór karty
+                            if (isWaveTimerOver()) {
+                                waveManager.increaseWaveIndex();
+                                enemyMenager.getEnemies().clear();
+                                waveManager.resetEnemyIndex();
+
+                            }
+                        }else{
+                            Finish();
                         }
                     }
-                }
-                if (isTimeForNewWave()) {
-                    spawnEnemy();
+
+
+                    if (isTimeForNewEnemy()) {
+                        spawnEnemy();
+                    }
                 }
                 enemyMenager.update();
                 towerManager.update();
@@ -82,11 +90,15 @@ public class Playing extends GameScene implements SceneMethods {
                 if (actionBar.getLives() <= 0) {
                     gameOver = true;
                 }
-            } else {
-
             }
+
         }
     }
+
+    public void Finish(){
+        win = true;
+    }
+
 
     private void passiveIncom() {
         goldTick++;
@@ -102,8 +114,25 @@ public class Playing extends GameScene implements SceneMethods {
         int h = g.getFontMetrics().getHeight();
         int w = g.getFontMetrics().stringWidth(text);
         g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
+
     }
 
+    public void drawWinScrean(Graphics g) {
+        g.setColor(new Color(10, 255, 50));
+        g.setFont(new Font("Serif", Font.BOLD, 50));
+        String text = "VICTORY";
+        int h = g.getFontMetrics().getHeight();
+        int w = g.getFontMetrics().stringWidth(text);
+        g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
+        w = 400;
+        h = w / 4;
+        int x = 640 - w / 2;
+        int y = 324;
+
+
+        bReplay = new MyButton("Replay", x, y, w, h);
+        bReplay.draw(g);
+    }
 
     private boolean isWaveTimerOver() {
         return waveManager.isWaveTimerOver();
@@ -131,8 +160,8 @@ public class Playing extends GameScene implements SceneMethods {
         enemyMenager.spawnEnemy(waveManager.getNextEnemy());
     }
 
-    private boolean isTimeForNewWave() {
-        if (waveManager.isTimeForNewWave()) {
+    private boolean isTimeForNewEnemy() {
+        if (waveManager.isTimeForNewEnemy()) {
             if (waveManager.isTherMoreEnemysInWave()) {
                 return true;
             }
@@ -158,7 +187,9 @@ public class Playing extends GameScene implements SceneMethods {
 
         drawSelectedTower(g);
         drawHighlight(g);
-
+        if (win) {
+            drawWinScrean(g);
+        }
         if (paused) {
             drawPause(g);
         }
@@ -210,6 +241,8 @@ public class Playing extends GameScene implements SceneMethods {
     public void mouseClicked(int x, int y) {
         if (x >= 1280) {
             actionBar.mouseClicked(x, y);
+        } else   if (win) { if (bReplay.getBounds().contains(x, y)) {
+            resetEvrything();}
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -253,10 +286,13 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseMoved(int x, int y) {
+        if (win) {  bReplay.setMouseOver(false);}
         if (x >= 1280) {
             actionBar.mouseMoved(x, y);
             mouseX = -111;
             mouseY = -111;
+        } else   if (win) { if (bReplay.getBounds().contains(x, y)) {
+            bReplay.setMouseOver(true);}
         } else {
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
@@ -265,6 +301,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseReleased(int x, int y) {
+        if (win) { bReplay.resetBooleans();}
         if (x >= 1280) {
             actionBar.mouseReleased(x, y);
         }
@@ -275,6 +312,8 @@ public class Playing extends GameScene implements SceneMethods {
     public void mousePressed(int x, int y) {
         if (x >= 1280) {
             actionBar.mousePressed(x, y);
+        } else  if (win) { if (bReplay.getBounds().contains(x, y)) {
+            bReplay.setMousePressed(true);}
         }
     }
 
@@ -282,6 +321,8 @@ public class Playing extends GameScene implements SceneMethods {
     public void mouseDragged(int x, int y) {
         if (x >= 1280) {
             actionBar.mouseDragged(x, y);
+        } else  if (win) { if (bReplay.getBounds().contains(x, y)) {
+            resetEvrything();}
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -346,7 +387,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void resetEvrything() {
         actionBar.resetEvrything();
-
+        win = false;
         enemyMenager.reset();
         projectileManager.reset();
         towerManager.reset();
@@ -372,9 +413,6 @@ public class Playing extends GameScene implements SceneMethods {
     public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
     }
-
-
-
 
 
 }

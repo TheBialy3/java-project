@@ -2,15 +2,12 @@ package ui;
 
 
 import helpz.Constants;
-import towers.*;
-
 import scenes.Playing;
+import towers.*;
 
 import java.awt.*;
 
-
 import static helpz.Constants.TowerType.*;
-
 import static main.GameStates.*;
 
 public class ActionBar extends Bar {
@@ -176,7 +173,7 @@ public class ActionBar extends Bar {
                 g.drawString("" + Constants.TowerType.getName(towerCostId), 1375, 1018);
                 g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
                 if (towerCostId == FROST_MAGE) {
-                    g.drawString("Slow:" +  100*Constants.TowerType.getPowerOfSlow(towerCostId)+"%", 1375, 1058);
+                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(towerCostId) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
                     g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCooldown(towerCostId), 1375, 1078);
@@ -185,7 +182,7 @@ public class ActionBar extends Bar {
                 g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
                 g.drawString("Range:" + displayedTower.getRange(), 1375, 1038);
                 if (displayedTower.getTowerType() == FROST_MAGE) {
-                    g.drawString("Slow:" + 100*Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType())+"%", 1375, 1058);
+                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType()) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
                     g.drawString("AS:" + 60 / displayedTower.getCooldown(), 1375, 1078);
@@ -360,23 +357,29 @@ public class ActionBar extends Bar {
                 }
                 if (bUpgrade1.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp1)) {
-                        displayedTower.Upgrade1Activate();
-                        goldSpend(costUp1);
-                        displayedTower.updateTowerWorthGold(costUp1);
+                        if (!displayedTower.isUpgrade1Active()) {
+                            displayedTower.Upgrade1Activate();
+                            goldSpend(costUp1);
+                            displayedTower.updateTowerWorthGold(costUp1);
+                        }
                     }
                 }
                 if (bUpgrade2.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp2)) {
-                        displayedTower.Upgrade2Activate();
-                        goldSpend(costUp2);
-                        displayedTower.updateTowerWorthGold(costUp2);
+                        if (!displayedTower.isUpgrade2Active()) {
+                            displayedTower.Upgrade2Activate();
+                            goldSpend(costUp2);
+                            displayedTower.updateTowerWorthGold(costUp2);
+                        }
                     }
                 }
                 if (bUpgrade3.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp3)) {
-                        displayedTower.Upgrade3Activate();
-                        goldSpend(costUp3);
-                        displayedTower.updateTowerWorthGold(costUp3);
+                        if (!displayedTower.isUpgrade3Active()) {
+                            displayedTower.Upgrade3Activate();
+                            goldSpend(costUp3);
+                            displayedTower.updateTowerWorthGold(costUp3);
+                        }
                     }
                 }
             }
@@ -419,23 +422,30 @@ public class ActionBar extends Bar {
                 }
                 if (bUpgrade1.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp1)) {
-                        displayedTower.Upgrade1Activate();
-                        goldSpend(costUp1);
-                        displayedTower.updateTowerWorthGold(costUp1);
+
+                        if (!displayedTower.isUpgrade1Active()) {
+                            displayedTower.Upgrade1Activate();
+                            goldSpend(costUp1);
+                            displayedTower.updateTowerWorthGold(costUp1);
+                        }
                     }
                 }
                 if (bUpgrade2.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp2)) {
-                        displayedTower.Upgrade2Activate();
-                        goldSpend(costUp2);
-                        displayedTower.updateTowerWorthGold(costUp2);
+                        if (!displayedTower.isUpgrade2Active()) {
+                            displayedTower.Upgrade2Activate();
+                            goldSpend(costUp2);
+                            displayedTower.updateTowerWorthGold(costUp2);
+                        }
                     }
                 }
                 if (bUpgrade3.getBounds().contains(x, y)) {
                     if (isEnoughGold(costUp3)) {
-                        displayedTower.Upgrade3Activate();
-                        goldSpend(costUp3);
-                        displayedTower.updateTowerWorthGold(costUp3);
+                        if (!displayedTower.isUpgrade3Active()) {
+                            displayedTower.Upgrade3Activate();
+                            goldSpend(costUp3);
+                            displayedTower.updateTowerWorthGold(costUp3);
+                        }
                     }
                 }
             }

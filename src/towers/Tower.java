@@ -167,7 +167,6 @@ public abstract class Tower {
 
     public void Upgrade1Activate() {
         if (!U1) {
-
             if (this instanceof Archer) {
                 ((Archer) this).upgrade(1);
             } else if (this instanceof Cannon) {
@@ -177,6 +176,7 @@ public abstract class Tower {
             } else if (this instanceof MineFactory) {
                 ((MineFactory) this).upgrade(1);
             }
+
         }
         U1 = true;
     }

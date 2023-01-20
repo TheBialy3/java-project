@@ -62,7 +62,7 @@ public class Constants {
             if (isAoe(projectileType)) {
                 switch (projectileType) {
                     case BOMB:
-                        return 50f;
+                        return 70f;
                 }
             }
             return 0;

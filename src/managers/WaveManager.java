@@ -100,8 +100,6 @@ public class WaveManager {
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
         waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-
-
     }
 
     public int getWaveIndex() {
@@ -116,7 +114,7 @@ public class WaveManager {
         return waves;
     }
 
-    public boolean isTimeForNewWave() {
+    public boolean isTimeForNewEnemy() {
         return enemySpownTick >= enemySpownTickLimit;
     }
 

@@ -25,9 +25,9 @@ public class Archer extends Tower {
     public int getCost(int upgrade) {
         switch (upgrade) {
             case 1:
-                return 100;
+                return 200;
             case 2:
-                return 150;
+                return 250;
             case 3:
                 return 200;
         }
@@ -37,7 +37,7 @@ public class Archer extends Tower {
     public String getName(int upgrade) {
         switch (upgrade) {
             case 1:
-                return "Attack speed +";
+                return "Double attack speed";
             case 2:
                 return "Attack damage +5";
             case 3:

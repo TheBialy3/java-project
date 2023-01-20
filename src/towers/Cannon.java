@@ -14,7 +14,7 @@ public class Cannon extends Tower {
                 this.addDmg(5);
                 return;
             case 3:
-                this.addDmg(15);
+                this.addDmg(10);
                 return;
         }
         return;
