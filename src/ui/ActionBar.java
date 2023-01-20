@@ -176,7 +176,7 @@ public class ActionBar extends Bar {
                 g.drawString("" + Constants.TowerType.getName(towerCostId), 1375, 1018);
                 g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
                 if (towerCostId == FROST_MAGE) {
-                    g.drawString("Slow:" +  Constants.TowerType.getPowerOfSlow(towerCostId)+"%", 1375, 1058);
+                    g.drawString("Slow:" +  100*Constants.TowerType.getPowerOfSlow(towerCostId)+"%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
                     g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCooldown(towerCostId), 1375, 1078);
@@ -185,7 +185,7 @@ public class ActionBar extends Bar {
                 g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
                 g.drawString("Range:" + displayedTower.getRange(), 1375, 1038);
                 if (displayedTower.getTowerType() == FROST_MAGE) {
-                    g.drawString("Slow:" + Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType())+"%", 1375, 1058);
+                    g.drawString("Slow:" + 100*Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType())+"%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
                     g.drawString("AS:" + 60 / displayedTower.getCooldown(), 1375, 1078);

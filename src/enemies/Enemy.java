@@ -6,13 +6,14 @@ import managers.WaveManager;
 
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
 
 public abstract class Enemy {
 
-    private int tick=0;
+    private int tick = 0;
 
     protected EnemyMenager enemyMenager;
     protected WaveManager waveManager;
@@ -23,43 +24,49 @@ public abstract class Enemy {
     protected int ID;
     protected int enemyType;
     protected int lastDir;
-    protected boolean alive = true;
-    protected float slowPower=1f;
+    protected boolean alive;
+    protected float slowPower = 1f;
+    protected boolean revive;
 
-    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager, WaveManager waveManager) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyMenager enemyMenager, WaveManager waveManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
-        this.enemyMenager=enemyMenager;
-        this.waveManager=waveManager;
+        this.enemyMenager = enemyMenager;
+        this.waveManager = waveManager;
         bounds = new Rectangle((int) x, (int) y, 64, 64);
         lastDir = -1;
         setStartHealth();
+        alive = true;
+        setRevive();
     }
 
-    public void tickUp(){
+    private void setRevive() {
+        if(this.enemyType ==ANIMATED_ORK){revive= true;}
+    }
+
+    public void tickUp() {
         tick++;
     }
 
-    public void tickZero(){
-        tick=0;
+    public void tickZero() {
+        tick = 0;
     }
 
-    public int getTick(){
+    public int getTick() {
         return tick;
     }
 
-    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager, WaveManager waveManager,int lastDir) {
+    public void reuse(float x, float y) {
         this.x = x;
         this.y = y;
-        this.ID = ID;
-        this.enemyType = enemyType;
-        this.enemyMenager=enemyMenager;
-        this.waveManager=waveManager;
-        bounds = new Rectangle((int) x, (int) y, 64, 64);
-        this.lastDir = lastDir;
+        this.alive=true;
         setStartHealth();
+    }
+
+    public void killed(){
+        revive = false;
     }
 
     public void move(float speed, int dir) {
@@ -95,8 +102,8 @@ public abstract class Enemy {
     }
 
     protected void setStartHealth() {
-        int a=waveManager.getWaveIndex();
-        health = Constants.EnemyType.getStartHealth(enemyType)*(5+a)/10;
+        int a = waveManager.getWaveIndex();
+        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + a) / 10;
         maxHealth = health;
         System.out.println(health);
     }
@@ -104,23 +111,30 @@ public abstract class Enemy {
     public void hurt(int dmg) {
         this.health -= dmg;
         if (health <= 0) {
-            if(enemyType==ANIMATED_ORK){
-                enemyMenager.addEnemy( ORC, (int)x,(int) y, lastDir);
+            alive = false;
+            if (enemyType == ANIMATED_ORK) {
+                if(this.revive){
+                    killed();
+                    reuse(this.x,this.y);
+                }
             }
-                alive = false;
-                enemyMenager.rewardPlayer(enemyType);
+            enemyMenager.rewardPlayer(enemyType);
 
         }
     }
 
     public void kill() {
-        health=0;
-        alive=false;
+        health = 0;
+        alive = false;
+    }
+
+    public boolean doesRevive() {
+        return revive;
     }
 
     public void slow(float powerOfSlow) {
         slowTick = 0;
-        slowPower=powerOfSlow;
+        slowPower = powerOfSlow;
     }
 
     public void setPos(int x, int y) {
@@ -163,7 +177,7 @@ public abstract class Enemy {
 
     public boolean isSlowd() {
 
-        return  slowTick < slowTickLimit;
+        return slowTick < slowTickLimit;
     }
 
     public void setLastDir(int newDir) {

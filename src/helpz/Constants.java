@@ -62,26 +62,11 @@ public class Constants {
             if (isAoe(projectileType)) {
                 switch (projectileType) {
                     case BOMB:
-                        return 40f;
+                        return 50f;
                 }
             }
             return 0;
         }
-
-        public static boolean isSlow(int projectileType) {
-            switch (projectileType) {
-                case ARROW:
-                    return false;
-                case BOMB:
-                    return false;
-                case FROST_BEEM:
-                    return true;
-                case MINE:
-                    return false;
-            }
-            return false;
-        }
-
 
     }
 

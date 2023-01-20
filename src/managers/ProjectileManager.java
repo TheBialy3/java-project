@@ -102,13 +102,9 @@ public class ProjectileManager {
                 if (isProjHitingEnemy(p)) {
                     p.setActive(false);
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
-                        explodeOnEnemys(p);
-                    }
-                    if (p.getProjectileType() == BOMB ) {
                         explosions.add(new Explosion(p.getPos()));
-
                     }
-                }else if (isProjOutOfBounds(p)) {
+                } else if (isProjOutOfBounds(p)) {
                     p.setActive(false);
                 }
             }
@@ -138,8 +134,8 @@ public class ProjectileManager {
 
     }
 
-    private void explodeOnEnemys(Projectile p) {
-        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+    private void explodeOnEnemys(Projectile p,ArrayList<Enemy> enemies) {
+        for (Enemy e : enemies) {
             if (e.isAlive()) {
                 float xDist = Math.abs(p.getPos().x - e.getX());
                 float yDist = Math.abs(p.getPos().y - e.getY());
@@ -156,7 +152,11 @@ public class ProjectileManager {
             for (Enemy e : playing.getEnemyMenager().getEnemies()) {
                 if (e.isAlive()) {
                     if (e.getBounds().contains(p.getPos())) {
-                        e.hurt(p.getDmg());
+                        if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
+                            explodeOnEnemys(p,playing.getEnemyMenager().getEnemies());
+                        } else {
+                            e.hurt(p.getDmg());
+                        }
                         return true;
                     }
                 }

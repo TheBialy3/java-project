@@ -46,8 +46,9 @@ public class EnemyMenager {
 
     private void loadEfectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyEfects = new BufferedImage[1];
+        enemyEfects = new BufferedImage[2];
         enemyEfects[0] = atlas.getSubimage(8 * 64, 0 * 64, 64, 64);
+        enemyEfects[1] = atlas.getSubimage(7 * 64, 0 * 64, 64, 64);
     }
 
     private void loadEnemyImages() {
@@ -121,6 +122,9 @@ public class EnemyMenager {
     private void drawEfects(Enemy e, Graphics g) {
         if (e.isSlowd()) {
             g.drawImage(enemyEfects[0], (int) e.getX(), (int) e.getY(), null);
+        }
+        if(e.doesRevive()){
+            g.drawImage(enemyEfects[1], (int) e.getX()-2, (int) e.getY()-53, null);
         }
     }
 
