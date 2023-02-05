@@ -6,7 +6,6 @@ import managers.WaveManager;
 
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
@@ -43,7 +42,7 @@ public abstract class Enemy {
     }
 
     private void setRevive() {
-        if(this.enemyType ==ANIMATED_ORK){revive= true;}
+        if(this.enemyType == ORK_ZOMBI){revive= true;}
     }
 
     public void tickUp() {
@@ -112,7 +111,7 @@ public abstract class Enemy {
         this.health -= dmg;
         if (health <= 0) {
             alive = false;
-            if (enemyType == ANIMATED_ORK) {
+            if (enemyType == ORK_ZOMBI) {
                 if(this.revive){
                     killed();
                     reuse(this.x,this.y);

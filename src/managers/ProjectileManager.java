@@ -198,8 +198,8 @@ public class ProjectileManager {
                 return BOMB;
             case FROST_MAGE:
                 return FROST_BEEM;
-            case MINE_FACTORY:
-                return MINE;
+            case MINES_FACTORY:
+                return MINES;
         }
         return 0;
     }

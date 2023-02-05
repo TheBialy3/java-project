@@ -40,7 +40,7 @@ public class GameOver extends GameScene implements SceneMethods {
         if(tick>=ANIMATION_SPEED){
             tick=0;
             animationIndex++;
-            if(animationIndex>=30){
+            if(animationIndex>=64){
                 animationIndex=0;
             }
         }

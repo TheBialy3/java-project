@@ -28,7 +28,6 @@ public class TileManager {
     public ArrayList<Tile> waterI = new ArrayList<>();
 
     public TileManager() {
-
         loadAtlas();
         createTiles();
 
@@ -37,7 +36,7 @@ public class TileManager {
 
     private void createTiles() {
         int id = 0;
-        int waterx = 2;
+        int waterx = 1;
         int watery = 9;
 
         tiles.add(WATER = new Tile(getAniSprite(waterx, watery), id++, WATER_TILE));
@@ -118,9 +117,10 @@ public class TileManager {
     }
 
     private BufferedImage[] getAniSprite(int xCord, int yCord) {
-        BufferedImage[] arr = new BufferedImage[30];
-        for (int i = 0; i < 30; i++) {
-            arr[i] = getWaterSprite(xCord * (64 + i * 5), yCord * (64));
+        int jumps =64;
+        BufferedImage[] arr = new BufferedImage[jumps];
+        for (int i = 0; i < jumps; i++) {
+            arr[i] = getWaterSprite(xCord*64 +  i * 8, yCord * (64));
         }
         return arr;
     }

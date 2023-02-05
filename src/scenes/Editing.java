@@ -18,12 +18,11 @@ public class Editing extends GameScene implements SceneMethods {
 
 
     private static int[][] lvl;
-
-
     private Tile selectedTile;
     private int mouseX, mouseY;
     private boolean drawSelect;
     private int tileXLast, tileYLast, lastTileId;
+    private static int chosenLvl=1;
 
     private ToolBar toolBar;
     private PathPoint start, end;
@@ -34,12 +33,16 @@ public class Editing extends GameScene implements SceneMethods {
         toolBar = new ToolBar(1280, 0, 256, 1280, this);
     }
 
-    private void LoadDefoultLevel() {
+    public void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData();
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start=points.get(0);
         end=points.get(1);
     }
+
+//    public void setLvlFile(int chosenL){
+//        chosenLvl=chosenL;
+//    }
 
     public void update() {
         updateTick();
@@ -87,7 +90,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("newlevel", lvl, start, end);
+        LoadSave.SaveLevel("level"+chosenLvl, lvl, start, end);
         game.getPlaying().setLevel(lvl);
     }
 

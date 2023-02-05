@@ -20,7 +20,7 @@ public class ActionBar extends Bar {
     private Tower displayedTower;
     private String textUp1, textUp2, textUp3;
 
-    private int gold = 300, costUp1, costUp2, costUp3;
+    private int gold = 100, costUp1, costUp2, costUp3;
     private boolean showTowerCost;
 
     private int towerCostId;
@@ -215,7 +215,7 @@ public class ActionBar extends Bar {
     }
 
     private void drawDisplayedTowerRange(Graphics g) {
-        if (displayedTower.getTowerType() == MINE_FACTORY) {
+        if (displayedTower.getTowerType() == MINES_FACTORY) {
             g.setColor(Color.BLACK);
             g.drawRect((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
         } else {
@@ -397,7 +397,7 @@ public class ActionBar extends Bar {
                         case FROST_MAGE:
                             selectedTower = new FrostMage(x, y, 0, b.getId(), road);
                             break;
-                        case MINE_FACTORY:
+                        case MINES_FACTORY:
                             road = playing.getRoadDirArr();
                             selectedTower = new MineFactory(x, y, 0, b.getId(), road);
                             break;
@@ -463,7 +463,7 @@ public class ActionBar extends Bar {
                         case FROST_MAGE:
                             selectedTower = new FrostMage(x, y, 0, b.getId(), road);
                             break;
-                        case MINE_FACTORY:
+                        case MINES_FACTORY:
                             road = playing.getRoadDirArr();
                             selectedTower = new MineFactory(x, y, 0, b.getId(), road);
                             break;

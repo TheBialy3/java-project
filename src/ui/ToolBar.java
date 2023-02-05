@@ -216,21 +216,27 @@ public class ToolBar extends Bar {
 
     public void mouseDragged(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
-            bMenu.setMousePressed(true);
+            SetGameState(MENU);
         } else if (bSave.getBounds().contains(x, y)) {
-            bSave.setMousePressed(true);
+            saveLevel();
         } else if (bWater.getBounds().contains(x, y)) {
-            bWater.setMousePressed(true);
+            selectedTile = editing.getGame().getTileManager().getTile(bWater.getId());
+            editing.setSelectedTile(selectedTile);
+            return;
         } else if (bPathStart.getBounds().contains(x, y)) {
-            bPathStart.setMousePressed(true);
+            selectedTile = new Tile(pathStart,-1,-1);
+            editing.setSelectedTile(selectedTile);
+            return;
         } else if (bPathEnd.getBounds().contains(x, y)) {
-            bPathEnd.setMousePressed(true);
+            selectedTile = new Tile(pathEnd,-2,-2);
+            editing.setSelectedTile(selectedTile);
+            return;
+
         } else {
             for (MyButton b : map.keySet()) {
                 if (b.getBounds().contains(x, y)) {
-                    b.setMousePressed(true);
-                    currentButton = b;
-                    currentIndex = 0;
+                    selectedTile = map.get(b).get(0);
+                    editing.setSelectedTile(selectedTile);
                     return;
                 }
             }

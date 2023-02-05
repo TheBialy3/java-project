@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static helpz.Constants.TowerType.*;
-import static helpz.Constants.TowerType.MINE_FACTORY;
+import static helpz.Constants.TowerType.MINES_FACTORY;
 
 public class TowerManager {
 
@@ -64,8 +64,8 @@ public class TowerManager {
             case FROST_MAGE:
                 towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, road));
                 break;
-            case MINE_FACTORY:
-                towers.add(new MineFactory(x, y, towerAmount++, MINE_FACTORY, road));
+            case MINES_FACTORY:
+                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, road));
                 towers.get(towers.size() - 1).isRoadNextTot();
                 break;
         }
@@ -82,7 +82,7 @@ public class TowerManager {
     public void update() {
         for (Tower t : towers) {
             t.update();
-            if (t.getTowerType() == MINE_FACTORY) {
+            if (t.getTowerType() == MINES_FACTORY) {
                 setMine(t);
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);

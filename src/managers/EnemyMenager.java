@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.ORC;
-import static helpz.Constants.Tiles.ROAD_TILE;
 
 public class EnemyMenager {
 
@@ -28,21 +27,19 @@ public class EnemyMenager {
     protected WaveManager waveManager;
 
     public EnemyMenager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
+        this.waveManager=waveManager;
         this.playing = playing;
         this.start = start;
         this.end = end;
         loadRoadDirArr();
         loadEnemyImages();
         loadEfectsImages();
-        this.waveManager=waveManager;
-    }
 
+    }
 
     private void loadRoadDirArr() {
          roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
     }
-
-
 
     private void loadEfectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
@@ -78,25 +75,8 @@ public class EnemyMenager {
             case TENTACLE:
                 enemies.add(new Tentacle(x, y, 0, this,waveManager));
                 break;
-            case ANIMATED_ORK:
-                enemies.add(new Ball(x, y, 0, this,waveManager));
-                break;
-        }
-    }
-
-    public void addEnemy(int enemyType,int x, int y,int lastDir) {
-        switch (enemyType) {
-            case ORC:
-                enemies.add(new Orc(x, y, 0, this,waveManager));
-                break;
-            case SLIME:
-                enemies.add(new Slime(x, y, 0, this,waveManager));
-                break;
-            case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0, this,waveManager));
-                break;
-            case ANIMATED_ORK:
-                enemies.add(new Ball(x, y, 0, this,waveManager));
+            case ORK_ZOMBI:
+                enemies.add(new OrcZombi(x, y, 0, this,waveManager));
                 break;
         }
     }
@@ -174,106 +154,6 @@ public class EnemyMenager {
         return new PathPoint((int) (e.getX() / 64), (int) (e.getY() / 64));
     }
 
-    private void updateEnemyMove(Enemy e) {
-        if (e.getLastDir() == -1) {
-            setNewDirectionAndMove(e);
-        }
-        int newX = (int) (e.getX() + getSpeedAndWidth(e.getLastDir(), e.getEnemyType()));
-        int newY = (int) (e.getY() + getSpeedAndHeight(e.getLastDir(), e.getEnemyType()));
-
-        if (getTileType(newX, newY) == ROAD_TILE) {
-            //keep moving
-            e.move(getSpeed(e.getEnemyType()), e.getLastDir());
-        } else if (isAtEnd(e)) {
-            e.kill();
-            playing.removeOneLive();
-        } else {
-            setNewDirectionAndMove(e);
-        }
-    }
-
-    private void setNewDirectionAndMove(Enemy e) {
-        int dir = e.getLastDir();
-
-        //move in tile in 100%
-        int xCord = (int) (e.getX() / 64);
-        int yCord = (int) (e.getY() / 64);
-
-        fixEnemyOffsetTile(e, dir, xCord, yCord);
-
-        if (isAtEnd(e)) {
-            return;
-        }
-
-        if (dir == LEFT || dir == RIGHT) {
-            int newY = (int) (e.getY() + getSpeedAndHeight(UP, e.getEnemyType()));
-            if (getTileType((int) e.getX(), newY) == ROAD_TILE) {
-                e.move(getSpeed(e.getEnemyType()), UP);
-            } else {
-                e.move(getSpeed(e.getEnemyType()), DOWN);
-            }
-        } else {
-            int newX = (int) (e.getX() + getSpeedAndWidth(RIGHT, e.getEnemyType()));
-            if (getTileType(newX, (int) e.getY()) == ROAD_TILE) {
-                e.move(getSpeed(e.getEnemyType()), RIGHT);
-            } else {
-                e.move(getSpeed(e.getEnemyType()), LEFT);
-            }
-        }
-    }
-
-    private void fixEnemyOffsetTile(Enemy e, int dir, int xCord, int yCord) {
-
-        switch (dir) {
-            case RIGHT:
-                if (xCord < 19) {
-                    xCord++;
-                }
-                break;
-            case DOWN:
-                if (yCord < 19) {
-                    yCord++;
-                }
-                break;
-        }
-        e.setPos(xCord * 64, yCord * 64);
-    }
-
-
-    private boolean isAtEnd(Enemy e) {
-        if (e.getX() == end.getxCord() * 64) {
-            if (e.getY() == end.getyCord() * 64) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int getTileType(int newX, int newY) {
-        return playing.getTileType(newX, newY);
-    }
-
-
-    private float getSpeedAndWidth(int dir, int enemyType) {
-        if (dir == LEFT) {
-            return -getSpeed(enemyType);
-        } else if (dir == RIGHT) {
-            return getSpeed(enemyType) + 64;
-        }
-
-        return 0;
-    }
-
-    private float getSpeedAndHeight(int dir, int enemyType) {
-        if (dir == UP) {
-            return -getSpeed(enemyType);
-        } else if (dir == DOWN) {
-            return getSpeed(enemyType) + 64;
-        }
-        return 0;
-    }
-
-
     private void drawHealthBar(Enemy e, Graphics g) {
         g.setColor(Color.RED);
         g.fillRect((int) e.getX() + 32 - (getNewHealthBar(e) / 2), (int) e.getY() - 10, getNewHealthBar(e), 6);
@@ -286,7 +166,7 @@ public class EnemyMenager {
 
     public void drawEnemy(Enemy e, Graphics g) {
 
-        if (e.getEnemyType() == ANIMATED_ORK) {
+        if (e.getEnemyType() == ORK_ZOMBI) {
             e.tickUp();
             if (e.getTick() < 50) {
                 g.drawImage(enemyImages[1], (int) e.getX(), (int) e.getY(), null);

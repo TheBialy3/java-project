@@ -34,6 +34,7 @@ public class Playing extends GameScene implements SceneMethods {
     private Tower selectedTower;
     private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomGold = 5;
     private boolean paused, gameOver, startOfGame = false, win = false;
+    private static int chosenLvl=1;
 
     public Playing(Game game) {
         super(game);
@@ -43,7 +44,6 @@ public class Playing extends GameScene implements SceneMethods {
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
-
     }
 
     public void setLevel(int[][] lvl) {
@@ -169,7 +169,7 @@ public class Playing extends GameScene implements SceneMethods {
         return false;
     }
 
-    private void LoadDefoultLevel() {
+    public void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData();
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start = points.get(0);

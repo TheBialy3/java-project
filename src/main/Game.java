@@ -13,7 +13,7 @@ public class Game extends JFrame implements Runnable {
     private Thread threadGame;
 
     private final double FPS_SET = 120;
-    private final double UPS_SET =60;
+    private final double UPS_SET = 120;
 
     //Classes
     private Render render;
@@ -24,24 +24,20 @@ public class Game extends JFrame implements Runnable {
     private TileManager tileManager;
     private GameOver gameOver;
 
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.gameScreen.initInputs();
+        game.start();
+    }
+
     public Game() {
         initClasses();
-        createDefoultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("gtd vi");
+        setTitle("gtd");
         setResizable(false);
         add(gameScreen);
         pack();
         setVisible(true);
-
-    }
-
-    private void createDefoultLevel() {
-        int[] arr = new int[400];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = 0;
-        }
-        LoadSave.CreateLevel("new_lvl", arr);
     }
 
     private void initClasses() {
@@ -55,10 +51,14 @@ public class Game extends JFrame implements Runnable {
         gameOver = new GameOver(this);
     }
 
+    private void start() {
+        threadGame = new Thread(this) {
+        };
+        threadGame.start();
+    }
 
     private void updateGame() {
         switch (GameStates.gameStates) {
-
             case PLAYING:
                 playing.update();
                 break;
@@ -78,18 +78,6 @@ public class Game extends JFrame implements Runnable {
     }
 
 
-    private void start() {
-        threadGame = new Thread(this) {
-        };
-        threadGame.start();
-    }
-
-    public static void main(String[] args) {
-
-        Game game = new Game();
-        game.gameScreen.initInputs();
-        game.start();
-    }
 
     @Override
     public void run() {

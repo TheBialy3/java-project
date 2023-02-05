@@ -16,10 +16,8 @@ public class Utilz {
                 roadDirArr[j][i]=-1;
             }
         }
-
         PathPoint currTile = start;
         int lastDir = -1;
-
         while (!IsCurrSameAsEnd(currTile, end)) {
             PathPoint prevTile = currTile;
             currTile = GetNextRoadTile(prevTile, lastDir, lvlTypeArr);
@@ -44,20 +42,16 @@ public class Utilz {
             else
                 return RIGHT;
         }
-
     }
 
     private static PathPoint GetNextRoadTile(PathPoint prevTile, int lastDir, int[][] lvlTypeArr) {
-
         int testDir = lastDir;
         PathPoint testTile = GetTileInDir(prevTile, testDir, lastDir);
-
         while (!IsTileRoad(testTile, lvlTypeArr)) {
             testDir++;
             testDir %= 4;
             testTile = GetTileInDir(prevTile, testDir, lastDir);
         }
-
         return testTile;
     }
 
