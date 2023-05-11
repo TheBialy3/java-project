@@ -3,3 +3,4 @@ This project is what I am currently working on. It is not done yet, but it will 
 I am trying to write clear, simple, and functional code. This project is a tower defense game with simple graphics that I created using Asprite and Paint.
 
 Here is a short video demonstrating how the game works.
+https://youtu.be/lEH6rjY4QOU
