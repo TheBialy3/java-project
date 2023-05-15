@@ -18,12 +18,13 @@ public abstract class Enemy {
     protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
-    protected int health, slowTickLimit = 3, slowTick = slowTickLimit;
-    protected int maxHealth;
+    protected int dmg, duration=0;
+    protected int slowTickLimit = 3, slowTick = slowTickLimit;
+    protected int maxHealth,health;
     protected int ID;
     protected int enemyType;
     protected int lastDir;
-    protected boolean alive;
+    protected boolean alive, poisoned=false;
     protected float slowPower = 1f;
     protected boolean revive;
 
@@ -47,11 +48,11 @@ public abstract class Enemy {
 
     public void tickUp() {
         tick++;
+        if (tick<100){
+            tick = 0;
+        }
     }
 
-    public void tickZero() {
-        tick = 0;
-    }
 
     public int getTick() {
         return tick;
@@ -66,6 +67,25 @@ public abstract class Enemy {
 
     public void killed(){
         revive = false;
+    }
+
+    public void setPoisonOn(int dmg, int duration){
+        this.dmg=dmg;
+        this.duration=duration;
+        poisoned=true;
+    }
+
+    public void poisonDamage() {
+        if (0 < duration) {
+            duration--;
+            if (0==duration%10){
+                hurt(dmg);
+            }
+
+        }
+        if (duration==0){
+            poisoned=false;
+        }
     }
 
     public void move(float speed, int dir) {
@@ -89,6 +109,9 @@ public abstract class Enemy {
                 break;
         }
         updateHitbox();
+        if(poisoned){
+            poisonDamage();
+        }
     }
 
     private void updateHitbox() {
@@ -175,8 +198,11 @@ public abstract class Enemy {
     }
 
     public boolean isSlowd() {
-
         return slowTick < slowTickLimit;
+    }
+
+    public boolean isPoisoned() {
+        return poisoned;
     }
 
     public void setLastDir(int newDir) {

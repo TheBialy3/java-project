@@ -4,9 +4,11 @@ import helpz.Constants;
 
 import java.util.ArrayList;
 
+import static helpz.Constants.TowerType.POISON_TOWER;
+
 public abstract class Tower {
 
-    private int x, y, id, towerType, cdTick, dmg, worthGold;
+    private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
     private float range, cooldown;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
@@ -22,6 +24,9 @@ public abstract class Tower {
         setDefaultCooldown();
         this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
+        if(Constants.TowerType.isDOT(towerType)){
+            duration=Constants.TowerType.getDefaulDuration(towerType);
+        }
     }
 
     public void update() {
@@ -139,10 +144,7 @@ public abstract class Tower {
     }
 
     public void reduceCooldown(float cooldown) {
-        System.out.println(this.cooldown);
-        System.out.println(cooldown);
         this.cooldown -= cooldown;
-        System.out.println(this.cooldown);
     }
 
     public void addRange(float range) {
@@ -175,6 +177,8 @@ public abstract class Tower {
                 ((FrostMage) this).upgrade(1);
             } else if (this instanceof MineFactory) {
                 ((MineFactory) this).upgrade(1);
+            }else if (this instanceof PoisonTower) {
+                ((PoisonTower) this).upgrade(1);
             }
 
         }
@@ -192,6 +196,8 @@ public abstract class Tower {
                 ((FrostMage) this).upgrade(2);
             } else if (this instanceof MineFactory) {
                 ((MineFactory) this).upgrade(2);
+            }else if (this instanceof PoisonTower) {
+                ((PoisonTower) this).upgrade(2);
             }
         }
         U2 = true;
@@ -208,8 +214,19 @@ public abstract class Tower {
                 ((FrostMage) this).upgrade(3);
             } else if (this instanceof MineFactory) {
                 ((MineFactory) this).upgrade(3);
+            }else if (this instanceof PoisonTower) {
+                ((PoisonTower) this).upgrade(3);
             }
         }
         U3 = true;
     }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void addDuration(int duration) {
+        this.duration += duration;
+    }
+
 }

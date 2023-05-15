@@ -11,23 +11,25 @@ import static helpz.Constants.EnemyType.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.ORC;
 
 public class EnemyMenager {
 
+    private Random random = new Random();
     private Playing playing;
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
-    private int HPbarWidth = 50;
+    private int HPbarWidth = 50, i = 0, ranl = random.nextInt(25),ranr = random.nextInt(25);
     private BufferedImage[] enemyEfects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
 
     public EnemyMenager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
-        this.waveManager=waveManager;
+        this.waveManager = waveManager;
         this.playing = playing;
         this.start = start;
         this.end = end;
@@ -38,14 +40,15 @@ public class EnemyMenager {
     }
 
     private void loadRoadDirArr() {
-         roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
+        roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
     }
 
     private void loadEfectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyEfects = new BufferedImage[2];
+        enemyEfects = new BufferedImage[3];
         enemyEfects[0] = atlas.getSubimage(8 * 64, 0 * 64, 64, 64);
         enemyEfects[1] = atlas.getSubimage(7 * 64, 0 * 64, 64, 64);
+        enemyEfects[2] = atlas.getSubimage(5 * 64, 1 * 64, 64, 64);
     }
 
     private void loadEnemyImages() {
@@ -67,26 +70,32 @@ public class EnemyMenager {
         int y = start.getyCord() * 64;
         switch (enemyType) {
             case ORC:
-                enemies.add(new Orc(x, y, 0, this,waveManager));
+                enemies.add(new Orc(x, y, 0, this, waveManager));
                 break;
             case SLIME:
-                enemies.add(new Slime(x, y, 0, this,waveManager));
+                enemies.add(new Slime(x, y, 0, this, waveManager));
                 break;
             case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0, this,waveManager));
+                enemies.add(new Tentacle(x, y, 0, this, waveManager));
                 break;
             case ORK_ZOMBI:
-                enemies.add(new OrcZombi(x, y, 0, this,waveManager));
+                enemies.add(new OrcZombi(x, y, 0, this, waveManager));
                 break;
         }
     }
 
     public void update() {
+        i++;
         for (Enemy e : enemies) {
             if (e.isAlive()) {
                 updateEnemyMoveNew(e);
             }
         }
+    }
+
+    public void resetRand() {
+        ranl = random.nextInt(25);
+        ranr = random.nextInt(25);
     }
 
     public void draw(Graphics g) {
@@ -100,11 +109,26 @@ public class EnemyMenager {
     }
 
     private void drawEfects(Enemy e, Graphics g) {
+
         if (e.isSlowd()) {
             g.drawImage(enemyEfects[0], (int) e.getX(), (int) e.getY(), null);
         }
-        if(e.doesRevive()){
-            g.drawImage(enemyEfects[1], (int) e.getX()-2, (int) e.getY()-53, null);
+        if (e.doesRevive()) {
+            g.drawImage(enemyEfects[1], (int) e.getX() - 2, (int) e.getY() - 53, null);
+        }
+        if (e.isPoisoned()) {
+            if((i/8)%4==4) {
+                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((i/5) % 2), (int) e.getY() + 25 - (i / 3), null);
+                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((i/5) % 2), (int) e.getY() + 25 - (((i+75)%150) / 3), null);
+            }else {
+            g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr+((i/5)%4), (int) e.getY() + 25 - (i / 3), null);
+            g.drawImage(enemyEfects[2], (int) e.getX() + ranl+((i/5)%4), (int) e.getY() + 25 - (((i+75)%150) / 3), null);}
+            if (i > 150) {
+                i = 0;
+                resetRand();
+            }
+
+
         }
     }
 
@@ -172,9 +196,6 @@ public class EnemyMenager {
                 g.drawImage(enemyImages[1], (int) e.getX(), (int) e.getY(), null);
             } else {
                 g.drawImage(enemyImages[4], (int) e.getX(), (int) e.getY(), null);
-                if (e.getTick() > 100) {
-                    e.tickZero();
-                }
             }
         } else {
             g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
@@ -199,11 +220,11 @@ public class EnemyMenager {
         playing.rewardPlayer(enemyType);
     }
 
-    public void reset(){
+    public void reset() {
         enemies.clear();
     }
 
-    public int[][] getRoadDirArr(){
+    public int[][] getRoadDirArr() {
         return roadDirArr;
     }
 }

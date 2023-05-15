@@ -1,19 +1,17 @@
 package main;
 
-import helpz.LoadSave;
 import managers.TileManager;
 import scenes.*;
 
 import javax.swing.*;
-
 
 public class Game extends JFrame implements Runnable {
 
     private GameScreen gameScreen;
     private Thread threadGame;
 
-    private final double FPS_SET = 120;
-    private final double UPS_SET = 120;
+    private final double FPS_SET = 60;
+    private final double UPS_SET = 60;
 
     //Classes
     private Render render;
@@ -81,7 +79,6 @@ public class Game extends JFrame implements Runnable {
 
     @Override
     public void run() {
-
         double timePerFrame = 1000000000.0 / FPS_SET;
         double timePerUpdate = 1000000000.0 / UPS_SET;
 
@@ -109,7 +106,6 @@ public class Game extends JFrame implements Runnable {
                 updates++;
             }
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-
                 if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
                     System.out.println("FPS: " + frames + "| UPS:" + updates);
                     frames = 0;

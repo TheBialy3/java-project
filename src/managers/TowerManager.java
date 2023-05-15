@@ -45,11 +45,12 @@ public class TowerManager {
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        towerImgs = new BufferedImage[4];
-        towerImgs[0] = atlas.getSubimage(7 * 64, 2 * 64, 64, 64);
+        towerImgs = new BufferedImage[5];
+        towerImgs[0] = atlas.getSubimage(0 * 64, 8 * 64, 64, 64);
         towerImgs[1] = atlas.getSubimage(8 * 64, 2 * 64, 64, 64);
         towerImgs[2] = atlas.getSubimage(0 * 64, 7 * 64, 64, 64);
         towerImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
+        towerImgs[4] = atlas.getSubimage(7 * 64, 2 * 64, 64, 64);
         road = playing.getRoadDirArr();
     }
 
@@ -67,6 +68,9 @@ public class TowerManager {
             case MINES_FACTORY:
                 towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, road));
                 towers.get(towers.size() - 1).isRoadNextTot();
+                break;
+            case POISON_TOWER:
+                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, road));
                 break;
         }
     }

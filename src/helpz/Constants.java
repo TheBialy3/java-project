@@ -14,6 +14,7 @@ public class Constants {
         public static final int BOMB = 1;
         public static final int FROST_BEEM = 2;
         public static final int MINES = 3;
+        public static final int POISON_POTION = 4;
 
 
         public static float getSpeed(int projectileType) {
@@ -26,6 +27,8 @@ public class Constants {
                     return 6f;
                 case MINES:
                     return 3f;
+                case POISON_POTION:
+                    return 4f;
             }
             return 0;
         }
@@ -39,6 +42,8 @@ public class Constants {
                 case FROST_BEEM:
                     return true;
                 case MINES:
+                    return false;
+                case POISON_POTION:
                     return false;
             }
             return false;
@@ -54,6 +59,8 @@ public class Constants {
                     return false;
                 case MINES:
                     return false;
+                case POISON_POTION:
+                    return true;
             }
             return false;
         }
@@ -62,7 +69,9 @@ public class Constants {
             if (isAoe(projectileType)) {
                 switch (projectileType) {
                     case BOMB:
-                        return 70f;
+                        return 80f;
+                    case POISON_POTION:
+                        return 80f;
                 }
             }
             return 0;
@@ -124,6 +133,7 @@ public class Constants {
         public static final int CANNON = 1;
         public static final int FROST_MAGE = 2;
         public static final int MINES_FACTORY = 3;
+        public static final int POISON_TOWER = 4;
 
         public static String getName(int towerType) {
             switch (towerType) {
@@ -135,6 +145,8 @@ public class Constants {
                     return "Frost Mage";
                 case MINES_FACTORY:
                     return "Mines Factory";
+                case POISON_TOWER:
+                    return "Poison Tower";
             }
             return "";
         }
@@ -149,6 +161,8 @@ public class Constants {
                     return true;
                 case MINES_FACTORY:
                     return false;
+                case POISON_TOWER:
+                    return true;
             }
             return false;
         }
@@ -157,6 +171,8 @@ public class Constants {
             if (isSlow(towerType)) {
                 switch (towerType) {
                     case FROST_MAGE:
+                        return 0.5f;
+                    case POISON_TOWER:
                         return 0.5f;
                 }
             }
@@ -173,6 +189,8 @@ public class Constants {
                     return 125;
                 case MINES_FACTORY:
                     return 200;
+                case POISON_TOWER:
+                    return 200;
             }
             return 0;
         }
@@ -186,6 +204,8 @@ public class Constants {
                 case FROST_MAGE:
                     return 0;
                 case MINES_FACTORY:
+                    return 90;
+                case POISON_TOWER:
                     return 90;
             }
             return 0;
@@ -201,6 +221,8 @@ public class Constants {
                     return 100;
                 case MINES_FACTORY:
                     return 96;
+                case POISON_TOWER:
+                    return 250;
             }
             return 0;
         }
@@ -215,16 +237,46 @@ public class Constants {
                     return 0;
                 case MINES_FACTORY:
                     return 10;
+                case POISON_TOWER:
+                    return 1;
             }
             return 0;
         }
+//dot - damage over time
+        public static boolean isDOT(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return false;
+                case CANNON:
+                    return false;
+                case FROST_MAGE:
+                    return true;
+                case MINES_FACTORY:
+                    return false;
+                case POISON_TOWER:
+                    return true;
+            }
+            return false;
+        }
+        public static int getDefaulDuration(int towerType) {
+            if (isSlow(towerType)) {
+                switch (towerType) {
+                    case FROST_MAGE:
+                        return 3;
+                    case POISON_TOWER:
+                        return 300;
+                }
+            }
+            return 1;
+        }
+
     }
 
     public static class Tiles {
         public static final int WATER_TILE = 0;
         public static final int GRASS_TILE = 1;
         public static final int ROAD_TILE = 2;
-        // public static final int ELSE = 3;
+        public static final int ELSE = 3;
     }
 
 

@@ -65,9 +65,9 @@ public class Playing extends GameScene implements SceneMethods {
                     if (isAllEnemysDead()) {
                         if (isThereMoreWaves()) {
 
-                            //start timer albo inicjuj karty
+                            //start timer or card draw
                             waveManager.startWaveTimer();
-                            //timer lub wybór karty
+
                             if (isWaveTimerOver()) {
                                 waveManager.increaseWaveIndex();
                                 enemyMenager.getEnemies().clear();
@@ -83,10 +83,11 @@ public class Playing extends GameScene implements SceneMethods {
                     if (isTimeForNewEnemy()) {
                         spawnEnemy();
                     }
+                    enemyMenager.update();
+                    towerManager.update();
+                    projectileManager.update();
                 }
-                enemyMenager.update();
-                towerManager.update();
-                projectileManager.update();
+
                 if (actionBar.getLives() <= 0) {
                     gameOver = true;
                 }
@@ -413,6 +414,5 @@ public class Playing extends GameScene implements SceneMethods {
     public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
     }
-
 
 }
