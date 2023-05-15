@@ -2,35 +2,90 @@ package enemies;
 
 import helpz.Constants;
 import managers.EnemyMenager;
+import managers.WaveManager;
 
 
 import java.awt.*;
 
 import static helpz.Constants.Direction.*;
+import static helpz.Constants.EnemyType.*;
 
 public abstract class Enemy {
 
+    private int tick = 0;
+
     protected EnemyMenager enemyMenager;
+    protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
-    protected int health, slowTickLimit = 120, slowTick = slowTickLimit;
-    protected int maxHealth;
+    protected int dmg, duration=0;
+    protected int slowTickLimit = 3, slowTick = slowTickLimit;
+    protected int maxHealth,health;
     protected int ID;
     protected int enemyType;
     protected int lastDir;
-    protected boolean alive = true;
-    protected float slowPower=1f;
+    protected boolean alive, poisoned=false;
+    protected float slowPower = 1f;
+    protected boolean revive;
 
-
-    public Enemy(float x, float y, int ID, int enemyType,EnemyMenager enemyMenager) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyMenager enemyMenager, WaveManager waveManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
-        this.enemyMenager=enemyMenager;
+        this.enemyMenager = enemyMenager;
+        this.waveManager = waveManager;
         bounds = new Rectangle((int) x, (int) y, 64, 64);
         lastDir = -1;
         setStartHealth();
+        alive = true;
+        setRevive();
+    }
+
+    private void setRevive() {
+        if(this.enemyType == ORK_ZOMBI){revive= true;}
+    }
+
+    public void tickUp() {
+        tick++;
+        if (tick<100){
+            tick = 0;
+        }
+    }
+
+
+    public int getTick() {
+        return tick;
+    }
+
+    public void reuse(float x, float y) {
+        this.x = x;
+        this.y = y;
+        this.alive=true;
+        setStartHealth();
+    }
+
+    public void killed(){
+        revive = false;
+    }
+
+    public void setPoisonOn(int dmg, int duration){
+        this.dmg=dmg;
+        this.duration=duration;
+        poisoned=true;
+    }
+
+    public void poisonDamage() {
+        if (0 < duration) {
+            duration--;
+            if (0==duration%10){
+                hurt(dmg);
+            }
+
+        }
+        if (duration==0){
+            poisoned=false;
+        }
     }
 
     public void move(float speed, int dir) {
@@ -54,6 +109,9 @@ public abstract class Enemy {
                 break;
         }
         updateHitbox();
+        if(poisoned){
+            poisonDamage();
+        }
     }
 
     private void updateHitbox() {
@@ -61,33 +119,44 @@ public abstract class Enemy {
         bounds.y = (int) y;
     }
 
-
-
     public float getHealthBar() {
         return (float) health / maxHealth;
     }
 
     protected void setStartHealth() {
-        health = Constants.EnemyType.GetStartHealth(enemyType);
+        int a = waveManager.getWaveIndex();
+        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + a) / 10;
         maxHealth = health;
+        System.out.println(health);
     }
 
     public void hurt(int dmg) {
         this.health -= dmg;
         if (health <= 0) {
             alive = false;
+            if (enemyType == ORK_ZOMBI) {
+                if(this.revive){
+                    killed();
+                    reuse(this.x,this.y);
+                }
+            }
             enemyMenager.rewardPlayer(enemyType);
+
         }
     }
 
     public void kill() {
-        health=0;
-        alive=false;
+        health = 0;
+        alive = false;
+    }
+
+    public boolean doesRevive() {
+        return revive;
     }
 
     public void slow(float powerOfSlow) {
         slowTick = 0;
-        slowPower=powerOfSlow;
+        slowPower = powerOfSlow;
     }
 
     public void setPos(int x, int y) {
@@ -129,7 +198,14 @@ public abstract class Enemy {
     }
 
     public boolean isSlowd() {
+        return slowTick < slowTickLimit;
+    }
 
-        return  slowTick < slowTickLimit;
+    public boolean isPoisoned() {
+        return poisoned;
+    }
+
+    public void setLastDir(int newDir) {
+        this.lastDir = newDir;
     }
 }

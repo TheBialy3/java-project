@@ -64,8 +64,8 @@ public class LoadSave {
         return list;
     }
 
-    public static ArrayList<PathPoint> getPathPoints(String name){
-        File lvlFile = new File("res/" + name + ".txt");
+    public static ArrayList<PathPoint> getPathPoints(){
+        File lvlFile = new File("res/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<PathPoint> points = new ArrayList<>();
@@ -73,18 +73,18 @@ public class LoadSave {
             points.add(new PathPoint(list.get(402),list.get(403)));
             return points;
         } else {
-            System.out.println("File: " + name + " nieistnieje");
+            System.out.println("File:  newlevel nieistnieje");
             return null;
         }
     }
 
-    public static int[][] GetLevelData(String name) {
-        File lvlFile = new File("res/" + name + ".txt");
+    public static int[][] GetLevelData() {
+        File lvlFile = new File("res/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             return Utilz.ArrayListTo2Dint(list, 20, 20);
         } else {
-            System.out.println("File: " + name + " nieistnieje");
+            System.out.println("File: level1.txt nieistnieje");
             return null;
         }
 
@@ -110,10 +110,12 @@ public class LoadSave {
     public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end) {
         File lvlFile = new File("res/" + name + ".txt");
         if (lvlFile.exists()) {
-            WriteToFile(lvlFile, Utilz.TwoDTo1Dint(idArr), start, end);
+            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end);
         } else {
             System.out.println("file " + name + " does not exists");
             return;
         }
     }
+
+
 }

@@ -31,6 +31,10 @@ public class Settings extends GameScene implements SceneMethods {
         initButtons();
     }
 
+    public void update() {
+        updateTick();
+    }
+
     private void initButtons() {
         int w = 400;
         int h = w / 4;
@@ -43,12 +47,27 @@ public class Settings extends GameScene implements SceneMethods {
         bMenu = new MyButton("Menu", x, y + yOffset + yOffset, w, h);
     }
 
+    protected void updateTick() {
+        tick++;
+        if(tick>=ANIMATION_SPEED){
+            tick=0;
+            animationIndex++;
+            if(animationIndex>=64){
+                animationIndex=0;
+            }
+        }
+    }
+
     @Override
     public void render(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
-                g.drawImage(tileManager.getSprite(id), x * 64, y * 64, null);
+                if (isAnimation(id)) {
+                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
+                } else {
+                    g.drawImage(getSprite(id), x * 64, y * 64, null);
+                }
             }
         }
         drawButtons(g);

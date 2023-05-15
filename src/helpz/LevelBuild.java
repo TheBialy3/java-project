@@ -2,7 +2,6 @@ package helpz;
 
 public class LevelBuild {
     public static int[][] getLevelData(){
-        //create a map 20x20
         //every value is a tile on the level.
 
         int[][] lvl={

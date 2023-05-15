@@ -3,25 +3,29 @@ package managers;
 import enemies.Enemy;
 import helpz.Constants;
 import helpz.LoadSave;
+import objects.PathPoint;
 import objects.Projectile;
-import objects.Tower;
+import towers.Tower;
 import scenes.Playing;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static helpz.Constants.ProjectileType.*;
 import static helpz.Constants.TowerType.*;
 
 public class ProjectileManager {
 
+    private Random random = new Random();
+
     private Playing playing;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Explosion> explosions = new ArrayList<>();
-    private BufferedImage[] proj_imgs, explo_imgs;
-    private int proj_id = 0;
+    private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
+    private int proj_id = 0, ranx, rany;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -32,19 +36,22 @@ public class ProjectileManager {
     private void importImgs() {
         //0,4
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        proj_imgs = new BufferedImage[4];
+        proj_imgs = new BufferedImage[5];
         proj_imgs[0] = atlas.getSubimage(4 * 64, 4 * 64, 64, 64);
         proj_imgs[1] = atlas.getSubimage(6 * 64, 2 * 64, 64, 64);
         proj_imgs[2] = atlas.getSubimage(7 * 64, 1 * 64, 64, 64);
         proj_imgs[3] = atlas.getSubimage(6 * 64, 0 * 64, 64, 64);
+        proj_imgs[4] = atlas.getSubimage(4 * 64, 1 * 64, 64, 64);
         implortExplosion(atlas);
     }
 
     private void implortExplosion(BufferedImage atlas) {
-        explo_imgs = new BufferedImage[9];
-        for (int i = 0; i < 9; i++) {
+        explo_imgs = new BufferedImage[10];
+        for (int i = 0; i < 10; i++) {
             explo_imgs[i] = atlas.getSubimage(i * 64, 5 * 64, 64, 64);
         }
+        splash_imgs = new BufferedImage[1];
+        splash_imgs[0] = atlas.getSubimage(5 * 64, 3 * 64, 64, 64);
     }
 
     public void newProjectile(Tower t, Enemy e) {
@@ -56,8 +63,8 @@ public class ProjectileManager {
 
         float xPer = (float) Math.abs(xDist) / totDist;
 
-        float xSpeed = xPer * helpz.Constants.ProjectileType.GetSpeed(type);
-        float ySpeed = helpz.Constants.ProjectileType.GetSpeed(type) - xSpeed;
+        float xSpeed = xPer * helpz.Constants.ProjectileType.getSpeed(type);
+        float ySpeed = helpz.Constants.ProjectileType.getSpeed(type) - xSpeed;
 
         if (t.getX() > e.getX())
             xSpeed *= -1;
@@ -73,16 +80,30 @@ public class ProjectileManager {
             if (xDist > 0)
                 rotate += 180;
         }
-
-//        for (Projectile p : projectiles)
-//            if (!p.isActive())
-//                if (p.getProjectileType() == type) {
-//                  p.reuse(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate);
-//                    return;
-//                }
-
+        for (Projectile p : projectiles) {
+            if (!p.isActive()) {
+                if (p.getProjectileType() == type) {
+                    if (p.getProjectileType() == POISON_POTION) {
+                        p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, t.getDuration());
+                        return;
+                    }
+                    p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
+                    return;
+                }
+            }
+        }
+        if (t.getTowerType() == POISON_TOWER) {
+            projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration()));
+            return;
+        }
         projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
+    }
 
+    public void newMine(Tower t, PathPoint e) {
+        int type = getProjType(t);
+        ranx = random.nextInt(44);
+        rany = random.nextInt(44);
+        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type));
     }
 
     public void update() {
@@ -92,34 +113,54 @@ public class ProjectileManager {
                 if (isProjHitingEnemy(p)) {
                     p.setActive(false);
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
-                        explodeOnEnemys(p);
+                        if (p.getProjectileType() == BOMB) {
+                            explosions.add(new Explosion(p.getPos(), p.getProjectileType()));
+                        }
+                        if (p.getProjectileType() == POISON_POTION) {
+                            explosions.add(new Explosion(p.getPos(), p.getProjectileType()));
+                        }
                     }
-                    if (p.getProjectileType() == BOMB) {
-                        explosions.add(new Explosion(p.getPos()));
-
-                    }
-                } else {
-                    // do nothing
+                } else if (isProjOutOfBounds(p)) {
+                    p.setActive(false);
                 }
             }
         }
         for (Explosion e : explosions) {
-            if (e.getIndex() < 9) {
+            if (e.getIndex() < 10) {
                 e.update();
             }
         }
     }
 
-    private void explodeOnEnemys(Projectile p) {
-        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+    private boolean isProjOutOfBounds(Projectile p) {
+        if (p.getPos().x <= 0) {
+            return true;
+        }
+        if (p.getPos().x >= 1280) {
+            return true;
+        }
+        if (p.getPos().y <= 0) {
+            return true;
+        }
+        if (p.getPos().y >= 1280) {
+            return true;
+        }
+        return false;
+
+
+    }
+
+    private void explodeOnEnemys(Projectile p, ArrayList<Enemy> enemies) {
+        for (Enemy e : enemies) {
             if (e.isAlive()) {
                 float xDist = Math.abs(p.getPos().x - e.getX());
                 float yDist = Math.abs(p.getPos().y - e.getY());
                 float realDist = (float) Math.hypot(xDist, yDist);
-                if (realDist <= Constants.ProjectileType.GetRadiusExplosion(p.getProjectileType())) {
-                    e.hurt(p.getDmg());
-                    if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                        e.slow(helpz.Constants.ProjectileType.GetPowerOfSlow(p.getProjectileType()));
+                if (realDist <= Constants.ProjectileType.getRadiusExplosion(p.getProjectileType())) {
+                    if (p.getProjectileType() == POISON_POTION) {
+                        e.setPoisonOn(p.getDmg(), p.getDuration());
+                    } else {
+                        e.hurt(p.getDmg());
                     }
                 }
             }
@@ -131,9 +172,10 @@ public class ProjectileManager {
             for (Enemy e : playing.getEnemyMenager().getEnemies()) {
                 if (e.isAlive()) {
                     if (e.getBounds().contains(p.getPos())) {
-                        e.hurt(p.getDmg());
-                        if (helpz.Constants.ProjectileType.isSlow(p.getProjectileType())) {
-                            e.slow(helpz.Constants.ProjectileType.GetPowerOfSlow(p.getProjectileType()));
+                        if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
+                            explodeOnEnemys(p, playing.getEnemyMenager().getEnemies());
+                        } else {
+                            e.hurt(p.getDmg());
                         }
                         return true;
                     }
@@ -145,8 +187,7 @@ public class ProjectileManager {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
-        for (Projectile p : projectiles)
+        for (Projectile p : projectiles) {
             if (p.isActive()) {
                 if (helpz.Constants.ProjectileType.isRorating(p.getProjectileType())) {
                     g2d.translate(p.getPos().x, p.getPos().y);
@@ -158,15 +199,21 @@ public class ProjectileManager {
                     g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - 32, (int) p.getPos().y - 32, null);
                 }
             }
-        drawExplosions(g2d);
-
+            drawExplosions(g2d);
+        }
     }
 
     private void drawExplosions(Graphics2D g2d) {
         for (Explosion e : explosions) {
-            if (e.getIndex() < 9) {
-                g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
-            }//else if (e.getIndex() == 9){ aoeExplosionsdamageSet =false; }
+            if (e.getExploType() == BOMB) {
+                if (e.getIndex() < 10) {
+                    g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
+                }//else if (e.getIndex() == 10){ aoeExplosionsdamageSet =false; }
+            }else {
+                if (e.getIndex() < 10) {
+                    g2d.drawImage(splash_imgs[0], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
+                }
+            }
         }
     }
 
@@ -178,19 +225,26 @@ public class ProjectileManager {
                 return BOMB;
             case FROST_MAGE:
                 return FROST_BEEM;
-            case MINE_FACTORY:
-                return MINE;
+            case MINES_FACTORY:
+                return MINES;
+            case POISON_TOWER:
+                return POISON_POTION;
         }
         return 0;
     }
 
+    public void endOfWave() {
+        projectiles.clear();
+    }
+
     public class Explosion {
 
-        private int exploTick = 0, exploIndex = 0;
+        private int exploTick = 0, exploIndex = 0, type;
         private Point2D.Float pos;
 
-        public Explosion(Point2D.Float pos) {
+        public Explosion(Point2D.Float pos, int type) {
             this.pos = pos;
+            this.type = type;
         }
 
         public void update() {
@@ -201,6 +255,10 @@ public class ProjectileManager {
             }
         }
 
+        public int getExploType() {
+            return type;
+        }
+
         public int getIndex() {
             return exploIndex;
         }
@@ -208,6 +266,12 @@ public class ProjectileManager {
         public Point2D.Float getPos() {
             return pos;
         }
+    }
+
+    public void reset() {
+        projectiles.clear();
+        explosions.clear();
+        proj_id = 0;
     }
 }
 

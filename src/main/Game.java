@@ -1,21 +1,16 @@
 package main;
 
-import helpz.LoadSave;
 import managers.TileManager;
-import scenes.Editing;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 import javax.swing.*;
-
 
 public class Game extends JFrame implements Runnable {
 
     private GameScreen gameScreen;
     private Thread threadGame;
 
-    private final double FPS_SET = 120;
+    private final double FPS_SET = 60;
     private final double UPS_SET = 60;
 
     //Classes
@@ -25,24 +20,22 @@ public class Game extends JFrame implements Runnable {
     private Settings settings;
     private Editing editing;
     private TileManager tileManager;
+    private GameOver gameOver;
+
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.gameScreen.initInputs();
+        game.start();
+    }
 
     public Game() {
         initClasses();
-        createDefoultLevel();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
+        setTitle("gtd");
         setResizable(false);
         add(gameScreen);
         pack();
         setVisible(true);
-    }
-
-    private void createDefoultLevel() {
-        int[] arr = new int[400];
-        for (int i = 0; i < arr.length; ++i) {
-            arr[i] = 0;
-        }
-        LoadSave.CreateLevel("new_lvl", arr);
     }
 
     private void initClasses() {
@@ -53,27 +46,8 @@ public class Game extends JFrame implements Runnable {
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
-
+        gameOver = new GameOver(this);
     }
-
-
-    private void updateGame() {
-        switch (GameStates.gameStates) {
-
-            case PLAYING:
-                playing.update();
-                break;
-
-            case EDITING:
-                editing.update();
-                break;
-            case MENU:
-                break;
-            case SETTINGS:
-                break;
-        }
-    }
-
 
     private void start() {
         threadGame = new Thread(this) {
@@ -81,16 +55,30 @@ public class Game extends JFrame implements Runnable {
         threadGame.start();
     }
 
-    public static void main(String[] args) {
-
-        Game game = new Game();
-        game.gameScreen.initInputs();
-        game.start();
+    private void updateGame() {
+        switch (GameStates.gameStates) {
+            case PLAYING:
+                playing.update();
+                break;
+            case EDITING:
+                editing.update();
+                break;
+            case MENU:
+                menu.update();
+                break;
+            case SETTINGS:
+                settings.update();
+                break;
+            case GAME_OVER:
+                gameOver.update();
+                break;
+        }
     }
+
+
 
     @Override
     public void run() {
-
         double timePerFrame = 1000000000.0 / FPS_SET;
         double timePerUpdate = 1000000000.0 / UPS_SET;
 
@@ -118,7 +106,6 @@ public class Game extends JFrame implements Runnable {
                 updates++;
             }
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-
                 if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
                     System.out.println("FPS: " + frames + "| UPS:" + updates);
                     frames = 0;
@@ -148,6 +135,10 @@ public class Game extends JFrame implements Runnable {
 
     public Editing getEditing() {
         return editing;
+    }
+
+    public GameOver getGameOver() {
+        return gameOver;
     }
 
     public TileManager getTileManager() {

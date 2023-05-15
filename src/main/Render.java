@@ -10,11 +10,6 @@ public class Render {
 
     public Render(Game game) {
         this.game = game;
-
-
-
-
-
     }
 
     public void render(Graphics g) {
@@ -31,6 +26,9 @@ public class Render {
                 break;
             case SETTINGS:
                 game.getSettings().render(g);
+                break;
+            case GAME_OVER:
+                game.getGameOver().render(g);
                 break;
         }
     }
