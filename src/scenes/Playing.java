@@ -250,10 +250,7 @@ public class Playing extends GameScene implements SceneMethods {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
                         actionBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
-
                         selectedTower = null;
-
-
                     }
                 }
             } else {

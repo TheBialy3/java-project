@@ -9,7 +9,7 @@ public class GameScene {
     protected Game game;
     protected int animationIndex;
     protected int tick;
-    protected int ANIMATION_SPEED=15;
+    protected int ANIMATION_SPEED=5;
 
     public GameScene(Game game){
         this.game = game;
