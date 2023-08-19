@@ -50,6 +50,28 @@ public class LoadSave {
         }
     }
 
+    private static void SaveXpToFile(File f,int xp) {
+        try {
+            PrintWriter pw = new PrintWriter(f);
+            pw.println(xp);
+            pw.println(xp);
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int[][] GetXpData() {
+        File lvlFile = new File("res/level1.txt");
+        if (lvlFile.exists()) {
+            ArrayList<Integer> list = ReadFromFile(lvlFile);
+            return Utilz.ArrayListTo2Dint(list, 20, 20);
+        } else {
+            System.out.println("File: level1.txt nieistnieje");
+            return null;
+        }
+    }
+
     private static ArrayList<Integer> ReadFromFile(File file) {
         ArrayList<Integer> list = new ArrayList<>();
         try {
@@ -87,7 +109,6 @@ public class LoadSave {
             System.out.println("File: level1.txt nieistnieje");
             return null;
         }
-
     }
 
     public static void CreateLevel(String name, int[] idArr) {

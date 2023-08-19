@@ -93,6 +93,7 @@ public class Editing extends GameScene implements SceneMethods {
         LoadSave.SaveLevel("level"+chosenLvl, lvl, start, end);
         game.getPlaying().setLevel(lvl);
         game.getPlaying().resetEvrything();
+        game.initClasses();
     }
 
     public void setSelectedTile(Tile tile) {

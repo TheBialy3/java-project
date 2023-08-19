@@ -1,10 +1,12 @@
 package scenes;
 
 import helpz.LevelBuild;
+import helpz.LoadSave;
 import main.Game;
 import managers.EnemyMenager;
 import managers.TileManager;
 import objects.PathPoint;
+import objects.Tile;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -13,7 +15,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Random;
 
+import static helpz.Constants.Tiles.GRASS_TILE;
 import static main.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods {
@@ -21,9 +25,10 @@ public class Menu extends GameScene implements SceneMethods {
     private BufferedImage img;
     private PathPoint start, end;
     private int[][] lvl;
+    private int xlevelSprite=-64,tilePixelNumber= 64 ,ran;
     private TileManager tileManager;
-    private EnemyMenager enemyMenager;
-
+    private BufferedImage[] moveImages;
+    private Random random = new Random();
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
     private MyButton bPlaing, bEditing, bSettings, bQuit;
@@ -73,15 +78,28 @@ public class Menu extends GameScene implements SceneMethods {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
                 if (isAnimation(id)) {
-                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
+                    g.drawImage(getSprite(id, animationIndex), x * tilePixelNumber, y * tilePixelNumber, null);
                 } else {
-                    g.drawImage(getSprite(id), x * 64, y * 64, null);
+                    g.drawImage(getSprite(id), x * tilePixelNumber, y * tilePixelNumber, null);
                 }
             }
         }
 
         drawButtons(g);
-        //enemyMenager.update();
+        drawIt(g);
+    }
+
+    private void drawIt(Graphics g) {
+        xlevelSprite++;
+        if(xlevelSprite>1600){
+            resetDrawIt(g);
+        }
+        g.drawImage(moveImages[ran],xlevelSprite,640 ,tilePixelNumber,tilePixelNumber,null);
+    }
+    private void resetDrawIt(Graphics g) {
+        xlevelSprite=-64;
+        ran = random.nextInt(10);
+
     }
 
     @Override
@@ -154,7 +172,7 @@ public class Menu extends GameScene implements SceneMethods {
     private void loadSprites() {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 10; x++) {
-                sprites.add(img.getSubimage(64 * x, 64 * y, 64, 64));
+                sprites.add(img.getSubimage(tilePixelNumber * x, tilePixelNumber * y, tilePixelNumber, tilePixelNumber));
             }
         }
     }
@@ -166,6 +184,18 @@ public class Menu extends GameScene implements SceneMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        moveImages = new BufferedImage[10];
+        moveImages[0]= atlas.getSubimage(3 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[1] = atlas.getSubimage(0 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[2] = atlas.getSubimage(4 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[3] = atlas.getSubimage(2 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[4] = atlas.getSubimage(1 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[5] = atlas.getSubimage(0 * tilePixelNumber, 8 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[6] = atlas.getSubimage(8 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[7] = atlas.getSubimage(0 * tilePixelNumber, 7 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[8] = atlas.getSubimage(4 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        moveImages[9] = atlas.getSubimage(7 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     @Override

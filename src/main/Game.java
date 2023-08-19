@@ -5,8 +5,11 @@ import scenes.*;
 
 import javax.swing.*;
 
+
+
 public class Game extends JFrame implements Runnable {
 
+    public int xp=0;
     private GameScreen gameScreen;
     private Thread threadGame;
 
@@ -38,7 +41,18 @@ public class Game extends JFrame implements Runnable {
         setVisible(true);
     }
 
-    private void initClasses() {
+    public void initClasses() {
+        tileManager = new TileManager();
+        gameScreen = new GameScreen(this);
+        render = new Render(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
+        settings = new Settings(this);
+        editing = new Editing(this);
+        gameOver = new GameOver(this);
+    }
+
+    public void initClasses(int lvl) {
         tileManager = new TileManager();
         gameScreen = new GameScreen(this);
         render = new Render(this);
@@ -74,7 +88,6 @@ public class Game extends JFrame implements Runnable {
                 break;
         }
     }
-
 
 
     @Override
