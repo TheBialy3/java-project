@@ -43,7 +43,6 @@ public class LoadSave {
             pw.println(start.getyCord());
             pw.println(end.getxCord());
             pw.println(end.getyCord());
-
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,13 +60,27 @@ public class LoadSave {
         }
     }
 
+    private static ArrayList<Integer> ReadSaveFile(File file) {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                list.add(Integer.parseInt(sc.nextLine()));
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static int[][] GetXpData() {
-        File lvlFile = new File("res/level1.txt");
-        if (lvlFile.exists()) {
-            ArrayList<Integer> list = ReadFromFile(lvlFile);
+        File saveFile = new File("res/save.txt");
+        if (saveFile.exists()) {
+            ArrayList<Integer> list = ReadSaveFile(saveFile);
             return Utilz.ArrayListTo2Dint(list, 20, 20);
         } else {
-            System.out.println("File: level1.txt nieistnieje");
+            System.out.println("File: save.txt nieistnieje");
             return null;
         }
     }
@@ -134,7 +147,7 @@ public class LoadSave {
             WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end);
         } else {
             System.out.println("file " + name + " does not exists");
-            return;
+            return ;
         }
     }
 
