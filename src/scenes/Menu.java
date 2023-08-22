@@ -175,7 +175,7 @@ public class Menu extends GameScene implements SceneMethods {
         bEditing.draw(g);
         bSettings.draw(g);
         bUpgrade.draw(g);
-        bQuit.draw(g);
+        bQuit.drawQuit(g);
     }
 
     private void loadSprites() {

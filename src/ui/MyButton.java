@@ -48,6 +48,8 @@ public class MyButton {
 
     }
 
+
+
     private void drawBorder(Graphics g) {
         g.setColor(Color.black);
         g.drawRect(x, y, width, height);
@@ -56,12 +58,10 @@ public class MyButton {
         }
         if(mousePressed){
             g.setColor(new Color(9, 255, 255));
-            g.drawRect(x+1, y+1, width-2, height-2);
-            g.drawRect(x+2, y+2, width-4, height-4);
+            g.drawRect(x+5, y+5, width-10, height-10);
+            g.drawRect(x+6, y+6, width-12, height-12);
         }
     }
-
-
 
 
     private void drawBody(Graphics g) {
@@ -72,6 +72,7 @@ public class MyButton {
         }
         g.fillRect(x, y, width, height);
     }
+
 
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
@@ -113,5 +114,38 @@ public class MyButton {
 
     public boolean isMousePressed() {
         return mousePressed;
+    }
+    public void drawQuit(Graphics g) {
+
+        //Body
+        drawBodyQuit(g);
+        //Border
+        drawBorderQuit(g);
+        //Text
+        drawText(g);
+
+    }
+
+    private void drawBorderQuit(Graphics g) {
+        g.setColor(Color.black);
+        g.drawRect(x+width/4, y+height/4, width/2, height/2);
+        if(mouseOver){
+            g.setColor(new Color(9, 255, 255));
+        }
+        if(mousePressed){
+            g.setColor(new Color(9, 255, 255));
+            g.drawRect(x+5+width/4, y+5+height/4, width/2-10, height/2-10);
+            g.drawRect(x+6+width/4, y+6+height/4, width/2-12, height/2-12);
+        }
+    }
+
+    private void drawBodyQuit(Graphics g) {
+        if (mouseOver) {
+            g.setColor(new Color(255, 15, 15));
+        } else {
+
+            g.setColor(new Color(169, 0, 0));
+        }
+        g.fillRect(x+width/4, y+height/4, width/2, height/2);
     }
 }
