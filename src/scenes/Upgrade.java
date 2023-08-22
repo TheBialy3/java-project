@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static main.GameStates.*;
 
-public class Settings extends GameScene implements SceneMethods {
+public class Upgrade extends GameScene implements SceneMethods {
 
     private BufferedImage img;
 
@@ -23,7 +23,7 @@ public class Settings extends GameScene implements SceneMethods {
 
     private MyButton bMusic, bSound, bMenu;
 
-    public Settings(Game game) {
+    public Upgrade(Game game) {
         super(game);
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();

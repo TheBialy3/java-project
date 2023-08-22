@@ -1,6 +1,6 @@
 package xp;
 
-import static helpz.LoadSave.GetXpData;
+import static helpz.LoadSave.*;
 
 public class firstTree {
     public firstTree(){

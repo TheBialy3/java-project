@@ -2,9 +2,10 @@ package main;
 
 import managers.TileManager;
 import scenes.*;
+import scenes.Menu;
 
 import javax.swing.*;
-
+import java.awt.*;
 
 
 public class Game extends JFrame implements Runnable {
@@ -15,6 +16,7 @@ public class Game extends JFrame implements Runnable {
 
     private final double FPS_SET = 60;
     private final double UPS_SET = 60;
+    public int fps = 0;
 
     //Classes
     private Render render;
@@ -22,6 +24,7 @@ public class Game extends JFrame implements Runnable {
     private Playing playing;
     private Settings settings;
     private Editing editing;
+    private Upgrade upgrade;
     private TileManager tileManager;
     private GameOver gameOver;
 
@@ -49,9 +52,11 @@ public class Game extends JFrame implements Runnable {
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
+        upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
     }
 
+    //for lvl chose
     public void initClasses(int lvl) {
         tileManager = new TileManager();
         gameScreen = new GameScreen(this);
@@ -87,6 +92,14 @@ public class Game extends JFrame implements Runnable {
                 gameOver.update();
                 break;
         }
+
+    }
+
+    public void drawfps(Graphics g) {
+        g.setFont(new Font("Monospaced", Font.BOLD, 17));
+            g.setColor(new Color(0, 0, 0));
+            g.drawString("FPS:" + fps, 2, 16);
+
     }
 
 
@@ -121,6 +134,7 @@ public class Game extends JFrame implements Runnable {
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
                 if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 //                    System.out.println("FPS: " + frames + "| UPS:" + updates);
+                    fps=frames;
                     frames = 0;
                     updates = 0;
                     lastTimeCheck = System.currentTimeMillis();

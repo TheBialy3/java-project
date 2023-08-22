@@ -31,14 +31,12 @@ public class Menu extends GameScene implements SceneMethods {
     private Random random = new Random();
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
-    private MyButton bPlaing, bEditing, bSettings, bQuit;
+    private MyButton bPlaing, bEditing, bSettings, bQuit, bUpgrade;
 
     public Menu(Game game) {
         super(game);
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
-        start = new PathPoint(1, 10);
-        end = new PathPoint(19, 10);
         importImg();
         loadSprites();
         initButtons();
@@ -48,13 +46,14 @@ public class Menu extends GameScene implements SceneMethods {
         int w = 400;
         int h = w / 4;
         int x = 1536 / 2 - w / 2;
-        int y = 300;
+        int y = 200;
         int yOffset = 200;
 
         bPlaing = new MyButton("Play", x, y, w, h);
         bEditing = new MyButton("Edit", x, y + (yOffset * 1), w, h);
         bSettings = new MyButton("Settings", x, y + (yOffset * 2), w, h);
-        bQuit = new MyButton("Quit", x, y + (yOffset * 3), w, h);
+        bUpgrade = new MyButton("Upgrade", x, y + (yOffset * 3), w, h);
+        bQuit = new MyButton("Quit", x, y + (yOffset * 4), w, h);
     }
 
     protected void updateTick() {
@@ -84,9 +83,8 @@ public class Menu extends GameScene implements SceneMethods {
                 }
             }
         }
-
-        drawButtons(g);
         drawIt(g);
+        drawButtons(g);
     }
 
     private void drawIt(Graphics g) {
@@ -94,7 +92,7 @@ public class Menu extends GameScene implements SceneMethods {
         if(xlevelSprite>1600){
             resetDrawIt(g);
         }
-        g.drawImage(moveImages[ran],xlevelSprite,640 ,tilePixelNumber,tilePixelNumber,null);
+        g.drawImage(moveImages[ran],xlevelSprite,507 ,tilePixelNumber,tilePixelNumber,null);
     }
     private void resetDrawIt(Graphics g) {
         xlevelSprite=-64;
@@ -108,10 +106,12 @@ public class Menu extends GameScene implements SceneMethods {
             SetGameState(PLAYING);
         } else if (bEditing.getBounds().contains(x, y)) {
             SetGameState(EDITING);
-//        }else if (bSettings.getBounds().contains(x,y)){
-//            SetGameState(SETTINGS);
+        }else if (bSettings.getBounds().contains(x,y)){
+            SetGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
             System.exit(0);
+        }else if (bUpgrade.getBounds().contains(x, y)) {
+            SetGameState(UPGRADE);
         }
     }
 
@@ -125,10 +125,14 @@ public class Menu extends GameScene implements SceneMethods {
         if (bEditing.getBounds().contains(x, y)) {
             bEditing.setMouseOver(true);
         }
-//        bSettings.setMouseOver(false);
-//        if (bSettings.getBounds().contains(x,y)){
-//            bSettings.setMouseOver(true);
-//        }
+        bSettings.setMouseOver(false);
+        if (bSettings.getBounds().contains(x,y)){
+            bSettings.setMouseOver(true);
+        }
+        bUpgrade.setMouseOver(false);
+        if (bUpgrade.getBounds().contains(x,y)){
+            bUpgrade.setMouseOver(true);
+        }
         bQuit.setMouseOver(false);
         if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMouseOver(true);
@@ -143,7 +147,8 @@ public class Menu extends GameScene implements SceneMethods {
     private void resetButtons() {
         bPlaing.resetBooleans();
         bEditing.resetBooleans();
-//        bSettings.resetBooleans();
+        bSettings.resetBooleans();
+        bUpgrade.resetBooleans();
         bQuit.resetBooleans();
     }
 
@@ -154,9 +159,12 @@ public class Menu extends GameScene implements SceneMethods {
         } else if (bEditing.getBounds().contains(x, y)) {
             bEditing.setMousePressed(true);
         }
-//        else if (bSettings.getBounds().contains(x,y)){
-//            bSettings.setMousePressed(true);
-//        }
+        else if (bSettings.getBounds().contains(x,y)){
+            bSettings.setMousePressed(true);
+        }
+        else if (bUpgrade.getBounds().contains(x,y)){
+            bUpgrade.setMousePressed(true);
+        }
         else if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMousePressed(true);
         }
@@ -165,7 +173,8 @@ public class Menu extends GameScene implements SceneMethods {
     private void drawButtons(Graphics g) {
         bPlaing.draw(g);
         bEditing.draw(g);
-//        bSettings.draw(g);
+        bSettings.draw(g);
+        bUpgrade.draw(g);
         bQuit.draw(g);
     }
 
@@ -204,8 +213,10 @@ public class Menu extends GameScene implements SceneMethods {
             SetGameState(PLAYING);
         } else if (bEditing.getBounds().contains(x, y)) {
             SetGameState(EDITING);
-//        }else if (bSettings.getBounds().contains(x,y)){
-//            SetGameState(SETTINGS);
+        }else if (bSettings.getBounds().contains(x,y)){
+            SetGameState(SETTINGS);
+        }else if (bUpgrade.getBounds().contains(x,y)){
+            SetGameState(UPGRADE);
         } else if (bQuit.getBounds().contains(x, y)) {
             System.exit(0);
         }

@@ -47,5 +47,7 @@ public class GameScreen extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         game.getRender().render(g);
+        game.drawfps(g);
     }
+
 }
