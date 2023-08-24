@@ -19,6 +19,7 @@ public class Editing extends GameScene implements SceneMethods {
 
     private static int[][] lvl;
     private Tile selectedTile;
+
     private int mouseX, mouseY;
     private boolean drawSelect;
     private int tileXLast, tileYLast, lastTileId;
@@ -50,7 +51,6 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
-
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
@@ -102,6 +102,32 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void changedTile(int x, int y) {
+        if (selectedTile != null) {
+            int tileX = x / 64;
+            int tileY = y / 64;
+            if (selectedTile.getId() >= 0) {
+
+                if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
+                    return;
+                }
+                tileXLast = tileX;
+                tileYLast = tileY;
+                lastTileId = selectedTile.getId();
+                lvl[tileY][tileX] = selectedTile.getId();
+            } else {
+                int id = lvl[tileY][tileX];
+                if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
+                    if (selectedTile.getId() == -1) {
+                        start = new PathPoint(tileX, tileY);
+                    } else {
+                        end = new PathPoint(tileX, tileY);
+                    }
+                }
+            }
+        }
+    }
+
+    private void selectPathAndPathEnds(int x, int y) {
         if (selectedTile != null) {
             int tileX = x / 64;
             int tileY = y / 64;

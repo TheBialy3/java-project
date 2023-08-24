@@ -33,7 +33,7 @@ public class LoadSave {
 //
 //    }
 
-    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end) {
+    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end) {//,int[] directionArr
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
@@ -43,13 +43,16 @@ public class LoadSave {
             pw.println(start.getyCord());
             pw.println(end.getxCord());
             pw.println(end.getyCord());
+//            for (Integer i : directionArr) {
+//                pw.println(i);
+//            }
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void SaveXpToFile(File f,int xp) {
+    private static void SaveXpToFile(File f,int xp) {//tree unlocked
         try {
             PrintWriter pw = new PrintWriter(f);
             pw.println(xp);
@@ -128,7 +131,7 @@ public class LoadSave {
         File newLvl = new File("res/" + name + ".txt");
         if (newLvl.exists()) {
             System.out.println("file" + name + "exists");
-            return;
+
         } else {
             try {
                 newLvl.createNewFile();
