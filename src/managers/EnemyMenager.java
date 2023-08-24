@@ -23,7 +23,8 @@ public class EnemyMenager {
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
-    private int HPbarWidth = 50, i = 0, ranl = random.nextInt(25),ranr = random.nextInt(25);
+    private int HPbarWidth = 50, i = 0, tilePixelNumber= 64;
+    private int  ranl = random.nextInt(25),ranr = random.nextInt(25);
     private BufferedImage[] enemyEfects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
@@ -46,19 +47,19 @@ public class EnemyMenager {
     private void loadEfectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyEfects = new BufferedImage[3];
-        enemyEfects[0] = atlas.getSubimage(8 * 64, 0 * 64, 64, 64);
-        enemyEfects[1] = atlas.getSubimage(7 * 64, 0 * 64, 64, 64);
-        enemyEfects[2] = atlas.getSubimage(5 * 64, 1 * 64, 64, 64);
+        enemyEfects[0] = atlas.getSubimage(8 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyEfects[1] = atlas.getSubimage(7 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyEfects[2] = atlas.getSubimage(5 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     private void loadEnemyImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyImages = new BufferedImage[5];
-        enemyImages[0] = atlas.getSubimage(3 * 64, 1 * 64, 64, 64);
-        enemyImages[1] = atlas.getSubimage(0 * 64, 6 * 64, 64, 64);
-        enemyImages[2] = atlas.getSubimage(4 * 64, 2 * 64, 64, 64);
-        enemyImages[3] = atlas.getSubimage(2 * 64, 2 * 64, 64, 64);
-        enemyImages[4] = atlas.getSubimage(1 * 64, 6 * 64, 64, 64);
+        enemyImages[0] = atlas.getSubimage(3 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages[1] = atlas.getSubimage(0 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages[2] = atlas.getSubimage(4 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages[3] = atlas.getSubimage(2 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages[4] = atlas.getSubimage(1 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void spawnEnemy(int nextEnemy) {
@@ -66,8 +67,8 @@ public class EnemyMenager {
     }
 
     public void addEnemy(int enemyType) {
-        int x = start.getxCord() * 64;
-        int y = start.getyCord() * 64;
+        int x = start.getxCord() * tilePixelNumber;
+        int y = start.getyCord() * tilePixelNumber;
         switch (enemyType) {
             case ORC:
                 enemies.add(new Orc(x, y, 0, this, waveManager));
@@ -148,7 +149,7 @@ public class EnemyMenager {
             }
             int newDir = roadDirArr[newTile.getyCord()][newTile.getxCord()];
             if (newDir != dir) {
-                e.setPos(newTile.getxCord() * 64, newTile.getyCord() * 64);
+                e.setPos(newTile.getxCord() * tilePixelNumber, newTile.getyCord() * tilePixelNumber);
                 e.setLastDir(newDir);
             }
         }
@@ -166,16 +167,16 @@ public class EnemyMenager {
 
         switch (e.getLastDir()) {
             case LEFT:
-                return new PathPoint((int) ((e.getX() + 63) / 64), (int) (e.getY() / 64));
+                return new PathPoint((int) ((e.getX() + 63) / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
             case UP:
-                return new PathPoint((int) (e.getX() / 64), (int) ((e.getY() + 63) / 64));
+                return new PathPoint((int) (e.getX() / tilePixelNumber), (int) ((e.getY() + 63) / tilePixelNumber));
             case RIGHT:
             case DOWN:
-                return new PathPoint((int) (e.getX() / 64), (int) (e.getY() / 64));
+                return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
 
         }
 
-        return new PathPoint((int) (e.getX() / 64), (int) (e.getY() / 64));
+        return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
     }
 
     private void drawHealthBar(Enemy e, Graphics g) {

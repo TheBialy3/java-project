@@ -25,7 +25,7 @@ public class ProjectileManager {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
-    private int proj_id = 0, ranx, rany;
+    private int proj_id = 0, ranx, rany,  tilePixelNumber= 64, halfTilePixelNumber= 32;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -34,24 +34,24 @@ public class ProjectileManager {
     }
 
     private void importImgs() {
-        //0,4
+        //place of sprite on spritesheet
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         proj_imgs = new BufferedImage[5];
-        proj_imgs[0] = atlas.getSubimage(4 * 64, 4 * 64, 64, 64);
-        proj_imgs[1] = atlas.getSubimage(6 * 64, 2 * 64, 64, 64);
-        proj_imgs[2] = atlas.getSubimage(7 * 64, 1 * 64, 64, 64);
-        proj_imgs[3] = atlas.getSubimage(6 * 64, 0 * 64, 64, 64);
-        proj_imgs[4] = atlas.getSubimage(4 * 64, 1 * 64, 64, 64);
+        proj_imgs[0] = atlas.getSubimage(4 * tilePixelNumber, 4 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[1] = atlas.getSubimage(6 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[2] = atlas.getSubimage(7 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[3] = atlas.getSubimage(6 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[4] = atlas.getSubimage(4 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         implortExplosion(atlas);
     }
 
     private void implortExplosion(BufferedImage atlas) {
         explo_imgs = new BufferedImage[10];
         for (int i = 0; i < 10; i++) {
-            explo_imgs[i] = atlas.getSubimage(i * 64, 5 * 64, 64, 64);
+            explo_imgs[i] = atlas.getSubimage(i * tilePixelNumber, 5 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         splash_imgs = new BufferedImage[1];
-        splash_imgs[0] = atlas.getSubimage(5 * 64, 3 * 64, 64, 64);
+        splash_imgs[0] = atlas.getSubimage(5 * tilePixelNumber, 3 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void newProjectile(Tower t, Enemy e) {
@@ -84,19 +84,19 @@ public class ProjectileManager {
             if (!p.isActive()) {
                 if (p.getProjectileType() == type) {
                     if (p.getProjectileType() == POISON_POTION) {
-                        p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, t.getDuration());
+                        p.reuse(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, t.getDuration());
                         return;
                     }
-                    p.reuse(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate);
+                    p.reuse(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate);
                     return;
                 }
             }
         }
         if (t.getTowerType() == POISON_TOWER) {
-            projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration()));
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration()));
             return;
         }
-        projectiles.add(new Projectile(t.getX() + 32, t.getY() + 32, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
+        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
     }
 
     public void newMine(Tower t, PathPoint e) {
@@ -192,11 +192,11 @@ public class ProjectileManager {
                 if (helpz.Constants.ProjectileType.isRorating(p.getProjectileType())) {
                     g2d.translate(p.getPos().x, p.getPos().y);
                     g2d.rotate(Math.toRadians(p.getRotation()));
-                    g2d.drawImage(proj_imgs[p.getProjectileType()], -32, -32, null);
+                    g2d.drawImage(proj_imgs[p.getProjectileType()], -halfTilePixelNumber, -halfTilePixelNumber, null);
                     g2d.rotate(-Math.toRadians(p.getRotation()));
                     g2d.translate(-p.getPos().x, -p.getPos().y);
                 } else {
-                    g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - 32, (int) p.getPos().y - 32, null);
+                    g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - halfTilePixelNumber, (int) p.getPos().y - halfTilePixelNumber, null);
                 }
             }
             drawExplosions(g2d);
@@ -207,11 +207,11 @@ public class ProjectileManager {
         for (Explosion e : explosions) {
             if (e.getExploType() == BOMB) {
                 if (e.getIndex() < 10) {
-                    g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
+                    g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
                 }//else if (e.getIndex() == 10){ aoeExplosionsdamageSet =false; }
             }else {
                 if (e.getIndex() < 10) {
-                    g2d.drawImage(splash_imgs[0], (int) e.getPos().x - 32, (int) e.getPos().y - 32, null);
+                    g2d.drawImage(splash_imgs[0], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
                 }
             }
         }

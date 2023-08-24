@@ -33,7 +33,7 @@ public class LoadSave {
 //
 //    }
 
-    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end) {
+    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end) {//,int[] directionArr
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
@@ -43,10 +43,48 @@ public class LoadSave {
             pw.println(start.getyCord());
             pw.println(end.getxCord());
             pw.println(end.getyCord());
-
+//            for (Integer i : directionArr) {
+//                pw.println(i);
+//            }
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void SaveXpToFile(File f,int xp) {//tree unlocked
+        try {
+            PrintWriter pw = new PrintWriter(f);
+            pw.println(xp);
+            pw.println(xp);
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static ArrayList<Integer> ReadSaveFile(File file) {
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(file);
+            while (sc.hasNextLine()) {
+                list.add(Integer.parseInt(sc.nextLine()));
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static int[][] GetXpData() {
+        File saveFile = new File("res/save.txt");
+        if (saveFile.exists()) {
+            ArrayList<Integer> list = ReadSaveFile(saveFile);
+            return Utilz.ArrayListTo2Dint(list, 20, 20);
+        } else {
+            System.out.println("File: save.txt nieistnieje");
+            return null;
         }
     }
 
@@ -87,14 +125,13 @@ public class LoadSave {
             System.out.println("File: level1.txt nieistnieje");
             return null;
         }
-
     }
 
     public static void CreateLevel(String name, int[] idArr) {
         File newLvl = new File("res/" + name + ".txt");
         if (newLvl.exists()) {
             System.out.println("file" + name + "exists");
-            return;
+
         } else {
             try {
                 newLvl.createNewFile();
@@ -113,7 +150,7 @@ public class LoadSave {
             WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end);
         } else {
             System.out.println("file " + name + " does not exists");
-            return;
+            return ;
         }
     }
 
