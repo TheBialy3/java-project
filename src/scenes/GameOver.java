@@ -100,7 +100,7 @@ public class GameOver extends GameScene implements SceneMethods {
     }
 
     private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/tak.png");
+        InputStream is = getClass().getResourceAsStream("/pngFile/tak.png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
