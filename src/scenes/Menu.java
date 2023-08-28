@@ -3,10 +3,8 @@ package scenes;
 import helpz.LevelBuild;
 import helpz.LoadSave;
 import main.Game;
-import managers.EnemyMenager;
 import managers.TileManager;
 import objects.PathPoint;
-import objects.Tile;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -17,7 +15,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static helpz.Constants.Tiles.GRASS_TILE;
 import static main.GameStates.*;
 
 public class Menu extends GameScene implements SceneMethods {
@@ -187,7 +184,7 @@ public class Menu extends GameScene implements SceneMethods {
     }
 
     private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/tak.png");
+        InputStream is = getClass().getResourceAsStream("/pngFile/tak.png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {

@@ -19,7 +19,7 @@ public class ActionBar extends Bar {
     private Tower selectedTower;
     private Tower displayedTower;
     private String textUp1, textUp2, textUp3;
-    private int startingGold = 300;
+    private int startingGold = 4000;
     private int gold = startingGold, costUp1, costUp2, costUp3;
     private boolean showTowerCost;
 
@@ -240,7 +240,7 @@ public class ActionBar extends Bar {
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
         bBestiary = new MyButton("Reset", 1417, 10, 108, 40);
 
-        towerButtons = new MyButton[5];
+        towerButtons = new MyButton[6];
 
         for (int i = 0; i < towerButtons.length; i++) {
             int row = i / 3;
@@ -287,37 +287,6 @@ public class ActionBar extends Bar {
         }
     }
 
-//    public void upgradeDescryption(Graphics g) {
-//        if (bUpgrade1.isMouseOver() || bUpgrade2.isMouseOver() || bUpgrade3.isMouseOver()) {
-//            g.setColor(new Color(100, 45, 15));
-//            g.fillRect(700, 990, 566, 280);
-//            g.setColor(Color.black);
-//            g.drawRect(700, 990, 566, 280);
-//            g.fillRect(710, 1000, 64, 64);
-//            g.setColor(new Color(15, 15, 15));
-//            g.drawRect(710, 1000, 64, 64);
-//            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 710, 1000, 64, 64, null);
-//            g.setFont(new Font("Serif", Font.BOLD, 30));
-//            String text;
-//            if (bUpgrade1.isMouseOver()) {
-//                text = "Cost: " + costUp1 + "g";
-//            } else if (bUpgrade2.isMouseOver()) {
-//                text = "Cost: " + costUp2 + "g";
-//            } else {
-//                text = "Cost: " + costUp3 + "g";
-//            }
-//            g.drawString(text, 794, 1022);
-//            g.setFont(new Font("Serif", Font.BOLD, 28));
-//            if (bUpgrade1.isMouseOver()) {
-//                g.drawString(textUp1, 794, 1064);
-//            } else if (bUpgrade2.isMouseOver()) {
-//                g.drawString(textUp2, 794, 1064);
-//            } else {
-//                g.drawString(textUp3, 794, 1064);
-//            }
-//
-//        }
-//    }
 
     private void drawUpgrade(Graphics g) {
         if (!displayedTower.isUpgrade1Active()) {
@@ -436,6 +405,9 @@ public class ActionBar extends Bar {
                         case POISON_TOWER:
                             selectedTower = new PoisonTower(x, y, 0, b.getId(), road);
                             break;
+                        case BOOM_VOLCANO:
+                            selectedTower = new BoomTower(x, y, 0, b.getId(), road);
+                            break;
                     }
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -504,6 +476,9 @@ public class ActionBar extends Bar {
                             break;
                         case POISON_TOWER:
                             selectedTower = new PoisonTower(x, y, 0, b.getId(), road);
+                            break;
+                        case BOOM_VOLCANO:
+                            selectedTower = new BoomTower(x, y, 0, b.getId(), road);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);
@@ -618,6 +593,18 @@ public class ActionBar extends Bar {
         } else if (displayedTower instanceof PoisonTower) {
             costUp1 = ((PoisonTower) displayedTower).getCost(1);
             textUp1 = ((PoisonTower) displayedTower).getName(1);
+        } else if (displayedTower instanceof BoomTower) {
+            costUp1 = ((BoomTower) displayedTower).getCost(1);
+            textUp1 = ((BoomTower) displayedTower).getName(1);
+//        } else if (displayedTower instanceof FrostMage) {
+//            costUp1 = ((FrostMage) displayedTower).getCost(1);
+//            textUp1 = ((FrostMage) displayedTower).getName(1);
+//        } else if (displayedTower instanceof MineFactory) {
+//            costUp1 = ((MineFactory) displayedTower).getCost(1);
+//            textUp1 = ((MineFactory) displayedTower).getName(1);
+//        } else if (displayedTower instanceof PoisonTower) {
+//            costUp1 = ((PoisonTower) displayedTower).getCost(1);
+//            textUp1 = ((PoisonTower) displayedTower).getName(1);
         } else {
             System.out.println("cost error 1");
         }
@@ -636,6 +623,18 @@ public class ActionBar extends Bar {
         } else if (displayedTower instanceof PoisonTower) {
             costUp2 = ((PoisonTower) displayedTower).getCost(2);
             textUp2 = ((PoisonTower) displayedTower).getName(2);
+        } else if (displayedTower instanceof BoomTower) {
+            costUp2 = ((BoomTower) displayedTower).getCost(2);
+            textUp2 = ((BoomTower) displayedTower).getName(2);
+//        } else if (displayedTower instanceof FrostMage) {
+//            costUp2 = ((FrostMage) displayedTower).getCost(2);
+//            textUp2 = ((FrostMage) displayedTower).getName(2);
+//        } else if (displayedTower instanceof MineFactory) {
+//            costUp2 = ((MineFactory) displayedTower).getCost(2);
+//            textUp2 = ((MineFactory) displayedTower).getName(2);
+//        } else if (displayedTower instanceof PoisonTower) {
+//            costUp2 = ((PoisonTower) displayedTower).getCost(2);
+//            textUp2 = ((PoisonTower) displayedTower).getName(2);
         } else {
             System.out.println("cost error 2");
         }
@@ -654,6 +653,18 @@ public class ActionBar extends Bar {
         } else if (displayedTower instanceof PoisonTower) {
             costUp3 = ((PoisonTower) displayedTower).getCost(3);
             textUp3 = ((PoisonTower) displayedTower).getName(3);
+        } else if (displayedTower instanceof BoomTower) {
+            costUp3 = ((BoomTower) displayedTower).getCost(3);
+            textUp3 = ((BoomTower) displayedTower).getName(3);
+//        } else if (displayedTower instanceof FrostMage) {
+//            costUp3 = ((FrostMage) displayedTower).getCost(3);
+//            textUp3 = ((FrostMage) displayedTower).getName(3);
+//        } else if (displayedTower instanceof MineFactory) {
+//            costUp3 = ((MineFactory) displayedTower).getCost(3);
+//            textUp3 = ((MineFactory) displayedTower).getName(3);
+//        } else if (displayedTower instanceof PoisonTower) {
+//            costUp3 = ((PoisonTower) displayedTower).getCost(3);
+//            textUp3 = ((PoisonTower) displayedTower).getName(3);
         } else {
             System.out.println("cost error 3");
         }

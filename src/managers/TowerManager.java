@@ -45,12 +45,13 @@ public class TowerManager {
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        towerImgs = new BufferedImage[5];
+        towerImgs = new BufferedImage[6];
         towerImgs[0] = atlas.getSubimage(0 * 64, 8 * 64, 64, 64);
         towerImgs[1] = atlas.getSubimage(8 * 64, 2 * 64, 64, 64);
         towerImgs[2] = atlas.getSubimage(0 * 64, 7 * 64, 64, 64);
         towerImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
         towerImgs[4] = atlas.getSubimage(7 * 64, 2 * 64, 64, 64);
+        towerImgs[5] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
         road = playing.getRoadDirArr();
     }
 
@@ -72,6 +73,11 @@ public class TowerManager {
             case POISON_TOWER:
                 towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, road));
                 break;
+            case BOOM_VOLCANO:
+                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, road));
+                break;
+            default:
+                break;
         }
     }
 
@@ -90,25 +96,42 @@ public class TowerManager {
                 setMine(t);
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
+            } else if (t.getTowerType() == BOOM_VOLCANO) {
+                if (t.isCooldownOver()) {
+                    hurtEnemyIfClose(t);
+                    t.resetCooldown();
+                }
             } else {
                 attackEnemyIfClose(t);
             }
         }
     }
 
-    private void slowEnemyIfClose(Tower t) {
+    private void hurtEnemyIfClose(Tower t) {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-
-                        e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
-
-                    }
+                    e.hurt(Constants.TowerType.getDefaultDmg(t.getTowerType()));
                 } else {
                     //nothing
                 }
             }
         }
+    }
+
+
+    private void slowEnemyIfClose(Tower t) {
+        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+            if (e.isAlive()) {
+                if (isEnemyInRange(t, e)) {
+                    e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
+                } else {
+                    //nothing
+                }
+            }
+        }
+
+    }
 
 
     private void attackEnemyIfClose(Tower t) {
@@ -186,7 +209,7 @@ public class TowerManager {
     public void draw(Graphics g) {
         for (Tower t : towers) {
             g.drawImage(towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
-            if(t.getTowerType()==FROST_MAGE){
+            if (t.getTowerType() == FROST_MAGE) {
                 g.setColor(new Color(0, 254, 255, 38));
                 g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
             }

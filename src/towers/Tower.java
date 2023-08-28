@@ -4,8 +4,6 @@ import helpz.Constants;
 
 import java.util.ArrayList;
 
-import static helpz.Constants.TowerType.POISON_TOWER;
-
 public abstract class Tower {
 
     private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
@@ -179,6 +177,8 @@ public abstract class Tower {
                 ((MineFactory) this).upgrade(1);
             }else if (this instanceof PoisonTower) {
                 ((PoisonTower) this).upgrade(1);
+            }else if (this instanceof BoomTower) {
+                ((BoomTower) this).upgrade(1);
             }
 
         }
@@ -198,6 +198,8 @@ public abstract class Tower {
                 ((MineFactory) this).upgrade(2);
             }else if (this instanceof PoisonTower) {
                 ((PoisonTower) this).upgrade(2);
+            }else if (this instanceof BoomTower) {
+                ((BoomTower) this).upgrade(2);
             }
         }
         U2 = true;
@@ -216,6 +218,8 @@ public abstract class Tower {
                 ((MineFactory) this).upgrade(3);
             }else if (this instanceof PoisonTower) {
                 ((PoisonTower) this).upgrade(3);
+            }else if (this instanceof BoomTower) {
+                ((BoomTower) this).upgrade(3);
             }
         }
         U3 = true;
