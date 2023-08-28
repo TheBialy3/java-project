@@ -1,7 +1,7 @@
 package towers;
 
-public class MineFactory extends Tower {
-    public MineFactory(int x, int y, int id, int towerType , int[][] road) {
+public class BoomTower extends Tower {
+    public BoomTower(int x, int y, int id, int towerType , int[][] road) {
         super(x, y, id, towerType,road);
 
     }
@@ -15,7 +15,7 @@ public class MineFactory extends Tower {
                 this.addDmg(5);
                 return;
             case 3:
-                this.reduceCooldown(20);
+                this.addRange(60);
                 return;
             default:
                 return ;
@@ -42,7 +42,7 @@ public class MineFactory extends Tower {
             case 2:
                 return "Attack damage +5";
             case 3:
-                return "Attack speed ++";
+                return "Range +60";
         }
         return "";
     }

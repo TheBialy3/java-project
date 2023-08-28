@@ -103,7 +103,7 @@ public class LoadSave {
     }
 
     public static ArrayList<PathPoint> getPathPoints(){
-        File lvlFile = new File("res/level1.txt");
+        File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<PathPoint> points = new ArrayList<>();
@@ -117,7 +117,7 @@ public class LoadSave {
     }
 
     public static int[][] GetLevelData() {
-        File lvlFile = new File("res/level1.txt");
+        File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             return Utilz.ArrayListTo2Dint(list, 20, 20);
