@@ -1,6 +1,7 @@
 package enemies;
 
 import helpz.Constants;
+import main.Game;
 import managers.EnemyMenager;
 import managers.WaveManager;
 
@@ -141,7 +142,7 @@ public abstract class Enemy {
                 }
             }
             enemyMenager.rewardPlayer(enemyType);
-
+            Game.addXp();
         }
     }
 

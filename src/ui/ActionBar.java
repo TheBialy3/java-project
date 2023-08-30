@@ -2,6 +2,7 @@ package ui;
 
 
 import helpz.Constants;
+import main.Game;
 import scenes.Playing;
 import towers.*;
 
@@ -13,6 +14,7 @@ import static main.GameStates.*;
 public class ActionBar extends Bar {
 
     private Playing playing;
+    private Game game;
     private MyButton bMenu, bBestiary;
     private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
@@ -29,10 +31,10 @@ public class ActionBar extends Bar {
 
     private int[][] road;
 
-    public ActionBar(int x, int y, int width, int height, Playing playing) {
+    public ActionBar(int x, int y, int width, int height, Playing playing, Game game) {
         super(x, y, width, height);
         this.playing = playing;
-
+this.game=game;
         initButtons();
     }
 
@@ -532,8 +534,10 @@ public class ActionBar extends Bar {
 
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
+            game.saveGame();
             bMenu.setMousePressed(true);
         } else if (bBestiary.getBounds().contains(x, y)) {
+            game.saveGame();
             bBestiary.setMousePressed(true);
         } else {
             if (displayedTower != null) {

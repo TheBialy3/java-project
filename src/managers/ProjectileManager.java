@@ -25,7 +25,7 @@ public class ProjectileManager {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
-    private int proj_id = 0, ranx, rany,  tilePixelNumber= 64, halfTilePixelNumber= 32;
+    private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -39,8 +39,8 @@ public class ProjectileManager {
         proj_imgs = new BufferedImage[5];
         proj_imgs[0] = atlas.getSubimage(4 * tilePixelNumber, 4 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         proj_imgs[1] = atlas.getSubimage(6 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[2] = atlas.getSubimage(7 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[3] = atlas.getSubimage(6 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[2] = atlas.getSubimage(6 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        proj_imgs[3] = atlas.getSubimage(7 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         proj_imgs[4] = atlas.getSubimage(4 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         implortExplosion(atlas);
     }
@@ -209,7 +209,7 @@ public class ProjectileManager {
                 if (e.getIndex() < 10) {
                     g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
                 }//else if (e.getIndex() == 10){ aoeExplosionsdamageSet =false; }
-            }else {
+            } else {
                 if (e.getIndex() < 10) {
                     g2d.drawImage(splash_imgs[0], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
                 }

@@ -6,17 +6,22 @@ import scenes.Menu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+
+import static helpz.LoadSave.*;
 
 
 public class Game extends JFrame implements Runnable {
 
-    public int xp=0;
+    public static int xp = 0;
+    private ArrayList<Integer> save;
     private GameScreen gameScreen;
     private Thread threadGame;
 
     private final double FPS_SET = 60;
     private final double UPS_SET = 60;
     public int fps = 0;
+    public ImageIcon img;
 
     //Classes
     private Render render;
@@ -32,16 +37,34 @@ public class Game extends JFrame implements Runnable {
         Game game = new Game();
         game.gameScreen.initInputs();
         game.start();
+
     }
 
     public Game() {
         initClasses();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("gtd");
+        setTitle("Biały Precel TD");
+        img = new ImageIcon("res/rest/logo.png");
+        setIconImage(img.getImage());
+        //setUndecorated(true);
         setResizable(false);
         add(gameScreen);
         pack();
         setVisible(true);
+        save =  GetXpData();
+        this.xp = save.get(0);
+    }
+
+    public static void addXp() {
+        xp++;
+    }
+
+    public static void costXp(int cost) {
+        xp-=cost;
+    }
+
+    public  void saveGame(){
+        SaveXpToFile(xp);
     }
 
     public void initClasses() {
@@ -65,6 +88,7 @@ public class Game extends JFrame implements Runnable {
         playing = new Playing(this);
         settings = new Settings(this);
         editing = new Editing(this);
+        upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
     }
 
@@ -97,9 +121,9 @@ public class Game extends JFrame implements Runnable {
 
     public void drawfps(Graphics g) {
         g.setFont(new Font("Monospaced", Font.BOLD, 17));
-            g.setColor(new Color(0, 0, 0));
-            g.drawString("FPS:" + fps, 2, 16);
-
+        g.setColor(new Color(0, 0, 0));
+        g.drawString("FPS:" + fps, 2, 16);
+        g.drawString("xp:" + xp, 2, 32);
     }
 
 
@@ -134,7 +158,7 @@ public class Game extends JFrame implements Runnable {
             if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
                 if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 //                    System.out.println("FPS: " + frames + "| UPS:" + updates);
-                    fps=frames;
+                    fps = frames;
                     frames = 0;
                     updates = 0;
                     lastTimeCheck = System.currentTimeMillis();

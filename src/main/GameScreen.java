@@ -21,8 +21,6 @@ public class GameScreen extends JPanel {
 
     public GameScreen(Game game) {
         this.game = game;
-
-
         setPanelSize();
     }
 
