@@ -35,12 +35,12 @@ public class Playing extends GameScene implements SceneMethods {
     private Tower selectedTower;
     private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomGold = 5;
     private boolean paused, gameOver, startOfGame = false, win = false;
-    private static int chosenLvl=1;
+    private static int chosenLvl = 1;
 
     public Playing(Game game) {
         super(game);
         LoadDefoultLevel();
-        actionBar = new ActionBar(1280, 0, 256, 1280, this);
+        actionBar = new ActionBar(1280, 0, 256, 1280, this, game);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
@@ -75,7 +75,7 @@ public class Playing extends GameScene implements SceneMethods {
                                 waveManager.resetEnemyIndex();
 
                             }
-                        }else{
+                        } else {
                             Finish();
                         }
                     }
@@ -91,14 +91,16 @@ public class Playing extends GameScene implements SceneMethods {
 
                 if (actionBar.getLives() <= 0) {
                     gameOver = true;
+                    game.saveGame();
                 }
             }
 
         }
     }
 
-    public void Finish(){
+    public void Finish() {
         win = true;
+        game.saveGame();
     }
 
 
@@ -243,8 +245,10 @@ public class Playing extends GameScene implements SceneMethods {
     public void mouseClicked(int x, int y) {
         if (x >= 1280) {
             actionBar.mouseClicked(x, y);
-        } else   if (win) { if (bReplay.getBounds().contains(x, y)) {
-            resetEvrything();}
+        } else if (win) {
+            if (bReplay.getBounds().contains(x, y)) {
+                resetEvrything();
+            }
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -285,13 +289,17 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseMoved(int x, int y) {
-        if (win) {  bReplay.setMouseOver(false);}
+        if (win) {
+            bReplay.setMouseOver(false);
+        }
         if (x >= 1280) {
             actionBar.mouseMoved(x, y);
             mouseX = -111;
             mouseY = -111;
-        } else   if (win) { if (bReplay.getBounds().contains(x, y)) {
-            bReplay.setMouseOver(true);}
+        } else if (win) {
+            if (bReplay.getBounds().contains(x, y)) {
+                bReplay.setMouseOver(true);
+            }
         } else {
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
@@ -300,7 +308,9 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseReleased(int x, int y) {
-        if (win) { bReplay.resetBooleans();}
+        if (win) {
+            bReplay.resetBooleans();
+        }
         if (x >= 1280) {
             actionBar.mouseReleased(x, y);
         }
@@ -311,8 +321,10 @@ public class Playing extends GameScene implements SceneMethods {
     public void mousePressed(int x, int y) {
         if (x >= 1280) {
             actionBar.mousePressed(x, y);
-        } else  if (win) { if (bReplay.getBounds().contains(x, y)) {
-            bReplay.setMousePressed(true);}
+        } else if (win) {
+            if (bReplay.getBounds().contains(x, y)) {
+                bReplay.setMousePressed(true);
+            }
         }
     }
 
@@ -320,8 +332,10 @@ public class Playing extends GameScene implements SceneMethods {
     public void mouseDragged(int x, int y) {
         if (x >= 1280) {
             actionBar.mouseDragged(x, y);
-        } else  if (win) { if (bReplay.getBounds().contains(x, y)) {
-            resetEvrything();}
+        } else if (win) {
+            if (bReplay.getBounds().contains(x, y)) {
+                resetEvrything();
+            }
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -412,5 +426,6 @@ public class Playing extends GameScene implements SceneMethods {
     public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
     }
+
 
 }

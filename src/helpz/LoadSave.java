@@ -52,16 +52,7 @@ public class LoadSave {
         }
     }
 
-    private static void SaveXpToFile(File f,int xp) {//tree unlocked
-        try {
-            PrintWriter pw = new PrintWriter(f);
-            pw.println(xp);
-            pw.println(xp);
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private static ArrayList<Integer> ReadSaveFile(File file) {
         ArrayList<Integer> list = new ArrayList<>();
@@ -77,11 +68,20 @@ public class LoadSave {
         return list;
     }
 
-    public static int[][] GetXpData() {
-        File saveFile = new File("res/save.txt");
+    public static void SaveXpToFile(int xp) {//tree unlocked
+        try {
+            PrintWriter pw = new PrintWriter("res/textFile/save.txt");
+            pw.println(xp);
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static ArrayList<Integer> GetXpData() {
+        File saveFile = new File("res/textFile/save.txt");
         if (saveFile.exists()) {
             ArrayList<Integer> list = ReadSaveFile(saveFile);
-            return Utilz.ArrayListTo2Dint(list, 20, 20);
+            return list;
         } else {
             System.out.println("File: save.txt nieistnieje");
             return null;
