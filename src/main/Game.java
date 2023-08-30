@@ -17,6 +17,7 @@ public class Game extends JFrame implements Runnable {
     private final double FPS_SET = 60;
     private final double UPS_SET = 60;
     public int fps = 0;
+    public ImageIcon img ;
 
     //Classes
     private Render render;
@@ -32,12 +33,15 @@ public class Game extends JFrame implements Runnable {
         Game game = new Game();
         game.gameScreen.initInputs();
         game.start();
+
     }
 
     public Game() {
         initClasses();
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setTitle("gtd");
+        setTitle("Biały Precel TD");
+        img= new ImageIcon("res/rest/logo.png");
+        setIconImage(img.getImage());
         setResizable(false);
         add(gameScreen);
         pack();
