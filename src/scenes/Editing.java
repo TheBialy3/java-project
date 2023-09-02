@@ -124,7 +124,10 @@ public class Editing extends GameScene implements SceneMethods {
                 tileXLast = tileX;
                 tileYLast = tileY;
                 lastTileId = selectedTile.getId();
-                lvl[tileY][tileX] = selectedTile.getId();
+                if(selectedTile.getId()>16){
+                    dirArr[tileY][tileX] = selectedTile.getId();
+                }else {
+                lvl[tileY][tileX] = selectedTile.getId();}
             } else {
                 int id = lvl[tileY][tileX];
                 if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
@@ -132,14 +135,6 @@ public class Editing extends GameScene implements SceneMethods {
                         start = new PathPoint(tileX, tileY);
                     }  else if(selectedTile.getId() == -2) {
                         end = new PathPoint(tileX, tileY);
-                    }else {
-                        if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
-                            return;
-                        }
-                        tileXLast = tileX;
-                        tileYLast = tileY;
-                        lastTileId = selectedTile.getId();
-                        dirArr[tileY][tileX] = selectedTile.getId();
                     }
                 }
             }

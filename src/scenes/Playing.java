@@ -48,9 +48,9 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager = new TowerManager(this);
     }
 
-    public void setLevel(int[][] lvl) {
-        this.lvl = lvl;
-    }
+//    public void setLevel(int[][] lvl) {
+//        this.lvl = lvl;
+//    }
 
     public void update() {
         if (!win) {

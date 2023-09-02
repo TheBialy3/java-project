@@ -94,28 +94,28 @@ public abstract class Tower {
         if (x / 64 > 20) {
             return;
         }
-        if (road[y / 64 - 1][x / 64 - 1] != -1) {
+        if (road[y / 64 - 1][x / 64 - 1] != 17) {
             arr.add(1);
         }
-        if (road[y / 64 - 1][x / 64] != -1) {
+        if (road[y / 64 - 1][x / 64] != 17) {
             arr.add(2);
         }
-        if (road[y / 64 - 1][x / 64 + 1] != -1) {
+        if (road[y / 64 - 1][x / 64 + 1] != 17) {
             arr.add(3);
         }
-        if (road[y / 64][x / 64 - 1] != -1) {
+        if (road[y / 64][x / 64 - 1] != 17) {
             arr.add(4);
         }
-        if (road[y / 64][x / 64 + 1] != -1) {
+        if (road[y / 64][x / 64 + 1] != 17) {
             arr.add(5);
         }
-        if (road[y / 64 + 1][x / 64 - 1] != -1) {
+        if (road[y / 64 + 1][x / 64 - 1] != 17) {
             arr.add(6);
         }
-        if (road[y / 64 + 1][x / 64] != -1) {
+        if (road[y / 64 + 1][x / 64] != 17) {
             arr.add(7);
         }
-        if (road[y / 64 + 1][x / 64 + 1] != -1) {
+        if (road[y / 64 + 1][x / 64 + 1] != 17) {
             arr.add(8);
         }
 

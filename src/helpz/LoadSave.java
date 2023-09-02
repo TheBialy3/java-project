@@ -120,7 +120,7 @@ public class LoadSave {
         File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
-            return Utilz.ArrayListTo2DintStartAt(list, 20, 20, 403);
+            return Utilz.ArrayListTo2DintStartAt(list, 20, 20, 404);
         } else {
             System.out.println("File: level1.txt nieistnieje");
             return null;
