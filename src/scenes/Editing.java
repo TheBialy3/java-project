@@ -4,12 +4,10 @@ import helpz.LoadSave;
 import main.Game;
 import objects.PathPoint;
 import objects.Tile;
-import ui.ActionBar;
 import ui.ToolBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
@@ -18,6 +16,7 @@ public class Editing extends GameScene implements SceneMethods {
 
 
     private static int[][] lvl;
+    private static int[][] dirArr;
     private Tile selectedTile;
 
     private int mouseX, mouseY;
@@ -39,11 +38,9 @@ public class Editing extends GameScene implements SceneMethods {
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start=points.get(0);
         end=points.get(1);
+        dirArr=LoadSave.GetLevelDir();
     }
 
-//    public void setLvlFile(int chosenL){
-//        chosenLvl=chosenL;
-//    }
 
     public void update() {
         updateTick();
@@ -54,7 +51,23 @@ public class Editing extends GameScene implements SceneMethods {
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
+        drawDirArr(g);
         drawPathPoint(g);
+    }
+
+    private void drawDirArr(Graphics g) {
+        if(dirArr!=null){
+            for (int y = 0; y < lvl.length; y++) {
+                for (int x = 0; x < lvl[y].length; x++) {
+                    int id = dirArr[y][x];
+                    if (isAnimation(id)) {
+                        g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
+                    } else {
+                        g.drawImage(getSprite(id), x * 64, y * 64, null);
+                    }
+                }
+            }
+        }
     }
 
     private void drawPathPoint(Graphics g) {
@@ -80,7 +93,6 @@ public class Editing extends GameScene implements SceneMethods {
 
     }
 
-
     private void drawSelectedTile(Graphics g) {
         if (selectedTile != null && drawSelect) {
             g.drawImage(selectedTile.getSprite(), mouseX, mouseY, 64, 64, null);
@@ -90,8 +102,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("level"+chosenLvl, lvl, start, end);
-        game.getPlaying().setLevel(lvl);
+        LoadSave.SaveLevel("level"+chosenLvl, lvl, start, end, dirArr);
         game.getPlaying().resetEvrything();
         game.initClasses();
     }
@@ -119,39 +130,23 @@ public class Editing extends GameScene implements SceneMethods {
                 if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
                     if (selectedTile.getId() == -1) {
                         start = new PathPoint(tileX, tileY);
-                    } else {
+                    }  else if(selectedTile.getId() == -2) {
                         end = new PathPoint(tileX, tileY);
+                    }else {
+                        if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
+                            return;
+                        }
+                        tileXLast = tileX;
+                        tileYLast = tileY;
+                        lastTileId = selectedTile.getId();
+                        dirArr[tileY][tileX] = selectedTile.getId();
                     }
                 }
             }
         }
     }
 
-    private void selectPathAndPathEnds(int x, int y) {
-        if (selectedTile != null) {
-            int tileX = x / 64;
-            int tileY = y / 64;
-            if (selectedTile.getId() >= 0) {
 
-                if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
-                    return;
-                }
-                tileXLast = tileX;
-                tileYLast = tileY;
-                lastTileId = selectedTile.getId();
-                lvl[tileY][tileX] = selectedTile.getId();
-            } else {
-                int id = lvl[tileY][tileX];
-                if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
-                    if (selectedTile.getId() == -1) {
-                        start = new PathPoint(tileX, tileY);
-                    } else {
-                        end = new PathPoint(tileX, tileY);
-                    }
-                }
-            }
-        }
-    }
 
     @Override
     public void mouseClicked(int x, int y) {

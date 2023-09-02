@@ -1,9 +1,9 @@
 package ui;
 
+import helpz.ImgFix;
 import helpz.LoadSave;
 import objects.Tile;
 import scenes.Editing;
-import scenes.Playing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,22 +11,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static helpz.Constants.Tiles.ROAD_TILE;
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
 public class ToolBar extends Bar {
 
     private MyButton bMenu, bSave;
-    private MyButton bPathStart, bPathEnd, bPortal;
+    private MyButton bPathStart, bPathEnd;
+    private MyButton bPathDir, bPathDirNull;
     private MyButton currentButton;
-    private MyButton bGrass, bWater, bRoadC, bWaterC, bWaterI, bWaterB, bRoad, bRoadP;
+    private MyButton bGrass, bWater, bRoadC, bWaterC, bWaterI, bWaterB, bRoad, bRoadDir, bRoadDirNull;
     private Tile selectedTile;
     private Editing editing;
+    private int tilePixelNumber=64;
     private int currentIndex = 0;
     private int currentType = 0;
     private int reszta = 0;
 
-    private BufferedImage pathStart, pathEnd;
+    private BufferedImage pathStart, pathEnd, pathDir, pathDirNull;
 
 
     private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
@@ -39,15 +42,18 @@ public class ToolBar extends Bar {
     }
 
     private void initPathImgs() {
-        pathStart = LoadSave.getSpriteAtlas().getSubimage(3 * 64, 2 * 64, 64, 64);
-        pathEnd = LoadSave.getSpriteAtlas().getSubimage(0 * 64, 0 * 64, 64, 64);
+        pathStart = LoadSave.getSpriteAtlas().getSubimage(0 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        pathEnd = LoadSave.getSpriteAtlas().getSubimage(1 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+
+        pathDir = LoadSave.getSpriteAtlas().getSubimage(0 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        pathDirNull = LoadSave.getSpriteAtlas().getSubimage(1 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     private void initButtons() {
-        int w = 64;
-        int h = 64;
+        int w = tilePixelNumber;
+        int h = tilePixelNumber;
         int x = 1293;
-        int y = 64;
+        int y = tilePixelNumber;
         int diff = 84;
         int id = 0;
         int type = 0;
@@ -59,12 +65,15 @@ public class ToolBar extends Bar {
         initMapButtons(bGrass, editing.getGame().getTileManager().getGrassT(), x, y, diff, w, h, id++, type++);
 
         initMapButtons(bRoad, editing.getGame().getTileManager().getRoadS(), x, y, diff, w, h, id++, type);
-        initMapButtons(bRoadC, editing.getGame().getTileManager().getRoadC(), x, y, diff, w, h, id++, type);
-        initMapButtons(bRoadP, editing.getGame().getTileManager().getRoadP(), x, y, diff, w, h, id++, type++);
+//        initMapButtons(bRoadC, editing.getGame().getTileManager().getRoadC(), x, y, diff, w, h, id++, type++);
+
 
         initMapButtons(bWaterC, editing.getGame().getTileManager().getWaterC(), x, y, diff, w, h, id++, type);
         initMapButtons(bWaterB, editing.getGame().getTileManager().getWaterB(), x, y, diff, w, h, id++, type);
         initMapButtons(bWaterI, editing.getGame().getTileManager().getWaterI(), x, y, diff, w, h, id++, type++);
+        initMapButtons(bWaterI, editing.getGame().getTileManager().getWaterI(), x, y, diff, w, h, id++, type++);
+        initMapButtons(bRoadDirNull, editing.getGame().getTileManager().getRoadDirNull(), x, y, diff, w, h, id++, type++);
+        initMapButtons(bRoadDir, editing.getGame().getTileManager().getRoadDir(), x, y, diff, w, h, id++, type++);
 
         bPathStart = new MyButton("PathStart", x, y + diff * type, w, h, id++);
         bPathEnd = new MyButton("PathEnd", x + diff * 1, y + diff * type, w, h, id++);
@@ -78,9 +87,7 @@ public class ToolBar extends Bar {
             currentType = type;
             reszta = 0;
         }
-
         b = new MyButton("", x + diff * reszta, y + diff * type, w, h, id);
-
         map.put(b, list);
     }
 
@@ -108,6 +115,9 @@ public class ToolBar extends Bar {
 
         drawPathButtons(g, bPathStart, pathStart);
         drawPathButtons(g, bPathEnd, pathEnd);
+//        drawPathButtons(g, bPathDir, pathDir);
+//        drawPathButtons(g, bPathDirNull, pathDirNull);
+
 
 
         drawNormalButtons(g, bWater);
@@ -136,9 +146,9 @@ public class ToolBar extends Bar {
 
     private void drawSelectedTile(Graphics g) {
         if (selectedTile != null) {
-            g.drawImage(selectedTile.getSprite(), 1300, 1200, 64, 64, null);
+            g.drawImage(selectedTile.getSprite(), 1300, 1200, tilePixelNumber, tilePixelNumber, null);
             g.setColor(Color.black);
-            g.drawRect(1300, 1200, 64, 64);
+            g.drawRect(1300, 1200, tilePixelNumber, tilePixelNumber);
         }
     }
 
@@ -165,8 +175,7 @@ public class ToolBar extends Bar {
             selectedTile = new Tile(pathEnd,-2,-2);
             editing.setSelectedTile(selectedTile);
             return;
-
-        } else {
+        }  else {
             for (MyButton b : map.keySet()) {
                 if (b.getBounds().contains(x, y)) {
                     selectedTile = map.get(b).get(0);

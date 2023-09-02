@@ -367,7 +367,7 @@ public class Constants {
         public static final int WATER_TILE = 0;
         public static final int GRASS_TILE = 1;
         public static final int ROAD_TILE = 2;
-        public static final int ELSE = 3;
+        public static final int ROAD_DIR = 3;
     }
 
 

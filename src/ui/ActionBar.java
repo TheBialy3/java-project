@@ -510,11 +510,13 @@ this.game=game;
                 if (bSell.getBounds().contains(x, y)) {
                     bSell.setMouseOver(true);
                 } else if (bUpgrade1.getBounds().contains(x, y)) {
-                    bUpgrade1.setMouseOver(true);
+                    if (!displayedTower.isUpgrade1Active()){
+                        bUpgrade1.setMouseOver(true);
+                    }
                 } else if (bUpgrade2.getBounds().contains(x, y)) {
-                    bUpgrade2.setMouseOver(true);
+                    if (!displayedTower.isUpgrade1Active()){ bUpgrade2.setMouseOver(true);}
                 } else if (bUpgrade3.getBounds().contains(x, y)) {
-                    bUpgrade3.setMouseOver(true);
+                    if (!displayedTower.isUpgrade1Active()){ bUpgrade3.setMouseOver(true);}
                 }
             }
             for (MyButton b : towerButtons) {
