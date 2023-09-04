@@ -20,13 +20,14 @@ import java.util.ArrayList;
 
 
 import static helpz.Constants.Tiles.*;
+import static helpz.Constants.TowerType.*;
 import static helpz.LoadSave.GetLevelDir;
 
 public class Playing extends GameScene implements SceneMethods {
 
     private static int[][] lvl;
     private ActionBar actionBar;
-    private int mouseX, mouseY;
+    private int mouseX, mouseY, mX, mY;
     private EnemyMenager enemyMenager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
@@ -204,7 +205,8 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void drawHighlight(Graphics g) {
         g.setColor(Color.white);
-        g.drawRect(mouseX, mouseY, 64, 64);
+        if(mouseX<1280){
+        g.drawRect(mouseX, mouseY, 64, 64);}
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -286,25 +288,30 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void shootEnemy(Tower t, Enemy e) {
-        projectileManager.newProjectile(t, e);
+        if (t.getTowerType()==CROSSBOW){
+            projectileManager.crossbowNewProjectile(t);
+        }else {
+            projectileManager.newProjectile(t, e);
+        }
+
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        mX=x;
+        mY=y;
+        mouseX = (x / 64) * 64;
+        mouseY = (y / 64) * 64;
         if (win) {
             bReplay.setMouseOver(false);
         }
         if (x >= 1280) {
             actionBar.mouseMoved(x, y);
-            mouseX = -111;
-            mouseY = -111;
+
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMouseOver(true);
             }
-        } else {
-            mouseX = (x / 64) * 64;
-            mouseY = (y / 64) * 64;
         }
     }
 
@@ -382,6 +389,10 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
+    private void rotateTower() {//////////////////////////////////////
+
+    }
+
     public EnemyMenager getEnemyMenager() {
         return enemyMenager;
     }
@@ -427,6 +438,14 @@ public class Playing extends GameScene implements SceneMethods {
 
     public int[][] getRoadDirArr() {
         return enemyMenager.getRoadDirArr();
+    }
+
+public int getMouseX(){
+        return mX;
+}
+
+    public int getMouseY(){
+        return mY;
     }
 
 

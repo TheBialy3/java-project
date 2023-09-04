@@ -53,6 +53,7 @@ public class WaveManager {
         waveTickTimerOver = false;
         playing.rewardPlayerAfterWave();
         projectileManager.endOfWave();
+
     }
 
     public boolean isWaveTimerOver() {

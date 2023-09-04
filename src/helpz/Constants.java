@@ -5,7 +5,7 @@ public class Constants {
     public static class Direction {
         public static final int LEFT = 20;
         public static final int UP = 21;
-        public static final int RIGHT =18;
+        public static final int RIGHT = 18;
         public static final int DOWN = 19;
     }
 
@@ -134,10 +134,10 @@ public class Constants {
         public static final int FROST_MAGE = 2;
         public static final int MINES_FACTORY = 3;
         public static final int POISON_TOWER = 4;
-      public static final int BOOM_VOLCANO = 5;
-//        public static final int CANNON = 6;
-//        public static final int FROST_MAGE = 7;
-//        public static final int MINES_FACTORY = 8;
+        public static final int BOOM_VOLCANO = 5;
+        public static final int CROSSBOW = 6;
+        public static final int MOUSE_FOLLOWS_TOWER = 7;
+        public static final int SNIPER = 8;
 //        public static final int POISON_TOWER = 9;
 
         public static String getName(int towerType) {
@@ -154,12 +154,12 @@ public class Constants {
                     return "Poison Tower";
                 case BOOM_VOLCANO:
                     return "Volcano";
-//                case CANNON:
-//                    return "Cannon";
-//                case FROST_MAGE:
-//                    return "Frost Mage";
-//                case MINES_FACTORY:
-//                    return "Mines Factory";
+                case CROSSBOW:
+                    return "Crossbow";
+                case MOUSE_FOLLOWS_TOWER:
+                    return "Creep";
+                case SNIPER:
+                    return "Sniper";
 //                case POISON_TOWER:
 //                    return "Poison Tower";
                 default:
@@ -181,12 +181,12 @@ public class Constants {
                     return true;
                 case BOOM_VOLCANO:
                     return false;
-//                case CANNON:
-//                    return false;
-//                case FROST_MAGE:
-//                    return true;
-//                case MINES_FACTORY:
-//                    return false;
+                case CROSSBOW:
+                    return false;
+                case MOUSE_FOLLOWS_TOWER:
+                    return false;
+                case SNIPER:
+                    return false;
 //                case POISON_TOWER:
 //                    return true;
                 default:
@@ -221,17 +221,17 @@ public class Constants {
                 case FROST_MAGE:
                     return 125;
                 case MINES_FACTORY:
-                    return 200;
+                    return 300;
                 case POISON_TOWER:
                     return 200;
                 case BOOM_VOLCANO:
                     return 400;
-//                case CANNON:
-//                    return 150;
-//                case FROST_MAGE:
-//                    return 125;
-//                case MINES_FACTORY:
-//                    return 200;
+                case CROSSBOW:
+                    return 250;
+                case MOUSE_FOLLOWS_TOWER:
+                    return 325;
+                case SNIPER:
+                    return 425;
 //                case POISON_TOWER:
 //                    return 200;
                 default:
@@ -253,12 +253,12 @@ public class Constants {
                     return 90;
                 case BOOM_VOLCANO:
                     return 100;
-//                case CANNON:
-//                    return 90;
-//                case FROST_MAGE:
-//                    return 0;
-//                case MINES_FACTORY:
-//                    return 90;
+                case CROSSBOW:
+                    return 50;
+                case MOUSE_FOLLOWS_TOWER:
+                    return 40;
+                case SNIPER:
+                    return 110;
 //                case POISON_TOWER:
 //                    return 90;
                 default:
@@ -280,13 +280,13 @@ public class Constants {
                 case POISON_TOWER:
                     return 250;
                 case BOOM_VOLCANO:
-                    return  200;
-//                case CANNON:
-//                    return 250;
-//                case FROST_MAGE:
-//                    return 100;
-//                case MINES_FACTORY:
-//                    return 96;
+                    return 200;
+                case CROSSBOW:
+                    return 2000;
+                case MOUSE_FOLLOWS_TOWER:
+                    return 2000;
+                case SNIPER:
+                    return 2000;
 //                case POISON_TOWER:
 //                    return 250;
                 default:
@@ -308,19 +308,20 @@ public class Constants {
                     return 1;
                 case BOOM_VOLCANO:
                     return 10;
-//                case CANNON:
-//                    return 15;
-//                case FROST_MAGE:
-//                    return 0;
-//                case MINES_FACTORY:
-//                    return 10;
+                case CROSSBOW:
+                    return 10;
+                case MOUSE_FOLLOWS_TOWER:
+                    return 15;
+                case SNIPER:
+                    return 30;
 //                case POISON_TOWER:
 //                    return 1;
                 default:
                     return 0;
             }
         }
-//dot - damage over time
+
+        //dot - damage over time
         public static boolean isDOT(int towerType) {
             switch (towerType) {
                 case ARCHER:
@@ -335,18 +336,19 @@ public class Constants {
                     return true;
                 case BOOM_VOLCANO:
                     return false;
-//                case CANNON:
-//                    return false;
-//                case FROST_MAGE:
-//                    return true;
-//                case MINES_FACTORY:
-//                    return false;
+                case CROSSBOW:
+                    return false;
+                case MOUSE_FOLLOWS_TOWER:
+                    return false;
+                case SNIPER:
+                    return false;
 //                case POISON_TOWER:
 //                    return true;
                 default:
                     return false;
             }
         }
+
         public static int getDefaulDuration(int towerType) {
             if (isSlow(towerType)) {
                 switch (towerType) {

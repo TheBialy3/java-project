@@ -242,12 +242,12 @@ this.game=game;
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
         bBestiary = new MyButton("Reset", 1417, 10, 108, 40);
 
-        towerButtons = new MyButton[6];
+        towerButtons = new MyButton[9];
 
         for (int i = 0; i < towerButtons.length; i++) {
             int row = i / 3;
-            int reszta = i % 3;
-            towerButtons[i] = new MyButton("", x + diff * reszta, y + diff * row, w, h, i);
+            int rest = i % 3;
+            towerButtons[i] = new MyButton("", x + diff * rest, y + diff * row, w, h, i);
         }
 
         bSell = new MyButton("Sell ", 1401, 1180, 125, 27);
@@ -410,6 +410,15 @@ this.game=game;
                         case BOOM_VOLCANO:
                             selectedTower = new BoomTower(x, y, 0, b.getId(), road);
                             break;
+                        case CROSSBOW:
+                            selectedTower = new Crossbow(x, y, 0, b.getId(), road);
+                            break;
+                        case MOUSE_FOLLOWS_TOWER:
+                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), road);
+                            break;
+                        case SNIPER:
+                            selectedTower = new Sniper(x, y, 0, b.getId(), road);
+                            break;
                     }
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -481,6 +490,15 @@ this.game=game;
                             break;
                         case BOOM_VOLCANO:
                             selectedTower = new BoomTower(x, y, 0, b.getId(), road);
+                            break;
+                        case CROSSBOW:
+                            selectedTower = new Crossbow(x, y, 0, b.getId(), road);
+                            break;
+                        case MOUSE_FOLLOWS_TOWER:
+                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), road);
+                            break;
+                        case SNIPER:
+                            selectedTower = new Sniper(x, y, 0, b.getId(), road);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);
@@ -602,15 +620,15 @@ this.game=game;
         } else if (displayedTower instanceof BoomTower) {
             costUp1 = ((BoomTower) displayedTower).getCost(1);
             textUp1 = ((BoomTower) displayedTower).getName(1);
-//        } else if (displayedTower instanceof FrostMage) {
-//            costUp1 = ((FrostMage) displayedTower).getCost(1);
-//            textUp1 = ((FrostMage) displayedTower).getName(1);
-//        } else if (displayedTower instanceof MineFactory) {
-//            costUp1 = ((MineFactory) displayedTower).getCost(1);
-//            textUp1 = ((MineFactory) displayedTower).getName(1);
-//        } else if (displayedTower instanceof PoisonTower) {
-//            costUp1 = ((PoisonTower) displayedTower).getCost(1);
-//            textUp1 = ((PoisonTower) displayedTower).getName(1);
+        } else if (displayedTower instanceof Crossbow) {
+            costUp1 = ((Crossbow) displayedTower).getCost(1);
+            textUp1 = ((Crossbow) displayedTower).getName(1);
+        } else if (displayedTower instanceof MauseFollowsTower) {
+            costUp1 = ((MauseFollowsTower) displayedTower).getCost(1);
+            textUp1 = ((MauseFollowsTower) displayedTower).getName(1);
+        } else if (displayedTower instanceof Sniper) {
+            costUp1 = ((Sniper) displayedTower).getCost(1);
+            textUp1 = ((Sniper) displayedTower).getName(1);
         } else {
             System.out.println("cost error 1");
         }
@@ -632,15 +650,15 @@ this.game=game;
         } else if (displayedTower instanceof BoomTower) {
             costUp2 = ((BoomTower) displayedTower).getCost(2);
             textUp2 = ((BoomTower) displayedTower).getName(2);
-//        } else if (displayedTower instanceof FrostMage) {
-//            costUp2 = ((FrostMage) displayedTower).getCost(2);
-//            textUp2 = ((FrostMage) displayedTower).getName(2);
-//        } else if (displayedTower instanceof MineFactory) {
-//            costUp2 = ((MineFactory) displayedTower).getCost(2);
-//            textUp2 = ((MineFactory) displayedTower).getName(2);
-//        } else if (displayedTower instanceof PoisonTower) {
-//            costUp2 = ((PoisonTower) displayedTower).getCost(2);
-//            textUp2 = ((PoisonTower) displayedTower).getName(2);
+        } else if (displayedTower instanceof Crossbow) {
+            costUp1 = ((Crossbow) displayedTower).getCost(2);
+            textUp1 = ((Crossbow) displayedTower).getName(2);
+        } else if (displayedTower instanceof MauseFollowsTower) {
+            costUp1 = ((MauseFollowsTower) displayedTower).getCost(2);
+            textUp1 = ((MauseFollowsTower) displayedTower).getName(2);
+        } else if (displayedTower instanceof Sniper) {
+            costUp1 = ((Sniper) displayedTower).getCost(2);
+            textUp1 = ((Sniper) displayedTower).getName(2);
         } else {
             System.out.println("cost error 2");
         }
@@ -662,20 +680,21 @@ this.game=game;
         } else if (displayedTower instanceof BoomTower) {
             costUp3 = ((BoomTower) displayedTower).getCost(3);
             textUp3 = ((BoomTower) displayedTower).getName(3);
-//        } else if (displayedTower instanceof FrostMage) {
-//            costUp3 = ((FrostMage) displayedTower).getCost(3);
-//            textUp3 = ((FrostMage) displayedTower).getName(3);
-//        } else if (displayedTower instanceof MineFactory) {
-//            costUp3 = ((MineFactory) displayedTower).getCost(3);
-//            textUp3 = ((MineFactory) displayedTower).getName(3);
-//        } else if (displayedTower instanceof PoisonTower) {
-//            costUp3 = ((PoisonTower) displayedTower).getCost(3);
-//            textUp3 = ((PoisonTower) displayedTower).getName(3);
+        } else if (displayedTower instanceof Crossbow) {
+            costUp1 = ((Crossbow) displayedTower).getCost(3);
+            textUp1 = ((Crossbow) displayedTower).getName(3);
+        } else if (displayedTower instanceof MauseFollowsTower) {
+            costUp1 = ((MauseFollowsTower) displayedTower).getCost(3);
+            textUp1 = ((MauseFollowsTower) displayedTower).getName(3);
+        } else if (displayedTower instanceof Sniper) {
+            costUp1 = ((Sniper) displayedTower).getCost(3);
+            textUp1 = ((Sniper) displayedTower).getName(3);
         } else {
             System.out.println("cost error 3");
         }
 
     }
+
 
 
 }
