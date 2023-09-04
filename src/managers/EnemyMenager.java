@@ -41,26 +41,22 @@ public class EnemyMenager {
     }
 
     private void loadRoadDirArr() {
-        roadDirArr = Utilz.GetRoadDirArr(playing.getGame().getTileManager().getTypeArr(), start, end);
+        roadDirArr = LoadSave.GetLevelDir();
     }
 
     private void loadEfectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyEfects = new BufferedImage[3];
-        enemyEfects[0] = atlas.getSubimage(8 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyEfects[1] = atlas.getSubimage(7 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyEfects[2] = atlas.getSubimage(5 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-    }
+        for (int i = 0; i < 3; i++) {
+            enemyEfects[i] = atlas.getSubimage(0, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }}
 
     private void loadEnemyImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyImages = new BufferedImage[5];
-        enemyImages[0] = atlas.getSubimage(3 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyImages[1] = atlas.getSubimage(0 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyImages[2] = atlas.getSubimage(4 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyImages[3] = atlas.getSubimage(2 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        enemyImages[4] = atlas.getSubimage(1 * tilePixelNumber, 6 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-    }
+        enemyImages = new BufferedImage[9];
+        for (int i = 0; i < 9; i++) {
+            enemyImages[i] = atlas.getSubimage(0, (2+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        } }
 
     public void spawnEnemy(int nextEnemy) {
         addEnemy(nextEnemy);

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 
 import static helpz.Constants.Tiles.*;
+import static helpz.LoadSave.GetLevelDir;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -47,9 +48,9 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager = new TowerManager(this);
     }
 
-    public void setLevel(int[][] lvl) {
-        this.lvl = lvl;
-    }
+//    public void setLevel(int[][] lvl) {
+//        this.lvl = lvl;
+//    }
 
     public void update() {
         if (!win) {
@@ -178,6 +179,7 @@ public class Playing extends GameScene implements SceneMethods {
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start = points.get(0);
         end = points.get(1);
+
     }
 
     @Override

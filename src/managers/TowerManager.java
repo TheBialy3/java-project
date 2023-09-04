@@ -22,7 +22,7 @@ public class TowerManager {
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arr = new ArrayList<>();
-    private int towerAmount = 0, ran;
+    private int towerAmount = 0, ran, tilePixelNumber=64;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;
@@ -37,22 +37,17 @@ public class TowerManager {
     private void loadUpgradeImgs() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         upgradeImgs = new BufferedImage[3];
-        upgradeImgs[0] = atlas.getSubimage(9 * 64, 0 * 64, 64, 64);
-        upgradeImgs[1] = atlas.getSubimage(9 * 64, 1 * 64, 64, 64);
-        upgradeImgs[2] = atlas.getSubimage(9 * 64, 2 * 64, 64, 64);
-        //upgradeImgs[3] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
+        for (int i = 0; i < 3; i++) {
+            upgradeImgs[i] = atlas.getSubimage(0, (23+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
     }
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         towerImgs = new BufferedImage[6];
-        towerImgs[0] = atlas.getSubimage(0 * 64, 8 * 64, 64, 64);
-        towerImgs[1] = atlas.getSubimage(8 * 64, 2 * 64, 64, 64);
-        towerImgs[2] = atlas.getSubimage(0 * 64, 7 * 64, 64, 64);
-        towerImgs[3] = atlas.getSubimage(9 * 64, 3 * 64, 64, 64);
-        towerImgs[4] = atlas.getSubimage(7 * 64, 2 * 64, 64, 64);
-        towerImgs[5] = atlas.getSubimage(4 * 64, 0 * 64, 64, 64);
-        road = playing.getRoadDirArr();
+        for (int i = 0; i < 6; i++) {
+            towerImgs[i] = atlas.getSubimage(0, (12+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }road = playing.getRoadDirArr();
     }
 
     public void addTower(Tower selectedTower, int x, int y) {

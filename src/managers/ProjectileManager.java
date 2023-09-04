@@ -37,21 +37,18 @@ public class ProjectileManager {
         //place of sprite on spritesheet
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         proj_imgs = new BufferedImage[5];
-        proj_imgs[0] = atlas.getSubimage(4 * tilePixelNumber, 4 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[1] = atlas.getSubimage(6 * tilePixelNumber, 2 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[2] = atlas.getSubimage(6 * tilePixelNumber, 0 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[3] = atlas.getSubimage(7 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        proj_imgs[4] = atlas.getSubimage(4 * tilePixelNumber, 1 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        implortExplosion(atlas);
+        for (int i = 0; i < 5; i++) {
+            proj_imgs[i] = atlas.getSubimage(0, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }  implortExplosion(atlas);
     }
 
     private void implortExplosion(BufferedImage atlas) {
         explo_imgs = new BufferedImage[10];
         for (int i = 0; i < 10; i++) {
-            explo_imgs[i] = atlas.getSubimage(i * tilePixelNumber, 5 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            explo_imgs[i] = atlas.getSubimage(i * tilePixelNumber, 26 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         splash_imgs = new BufferedImage[1];
-        splash_imgs[0] = atlas.getSubimage(5 * tilePixelNumber, 3 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        splash_imgs[0] = atlas.getSubimage(0 * tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void newProjectile(Tower t, Enemy e) {
