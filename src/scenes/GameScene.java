@@ -9,7 +9,7 @@ public class GameScene {
     protected Game game;
     protected int animationIndex;
     protected int tick;
-    protected int ANIMATION_SPEED=5;
+    protected int ANIMATION_SPEED=2;
 
     public GameScene(Game game){
         this.game = game;
@@ -28,7 +28,7 @@ public class GameScene {
         if(tick>=ANIMATION_SPEED){
             tick=0;
             animationIndex++;
-            if(animationIndex>=64){
+            if(animationIndex>=704){
                 animationIndex=0;
             }
         }
