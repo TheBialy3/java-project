@@ -22,7 +22,7 @@ public class TowerManager {
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arr = new ArrayList<>();
-    private int towerAmount = 0, ran, tilePixelNumber=64;
+    private int towerAmount = 0, ran, tilePixelNumber = 64;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;
@@ -38,16 +38,18 @@ public class TowerManager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         upgradeImgs = new BufferedImage[3];
         for (int i = 0; i < 3; i++) {
-            upgradeImgs[i] = atlas.getSubimage(0, (23+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            upgradeImgs[i] = atlas.getSubimage(0, (23 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        towerImgs = new BufferedImage[6];
-        for (int i = 0; i < 6; i++) {
-            towerImgs[i] = atlas.getSubimage(0, (12+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        }road = playing.getRoadDirArr();
+        int towerNumber =9;
+        towerImgs = new BufferedImage[towerNumber];
+        for (int i = 0; i < towerNumber; i++) {
+            towerImgs[i] = atlas.getSubimage(0, (12 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+        road = playing.getRoadDirArr();
     }
 
     public void addTower(Tower selectedTower, int x, int y) {
@@ -71,6 +73,15 @@ public class TowerManager {
             case BOOM_VOLCANO:
                 towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, road));
                 break;
+            case CROSSBOW:
+                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW, road));
+                break;
+            case MOUSE_FOLLOWS_TOWER:
+                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, road));
+                break;
+            case SNIPER:
+                towers.add(new Sniper(x, y, towerAmount++, SNIPER, road));
+                break;
             default:
                 break;
         }
@@ -91,7 +102,7 @@ public class TowerManager {
                 setMine(t);
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
-            } else if (t.getTowerType() == BOOM_VOLCANO) {
+            }  else if (t.getTowerType() == BOOM_VOLCANO) {
                 if (t.isCooldownOver()) {
                     hurtEnemyIfClose(t);
                     t.resetCooldown();
@@ -101,6 +112,8 @@ public class TowerManager {
             }
         }
     }
+
+
 
     private void hurtEnemyIfClose(Tower t) {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
@@ -134,7 +147,11 @@ public class TowerManager {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
                     if (t.isCooldownOver()) {
-                        playing.shootEnemy(t, e);
+                        if (t.getTowerType() == SNIPER) {
+                            e.hurt(t.getDmg());
+                        } else {
+                            playing.shootEnemy(t, e);
+                        }
                         t.resetCooldown();
                     }
                 } else {

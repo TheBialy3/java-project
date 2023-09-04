@@ -179,6 +179,16 @@ public abstract class Tower {
                 ((PoisonTower) this).upgrade(1);
             }else if (this instanceof BoomTower) {
                 ((BoomTower) this).upgrade(1);
+            } else if (this instanceof Crossbow) {
+                ((Crossbow) this).upgrade(1);
+            } else if (this instanceof MauseFollowsTower) {
+                ((MauseFollowsTower) this).upgrade(1);
+            } else if (this instanceof Sniper) {
+                ((Sniper) this).upgrade(1);
+//            }else if (this instanceof PoisonTower) {
+//                ((PoisonTower) this).upgrade(1);
+//            }else if (this instanceof BoomTower) {
+//                ((BoomTower) this).upgrade(1);
             }
 
         }
@@ -200,6 +210,16 @@ public abstract class Tower {
                 ((PoisonTower) this).upgrade(2);
             }else if (this instanceof BoomTower) {
                 ((BoomTower) this).upgrade(2);
+            } else if (this instanceof Crossbow) {
+                ((Crossbow) this).upgrade(2);
+            } else if (this instanceof MauseFollowsTower) {
+                ((MauseFollowsTower) this).upgrade(2);
+            } else if (this instanceof Sniper) {
+                ((Sniper) this).upgrade(2);
+//            }else if (this instanceof PoisonTower) {
+//                ((PoisonTower) this).upgrade(1);
+//            }else if (this instanceof BoomTower) {
+//                ((BoomTower) this).upgrade(1);
             }
         }
         U2 = true;
@@ -220,6 +240,16 @@ public abstract class Tower {
                 ((PoisonTower) this).upgrade(3);
             }else if (this instanceof BoomTower) {
                 ((BoomTower) this).upgrade(3);
+            } else if (this instanceof Crossbow) {
+                ((Crossbow) this).upgrade(3);
+            } else if (this instanceof MauseFollowsTower) {
+                ((MauseFollowsTower) this).upgrade(3);
+            } else if (this instanceof Sniper) {
+                ((Sniper) this).upgrade(3);
+//            }else if (this instanceof PoisonTower) {
+//                ((PoisonTower) this).upgrade(1);
+//            }else if (this instanceof BoomTower) {
+//                ((BoomTower) this).upgrade(1);
             }
         }
         U3 = true;

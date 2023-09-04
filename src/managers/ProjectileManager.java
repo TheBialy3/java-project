@@ -39,7 +39,8 @@ public class ProjectileManager {
         proj_imgs = new BufferedImage[5];
         for (int i = 0; i < 5; i++) {
             proj_imgs[i] = atlas.getSubimage(0, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        }  implortExplosion(atlas);
+        }
+        implortExplosion(atlas);
     }
 
     private void implortExplosion(BufferedImage atlas) {
@@ -53,21 +54,33 @@ public class ProjectileManager {
 
     public void newProjectile(Tower t, Enemy e) {
         int type = getProjType(t);
-
-        int xDist = (int) (t.getX() - e.getX());
-        int yDist = (int) (t.getY() - e.getY());
+        int xDist;
+        int yDist;
+        //mouseFollower
+        if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
+            xDist = (int) (t.getX() - playing.getMouseX());
+            yDist = (int) (t.getY() - playing.getMouseY());
+        } else {
+            xDist = (int) (t.getX() - e.getX());
+            yDist = (int) (t.getY() - e.getY());
+        }
         int totDist = Math.abs(xDist) + Math.abs(yDist);
-
         float xPer = (float) Math.abs(xDist) / totDist;
 
         float xSpeed = xPer * helpz.Constants.ProjectileType.getSpeed(type);
         float ySpeed = helpz.Constants.ProjectileType.getSpeed(type) - xSpeed;
-
-        if (t.getX() > e.getX())
-            xSpeed *= -1;
-        if (t.getY() > e.getY())
-            ySpeed *= -1;
-
+        //mouseFollower
+        if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
+            if (t.getX() > playing.getMouseX())
+                xSpeed *= -1;
+            if (t.getY() > playing.getMouseY())
+                ySpeed *= -1;
+        } else {
+            if (t.getX() > e.getX())
+                xSpeed *= -1;
+            if (t.getY() > e.getY())
+                ySpeed *= -1;
+        }
         float rotate = 0;
 
         if (helpz.Constants.ProjectileType.isRorating(type)) {
@@ -220,18 +233,34 @@ public class ProjectileManager {
                 return ARROW;
             case CANNON:
                 return BOMB;
-            case FROST_MAGE:
-                return FROST_BEEM;
             case MINES_FACTORY:
                 return MINES;
             case POISON_TOWER:
                 return POISON_POTION;
+            case CROSSBOW:
+                return ARROW;
+            default:
+                return 0;
         }
-        return 0;
     }
 
     public void endOfWave() {
         projectiles.clear();
+    }
+
+    public void crossbowNewProjectile(Tower t) {
+        int type = getProjType(t);
+        float Speed = helpz.Constants.ProjectileType.getSpeed(type);
+        int neg;
+        for (int i = 0; i < 4; i++) {
+            if (i < 2) {
+                neg = -1;
+            } else {
+                neg = 1;
+            }
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type));
+
+        }
     }
 
     public class Explosion {
