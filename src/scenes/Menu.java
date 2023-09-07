@@ -182,7 +182,7 @@ public class Menu extends GameScene implements SceneMethods {
     }
 
     private void importImg() {
-        InputStream is = getClass().getResourceAsStream("/pngFile/try.png");//poczatkowyWyglad
+        InputStream is = getClass().getResourceAsStream("/pngFile/final.png");//poczatkowyWyglad
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {

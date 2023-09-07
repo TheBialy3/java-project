@@ -138,7 +138,7 @@ public class Constants {
         public static final int CROSSBOW = 6;
         public static final int MOUSE_FOLLOWS_TOWER = 7;
         public static final int SNIPER = 8;
-//        public static final int POISON_TOWER = 9;
+        public static final int LASER_TOWER = 9;
 
         public static String getName(int towerType) {
             switch (towerType) {
@@ -160,8 +160,8 @@ public class Constants {
                     return "Creep";
                 case SNIPER:
                     return "Sniper";
-//                case POISON_TOWER:
-//                    return "Poison Tower";
+                case LASER_TOWER:
+                    return "Eye laser Tower";
                 default:
                     return "";
             }
@@ -187,8 +187,8 @@ public class Constants {
                     return false;
                 case SNIPER:
                     return false;
-//                case POISON_TOWER:
-//                    return true;
+                case LASER_TOWER:
+                    return true;
                 default:
                     return false;
             }
@@ -201,8 +201,8 @@ public class Constants {
                         return 0.5f;
                     case POISON_TOWER:
                         return 0.5f;
-//                    case FROST_MAGE:
-//                        return 0.5f;
+                    case LASER_TOWER:
+                        return 0.2f;
 //                    case POISON_TOWER:
 //                        return 0.5f;
                     default:
@@ -232,8 +232,8 @@ public class Constants {
                     return 325;
                 case SNIPER:
                     return 425;
-//                case POISON_TOWER:
-//                    return 200;
+                case LASER_TOWER:
+                    return 800;
                 default:
                     return 0;
             }
@@ -259,8 +259,8 @@ public class Constants {
                     return 40;
                 case SNIPER:
                     return 110;
-//                case POISON_TOWER:
-//                    return 90;
+                case LASER_TOWER:
+                    return 2;
                 default:
                     return 0;
             }
@@ -287,8 +287,8 @@ public class Constants {
                     return 2000;
                 case SNIPER:
                     return 2000;
-//                case POISON_TOWER:
-//                    return 250;
+                case LASER_TOWER:
+                    return 325;
                 default:
                     return 0;
             }
@@ -314,8 +314,8 @@ public class Constants {
                     return 15;
                 case SNIPER:
                     return 30;
-//                case POISON_TOWER:
-//                    return 1;
+                case LASER_TOWER:
+                    return 1;
                 default:
                     return 0;
             }
@@ -342,8 +342,8 @@ public class Constants {
                     return false;
                 case SNIPER:
                     return false;
-//                case POISON_TOWER:
-//                    return true;
+                case LASER_TOWER:
+                    return false;
                 default:
                     return false;
             }

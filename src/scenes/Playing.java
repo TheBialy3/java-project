@@ -8,10 +8,11 @@ import managers.EnemyMenager;
 import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
+import objects.Beem;
 import objects.PathPoint;
 
 import towers.*;
-import ui.ActionBar;
+import ui.PlayingBar;
 import ui.MyButton;
 
 import java.awt.*;
@@ -21,12 +22,11 @@ import java.util.ArrayList;
 
 import static helpz.Constants.Tiles.*;
 import static helpz.Constants.TowerType.*;
-import static helpz.LoadSave.GetLevelDir;
 
 public class Playing extends GameScene implements SceneMethods {
 
     private static int[][] lvl;
-    private ActionBar actionBar;
+    private PlayingBar playingBar;
     private int mouseX, mouseY, mX, mY;
     private EnemyMenager enemyMenager;
     private ProjectileManager projectileManager;
@@ -34,6 +34,7 @@ public class Playing extends GameScene implements SceneMethods {
     private WaveManager waveManager;
     private MyButton bReplay;
     private PathPoint start, end;
+    private ArrayList<Beem> beems= new ArrayList<>();;
     private Tower selectedTower;
     private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomGold = 5;
     private boolean paused, gameOver, startOfGame = false, win = false;
@@ -42,7 +43,7 @@ public class Playing extends GameScene implements SceneMethods {
     public Playing(Game game) {
         super(game);
         LoadDefoultLevel();
-        actionBar = new ActionBar(1280, 0, 256, 1280, this, game);
+        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
@@ -91,7 +92,7 @@ public class Playing extends GameScene implements SceneMethods {
                     projectileManager.update();
                 }
 
-                if (actionBar.getLives() <= 0) {
+                if (playingBar.getLives() <= 0) {
                     gameOver = true;
                     game.saveGame();
                 }
@@ -109,7 +110,7 @@ public class Playing extends GameScene implements SceneMethods {
     private void passiveIncom() {
         goldTick++;
         if (goldTick % goldTickLimit == 0) {
-            actionBar.earnGold(passiveIncomGold);
+            playingBar.earnGold(passiveIncomGold);
         }
     }
 
@@ -120,7 +121,6 @@ public class Playing extends GameScene implements SceneMethods {
         int h = g.getFontMetrics().getHeight();
         int w = g.getFontMetrics().stringWidth(text);
         g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
-
     }
 
     public void drawWinScrean(Graphics g) {
@@ -189,8 +189,9 @@ public class Playing extends GameScene implements SceneMethods {
 
         enemyMenager.draw(g);
         towerManager.draw(g);
-        actionBar.draw(g);
+        playingBar.draw(g);
         projectileManager.draw(g);
+        drawBeem(g);
 
         drawSelectedTower(g);
         drawHighlight(g);
@@ -200,13 +201,28 @@ public class Playing extends GameScene implements SceneMethods {
         if (paused) {
             drawPause(g);
         }
+
+    }
+
+    private void drawBeem(Graphics g) {
+
+        for(Beem beem:beems){
+            if(beem.getActive()){
+                g.setColor(new Color(255, 0, 0));
+                g.drawLine(beem.getxStart(),beem.getyStart(),beem.getxEnd(),beem.getyEnd());
+                beem.timerDown();
+
+            }
+        }
+
     }
 
 
     private void drawHighlight(Graphics g) {
         g.setColor(Color.white);
-        if(mouseX<1280){
-        g.drawRect(mouseX, mouseY, 64, 64);}
+        if (mouseX < 1280) {
+            g.drawRect(mouseX, mouseY, 64, 64);
+        }
     }
 
     private void drawSelectedTower(Graphics g) {
@@ -248,7 +264,7 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void mouseClicked(int x, int y) {
         if (x >= 1280) {
-            actionBar.mouseClicked(x, y);
+            playingBar.mouseClicked(x, y);
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
                 resetEvrything();
@@ -258,14 +274,14 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isTileGrass(mouseX, mouseY)) {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
-                        actionBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
+                        playingBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
                         selectedTower = null;
                     }
                 }
             } else {
                 //check tower on map
                 Tower t = getTowerAt(mouseX, mouseY);
-                actionBar.displayTower(t);
+                playingBar.displayTower(t);
 
             }
         }
@@ -288,9 +304,9 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void shootEnemy(Tower t, Enemy e) {
-        if (t.getTowerType()==CROSSBOW){
+        if (t.getTowerType() == CROSSBOW) {
             projectileManager.crossbowNewProjectile(t);
-        }else {
+        } else {
             projectileManager.newProjectile(t, e);
         }
 
@@ -298,15 +314,15 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseMoved(int x, int y) {
-        mX=x;
-        mY=y;
+        mX = x;
+        mY = y;
         mouseX = (x / 64) * 64;
         mouseY = (y / 64) * 64;
         if (win) {
             bReplay.setMouseOver(false);
         }
         if (x >= 1280) {
-            actionBar.mouseMoved(x, y);
+            playingBar.mouseMoved(x, y);
 
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
@@ -321,7 +337,7 @@ public class Playing extends GameScene implements SceneMethods {
             bReplay.resetBooleans();
         }
         if (x >= 1280) {
-            actionBar.mouseReleased(x, y);
+            playingBar.mouseReleased(x, y);
         }
     }
 
@@ -329,7 +345,7 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void mousePressed(int x, int y) {
         if (x >= 1280) {
-            actionBar.mousePressed(x, y);
+            playingBar.mousePressed(x, y);
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMousePressed(true);
@@ -340,7 +356,7 @@ public class Playing extends GameScene implements SceneMethods {
     @Override
     public void mouseDragged(int x, int y) {
         if (x >= 1280) {
-            actionBar.mouseDragged(x, y);
+            playingBar.mouseDragged(x, y);
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
                 resetEvrything();
@@ -350,7 +366,7 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isTileGrass(mouseX, mouseY)) {
                     if (getTowerAt(mouseX, mouseY) == null) {
                         towerManager.addTower(selectedTower, mouseX, mouseY);
-                        actionBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
+                        playingBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
                         selectedTower = null;
 
 
@@ -359,7 +375,7 @@ public class Playing extends GameScene implements SceneMethods {
             } else {
                 //check tower on map
                 Tower t = getTowerAt(mouseX, mouseY);
-                actionBar.displayTower(t);
+                playingBar.displayTower(t);
 
             }
         }
@@ -368,11 +384,11 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void rewardPlayerAfterWave() {
-        actionBar.earnGold(endWaveGold);
+        playingBar.earnGold(endWaveGold);
     }
 
     public void rewardPlayer(int enemyType) {
-        actionBar.earnGold(Constants.EnemyType.getGoldWorth(enemyType));
+        playingBar.earnGold(Constants.EnemyType.getGoldWorth(enemyType));
     }
 
     public TowerManager getTowerManager() {
@@ -408,11 +424,11 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void removeOneLive() {
-        actionBar.removeOneLive();
+        playingBar.removeOneLive();
     }
 
     public void resetEvrything() {
-        actionBar.resetEvrything();
+        playingBar.resetEvrything();
         win = false;
         enemyMenager.reset();
         projectileManager.reset();
@@ -440,13 +456,15 @@ public class Playing extends GameScene implements SceneMethods {
         return enemyMenager.getRoadDirArr();
     }
 
-public int getMouseX(){
+    public int getMouseX() {
         return mX;
-}
+    }
 
-    public int getMouseY(){
+    public int getMouseY() {
         return mY;
     }
 
-
+    public void beemEnemy(Tower t, Enemy e) {
+        beems.add(new Beem(t.getX()+45, t.getY()+20,(int) e.getX()+32, (int) e.getY()+32));
+    }
 }
