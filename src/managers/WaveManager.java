@@ -1,9 +1,7 @@
 package managers;
 
-import enemies.Enemy;
 import events.Wave;
 import scenes.Playing;
-import ui.ActionBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -44,10 +44,11 @@ public class TowerManager {
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        int towerNumber =9;
+        int towerNumber = 10;
+        int imageInRow = 9;
         towerImgs = new BufferedImage[towerNumber];
         for (int i = 0; i < towerNumber; i++) {
-            towerImgs[i] = atlas.getSubimage(0, (12 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            towerImgs[i] = atlas.getSubimage((0+i/9) * tilePixelNumber, (12 + i%9) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         road = playing.getRoadDirArr();
     }
@@ -82,6 +83,9 @@ public class TowerManager {
             case SNIPER:
                 towers.add(new Sniper(x, y, towerAmount++, SNIPER, road));
                 break;
+            case LASER_TOWER:
+                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, road));
+                break;
             default:
                 break;
         }
@@ -102,9 +106,9 @@ public class TowerManager {
                 setMine(t);
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
-            }  else if (t.getTowerType() == BOOM_VOLCANO) {
+            } else if (t.getTowerType() == BOOM_VOLCANO) {
                 if (t.isCooldownOver()) {
-                    hurtEnemyIfClose(t);
+                    hurtAllEnemysIfClose(t);
                     t.resetCooldown();
                 }
             } else {
@@ -114,8 +118,7 @@ public class TowerManager {
     }
 
 
-
-    private void hurtEnemyIfClose(Tower t) {
+    private void hurtAllEnemysIfClose(Tower t) {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
@@ -149,6 +152,9 @@ public class TowerManager {
                     if (t.isCooldownOver()) {
                         if (t.getTowerType() == SNIPER) {
                             e.hurt(t.getDmg());
+                        } else if (t.getTowerType() == LASER_TOWER) {
+                            e.hurt(t.getDmg());
+                            playing.beemEnemy(t, e);
                         } else {
                             playing.shootEnemy(t, e);
                         }

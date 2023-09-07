@@ -11,7 +11,7 @@ import java.awt.*;
 import static helpz.Constants.TowerType.*;
 import static main.GameStates.*;
 
-public class ActionBar extends Bar {
+public class PlayingBar extends Bar {
 
     private Playing playing;
     private Game game;
@@ -31,10 +31,10 @@ public class ActionBar extends Bar {
 
     private int[][] road;
 
-    public ActionBar(int x, int y, int width, int height, Playing playing, Game game) {
+    public PlayingBar(int x, int y, int width, int height, Playing playing, Game game) {
         super(x, y, width, height);
         this.playing = playing;
-this.game=game;
+        this.game = game;
         initButtons();
     }
 
@@ -242,7 +242,7 @@ this.game=game;
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
         bBestiary = new MyButton("Reset", 1417, 10, 108, 40);
 
-        towerButtons = new MyButton[9];
+        towerButtons = new MyButton[10];
 
         for (int i = 0; i < towerButtons.length; i++) {
             int row = i / 3;
@@ -419,6 +419,9 @@ this.game=game;
                         case SNIPER:
                             selectedTower = new Sniper(x, y, 0, b.getId(), road);
                             break;
+                        case LASER_TOWER:
+                            selectedTower = new LaserTower(x, y, 0, b.getId(), road);
+                            break;
                     }
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -500,6 +503,9 @@ this.game=game;
                         case SNIPER:
                             selectedTower = new Sniper(x, y, 0, b.getId(), road);
                             break;
+                        case LASER_TOWER:
+                            selectedTower = new LaserTower(x, y, 0, b.getId(), road);
+                            break;
                     }
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -528,13 +534,17 @@ this.game=game;
                 if (bSell.getBounds().contains(x, y)) {
                     bSell.setMouseOver(true);
                 } else if (bUpgrade1.getBounds().contains(x, y)) {
-                    if (!displayedTower.isUpgrade1Active()){
+                    if (!displayedTower.isUpgrade1Active()) {
                         bUpgrade1.setMouseOver(true);
                     }
                 } else if (bUpgrade2.getBounds().contains(x, y)) {
-                    if (!displayedTower.isUpgrade1Active()){ bUpgrade2.setMouseOver(true);}
+                    if (!displayedTower.isUpgrade1Active()) {
+                        bUpgrade2.setMouseOver(true);
+                    }
                 } else if (bUpgrade3.getBounds().contains(x, y)) {
-                    if (!displayedTower.isUpgrade1Active()){ bUpgrade3.setMouseOver(true);}
+                    if (!displayedTower.isUpgrade1Active()) {
+                        bUpgrade3.setMouseOver(true);
+                    }
                 }
             }
             for (MyButton b : towerButtons) {
@@ -629,6 +639,9 @@ this.game=game;
         } else if (displayedTower instanceof Sniper) {
             costUp1 = ((Sniper) displayedTower).getCost(1);
             textUp1 = ((Sniper) displayedTower).getName(1);
+        } else if (displayedTower instanceof LaserTower) {
+            costUp1 = ((LaserTower) displayedTower).getCost(1);
+            textUp1 = ((LaserTower) displayedTower).getName(1);
         } else {
             System.out.println("cost error 1");
         }
@@ -651,14 +664,17 @@ this.game=game;
             costUp2 = ((BoomTower) displayedTower).getCost(2);
             textUp2 = ((BoomTower) displayedTower).getName(2);
         } else if (displayedTower instanceof Crossbow) {
-            costUp1 = ((Crossbow) displayedTower).getCost(2);
-            textUp1 = ((Crossbow) displayedTower).getName(2);
+            costUp2 = ((Crossbow) displayedTower).getCost(2);
+            textUp2 = ((Crossbow) displayedTower).getName(2);
         } else if (displayedTower instanceof MauseFollowsTower) {
-            costUp1 = ((MauseFollowsTower) displayedTower).getCost(2);
-            textUp1 = ((MauseFollowsTower) displayedTower).getName(2);
+            costUp2 = ((MauseFollowsTower) displayedTower).getCost(2);
+            textUp2 = ((MauseFollowsTower) displayedTower).getName(2);
         } else if (displayedTower instanceof Sniper) {
-            costUp1 = ((Sniper) displayedTower).getCost(2);
-            textUp1 = ((Sniper) displayedTower).getName(2);
+            costUp2 = ((Sniper) displayedTower).getCost(2);
+            textUp2 = ((Sniper) displayedTower).getName(2);
+        } else if (displayedTower instanceof LaserTower) {
+            costUp2 = ((LaserTower) displayedTower).getCost(2);
+            textUp2 = ((LaserTower) displayedTower).getName(2);
         } else {
             System.out.println("cost error 2");
         }
@@ -681,20 +697,22 @@ this.game=game;
             costUp3 = ((BoomTower) displayedTower).getCost(3);
             textUp3 = ((BoomTower) displayedTower).getName(3);
         } else if (displayedTower instanceof Crossbow) {
-            costUp1 = ((Crossbow) displayedTower).getCost(3);
-            textUp1 = ((Crossbow) displayedTower).getName(3);
+            costUp3 = ((Crossbow) displayedTower).getCost(3);
+            textUp3 = ((Crossbow) displayedTower).getName(3);
         } else if (displayedTower instanceof MauseFollowsTower) {
-            costUp1 = ((MauseFollowsTower) displayedTower).getCost(3);
-            textUp1 = ((MauseFollowsTower) displayedTower).getName(3);
+            costUp3 = ((MauseFollowsTower) displayedTower).getCost(3);
+            textUp3 = ((MauseFollowsTower) displayedTower).getName(3);
         } else if (displayedTower instanceof Sniper) {
-            costUp1 = ((Sniper) displayedTower).getCost(3);
-            textUp1 = ((Sniper) displayedTower).getName(3);
+            costUp3 = ((Sniper) displayedTower).getCost(3);
+            textUp3 = ((Sniper) displayedTower).getName(3);
+        } else if (displayedTower instanceof LaserTower) {
+            costUp3 = ((LaserTower) displayedTower).getCost(3);
+            textUp3 = ((LaserTower) displayedTower).getName(3);
         } else {
             System.out.println("cost error 3");
         }
 
     }
-
 
 
 }
