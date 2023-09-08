@@ -34,11 +34,10 @@ public class ProjectileManager {
     }
 
     private void importImgs() {
-        //place of sprite on spritesheet
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         proj_imgs = new BufferedImage[5];
         for (int i = 0; i < 5; i++) {
-            proj_imgs[i] = atlas.getSubimage(0, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            proj_imgs[i] = atlas.getSubimage(0+i* tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         implortExplosion(atlas);
     }
@@ -49,7 +48,7 @@ public class ProjectileManager {
             explo_imgs[i] = atlas.getSubimage(i * tilePixelNumber, 26 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         splash_imgs = new BufferedImage[1];
-        splash_imgs[0] = atlas.getSubimage(0 * tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        splash_imgs[0] = atlas.getSubimage(0 * tilePixelNumber, 30 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void newProjectile(Tower t, Enemy e) {
@@ -238,7 +237,7 @@ public class ProjectileManager {
             case POISON_TOWER:
                 return POISON_POTION;
             case CROSSBOW:
-                return ARROW;
+                return SHORT_BEEM;
             default:
                 return 0;
         }

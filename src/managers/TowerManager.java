@@ -36,9 +36,9 @@ public class TowerManager {
 
     private void loadUpgradeImgs() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        upgradeImgs = new BufferedImage[3];
-        for (int i = 0; i < 3; i++) {
-            upgradeImgs[i] = atlas.getSubimage(0, (23 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        upgradeImgs = new BufferedImage[4];
+        for (int i = 0; i < 4; i++) {
+            upgradeImgs[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29  * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
 

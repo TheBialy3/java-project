@@ -2,7 +2,7 @@ package enemies;
 
 import managers.EnemyMenager;
 
-import static helpz.Constants.EnemyType.ORK_ZOMBI;
+import static helpz.Constants.EnemyType.*;
 
 import managers.WaveManager;
 

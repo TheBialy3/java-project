@@ -2,7 +2,7 @@ package managers;
 
 import enemies.*;
 import helpz.LoadSave;
-import helpz.Utilz;
+
 import objects.PathPoint;
 import scenes.Playing;
 
@@ -48,7 +48,7 @@ public class EnemyMenager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyEfects = new BufferedImage[3];
         for (int i = 0; i < 3; i++) {
-            enemyEfects[i] = atlas.getSubimage(0, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            enemyEfects[i] = atlas.getSubimage(0+i*tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }}
 
     private void loadEnemyImages() {
@@ -77,6 +77,12 @@ public class EnemyMenager {
                 break;
             case ORK_ZOMBI:
                 enemies.add(new OrcZombi(x, y, 0, this, waveManager));
+                break;
+            case CAMEL:
+                enemies.add(new Camel(x, y, 0, this, waveManager));
+                for(int i=0; i<2;i++){
+                    enemies.add(new CamelJunior(x, y, 0, this, waveManager));
+                }
                 break;
         }
     }
@@ -108,10 +114,10 @@ public class EnemyMenager {
     private void drawEfects(Enemy e, Graphics g) {
 
         if (e.isSlowd()) {
-            g.drawImage(enemyEfects[0], (int) e.getX(), (int) e.getY(), null);
+            g.drawImage(enemyEfects[1], (int) e.getX(), (int) e.getY(), null);
         }
         if (e.doesRevive()) {
-            g.drawImage(enemyEfects[1], (int) e.getX() - 2, (int) e.getY() - 53, null);
+            g.drawImage(enemyEfects[0], (int) e.getX() - 2, (int) e.getY() - 53, null);
         }
         if (e.isPoisoned()) {
             if((i/8)%4==4) {
@@ -169,10 +175,17 @@ public class EnemyMenager {
             case RIGHT:
             case DOWN:
                 return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
-
         }
-
         return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
+    }
+    public void spawnJuniors(float x, float y, int type) {
+        for(Enemy e:enemies){
+            if(e.getEnemyType()==type) {
+                if (!e.isAlive()) {
+                    e.reuse(x,y);
+                }
+            }
+        }
     }
 
     private void drawHealthBar(Enemy e, Graphics g) {
@@ -224,4 +237,6 @@ public class EnemyMenager {
     public int[][] getRoadDirArr() {
         return roadDirArr;
     }
+
+
 }

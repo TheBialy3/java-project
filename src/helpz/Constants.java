@@ -12,9 +12,9 @@ public class Constants {
     public static class ProjectileType {
         public static final int ARROW = 0;
         public static final int BOMB = 1;
-        public static final int FROST_BEEM = 2;
-        public static final int MINES = 3;
-        public static final int POISON_POTION = 4;
+        public static final int MINES = 2;
+        public static final int POISON_POTION = 3;
+        public static final int SHORT_BEEM = 4;
 
 
         public static float getSpeed(int projectileType) {
@@ -23,12 +23,12 @@ public class Constants {
                     return 8f;
                 case BOMB:
                     return 4f;
-                case FROST_BEEM:
-                    return 6f;
+                case SHORT_BEEM:
+                    return 10f;
                 case MINES:
                     return 3f;
                 case POISON_POTION:
-                    return 4f;
+                    return 5f;
             }
             return 0;
         }
@@ -39,7 +39,7 @@ public class Constants {
                     return true;
                 case BOMB:
                     return false;
-                case FROST_BEEM:
+                case SHORT_BEEM:
                     return true;
                 case MINES:
                     return false;
@@ -55,7 +55,7 @@ public class Constants {
                     return false;
                 case BOMB:
                     return true;
-                case FROST_BEEM:
+                case SHORT_BEEM:
                     return false;
                 case MINES:
                     return false;
@@ -84,6 +84,10 @@ public class Constants {
         public static final int ORK_ZOMBI = 1;
         public static final int TENTACLE = 2;
         public static final int SLIME = 3;
+        public static final int CAMEL = 4;
+        public static final int CAMEL_JUNIOR = 5;
+//        public static final int TENTACLE = 6;
+//        public static final int SLIME = 7;
 
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
@@ -95,6 +99,10 @@ public class Constants {
                     return 0.4f;
                 case SLIME:
                     return 0.7f;
+                case CAMEL:
+                    return 0.25f;
+                case CAMEL_JUNIOR:
+                    return 1f;
             }
             return 0;
         }
@@ -109,6 +117,10 @@ public class Constants {
                     return 150;
                 case SLIME:
                     return 70;
+                case CAMEL:
+                    return 500;
+                case CAMEL_JUNIOR:
+                    return 50;
             }
             return 0;
         }
@@ -118,11 +130,15 @@ public class Constants {
                 case ORC:
                     return 10;
                 case ORK_ZOMBI:
-                    return 15;
+                    return 7;
                 case TENTACLE:
                     return 15;
                 case SLIME:
                     return 8;
+                case CAMEL:
+                    return 30;
+                case CAMEL_JUNIOR:
+                    return 3;
             }
             return 0;
         }

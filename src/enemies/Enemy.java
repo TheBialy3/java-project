@@ -19,13 +19,13 @@ public abstract class Enemy {
     protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
-    protected int dmg, duration=0;
+    protected int dmg, duration = 0;
     protected int slowTickLimit = 3, slowTick = slowTickLimit;
-    protected int maxHealth,health;
+    protected int maxHealth, health;
     protected int ID;
     protected int enemyType;
     protected int lastDir;
-    protected boolean alive, poisoned=false;
+    protected boolean alive, poisoned = false;
     protected float slowPower = 1f;
     protected boolean revive;
 
@@ -39,17 +39,21 @@ public abstract class Enemy {
         bounds = new Rectangle((int) x, (int) y, 64, 64);
         lastDir = -1;
         setStartHealth();
-        alive = true;
+        if (enemyType != CAMEL_JUNIOR) {
+            alive = true;
+        }
         setRevive();
     }
 
     private void setRevive() {
-        if(this.enemyType == ORK_ZOMBI){revive= true;}
+        if (this.enemyType == ORK_ZOMBI) {
+            revive = true;
+        }
     }
 
     public void tickUp() {
         tick++;
-        if (tick<100){
+        if (tick < 100) {
             tick = 0;
         }
     }
@@ -62,30 +66,30 @@ public abstract class Enemy {
     public void reuse(float x, float y) {
         this.x = x;
         this.y = y;
-        this.alive=true;
+        this.alive = true;
         setStartHealth();
     }
 
-    public void killed(){
+    public void killed() {
         revive = false;
     }
 
-    public void setPoisonOn(int dmg, int duration){
-        this.dmg=dmg;
-        this.duration=duration;
-        poisoned=true;
+    public void setPoisonOn(int dmg, int duration) {
+        this.dmg = dmg;
+        this.duration = duration;
+        poisoned = true;
     }
 
     public void poisonDamage() {
         if (0 < duration) {
             duration--;
-            if (0==duration%10){
+            if (0 == duration % 10) {
                 hurt(dmg);
             }
 
         }
-        if (duration==0){
-            poisoned=false;
+        if (duration == 0) {
+            poisoned = false;
         }
     }
 
@@ -110,7 +114,7 @@ public abstract class Enemy {
                 break;
         }
         updateHitbox();
-        if(poisoned){
+        if (poisoned) {
             poisonDamage();
         }
     }
@@ -136,15 +140,18 @@ public abstract class Enemy {
         if (health <= 0) {
             alive = false;
             if (enemyType == ORK_ZOMBI) {
-                if(this.revive){
+                if (this.revive) {
                     killed();
-                    reuse(this.x,this.y);
+                    reuse(this.x, this.y);
                 }
+            } else if (enemyType == CAMEL) {
+                enemyMenager.spawnJuniors(this.x, this.y, (this.enemyType + 1));
             }
             enemyMenager.rewardPlayer(enemyType);
             Game.addXp();
         }
     }
+
 
     public void kill() {
         health = 0;
