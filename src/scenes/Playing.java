@@ -189,12 +189,16 @@ public class Playing extends GameScene implements SceneMethods {
 
         enemyMenager.draw(g);
         towerManager.draw(g);
+
+        drawSelectedTower(g);
+        drawHighlight(g);
+
         playingBar.draw(g);
         projectileManager.draw(g);
         drawBeem(g);
 
-        drawSelectedTower(g);
-        drawHighlight(g);
+
+
         if (win) {
             drawWinScrean(g);
         }

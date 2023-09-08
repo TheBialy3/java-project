@@ -140,6 +140,13 @@ public abstract class Tower {
     public float getCooldown() {
         return cooldown;
     }
+    public int getDuration() {
+        return duration;
+    }
+
+    public void addDuration(int duration) {
+        this.duration += duration;
+    }
 
     public void reduceCooldown(float cooldown) {
         this.cooldown -= cooldown;
@@ -255,12 +262,6 @@ public abstract class Tower {
         U3 = true;
     }
 
-    public int getDuration() {
-        return duration;
-    }
 
-    public void addDuration(int duration) {
-        this.duration += duration;
-    }
 
 }
