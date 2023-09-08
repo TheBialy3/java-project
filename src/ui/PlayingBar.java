@@ -298,7 +298,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1301, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[0], 1301, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(),1)], 1301, 1095, 64, 64, null);
         }
         if (!displayedTower.isUpgrade2Active()) {
             if (!isEnoughGold(costUp2)) {
@@ -307,7 +307,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1376, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[1], 1376, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(),2)], 1376, 1095, 64, 64, null);
         }
         if (!displayedTower.isUpgrade3Active()) {
             if (!isEnoughGold(costUp3)) {
@@ -316,7 +316,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1451, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[2], 1451, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(),3)], 1451, 1095, 64, 64, null);
         }
     }
 

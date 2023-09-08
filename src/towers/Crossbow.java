@@ -42,7 +42,7 @@ public class Crossbow  extends Tower {
             case 2:
                 return "Attack damage +5";
             case 3:
-                return "Range +60";
+                return "Attack speed +";
         }
         return "";
     }
