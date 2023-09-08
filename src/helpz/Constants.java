@@ -337,6 +337,113 @@ public class Constants {
             }
         }
 
+        public static int getUpgradeTowerImage(int towerType,int upgrade) {
+            switch (towerType) {
+                case ARCHER:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 0;
+                    }
+                    return 1;
+                case CANNON:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 1;
+                    }
+                    return 1;
+                case FROST_MAGE:
+                    switch (upgrade) {
+                        case 1:
+                            return 0;
+                        case 2:
+                            return 0;
+                        case 3:
+                            return 0;
+                    }
+                    return 1;
+                case MINES_FACTORY:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 2;
+                    }
+                    return 1;
+                case POISON_TOWER:
+                    switch (upgrade) {
+                        case 1:
+                            return 1;
+                        case 2:
+                            return 3;
+                        case 3:
+                            return 0;
+                    }
+                    return 1;
+                case BOOM_VOLCANO:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 0;
+                    }
+                    return 1;
+                case CROSSBOW:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 2;
+                    }
+                    return 1;
+                case MOUSE_FOLLOWS_TOWER:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 2;
+                    }
+                    return 1;
+                case SNIPER:
+                    switch (upgrade) {
+                        case 1:
+                            return 2;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 1;
+                    }
+                    return 1;
+                case LASER_TOWER:
+                    switch (upgrade) {
+                        case 1:
+                            return 0;
+                        case 2:
+                            return 1;
+                        case 3:
+                            return 1;
+                    }
+                    return 1;
+                default:
+                    return 1;
+            }
+        }
+
         //dot - damage over time
         public static boolean isDOT(int towerType) {
             switch (towerType) {
