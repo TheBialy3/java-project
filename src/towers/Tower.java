@@ -88,36 +88,32 @@ public abstract class Tower {
     }
 
     public void isRoadNextTot() {
-        if (y / 64 > 20) {
-            return;
-        }
-        if (x / 64 > 20) {
-            return;
-        }
+        try{
         if (road[y / 64 - 1][x / 64 - 1] != 17) {
             arr.add(1);
         }
+        }catch (Exception e){System.out.println("Out of bound 1");} try{
         if (road[y / 64 - 1][x / 64] != 17) {
             arr.add(2);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 2");} try{
         if (road[y / 64 - 1][x / 64 + 1] != 17) {
             arr.add(3);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 3");} try{
         if (road[y / 64][x / 64 - 1] != 17) {
             arr.add(4);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 4");} try{
         if (road[y / 64][x / 64 + 1] != 17) {
             arr.add(5);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 5");} try{
         if (road[y / 64 + 1][x / 64 - 1] != 17) {
             arr.add(6);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 6");} try{
         if (road[y / 64 + 1][x / 64] != 17) {
             arr.add(7);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 7");} try{
         if (road[y / 64 + 1][x / 64 + 1] != 17) {
             arr.add(8);
-        }
+        }   }catch (Exception e){System.out.println("Out of bound 8");}
 
     }
 
