@@ -197,16 +197,6 @@ public class Menu extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        if (bPlaing.getBounds().contains(x, y)) {
-            SetGameState(PLAYING);
-        } else if (bEditing.getBounds().contains(x, y)) {
-            SetGameState(EDITING);
-        } else if (bSettings.getBounds().contains(x, y)) {
-            SetGameState(SETTINGS);
-        } else if (bUpgrade.getBounds().contains(x, y)) {
-            SetGameState(UPGRADE);
-        } else if (bQuit.getBounds().contains(x, y)) {
-            System.exit(0);
-        }
+        mouseClicked(x,y);
     }
 }
