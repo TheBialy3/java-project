@@ -359,32 +359,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        if (x >= 1280) {
-            playingBar.mouseDragged(x, y);
-        } else if (win) {
-            if (bReplay.getBounds().contains(x, y)) {
-                resetEvrything();
-            }
-        } else {
-            if (selectedTower != null) {
-                if (isTileGrass(mouseX, mouseY)) {
-                    if (getTowerAt(mouseX, mouseY) == null) {
-                        towerManager.addTower(selectedTower, mouseX, mouseY);
-                        playingBar.goldSpend(Constants.TowerType.getCost(selectedTower.getTowerType()));
-                        selectedTower = null;
-
-
-                    }
-                }
-            } else {
-                //check tower on map
-                Tower t = getTowerAt(mouseX, mouseY);
-                playingBar.displayTower(t);
-
-            }
-        }
-
-        paused = false;
+        mouseClicked(x,y);
     }
 
     public void rewardPlayerAfterWave() {

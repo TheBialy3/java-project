@@ -180,13 +180,7 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        if (x >= 1280) {
-            toolBar.mouseDragged(x, y);
-        } else {
-            changedTile(x, y);
-            mouseX = (x / 64) * 64;
-            mouseY = (y / 64) * 64;
-        }
+        mouseClicked(x,y);
     }
 
     public void keyPressed(KeyEvent e) {
