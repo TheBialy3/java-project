@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
+import static helpz.LoadSave.getBackgroundImg;
 import static main.GameStates.*;
 
 public class Upgrade extends GameScene implements SceneMethods {
@@ -25,8 +26,7 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     public Upgrade(Game game) {
         super(game);
-        lvl = LevelBuild.getLevelData();
-        tileManager = new TileManager();
+
 
         initButtons();
     }
@@ -47,30 +47,10 @@ public class Upgrade extends GameScene implements SceneMethods {
 //        bMenu = new MyButton("Menu", x, y + yOffset + yOffset, w, h);
     }
 
-    protected void updateTick() {
-        tick++;
-        if(tick>=ANIMATION_SPEED){
-            tick=0;
-            animationIndex++;
-            if(animationIndex>=64){
-                animationIndex=0;
-            }
-        }
-    }
-
     @Override
     public void render(Graphics g) {
-        for (int y = 0; y < lvl.length; y++) {
-            for (int x = 0; x < lvl[y].length; x++) {
-                int id = lvl[y][x];
-                if (isAnimation(id)) {
-                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
-                } else {
-                    g.drawImage(getSprite(id), x * 64, y * 64, null);
-                }
-            }
-        }
-        drawButtons(g);
+        g.drawImage(getBackgroundImg("back"), 0,0, 1536,1280,null);
+      //  drawButtons(g);
     }
 
     @Override

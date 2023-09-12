@@ -20,6 +20,16 @@ public class LoadSave {
         }
         return img;
     }
+    public static BufferedImage getBackgroundImg(String name) {
+        BufferedImage img = null;
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/"+name+".png");//poczatkowyWyglad
+        try {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
+    }
 
 
 //    //txt file
