@@ -25,8 +25,10 @@ public class LoadSave {
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/"+name+".png");//poczatkowyWyglad
         try {
             img = ImageIO.read(is);
+            System.out.println("tu");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("tu n");
         }
         return img;
     }
