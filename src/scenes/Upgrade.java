@@ -1,6 +1,7 @@
 package scenes;
 
 import helpz.LevelBuild;
+import helpz.LoadSave;
 import main.Game;
 import managers.TileManager;
 import ui.MyButton;
@@ -51,6 +52,16 @@ public class Upgrade extends GameScene implements SceneMethods {
     public void render(Graphics g) {
         g.drawImage(getBackgroundImg("back"), 0,0, 1536,1280,null);
       //  drawButtons(g);
+    }
+
+    private void importImgs() {
+        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        BufferedImage[] proj_imgs = new BufferedImage[5];
+        int tilePixelNumber=64;
+        for (int i = 0; i < 5; i++) {
+            proj_imgs[i] = atlas.getSubimage(0+i* tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+
     }
 
     @Override
