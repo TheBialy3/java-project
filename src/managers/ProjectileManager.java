@@ -30,7 +30,6 @@ public class ProjectileManager {
     public ProjectileManager(Playing playing) {
         this.playing = playing;
         importImgs();
-
     }
 
     private void importImgs() {

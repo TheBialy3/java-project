@@ -33,6 +33,19 @@ public class LoadSave {
         return img;
     }
 
+    public static BufferedImage getCadrSprite() {
+        BufferedImage img = null;
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/card.png");//poczatkowyWyglad
+        try {
+            img = ImageIO.read(is);
+            System.out.println("tu");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("tu n");
+        }
+        return img;
+    }
+
 
 //    //txt file
 //    public static void CreateFile() {
@@ -176,6 +189,7 @@ public class LoadSave {
             return ;
         }
     }
+
 
 
 }
