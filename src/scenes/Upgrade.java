@@ -52,6 +52,10 @@ public class Upgrade extends GameScene implements SceneMethods {
     public void render(Graphics g) {
         g.drawImage(getBackgroundImg("back"), 0,0, 1536,1280,null);
       //  drawButtons(g);
+        drawUpgradeImg(g);
+    }
+
+    private void drawUpgradeImg(Graphics g) {
     }
 
     private void importImgs() {
