@@ -495,5 +495,4 @@ public class Constants {
         public static final int ROAD_DIR = 3;
     }
 
-
 }
