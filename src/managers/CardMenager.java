@@ -19,4 +19,5 @@ public class CardMenager {
             cardImg[i] = atlas.getSubimage(0, 0 , 300, 420);
         }
     }
+
 }
