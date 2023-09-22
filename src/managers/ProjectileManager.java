@@ -56,8 +56,8 @@ public class ProjectileManager {
         int yDist;
         //mouseFollower
         if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
-            xDist = (int) (t.getX() - playing.getMouseX());
-            yDist = (int) (t.getY() - playing.getMouseY());
+            xDist = (int) (t.getX() - playing.getMouseX()+32);
+            yDist = (int) (t.getY() - playing.getMouseY()+32);
         } else {
             xDist = (int) (t.getX() - e.getX());
             yDist = (int) (t.getY() - e.getY());
@@ -69,9 +69,9 @@ public class ProjectileManager {
         float ySpeed = helpz.Constants.ProjectileType.getSpeed(type) - xSpeed;
         //mouseFollower
         if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
-            if (t.getX() > playing.getMouseX())
+            if (t.getX() > playing.getMouseX()+32)
                 xSpeed *= -1;
-            if (t.getY() > playing.getMouseY())
+            if (t.getY() > playing.getMouseY()+32)
                 ySpeed *= -1;
         } else {
             if (t.getX() > e.getX())
