@@ -5,6 +5,7 @@ import scenes.Playing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class WaveManager {
 
@@ -16,6 +17,7 @@ public class WaveManager {
     private int enemyIndex, waveIndex;
     private boolean waveStartTimer, waveTickTimerOver;
     private int waveTickLimit = 60 * 3, waveTick = 0;
+    private Random random = new Random();
 
     public WaveManager(Playing playing) {
         createWaves();
@@ -51,7 +53,7 @@ public class WaveManager {
         waveTickTimerOver = false;
         playing.rewardPlayerAfterWave();
         projectileManager.endOfWave();
-
+        playing.beemReset();
     }
 
     public boolean isWaveTimerOver() {
@@ -69,36 +71,17 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 4))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1,4, 1, 1))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0,4, 0, 0, 0, 1, 0, 1))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1,4, 3, 1, 3, 1, 2, 0, 0, 1, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0,4, 3, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(3, 1,4, 3, 3, 1, 1, 3, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 2, 3, 3, 1, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 1, 3, 3, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 1, 3, 3, 1, 1, 3,4,4, 1, 2, 0, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 3, 3, 1, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(0, 1, 3, 3, 1, 1, 3, 1, 2, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 1))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0,4, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2, 0, 3, 3, 2, 0, 3, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 2, 0, 3, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 2, 0, 3, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 2, 0, 3, 3, 2, 0, 3, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1,4, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 3, 3, 0, 0, 1, 1, 2, 0, 3, 3, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 3, 3, 0, 0, 1, 1, 2, 0, 3, 3, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1,4, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 3, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 4,0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
-        waves.add(new Wave(new ArrayList<Integer>(Arrays.asList(2, 0, 3, 3, 1, 1, 3, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 2, 1, 3, 2))));
+        int waveNumberMax=40;
+        int enemyTypesNumber=5;
+        int ran;
+        for(int waveNumber=0;waveNumber<waveNumberMax;waveNumber++){
+            ArrayList<Integer> randList=new ArrayList<>();
+            for(int waveEnemyNumber=0;waveEnemyNumber<waveNumber*2;waveEnemyNumber++){
+                ran = random.nextInt(enemyTypesNumber);
+                randList.add(ran);
+            }
+            waves.add(new Wave(randList));
+        }
     }
 
     public int getWaveIndex() {

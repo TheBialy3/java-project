@@ -421,6 +421,7 @@ public class Playing extends GameScene implements SceneMethods {
         selectedTower = null;
         goldTick = 0;
         paused = false;
+        beemReset();
     }
 
     public void setMine(Tower t, PathPoint e) {
@@ -445,5 +446,8 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void beemEnemy(Tower t, Enemy e) {
         beems.add(new Beem(t.getX()+45, t.getY()+20,(int) e.getX()+32, (int) e.getY()+32));
+    }
+    public void beemReset(){
+        beems.clear();
     }
 }
