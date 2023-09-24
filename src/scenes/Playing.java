@@ -384,10 +384,6 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    private void rotateTower() {//////////////////////////////////////
-
-    }
-
     public EnemyMenager getEnemyMenager() {
         return enemyMenager;
     }

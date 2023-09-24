@@ -30,6 +30,9 @@ public class Render {
             case GAME_OVER:
                 game.getGameOver().render(g);
                 break;
+            case UPGRADE:
+                game.getUpgrade().render(g);
+                break;
         }
     }
 

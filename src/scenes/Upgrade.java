@@ -1,6 +1,5 @@
 package scenes;
 
-import helpz.LevelBuild;
 import helpz.LoadSave;
 import main.Game;
 import managers.TileManager;
@@ -11,8 +10,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
-import static helpz.LoadSave.getBackgroundImg;
-import static main.GameStates.*;
+
+
 
 public class Upgrade extends GameScene implements SceneMethods {
 
@@ -40,7 +39,7 @@ public class Upgrade extends GameScene implements SceneMethods {
         int w = 400;
         int h = w / 4;
         int x = 1536 / 2 - w / 2;
-        int y = 300;
+        int y = 1000;
         int yOffset = 200;
 
 //        bMusic = new MyButton("Music", x, y, w, h);
@@ -50,7 +49,8 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(getBackgroundImg("back"), 0,0, 1536,1280,null);
+        g.drawImage( helpz.LoadSave.getBackgroundImg(), 0,0, 1536,1280,null);
+
       //  drawButtons(g);
         drawUpgradeImg(g);
     }
@@ -58,15 +58,6 @@ public class Upgrade extends GameScene implements SceneMethods {
     private void drawUpgradeImg(Graphics g) {
     }
 
-    private void importImgs() {
-        BufferedImage atlas = LoadSave.getSpriteAtlas();
-        BufferedImage[] proj_imgs = new BufferedImage[5];
-        int tilePixelNumber=64;
-        for (int i = 0; i < 5; i++) {
-            proj_imgs[i] = atlas.getSubimage(0+i* tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        }
-
-    }
 
     @Override
     public void mouseClicked(int x, int y) {
