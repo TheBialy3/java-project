@@ -192,6 +192,10 @@ public class Game extends JFrame implements Runnable {
         return gameOver;
     }
 
+    public Upgrade getUpgrade() {
+        return upgrade;
+    }
+
     public TileManager getTileManager() {
         return tileManager;
     }

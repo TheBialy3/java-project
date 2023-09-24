@@ -80,9 +80,7 @@ public class EnemyMenager {
                 break;
             case CAMEL:
                 enemies.add(new Camel(x, y, 0, this, waveManager));
-                for(int i=0; i<2;i++){
-                    enemies.add(new CamelJunior(x, y, 0, this, waveManager));
-                }
+                enemies.add(new CamelJunior(x, y, 0, this, waveManager));
                 break;
         }
     }

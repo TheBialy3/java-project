@@ -12,7 +12,7 @@ public class LoadSave {
 
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/final.png");//poczatkowyWyglad
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/final.png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
@@ -20,9 +20,9 @@ public class LoadSave {
         }
         return img;
     }
-    public static BufferedImage getBackgroundImg(String name) {
+    public static BufferedImage getBackgroundImg() {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/"+name+".png");//poczatkowyWyglad
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/back.png");
         try {
             img = ImageIO.read(is);
             System.out.println("tu");
@@ -35,28 +35,15 @@ public class LoadSave {
 
     public static BufferedImage getCadrSprite() {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/card.png");//poczatkowyWyglad
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/card.png");
         try {
             img = ImageIO.read(is);
-            System.out.println("tu");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("tu n");
         }
         return img;
     }
 
-
-//    //txt file
-//    public static void CreateFile() {
-//        File textFile = new File("res/test.txt");
-//        try {
-//            textFile.createNewFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end,int[] directionArr) {//
         try {

@@ -92,10 +92,6 @@ public class WaveManager {
         return waves.size();
     }
 
-    public ArrayList<Wave> getWaves() {
-        return waves;
-    }
-
     public boolean isTimeForNewEnemy() {
         return enemySpownTick >= enemySpownTickLimit;
     }
