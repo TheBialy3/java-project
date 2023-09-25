@@ -81,10 +81,10 @@ public class Upgrade extends GameScene implements SceneMethods {
 //        if (bSound.getBounds().contains(x, y)) {
 //            bSound.setMouseOver(true);
 //        }
-//        bMenu.setMouseOver(false);
-//        if (bMenu.getBounds().contains(x, y)) {
-//            bMenu.setMouseOver(true);
-//        }
+        bMenu.setMouseOver(false);
+        if (bMenu.getBounds().contains(x, y)) {
+            bMenu.setMouseOver(true);
+        }
     }
 
     @Override
