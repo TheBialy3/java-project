@@ -23,10 +23,10 @@ public class Upgrade extends GameScene implements SceneMethods {
     private TileManager tileManager;
 
     private MyButton bMusic, bSound, bMenu;
+    private MyButton[] upgradeIcons;
 
     public Upgrade(Game game) {
         super(game);
-
 
         initButtons();
     }
@@ -44,20 +44,45 @@ public class Upgrade extends GameScene implements SceneMethods {
 
 //        bMusic = new MyButton("Music", x, y, w, h);
 //        bSound = new MyButton("Sound", x, y + yOffset, w, h);
-        bMenu = new MyButton("Menu", x, y , w, h);
+        bMenu = new MyButton("Menu", x, y, w, h);
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage( helpz.LoadSave.getBackgroundImg(), 0,0, 1536,1280,null);
+        g.drawImage(helpz.LoadSave.getBackgroundImg(), 0, 0, 1536, 1280, null);
 
-      //  drawButtons(g);
+        //  drawButtons(g);
         drawUpgradeImg(g);
     }
 
     private void drawUpgradeImg(Graphics g) {
+        for (MyButton b : upgradeIcons) {
+            if (upgradeUnlocked) {///////////////////////////
+                g.setColor(new Color(161, 0, 0));
+            } else {
+                g.setColor(new Color(200, 200, 200));
+            }
+            g.fillRect(b.x, b.y, b.width, b.height);
+            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
+            drawButtonFeedback(g, b);
+        }
     }
 
+    protected void drawButtonFeedback(Graphics g, MyButton b) {
+        //MouseOver
+        if (b.isMouseOver()) {
+            g.setColor(Color.WHITE);
+        } else {
+            g.setColor(Color.BLACK);
+        }
+        //Border
+        g.drawRect(b.x, b.y, b.width, b.height);
+        //MousePressed
+        if (b.isMousePressed()) {
+            g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
+            g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
+        }
+    }
 
     @Override
     public void mouseClicked(int x, int y) {
@@ -66,7 +91,7 @@ public class Upgrade extends GameScene implements SceneMethods {
 //        } else if (bSound.getBounds().contains(x, y)) {
 //
 //        } else
-            if (bMenu.getBounds().contains(x, y)) {
+        if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
         }
     }
@@ -115,9 +140,10 @@ public class Upgrade extends GameScene implements SceneMethods {
 //        bSound.draw(g);
         bMenu.draw(g);
     }
+
     @Override
     public void mouseDragged(int x, int y) {
-        mouseClicked(x,y);
+        mouseClicked(x, y);
     }
 
 }
