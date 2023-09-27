@@ -25,7 +25,7 @@ public abstract class Enemy {
     protected int ID;
     protected int enemyType;
     protected int lastDir;
-    protected boolean alive, poisoned = false;
+    protected boolean alive=false, poisoned = false;
     protected float slowPower = 1f;
     protected boolean revive;
 
@@ -129,8 +129,8 @@ public abstract class Enemy {
     }
 
     protected void setStartHealth() {
-        int a = waveManager.getWaveIndex();
-        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + a) / 10;
+        int waveIndex = waveManager.getWaveIndex();
+        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + waveIndex)/2;//(5 + waveIndex) / 10
         maxHealth = health;
         System.out.println(health);
     }

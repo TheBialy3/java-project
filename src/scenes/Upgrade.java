@@ -3,7 +3,9 @@ package scenes;
 import helpz.LoadSave;
 import main.Game;
 import managers.TileManager;
+import objects.Card;
 import ui.MyButton;
+import xp.UpgradesItemsCard;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,6 +20,7 @@ public class Upgrade extends GameScene implements SceneMethods {
     private BufferedImage img;
 
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
+    private ArrayList<Card> cards=new ArrayList<>();
 
     private int[][] lvl;
     private TileManager tileManager;
@@ -28,7 +31,12 @@ public class Upgrade extends GameScene implements SceneMethods {
     public Upgrade(Game game) {
         super(game);
 
+        initCards();
         initButtons();
+    }
+
+    private void initCards() {
+       // cards.add(new Card());
     }
 
     public void update() {
@@ -56,8 +64,8 @@ public class Upgrade extends GameScene implements SceneMethods {
     }
 
     private void drawUpgradeImg(Graphics g) {
-        for (MyButton b : upgradeIcons) {
-            if (upgradeUnlocked) {///////////////////////////
+        for (Card card:cards) {
+            if (card.isUnlocked()) {///////////////////////////
                 g.setColor(new Color(161, 0, 0));
             } else {
                 g.setColor(new Color(200, 200, 200));
