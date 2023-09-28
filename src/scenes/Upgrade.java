@@ -64,31 +64,18 @@ public class Upgrade extends GameScene implements SceneMethods {
     }
 
     private void drawUpgradeImg(Graphics g) {
+        int diff=100;
+
+        int tilePixelNumber=64;
         for (Card card:cards) {
             if (card.isUnlocked()) {///////////////////////////
                 g.setColor(new Color(161, 0, 0));
             } else {
                 g.setColor(new Color(200, 200, 200));
             }
-            g.fillRect(b.x, b.y, b.width, b.height);
+            g.fillRect(50+(diff*(card.getId()%10)),50+(diff*(card.getId()/10)), tilePixelNumber,tilePixelNumber);
             //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
-            drawButtonFeedback(g, b);
-        }
-    }
 
-    protected void drawButtonFeedback(Graphics g, MyButton b) {
-        //MouseOver
-        if (b.isMouseOver()) {
-            g.setColor(Color.WHITE);
-        } else {
-            g.setColor(Color.BLACK);
-        }
-        //Border
-        g.drawRect(b.x, b.y, b.width, b.height);
-        //MousePressed
-        if (b.isMousePressed()) {
-            g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
-            g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
         }
     }
 
