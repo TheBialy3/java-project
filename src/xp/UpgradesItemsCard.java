@@ -10,8 +10,9 @@ public class UpgradesItemsCard {
         createUpgraces();
     }
     public void createUpgraces(){
-
-
+        int id=0;
+        cards.add(new Card(id++, "More damage", "All your tawers gets damage +1",  true));
+        cards.add(new Card(id++, "More damage", "All your tawers gets damage +1",  true));
     }
 
 

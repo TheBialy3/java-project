@@ -1,15 +1,15 @@
 package objects;
 
 public class Card {
-   private int id, iconID;
+   private int id;
     private String name, description;
-    private boolean unlocked;
+    private boolean unlocked, active=false;
 
-    public Card(int id, String name, String description, int iconID, boolean unlocked) {
+    public Card(int id, String name, String description,  boolean unlocked) {
         this.id=id;
         this.name=name;
         this.description=description;
-        this.iconID =iconID;
+
         this.unlocked=unlocked;
     }
 
@@ -17,9 +17,7 @@ public class Card {
         return id;
     }
 
-    public int getIconID() {
-        return iconID;
-    }
+
 
     public String getName() {
         return name;
@@ -35,5 +33,13 @@ public class Card {
 
     public void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
