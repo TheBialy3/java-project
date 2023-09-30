@@ -48,6 +48,7 @@ public class Playing extends GameScene implements SceneMethods {
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
+       // xp.UpgradesItemsCard();
     }
 
 //    public void setLevel(int[][] lvl) {
