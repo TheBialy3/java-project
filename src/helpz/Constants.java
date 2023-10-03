@@ -92,7 +92,7 @@ public class Constants {
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
                 case ORC:
-                    return 0.5f;
+                    return 0.35f;
                 case ORK_ZOMBI:
                     return 0.3f;
                 case TENTACLE:
@@ -110,7 +110,7 @@ public class Constants {
         public static int getStartHealth(int enemyType) {
             switch (enemyType) {
                 case ORC:
-                    return 100;
+                    return 300;
                 case ORK_ZOMBI:
                     return 200;
                 case TENTACLE:
