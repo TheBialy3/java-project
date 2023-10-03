@@ -75,7 +75,7 @@ public class Playing extends GameScene implements SceneMethods {
 
                             if (isWaveTimerOver()) {
                                 waveManager.increaseWaveIndex();
-                                enemyMenager.getEnemies().clear();
+                                enemyMenager.getEnemies();
                                 waveManager.resetEnemyIndex();
 
                             }

@@ -24,6 +24,9 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Attack Speed Boost", "All your towers have Attack Speed Boosted", false));
         cards.add(new Card(id++, "Longer duration", "All your towers that do Damage over time (DOT) do it longer", false));
         cards.add(new Card(id++, "Damage Boost", "All your towers gets more Damage", false));
+        //ENEMY
+        cards.add(new Card(id++, "Greed Is Good", "Killing enemies grands more Gold, but they have More HP", false));
+        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they have More HP", false));
         //ARCHER
         cards.add(new Card(id++, "Pricing shoot", "Sniper will now shoot auto rifle", false));
         //CANNON

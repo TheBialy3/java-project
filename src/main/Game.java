@@ -123,7 +123,7 @@ public class Game extends JFrame implements Runnable {
         g.setFont(new Font("Monospaced", Font.BOLD, 17));
         g.setColor(new Color(0, 0, 0));
         g.drawString("FPS:" + fps, 2, 16);
-        g.drawString("xp:" + xp, 2, 32);
+       // g.drawString("xp:" + xp, 2, 32);
     }
 
 

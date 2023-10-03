@@ -23,7 +23,7 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private ArrayList<Card> cards=new ArrayList<>();
-    private MyButton bMusic, bSound, bMenu;
+    private MyButton  bMenu;
 
     public Upgrade(Game game) {
         super(game);
@@ -44,11 +44,8 @@ public class Upgrade extends GameScene implements SceneMethods {
         int w = 200;
         int h = w / 4;
         int x = 1536 / 2 - w / 2;
-        int y = 1000;
-        int yOffset = 200;
+        int y = 1150;
 
-//        bMusic = new MyButton("Music", x, y, w, h);
-//        bSound = new MyButton("Sound", x, y + yOffset, w, h);
         bMenu = new MyButton("Menu", x, y, w, h);
     }
 
@@ -56,21 +53,21 @@ public class Upgrade extends GameScene implements SceneMethods {
     public void render(Graphics g) {
         g.drawImage(helpz.LoadSave.getBackgroundImg(), 0, 0, 1536, 1280, null);
 
-        //  drawButtons(g);
+        drawButtons(g);
         drawUpgradeImg(g);
     }
 
     private void drawUpgradeImg(Graphics g) {
-        int diff=100;
+        int diff=99;
 
         int tilePixelNumber=64;
         for (Card card:cards) {
             if (card.isUnlocked()) {///////////////////////////
-                g.setColor(new Color(161, 0, 0));
-            } else {
                 g.setColor(new Color(200, 200, 200));
+            } else {
+                g.setColor(new Color(161, 0, 0));
             }
-            g.fillRect(50+(diff*(card.getId()%10)),50+(diff*(card.getId()/10)), tilePixelNumber,tilePixelNumber);
+            g.fillRect(40+(diff*(card.getId()%15)),50+(diff*(card.getId()/15)), tilePixelNumber,tilePixelNumber);
             //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
 
         }
@@ -78,9 +75,7 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     @Override
     public void mouseClicked(int x, int y) {
-//        if (bMusic.getBounds().contains(x, y)) {
-//
-//        } else if (bSound.getBounds().contains(x, y)) {
+//       if (bSound.getBounds().contains(x, y)) {
 //
 //        } else
         if (bMenu.getBounds().contains(x, y)) {
@@ -90,10 +85,6 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     @Override
     public void mouseMoved(int x, int y) {
-//        bMusic.setMouseOver(false);
-//        if (bMusic.getBounds().contains(x, y)) {
-//            bMusic.setMouseOver(true);
-//        }
 //        bSound.setMouseOver(false);
 //        if (bSound.getBounds().contains(x, y)) {
 //            bSound.setMouseOver(true);
@@ -110,16 +101,13 @@ public class Upgrade extends GameScene implements SceneMethods {
     }
 
     private void resetButtons() {
-//        bMusic.resetBooleans();
 //        bSound.resetBooleans();
         bMenu.resetBooleans();
     }
 
     @Override
     public void mousePressed(int x, int y) {
-//        if (bMusic.getBounds().contains(x, y)) {
-//            bMusic.setMousePressed(true);
-//        } else if (bSound.getBounds().contains(x, y)) {
+// if (bSound.getBounds().contains(x, y)) {
 //            bSound.setMousePressed(true);
 //        } else
         if (bMenu.getBounds().contains(x, y)) {
@@ -128,7 +116,6 @@ public class Upgrade extends GameScene implements SceneMethods {
     }
 
     private void drawButtons(Graphics g) {
-//        bMusic.draw(g);
 //        bSound.draw(g);
         bMenu.draw(g);
     }
