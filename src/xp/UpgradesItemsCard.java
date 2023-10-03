@@ -1,13 +1,16 @@
 package xp;
 
 import objects.Card;
+import scenes.Upgrade;
 
 import java.util.ArrayList;
 
 public class UpgradesItemsCard {
     private ArrayList<Card> cards = new ArrayList<>();
+    private Upgrade upgrade;
 
-    public UpgradesItemsCard() {
+    public UpgradesItemsCard(Upgrade upgrade) {
+        this.upgrade=upgrade;
         createUpgrades();
     }
 
@@ -44,13 +47,17 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Shoot 8 Bolts", "Sniper will now shoot auto rifle", false));
         //MOUSE_FOLLOWS_TOWER
         cards.add(new Card(id++, "Faster Gun", "Volcano will now exploding 2 times", false));
-        cards.add(new Card(id++, "Two Mine for One", "Volcano will now exploding 2 times", false));
-        cards.add(new Card(id++, "Two Mine for One", "Volcano will now exploding 2 times", false));
+        cards.add(new Card(id++, "Another One", "Volcano will now exploding 2 times", false));
+       // cards.add(new Card(id++, "Laser Beem", "Volcano will now exploding 2 times", false));
         //SNIPER
         cards.add(new Card(id++, "Strong Sniper", "Sniper will now shoot bigger caliber", false));
         cards.add(new Card(id++, "Fast Sniper", "Sniper will now shoot auto rifle", false));
         //LASER_TOWER
         cards.add(new Card(id++, "Double Laser", "Sniper will now shoot auto rifle", false));
         cards.add(new Card(id++, "Global Laser", "Sniper will now shoot auto rifle", false));
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 }
