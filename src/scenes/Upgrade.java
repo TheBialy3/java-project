@@ -19,24 +19,21 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     private BufferedImage img;
 
+    private UpgradesItemsCard upgradesItemsCard;
+
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private ArrayList<Card> cards=new ArrayList<>();
-
-    private int[][] lvl;
-    private TileManager tileManager;
-
     private MyButton bMusic, bSound, bMenu;
-    private MyButton[] upgradeIcons;
 
     public Upgrade(Game game) {
         super(game);
-
+        this.upgradesItemsCard=new UpgradesItemsCard(this);
         initCards();
         initButtons();
     }
 
     private void initCards() {
-       // cards.add(new Card());
+       cards=upgradesItemsCard.getCards();
     }
 
     public void update() {
