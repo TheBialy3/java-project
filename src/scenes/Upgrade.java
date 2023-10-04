@@ -17,8 +17,6 @@ import static main.GameStates.SetGameState;
 
 public class Upgrade extends GameScene implements SceneMethods {
 
-    private BufferedImage img;
-
     private UpgradesItemsCard upgradesItemsCard;
 
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
@@ -68,7 +66,7 @@ public class Upgrade extends GameScene implements SceneMethods {
                 g.setColor(new Color(161, 0, 0));
             }
             g.fillRect(40+(diff*(card.getId()%15)),50+(diff*(card.getId()/15)), tilePixelNumber,tilePixelNumber);
-            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
+            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(card.getId()%15)), 50+(diff*(card.getId()/15)), tilePixelNumber, tilePixelNumber, null);
 
         }
     }

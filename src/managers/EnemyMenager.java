@@ -177,10 +177,12 @@ public class EnemyMenager {
         return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
     }
     public void spawnJuniors(float x, float y, int type) {
+        int porzesuniencie=0;
         for(Enemy e:enemies){
             if(e.getEnemyType()==type) {
                 if (!e.isAlive()) {
-                    e.reuse(x,y);
+                    e.reuse(x+porzesuniencie,y+porzesuniencie);
+                    porzesuniencie++;
                 }
             }
         }
@@ -190,6 +192,9 @@ public class EnemyMenager {
         g.setColor(Color.RED);
         g.fillRect((int) e.getX() + 32 - (getNewHealthBar(e) / 2), (int) e.getY() - 10, getNewHealthBar(e), 6);
         getNewHealthBar(e);
+        g.setColor(Color.BLACK);
+        g.drawRect((int) e.getX() + 32 - (HPbarWidth / 2), (int) e.getY() - 10,HPbarWidth, 6);
+
     }
 
     private int getNewHealthBar(Enemy e) {

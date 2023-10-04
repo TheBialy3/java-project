@@ -125,6 +125,43 @@ public class Constants {
             return 0;
         }
 
+        //MR- magic resist
+        public static int getMR(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 0;
+                case ORK_ZOMBI:
+                    return 20;
+                case TENTACLE:
+                    return 80;
+                case SLIME:
+                    return 20;
+                case CAMEL:
+                    return 0;
+                case CAMEL_JUNIOR:
+                    return 60;
+            }
+            return 0;
+        }
+
+        public static int getArmor(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 40;
+                case ORK_ZOMBI:
+                    return 20;
+                case TENTACLE:
+                    return 0;
+                case SLIME:
+                    return 80;
+                case CAMEL:
+                    return 60;
+                case CAMEL_JUNIOR:
+                    return 20;
+            }
+            return 0;
+        }
+
         public static int getGoldWorth(int enemyType) {
             switch (enemyType) {
                 case ORC:
@@ -332,6 +369,37 @@ public class Constants {
                     return 30;
                 case LASER_TOWER:
                     return 1;
+                default:
+                    return 0;
+            }
+        }
+
+        public static final int PHYSICAL = 100;
+        public static final int MAGIC = 200;
+        public static final int TRUE = 300;
+
+        public static int getDmgType(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return PHYSICAL;
+                case CANNON:
+                    return PHYSICAL;
+                case FROST_MAGE:
+                    return MAGIC;
+                case MINES_FACTORY:
+                    return MAGIC;
+                case POISON_TOWER:
+                    return MAGIC;
+                case BOOM_VOLCANO:
+                    return PHYSICAL;
+                case CROSSBOW:
+                    return PHYSICAL;
+                case MOUSE_FOLLOWS_TOWER:
+                    return PHYSICAL;
+                case SNIPER:
+                    return TRUE;
+                case LASER_TOWER:
+                    return TRUE;
                 default:
                     return 0;
             }

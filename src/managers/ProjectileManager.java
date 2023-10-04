@@ -36,7 +36,7 @@ public class ProjectileManager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         proj_imgs = new BufferedImage[5];
         for (int i = 0; i < 5; i++) {
-            proj_imgs[i] = atlas.getSubimage(0+i* tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            proj_imgs[i] = atlas.getSubimage(0 + i * tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         implortExplosion(atlas);
     }
@@ -56,8 +56,8 @@ public class ProjectileManager {
         int yDist;
         //mouseFollower
         if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
-            xDist = (int) (t.getX() - playing.getMouseX()+32);
-            yDist = (int) (t.getY() - playing.getMouseY()+32);
+            xDist = (int) (t.getX() - playing.getMouseX() + 32);
+            yDist = (int) (t.getY() - playing.getMouseY() + 32);
         } else {
             xDist = (int) (t.getX() - e.getX());
             yDist = (int) (t.getY() - e.getY());
@@ -69,24 +69,29 @@ public class ProjectileManager {
         float ySpeed = helpz.Constants.ProjectileType.getSpeed(type) - xSpeed;
         //mouseFollower
         if (t.getTowerType() == MOUSE_FOLLOWS_TOWER) {
-            if (t.getX() > playing.getMouseX()+32)
+            if (t.getX() + 32 > playing.getMouseX())
                 xSpeed *= -1;
-            if (t.getY() > playing.getMouseY()+32)
+            if (t.getY() + 32 > playing.getMouseY())
                 ySpeed *= -1;
         } else {
+            //rest
             if (t.getX() > e.getX())
                 xSpeed *= -1;
             if (t.getY() > e.getY())
                 ySpeed *= -1;
         }
         float rotate = 0;
+        try {
+            if (helpz.Constants.ProjectileType.isRorating(type)) {
+                float arcValue = (float) Math.atan(yDist / (float) xDist);
+                rotate = (float) Math.toDegrees(arcValue);
 
-        if (helpz.Constants.ProjectileType.isRorating(type)) {
-            float arcValue = (float) Math.atan(yDist / (float) xDist);
-            rotate = (float) Math.toDegrees(arcValue);
-
-            if (xDist > 0)
-                rotate += 180;
+                if (xDist > 0) {
+                    rotate += 180;
+                }
+            }
+        } catch (Exception expe) {
+            System.out.println("draw projectile error");
         }
         for (Projectile p : projectiles) {
             if (!p.isActive()) {
