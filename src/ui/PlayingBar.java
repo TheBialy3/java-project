@@ -15,7 +15,7 @@ public class PlayingBar extends Bar {
 
     private Playing playing;
     private Game game;
-    private MyButton bMenu, bBestiary;
+    private MyButton bMenu, bReset;
     private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
     private Tower selectedTower;
@@ -23,6 +23,7 @@ public class PlayingBar extends Bar {
     private String textUp1, textUp2, textUp3;
     private int startingGold = 4000;
     private int gold = startingGold, costUp1, costUp2, costUp3;
+
     private boolean showTowerCost;
 
     private int towerCostId;
@@ -51,19 +52,24 @@ public class PlayingBar extends Bar {
         //backGround
         g.setColor(new Color(0, 102, 102));
         g.fillRect(x, y, width, height);
+
         //buttons
         drawButtons(g);
+
         //displayTower
         drawDispalyTower(g);
+
         //waveInfo
         drawWaveInfo(g);
+
         //GoldInfo
         drawGoldAmount(g);
+
         //towerInfo
         if (showTowerCost) {
             drawTowerCost(g);
         }
-
+        //towerSellInfo
         if (bSell.isMouseOver()) {
             drawTowerSellCost(g);
         }
@@ -240,7 +246,7 @@ public class PlayingBar extends Bar {
         int diff = 84;
 
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
-        bBestiary = new MyButton("Reset", 1417, 10, 108, 40);
+        bReset = new MyButton("Reset", 1417, 10, 108, 40);
 
         towerButtons = new MyButton[10];
 
@@ -331,7 +337,7 @@ public class PlayingBar extends Bar {
 
     private void drawButtons(Graphics g) {
         bMenu.draw(g);
-        bBestiary.draw(g);
+        bReset.draw(g);
         for (MyButton b : towerButtons) {
             if (getTowerCost(b.getId()) < gold) {
                 g.setColor(new Color(3, 132, 0));
@@ -352,10 +358,9 @@ public class PlayingBar extends Bar {
 
 
     public void mouseClicked(int x, int y) {
-
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
-        } else if (bBestiary.getBounds().contains(x, y)) {
+        } else if (bReset.getBounds().contains(x, y)) {
             playing.resetEvrything();
         } else {
             if (displayedTower != null) {
@@ -436,91 +441,12 @@ public class PlayingBar extends Bar {
 
 
     public void mouseDragged(int x, int y) {
-        if (bMenu.getBounds().contains(x, y)) {
-            SetGameState(MENU);
-        } else if (bBestiary.getBounds().contains(x, y)) {
-            playing.resetEvrything();
-        } else {
-            if (displayedTower != null) {
-                if (bSell.getBounds().contains(x, y)) {
-                    sellTowerClicked();
-                }
-                if (bUpgrade1.getBounds().contains(x, y)) {
-                    if (isEnoughGold(costUp1)) {
-
-                        if (!displayedTower.isUpgrade1Active()) {
-                            displayedTower.Upgrade1Activate();
-                            goldSpend(costUp1);
-                            displayedTower.updateTowerWorthGold(costUp1);
-                        }
-                    }
-                }
-                if (bUpgrade2.getBounds().contains(x, y)) {
-                    if (isEnoughGold(costUp2)) {
-                        if (!displayedTower.isUpgrade2Active()) {
-                            displayedTower.Upgrade2Activate();
-                            goldSpend(costUp2);
-                            displayedTower.updateTowerWorthGold(costUp2);
-                        }
-                    }
-                }
-                if (bUpgrade3.getBounds().contains(x, y)) {
-                    if (isEnoughGold(costUp3)) {
-                        if (!displayedTower.isUpgrade3Active()) {
-                            displayedTower.Upgrade3Activate();
-                            goldSpend(costUp3);
-                            displayedTower.updateTowerWorthGold(costUp3);
-                        }
-                    }
-                }
-            }
-        }
-        for (MyButton b : towerButtons) {
-            if (b.getBounds().contains(x, y)) {
-                if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
-                    switch (b.getId()) {
-                        case ARCHER:
-                            selectedTower = new Archer(x, y, 0, b.getId(), road);
-                            break;
-                        case CANNON:
-                            selectedTower = new Cannon(x, y, 0, b.getId(), road);
-                            break;
-                        case FROST_MAGE:
-                            selectedTower = new FrostMage(x, y, 0, b.getId(), road);
-                            break;
-                        case MINES_FACTORY:
-                            road = playing.getRoadDirArr();
-                            selectedTower = new MineFactory(x, y, 0, b.getId(), road);
-                            break;
-                        case POISON_TOWER:
-                            selectedTower = new PoisonTower(x, y, 0, b.getId(), road);
-                            break;
-                        case BOOM_VOLCANO:
-                            selectedTower = new BoomTower(x, y, 0, b.getId(), road);
-                            break;
-                        case CROSSBOW:
-                            selectedTower = new Crossbow(x, y, 0, b.getId(), road);
-                            break;
-                        case MOUSE_FOLLOWS_TOWER:
-                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), road);
-                            break;
-                        case SNIPER:
-                            selectedTower = new Sniper(x, y, 0, b.getId(), road);
-                            break;
-                        case LASER_TOWER:
-                            selectedTower = new LaserTower(x, y, 0, b.getId(), road);
-                            break;
-                    }
-                    playing.setSelectedTower(selectedTower);
-                    return;
-                }
-            }
-        }
+        mouseClicked(x, y);
     }
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
-        bBestiary.setMouseOver(false);
+        bReset.setMouseOver(false);
         showTowerCost = false;
         bSell.setMouseOver(false);
         bUpgrade1.setMouseOver(false);
@@ -531,8 +457,8 @@ public class PlayingBar extends Bar {
         }
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
-        } else if (bBestiary.getBounds().contains(x, y)) {
-            bBestiary.setMouseOver(true);
+        } else if (bReset.getBounds().contains(x, y)) {
+            bReset.setMouseOver(true);
         } else {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {
@@ -570,9 +496,9 @@ public class PlayingBar extends Bar {
         if (bMenu.getBounds().contains(x, y)) {
             game.saveGame();
             bMenu.setMousePressed(true);
-        } else if (bBestiary.getBounds().contains(x, y)) {
+        } else if (bReset.getBounds().contains(x, y)) {
             game.saveGame();
-            bBestiary.setMousePressed(true);
+            bReset.setMousePressed(true);
         } else {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {
@@ -596,7 +522,7 @@ public class PlayingBar extends Bar {
 
     private void resetButtons() {
         bMenu.resetBooleans();
-        bBestiary.resetBooleans();
+        bReset.resetBooleans();
         bSell.resetBooleans();
         bUpgrade1.resetBooleans();
         bUpgrade2.resetBooleans();
@@ -606,7 +532,7 @@ public class PlayingBar extends Bar {
         }
     }
 
-    private boolean isEnoughGold(int cost) {
+    public boolean isEnoughGold(int cost) {
         return gold >= cost;
     }
 

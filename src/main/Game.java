@@ -30,6 +30,7 @@ public class Game extends JFrame implements Runnable {
     private Settings settings;
     private Editing editing;
     private Upgrade upgrade;
+    private Bestiary bestiary;
     private TileManager tileManager;
     private GameOver gameOver;
 
@@ -77,6 +78,7 @@ public class Game extends JFrame implements Runnable {
         editing = new Editing(this);
         upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
+        bestiary = new Bestiary(this);
     }
 
     //for lvl chose
@@ -90,6 +92,7 @@ public class Game extends JFrame implements Runnable {
         editing = new Editing(this);
         upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
+        bestiary = new Bestiary(this);
     }
 
     private void start() {
@@ -114,6 +117,12 @@ public class Game extends JFrame implements Runnable {
                 break;
             case GAME_OVER:
                 gameOver.update();
+                break;
+            case BESTIARY:
+                bestiary.update();
+                break;
+            case UPGRADE:
+                upgrade.update();
                 break;
         }
 
@@ -194,6 +203,10 @@ public class Game extends JFrame implements Runnable {
 
     public Upgrade getUpgrade() {
         return upgrade;
+    }
+
+    public Bestiary getBestiary() {
+        return bestiary;
     }
 
     public TileManager getTileManager() {

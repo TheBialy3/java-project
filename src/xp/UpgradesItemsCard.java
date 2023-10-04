@@ -35,6 +35,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Strong Canon", "Volcano will now exploding 2 times", false));
         //FROST_MAGE
         cards.add(new Card(id++, "Global Frost Mage", "Volcano will now exploding 2 times", false));
+        cards.add(new Card(id++, "Frost Damage", "Volcano will now exploding 2 times", false));
         cards.add(new Card(id++, "Frost Arch Mage", "Volcano will now exploding 2 times", false));
         //MINES_FACTORY
         cards.add(new Card(id++, "Long live the Mine", "Volcano will now exploding 2 times", false));
