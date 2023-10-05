@@ -107,6 +107,30 @@ public class Constants {
             return 0;
         }
 
+
+        public static final int WALK = 0;
+        public static final int FLY = 1;
+        //public static final int TENTACLE = 2;
+
+        public static int getMoveType(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 0.35f;
+                case ORK_ZOMBI:
+                    return 0.3f;
+                case TENTACLE:
+                    return 0.4f;
+                case SLIME:
+                    return 0.7f;
+                case CAMEL:
+                    return 0.25f;
+                case CAMEL_JUNIOR:
+                    return 1f;
+            }
+            return 0;
+        }
+
+
         public static int getStartHealth(int enemyType) {
             switch (enemyType) {
                 case ORC:
@@ -374,9 +398,9 @@ public class Constants {
             }
         }
 
-        public static final int PHYSICAL = 100;
-        public static final int MAGIC = 200;
-        public static final int TRUE = 300;
+        public static final int PHYSICAL = 0;
+        public static final int MAGIC = 1;
+        public static final int TRUE = 2;
 
         public static int getDmgType(int towerType) {
             switch (towerType) {
