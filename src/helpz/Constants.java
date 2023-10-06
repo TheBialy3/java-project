@@ -115,17 +115,17 @@ public class Constants {
         public static int getMoveType(int enemyType) {
             switch (enemyType) {
                 case ORC:
-                    return 0.35f;
+                    return WALK;
                 case ORK_ZOMBI:
-                    return 0.3f;
+                    return WALK;
                 case TENTACLE:
-                    return 0.4f;
+                    return WALK;
                 case SLIME:
-                    return 0.7f;
+                    return WALK;
                 case CAMEL:
-                    return 0.25f;
+                    return WALK;
                 case CAMEL_JUNIOR:
-                    return 1f;
+                    return WALK;
             }
             return 0;
         }
@@ -428,6 +428,38 @@ public class Constants {
                     return 0;
             }
         }
+
+        public static final int BOTH = 0;
+        public static final int FLY = 1;
+        public static final int WALKING = 2;
+
+        public static int getTargetMoveType(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return BOTH;
+                case CANNON:
+                    return WALKING;
+                case FROST_MAGE:
+                    return BOTH;
+                case MINES_FACTORY:
+                    return WALKING;
+                case POISON_TOWER:
+                    return WALKING;
+                case BOOM_VOLCANO:
+                    return BOTH;
+                case CROSSBOW:
+                    return WALKING;
+                case MOUSE_FOLLOWS_TOWER:
+                    return BOTH;
+                case SNIPER:
+                    return BOTH;
+                case LASER_TOWER:
+                    return BOTH;
+                default:
+                    return 0;
+            }
+        }
+
 
         public static int getUpgradeTowerImage(int towerType,int upgrade) {
             switch (towerType) {

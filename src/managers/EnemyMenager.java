@@ -117,6 +117,7 @@ public class EnemyMenager {
         if (e.doesRevive()) {
             g.drawImage(enemyEfects[0], (int) e.getX() - 2, (int) e.getY() - 53, null);
         }
+        //efect Poison
         if (e.isPoisoned()) {
             if((i/8)%4==4) {
                 g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((i/5) % 2), (int) e.getY() + 25 - (i / 3), null);
