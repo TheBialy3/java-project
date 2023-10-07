@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static helpz.Constants.TowerType.*;
-import static helpz.Constants.TowerType.MINES_FACTORY;
+
 
 public class TowerManager {
 
@@ -122,7 +122,7 @@ public class TowerManager {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-                    e.hurt(Constants.TowerType.getDefaultDmg(t.getTowerType()));
+                    e.hurt(getDefaultDmg(t.getTowerType()), getDmgType(t.getTowerType()));
                 } else {
                     //nothing
                 }
@@ -151,9 +151,9 @@ public class TowerManager {
                 if (isEnemyInRange(t, e)) {
                     if (t.isCooldownOver()) {
                         if (t.getTowerType() == SNIPER) {
-                            e.hurt(t.getDmg());
+                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                         } else if (t.getTowerType() == LASER_TOWER) {
-                            e.hurt(t.getDmg());
+                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                             playing.beemEnemy(t, e);
                         } else {
                             playing.shootEnemy(t, e);

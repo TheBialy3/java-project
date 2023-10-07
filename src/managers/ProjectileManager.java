@@ -109,14 +109,14 @@ public class ProjectileManager {
             projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration()));
             return;
         }
-        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type));
+        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, getDmgType(t.getTowerType())));
     }
 
     public void newMine(Tower t, PathPoint e) {
         int type = getProjType(t);
         ranx = random.nextInt(44);
         rany = random.nextInt(44);
-        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type));
+        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type, getDmgType(t.getTowerType())));
     }
 
     public void update() {
@@ -171,9 +171,9 @@ public class ProjectileManager {
                 float realDist = (float) Math.hypot(xDist, yDist);
                 if (realDist <= Constants.ProjectileType.getRadiusExplosion(p.getProjectileType())) {
                     if (p.getProjectileType() == POISON_POTION) {
-                        e.setPoisonOn(p.getDmg(), p.getDuration());
+                        e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
                     } else {
-                        e.hurt(p.getDmg());
+                        e.hurt(p.getDmg(), p.getDamageType());
                     }
                 }
             }
@@ -188,7 +188,7 @@ public class ProjectileManager {
                         if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
                             explodeOnEnemys(p, playing.getEnemyMenager().getEnemies());
                         } else {
-                            e.hurt(p.getDmg());
+                            e.hurt(p.getDmg(),p.getDamageType());
                         }
                         return true;
                     }
@@ -261,7 +261,7 @@ public class ProjectileManager {
             } else {
                 neg = 1;
             }
-            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type));
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType())));
 
         }
     }

@@ -10,6 +10,7 @@ import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
+import static helpz.Constants.TowerType.*;
 
 public abstract class Enemy {
 
@@ -21,13 +22,14 @@ public abstract class Enemy {
     protected Rectangle bounds;
     protected int dmg, duration = 0;
     protected int slowTickLimit = 3, slowTick = slowTickLimit;
-    protected int maxHealth, health;
+    protected int maxHealth, health, mr, armor;
     protected int ID;
-    protected int enemyType;
+    protected int enemyType, damageType;
     protected int lastDir;
     protected boolean alive=false, poisoned = false;
     protected float slowPower = 1f;
     protected boolean revive;
+
 
     public Enemy(float x, float y, int ID, int enemyType, EnemyMenager enemyMenager, WaveManager waveManager) {
         this.x = x;
@@ -43,6 +45,12 @@ public abstract class Enemy {
             alive = true;
         }
         setRevive();
+        setResists(enemyType);
+    }
+
+    private void setResists(int enemyType) {
+        this.mr=getMR(enemyType);
+        this.armor=getArmor(enemyType);
     }
 
     private void setRevive() {
@@ -74,9 +82,10 @@ public abstract class Enemy {
         revive = false;
     }
 
-    public void setPoisonOn(int dmg, int duration) {
+    public void setPoisonOn(int dmg, int duration, int damageType) {
         this.dmg = dmg;
         this.duration = duration;
+        this.damageType=damageType;
         poisoned = true;
     }
 
@@ -84,7 +93,7 @@ public abstract class Enemy {
         if (0 < duration) {
             duration--;
             if (0 == duration % 10) {
-                hurt(dmg);
+                hurt(dmg,damageType);
             }
 
         }
@@ -135,8 +144,11 @@ public abstract class Enemy {
         System.out.println(health);
     }
 
-    public void hurt(int dmg) {
-        this.health -= dmg;
+    public void hurt(int dmg, int DMGType) {
+
+
+        this.health -= calculateDMG(dmg, DMGType) ;
+
         if (health <= 0) {
             alive = false;
             if (enemyType == ORK_ZOMBI) {
@@ -150,6 +162,14 @@ public abstract class Enemy {
             enemyMenager.rewardPlayer(enemyType);
             Game.addXp();
         }
+    }
+
+    private int calculateDMG(int dmg, int dmgType) {
+        if (dmgType==PHYSICAL){
+            return  ((100-armor)*dmg/100);
+        } else if (dmgType==MAGIC){
+            return  ((100-mr)*dmg/100);
+        }else {return dmg;}
     }
 
 
