@@ -5,12 +5,12 @@ import java.awt.geom.Point2D;
 public class Projectile {
 
     private Point2D.Float pos;
-    private int id, projectileType, dmg, duration;
+    private int id, projectileType, dmg, duration, damageType;
     private boolean active = true;
     private float speedx, speedy, rotation;
 
 
-    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType) {
+    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType) {
         pos = new Point2D.Float(x, y);
         this.speedx = speedx;
         this.speedy = speedy;
@@ -18,9 +18,10 @@ public class Projectile {
         this.rotation = rotation;
         this.id = id;
         this.projectileType = projectileType;
+        this.damageType = damageType;
     }
 
-    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int duration) {
+    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType, int duration) {
         pos = new Point2D.Float(x, y);
         this.speedx = speedx;
         this.speedy = speedy;
@@ -28,7 +29,9 @@ public class Projectile {
         this.rotation = rotation;
         this.id = id;
         this.projectileType = projectileType;
+        this.damageType = damageType;
         this.duration = duration;
+
     }
 
     public void reuse(float x, float y, float speedx, float speedy, int dmg, float rotation, int duration) {
@@ -90,5 +93,9 @@ public class Projectile {
 
     public int getDuration() {
         return duration;
+    }
+
+    public int getDamageType() {
+        return damageType;
     }
 }
