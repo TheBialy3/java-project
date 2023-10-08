@@ -398,9 +398,11 @@ public class Constants {
             }
         }
 
-        public static final int PHYSICAL = 0;
-        public static final int MAGIC = 1;
-        public static final int TRUE = 2;
+
+        public static final int TRUE = 0;
+        public static final int PHYSICAL = 1;
+        public static final int MAGIC = 2;
+
 
         public static int getDmgType(int towerType) {
             switch (towerType) {
