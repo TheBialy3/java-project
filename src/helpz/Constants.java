@@ -374,7 +374,7 @@ public class Constants {
         public static int getDefaultDmg(int towerType) {
             switch (towerType) {
                 case ARCHER:
-                    return 5;
+                    return 20;
                 case CANNON:
                     return 15;
                 case FROST_MAGE:
@@ -382,13 +382,13 @@ public class Constants {
                 case MINES_FACTORY:
                     return 10;
                 case POISON_TOWER:
-                    return 1;
+                    return 5;
                 case BOOM_VOLCANO:
-                    return 10;
+                    return 30;
                 case CROSSBOW:
-                    return 10;
+                    return 30;
                 case MOUSE_FOLLOWS_TOWER:
-                    return 15;
+                    return 25;
                 case SNIPER:
                     return 30;
                 case LASER_TOWER:

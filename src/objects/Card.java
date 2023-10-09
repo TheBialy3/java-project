@@ -1,16 +1,17 @@
 package objects;
 
 public class Card {
-   private int id;
+   private int id,towertype;
     private String name, description;
     private boolean unlocked, active=false;
 
-    public Card(int id, String name, String description,  boolean unlocked) {
+    public Card(int id, String name, String description,  boolean unlocked, int towertype) {
         this.id=id;
         this.name=name;
         this.description=description;
 
         this.unlocked=unlocked;
+        this.towertype=towertype;
     }
 
     public int getId() {
@@ -41,5 +42,9 @@ public class Card {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public int getTowertype() {
+        return towertype;
     }
 }
