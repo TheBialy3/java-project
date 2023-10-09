@@ -1,6 +1,7 @@
 package main;
 
 import managers.TileManager;
+import objects.Card;
 import scenes.*;
 import scenes.Menu;
 
@@ -15,6 +16,7 @@ public class Game extends JFrame implements Runnable {
 
     public static int xp = 0;
     private ArrayList<Integer> save;
+    ArrayList<Boolean> cardSave=new ArrayList<>();
     private GameScreen gameScreen;
     private Thread threadGame;
 
@@ -33,6 +35,7 @@ public class Game extends JFrame implements Runnable {
     private Bestiary bestiary;
     private TileManager tileManager;
     private GameOver gameOver;
+    private ArrayList<Card> cards = new ArrayList<>();
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -52,9 +55,25 @@ public class Game extends JFrame implements Runnable {
         add(gameScreen);
         pack();
         setVisible(true);
-        save =  GetXpData();
-        this.xp = save.get(0);
+
+        getCardSave();
     }
+
+    private void getCardSave() {
+        try{
+            save = GetXpData();
+            this.xp = save.get(0);
+            cardSave = GetCardSave();
+            cards = upgrade.getCards();
+            for (Card card : cards) {
+                card.setUnlocked(cardSave.get(card.getId()));
+            }
+        }catch (Exception e){
+            System.out.println("There is no save file");
+            CreateSaveFile();
+        }
+    }
+
 
     public static void addXp() {
         xp++;
@@ -65,7 +84,8 @@ public class Game extends JFrame implements Runnable {
     }
 
     public  void saveGame(){
-        SaveXpToFile(xp);
+        cards=upgrade.getCards();
+        SaveXpToFile(xp, cards);
     }
 
     public void initClasses() {
