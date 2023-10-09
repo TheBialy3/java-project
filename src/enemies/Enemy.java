@@ -141,18 +141,11 @@ public abstract class Enemy {
         int waveIndex = waveManager.getWaveIndex();
         health = Constants.EnemyType.getStartHealth(enemyType) * (5 + waveIndex)/2;//(5 + waveIndex) / 10
         maxHealth = health;
-        System.out.println(health);
     }
 
     public void hurt(int dmg, int DMGType) {
-
-        System.out.println(dmg);
-        System.out.println(DMGType);
-        System.out.println( this.health);
         int calDMG=calculateDMG(dmg, DMGType) ;
-        System.out.println(calDMG);
         this.health -= calDMG;//calculateDMG(dmg, DMGType) ;
-        System.out.println(this.health);
         if (health <= 0) {
             alive = false;
             if (enemyType == ORK_ZOMBI) {

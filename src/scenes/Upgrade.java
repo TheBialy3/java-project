@@ -123,4 +123,7 @@ public class Upgrade extends GameScene implements SceneMethods {
         mouseClicked(x, y);
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 }

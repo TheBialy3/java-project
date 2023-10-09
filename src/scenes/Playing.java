@@ -75,6 +75,9 @@ public class Playing extends GameScene implements SceneMethods {
                         if (isThereMoreWaves()) {
 
                             //start timer or card draw
+                            if(waveManager.getWaveIndex()%5==0){
+                                cardSelectStart();
+                            }
                             waveManager.startWaveTimer();
 
                             if (isWaveTimerOver()) {
@@ -104,6 +107,10 @@ public class Playing extends GameScene implements SceneMethods {
             }
 
         }
+    }
+
+    private void cardSelectStart() {
+
     }
 
     public void Finish() {
@@ -253,20 +260,6 @@ public class Playing extends GameScene implements SceneMethods {
                 }
             }
         }
-    }
-
-
-    public int getTileType(int x, int y) {
-        int xCord = x / 64;
-        int yCord = y / 64;
-
-        if (xCord > 19 || xCord < 0) {
-            return 0;
-        } else if (yCord > 19 || yCord < 0) {
-            return 0;
-        }
-        int id = lvl[y / 64][x / 64];
-        return game.getTileManager().getTile(id).getTileType();
     }
 
 

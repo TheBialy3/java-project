@@ -1,6 +1,9 @@
 package helpz;
 
+import objects.Card;
 import objects.PathPoint;
+import scenes.Upgrade;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -9,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LoadSave {
+
+    private Upgrade upgrade;
 
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
@@ -20,6 +25,7 @@ public class LoadSave {
         }
         return img;
     }
+
     public static BufferedImage getBackgroundImg() {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/back.png");
@@ -43,7 +49,7 @@ public class LoadSave {
     }
 
 
-    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end,int[] directionArr) {//
+    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end, int[] directionArr) {//
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
@@ -63,13 +69,28 @@ public class LoadSave {
     }
 
 
-
     private static ArrayList<Integer> ReadSaveFile(File file) {
         ArrayList<Integer> list = new ArrayList<>();
         try {
             Scanner sc = new Scanner(file);
+            list.add(Integer.parseInt(sc.nextLine()));
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
+    private static ArrayList<Boolean> ReadSaveFile(File file, int startOfReading) {
+        ArrayList<Boolean> list = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(file);
+            for (int i = 0; i < startOfReading; i++) {
+                sc.nextLine();
+            }
             while (sc.hasNextLine()) {
-                list.add(Integer.parseInt(sc.nextLine()));
+                list.add(Boolean.parseBoolean(sc.nextLine()));
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -78,15 +99,7 @@ public class LoadSave {
         return list;
     }
 
-    public static void SaveXpToFile(int xp) {//tree unlocked
-        try {
-            PrintWriter pw = new PrintWriter("res/textFile/save.txt");
-            pw.println(xp);
-            pw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
     public static ArrayList<Integer> GetXpData() {
         File saveFile = new File("res/textFile/save.txt");
         if (saveFile.exists()) {
@@ -95,6 +108,31 @@ public class LoadSave {
         } else {
             System.out.println("File: save.txt nieistnieje");
             return null;
+        }
+    }
+
+    public static ArrayList<Boolean> GetCardSave() {
+        File saveFile = new File("res/textFile/save.txt");
+        if (saveFile.exists()) {
+            ArrayList<Boolean> list = ReadSaveFile(saveFile, 1);
+            return list;
+        } else {
+            System.out.println("File: save.txt nieistnieje");
+            return null;
+        }
+    }
+
+    public static void SaveXpToFile(int xp, ArrayList<Card> cards) {//tree unlocked
+
+        try {
+            PrintWriter pw = new PrintWriter("res/textFile/save.txt");
+            pw.println(xp);
+            for (Card card : cards) {
+                pw.println(card.isUnlocked());
+            }
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -112,13 +150,13 @@ public class LoadSave {
         return list;
     }
 
-    public static ArrayList<PathPoint> getPathPoints(){
+    public static ArrayList<PathPoint> getPathPoints() {
         File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<PathPoint> points = new ArrayList<>();
-            points.add(new PathPoint(list.get(400),list.get(401)));
-            points.add(new PathPoint(list.get(402),list.get(403)));
+            points.add(new PathPoint(list.get(400), list.get(401)));
+            points.add(new PathPoint(list.get(402), list.get(403)));
             return points;
         } else {
             System.out.println("File:  newlevel nieistnieje");
@@ -148,6 +186,23 @@ public class LoadSave {
         }
     }
 
+    public static void CreateSaveFile() {
+        File newLvl = new File("res/textFile/save.txt");
+        if (newLvl.exists()) {
+            System.out.println("file save.txt exists");
+
+        } else {
+            try {
+                newLvl.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //  WriteToFile(newLvl, idArr, new PathPoint(0,0), new PathPoint(0,0));
+
+        }
+    }
+
     public static void CreateLevel(String name, int[] idArr) {
         File newLvl = new File("res/" + name + ".txt");
         if (newLvl.exists()) {
@@ -160,7 +215,7 @@ public class LoadSave {
                 e.printStackTrace();
             }
 
-          //  WriteToFile(newLvl, idArr, new PathPoint(0,0), new PathPoint(0,0));
+            //  WriteToFile(newLvl, idArr, new PathPoint(0,0), new PathPoint(0,0));
 
         }
     }
@@ -168,13 +223,12 @@ public class LoadSave {
     public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end, int[][] dirArr) {
         File lvlFile = new File("res/textFile/" + name + ".txt");
         if (lvlFile.exists()) {
-            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end,Utilz.TwoDto1DintArr(dirArr));
+            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end, Utilz.TwoDto1DintArr(dirArr));
         } else {
             System.out.println("file " + name + " does not exists");
-            return ;
+            return;
         }
     }
-
 
 
 }
