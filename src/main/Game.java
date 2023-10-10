@@ -232,4 +232,8 @@ public class Game extends JFrame implements Runnable {
     public TileManager getTileManager() {
         return tileManager;
     }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 }

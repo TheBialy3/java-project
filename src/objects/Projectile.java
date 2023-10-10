@@ -21,18 +21,7 @@ public class Projectile {
         this.damageType = damageType;
     }
 
-    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType, int duration) {
-        pos = new Point2D.Float(x, y);
-        this.speedx = speedx;
-        this.speedy = speedy;
-        this.dmg = dmg;
-        this.rotation = rotation;
-        this.id = id;
-        this.projectileType = projectileType;
-        this.damageType = damageType;
-        this.duration = duration;
 
-    }
 
     public void reuse(float x, float y, float speedx, float speedy, int dmg, float rotation, int duration) {
         pos = new Point2D.Float(x, y);
