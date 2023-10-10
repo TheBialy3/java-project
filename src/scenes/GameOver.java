@@ -118,7 +118,7 @@ public class GameOver extends GameScene implements SceneMethods {
     }
 
     public void replayGame() {
-        game.getPlaying().resetEvrything();
+        game.getPlaying().resetEverything();
         SetGameState(PLAYING);
     }
 

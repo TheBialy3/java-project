@@ -1,18 +1,18 @@
 package objects;
 
-public class Beem {
+public class Beam {
 
     private int xStart, yStart;
     private int xEnd, yEnd;
     private int beemTimer;
     private boolean active = true;
 
-    public Beem(int xStart, int yCord, int xEnd, int yEnd) {
+    public Beam(int xStart, int yCord, int xEnd, int yEnd) {
         this.xStart = xStart;
         this.yStart = yCord;
         this.xEnd = xEnd;
         this.yEnd = yEnd;
-        beemTimer = 10;
+        beemTimer = 8;
     }
     public boolean getActive(){
         return active;

@@ -2,7 +2,7 @@ package helpz;
 
 import objects.Card;
 import objects.PathPoint;
-import scenes.Upgrade;
+
 
 
 import javax.imageio.ImageIO;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class LoadSave {
 
-    private Upgrade upgrade;
+
 
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
@@ -37,9 +37,9 @@ public class LoadSave {
         return img;
     }
 
-    public static BufferedImage getCadrSprite() {
+    public static BufferedImage getCardSprite() {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("res/pngFile/card.png");
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/cardLong.png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
@@ -47,6 +47,17 @@ public class LoadSave {
         }
         return img;
     }
+    public static BufferedImage getCardChooseSprite() {
+        BufferedImage img = null;
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/cardLongChoose.png");
+        try {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
+    }
+
 
 
     private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end, int[] directionArr) {//

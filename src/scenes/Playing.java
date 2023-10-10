@@ -8,7 +8,7 @@ import managers.EnemyMenager;
 import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
-import objects.Beem;
+import objects.Beam;
 import objects.PathPoint;
 
 import towers.*;
@@ -17,11 +17,13 @@ import ui.MyButton;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 
 import static helpz.Constants.Tiles.*;
 import static helpz.Constants.TowerType.*;
+import static helpz.LoadSave.*;
 
 public class Playing extends GameScene implements SceneMethods {
 
@@ -34,30 +36,43 @@ public class Playing extends GameScene implements SceneMethods {
     private TowerManager towerManager;
     private WaveManager waveManager;
     private MyButton bReplay;
+    private MyButton bCard1, bCard2, bCard3;
+    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite();
     private PathPoint start, end;
-    private ArrayList<Beem> beems= new ArrayList<>();
+    private ArrayList<Beam> beams = new ArrayList<>();
 
     private Tower selectedTower;
-    private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomGold = 5;
-    private boolean paused, gameOver, startOfGame = false, win = false;
+    private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
+    private boolean paused, gameOver, startOfGame = false, win = false, cardSelect = false;
     // if showTowersOrEnemyType is false show towers
-    private boolean showTowersOrEnemyType=false;
+    private boolean showTowersOrEnemyType = false;
     private static int chosenLvl = 1;
 
     public Playing(Game game) {
         super(game);
-        LoadDefoultLevel();
+        LoadDefaultLevel();
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
-       // xp.UpgradesItemsCard();
+        initCardButtons();
+
+        // xp.UpgradesItemsCard();
     }
 
-//    public void setLevel(int[][] lvl) {
-//        this.lvl = lvl;
-//    }
+    private void initCardButtons() {
+        int cardX = 140;
+        int cardY = 100;
+        int cardW = 1000;
+        int cardH = 300;
+        int diffCard = 400;
+
+
+        bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
+        bCard2 = new MyButton("Card2", cardX , cardY+ diffCard, cardW, cardH);
+        bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
+    }
 
     public void update() {
         if (!win) {
@@ -68,48 +83,50 @@ public class Playing extends GameScene implements SceneMethods {
                     if (startOfGame) {
                         waveManager.startWaveTimer();
                     }
-                    //passiveIncom
-                    passiveIncom();
+                    if (cardSelect) {
+                    } else {
+                        passiveIncome();
+                        if (isAllEnemyDead()) {
+                            if (isThereMoreWaves()) {
 
-                    if (isAllEnemysDead()) {
-                        if (isThereMoreWaves()) {
+                                //start timer or card draw
+                                if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
+                                    cardSelectStart();
+                                }
+                                waveManager.startWaveTimer();
 
-                            //start timer or card draw
-                            if(waveManager.getWaveIndex()%5==0){
-                                cardSelectStart();
+                                if (isWaveTimerOver()) {
+                                    waveManager.increaseWaveIndex();
+                                    enemyMenager.getEnemies();
+                                    waveManager.resetEnemyIndex();
+
+                                }
+                            } else {
+                                Finish();
                             }
-                            waveManager.startWaveTimer();
-
-                            if (isWaveTimerOver()) {
-                                waveManager.increaseWaveIndex();
-                                enemyMenager.getEnemies();
-                                waveManager.resetEnemyIndex();
-
-                            }
-                        } else {
-                            Finish();
                         }
+
+
+                        if (isTimeForNewEnemy()) {
+                            spawnEnemy();
+                        }
+                        enemyMenager.update();
+                        towerManager.update();
+                        projectileManager.update();
                     }
 
-
-                    if (isTimeForNewEnemy()) {
-                        spawnEnemy();
+                    if (playingBar.getLives() <= 0) {
+                        gameOver = true;
+                        game.saveGame();
                     }
-                    enemyMenager.update();
-                    towerManager.update();
-                    projectileManager.update();
-                }
-
-                if (playingBar.getLives() <= 0) {
-                    gameOver = true;
-                    game.saveGame();
                 }
             }
 
         }
     }
 
-    private void cardSelectStart() {
+    private void cardSelectStart() {////////////////////////////////////////////////////////////////////////////
+        cardSelect = true;
 
     }
 
@@ -119,10 +136,10 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
-    private void passiveIncom() {
+    private void passiveIncome() {
         goldTick++;
         if (goldTick % goldTickLimit == 0) {
-            playingBar.earnGold(passiveIncomGold);
+            playingBar.earnGold(passiveIncomeGold);
         }
     }
 
@@ -135,7 +152,7 @@ public class Playing extends GameScene implements SceneMethods {
         g.drawString(text, 640 - w / 2, 15 + 640 - h / 2);
     }
 
-    public void drawWinScrean(Graphics g) {
+    public void drawWinScreen(Graphics g) {
         g.setColor(new Color(10, 255, 50));
         g.setFont(new Font("Serif", Font.BOLD, 50));
         String text = "VICTORY";
@@ -147,10 +164,12 @@ public class Playing extends GameScene implements SceneMethods {
         int x = 640 - w / 2;
         int y = 324;
 
-
         bReplay = new MyButton("Replay", x, y, w, h);
         bReplay.draw(g);
+
+
     }
+
 
     private boolean isWaveTimerOver() {
         return waveManager.isWaveTimerOver();
@@ -161,7 +180,7 @@ public class Playing extends GameScene implements SceneMethods {
         return waveManager.isThereMoreWaves();
     }
 
-    public boolean isAllEnemysDead() {
+    public boolean isAllEnemyDead() {
         if (waveManager.isTherMoreEnemysInWave()) {
             return false;
         }
@@ -187,7 +206,7 @@ public class Playing extends GameScene implements SceneMethods {
         return false;
     }
 
-    public void LoadDefoultLevel() {
+    public void LoadDefaultLevel() {
         lvl = LoadSave.GetLevelData();
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start = points.get(0);
@@ -207,12 +226,13 @@ public class Playing extends GameScene implements SceneMethods {
 
         playingBar.draw(g);
         projectileManager.draw(g);
-        drawBeem(g);
+        drawBeam(g);
 
-
-
+        if (cardSelect) {
+            drawCardsToSelect(g);
+        }
         if (win) {
-            drawWinScrean(g);
+            drawWinScreen(g);
         }
         if (paused) {
             drawPause(g);
@@ -220,13 +240,39 @@ public class Playing extends GameScene implements SceneMethods {
 
     }
 
-    private void drawBeem(Graphics g) {
+    private void drawCardsToSelect(Graphics g) {
+        int cardX = 140;
+        int cardY = 100;
+        int diffCard = 400;
 
-        for(Beem beem:beems){
-            if(beem.getActive()){
+        bCard1.draw(g);
+        bCard2.draw(g);
+        bCard3.draw(g);
+
+        if (!bCard1.isMouseOver()) {
+            g.drawImage(card, cardX, cardY, null);
+        } else {
+            g.drawImage(cardChoose, cardX, cardY, null);
+        }
+        if (!bCard2.isMouseOver()) {
+            g.drawImage(card, cardX, cardY+ diffCard, null);
+        } else {
+            g.drawImage(cardChoose, cardX, cardY + diffCard, null);
+        }
+        if (!bCard3.isMouseOver()) {
+            g.drawImage(card, cardX, cardY + diffCard + diffCard, null);
+        } else {
+            g.drawImage(cardChoose, cardX, cardY + diffCard + diffCard, null);
+        }
+
+    }
+
+    private void drawBeam(Graphics g) {
+        for (Beam beam : beams) {
+            if (beam.getActive()) {
                 g.setColor(new Color(255, 0, 0));
-                g.drawLine(beem.getxStart(),beem.getyStart(),beem.getxEnd(),beem.getyEnd());
-                beem.timerDown();
+                g.drawLine(beam.getxStart(), beam.getyStart(), beam.getxEnd(), beam.getyEnd());
+                beam.timerDown();
 
             }
         }
@@ -269,7 +315,7 @@ public class Playing extends GameScene implements SceneMethods {
             playingBar.mouseClicked(x, y);
         } else if (win) {
             if (bReplay.getBounds().contains(x, y)) {
-                resetEvrything();
+                resetEverything();
             }
         } else {
             if (selectedTower != null) {
@@ -357,7 +403,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        mouseClicked(x,y);
+        mouseClicked(x, y);
     }
 
     public void rewardPlayerAfterWave() {
@@ -381,53 +427,53 @@ public class Playing extends GameScene implements SceneMethods {
             paused = true;
         }
         if (e.getKeyCode() == KeyEvent.VK_Q) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))){
-                selectedTower=new Archer(1555, 15555, 0, ARCHER, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))) {
+                selectedTower = new Archer(1555, 15555, 0, ARCHER, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(CANNON))){
-                selectedTower=new Cannon(1555, 15555, 0, CANNON, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(CANNON))) {
+                selectedTower = new Cannon(1555, 15555, 0, CANNON, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(FROST_MAGE))){
-                selectedTower=new FrostMage(1555, 15555, 0, FROST_MAGE, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(FROST_MAGE))) {
+                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(MINES_FACTORY))){
-                selectedTower=new MineFactory(1555, 15555, 0, MINES_FACTORY, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(MINES_FACTORY))) {
+                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_T) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(POISON_TOWER))){
-                selectedTower=new PoisonTower(1555, 15555, 0, POISON_TOWER, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(POISON_TOWER))) {
+                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_Y) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(BOOM_VOLCANO))){
-                selectedTower=new BoomTower(1555, 15555, 0, BOOM_VOLCANO, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(BOOM_VOLCANO))) {
+                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_A) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(CROSSBOW))){
-                selectedTower=new Crossbow(1555, 15555, 0, CROSSBOW, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(CROSSBOW))) {
+                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(MOUSE_FOLLOWS_TOWER))){
-                selectedTower=new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(MOUSE_FOLLOWS_TOWER))) {
+                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(SNIPER))){
-                selectedTower=new Sniper(1555, 15555, 0, SNIPER, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(SNIPER))) {
+                selectedTower = new Sniper(1555, 15555, 0, SNIPER, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_F) {
-            if(playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))){
-                selectedTower=new LaserTower(1555, 15555, 0, LASER_TOWER, road);
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
+                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, road);
             }
         }
     }
@@ -440,6 +486,7 @@ public class Playing extends GameScene implements SceneMethods {
         return waveManager;
     }
 
+
     public void mouseClickedR() {
         setSelectedTower(null);
 
@@ -450,7 +497,7 @@ public class Playing extends GameScene implements SceneMethods {
         playingBar.removeOneLive();
     }
 
-    public void resetEvrything() {
+    public void resetEverything() {
         playingBar.resetEvrything();
         win = false;
         enemyMenager.reset();
@@ -465,7 +512,7 @@ public class Playing extends GameScene implements SceneMethods {
         selectedTower = null;
         goldTick = 0;
         paused = false;
-        beemReset();
+        beamReset();
     }
 
     public void setMine(Tower t, PathPoint e) {
@@ -477,7 +524,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public int[][] getRoadDirArr() {
-        road=enemyMenager.getRoadDirArr();
+        road = enemyMenager.getRoadDirArr();
         return road;
     }
 
@@ -489,10 +536,11 @@ public class Playing extends GameScene implements SceneMethods {
         return mY;
     }
 
-    public void beemEnemy(Tower t, Enemy e) {
-        beems.add(new Beem(t.getX()+45, t.getY()+20,(int) e.getX()+32, (int) e.getY()+32));
+    public void beamEnemy(Tower t, Enemy e) {
+        beams.add(new Beam(t.getX() + 45, t.getY() + 20, (int) e.getX() + 32, (int) e.getY() + 32));
     }
-    public void beemReset(){
-        beems.clear();
+
+    public void beamReset() {
+        beams.clear();
     }
 }

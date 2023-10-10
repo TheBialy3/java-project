@@ -154,7 +154,7 @@ public class TowerManager {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                         } else if (t.getTowerType() == LASER_TOWER) {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                            playing.beemEnemy(t, e);
+                            playing.beamEnemy(t, e);
                         } else {
                             playing.shootEnemy(t, e);
                         }
@@ -170,7 +170,7 @@ public class TowerManager {
     private void setMine(Tower t) {
         int a = t.arrSize();
         if (a != 0) {
-            if (!playing.isAllEnemysDead()) {
+            if (!playing.isAllEnemyDead()) {
                 if (t.isCooldownOver()) {
                     arr = t.getArr();
                     ran = random.nextInt(a);

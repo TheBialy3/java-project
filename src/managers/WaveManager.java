@@ -4,7 +4,6 @@ import events.Wave;
 import scenes.Playing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class WaveManager {
@@ -12,8 +11,8 @@ public class WaveManager {
     private Playing playing;
     private ArrayList<Wave> waves = new ArrayList<>();
     private ProjectileManager projectileManager;
-    private int enemySpownTickLimit = 60 * 1;
-    private int enemySpownTick = enemySpownTickLimit;
+    private int enemySpawnTickLimit = 60 * 1;
+    private int enemySpawnTick = enemySpawnTickLimit;
     private int enemyIndex, waveIndex;
     private boolean waveStartTimer, waveTickTimerOver;
     private int waveTickLimit = 60 * 3, waveTick = 0;
@@ -27,8 +26,8 @@ public class WaveManager {
     }
 
     public void update() {
-        if (enemySpownTick < enemySpownTickLimit) {
-            enemySpownTick++;
+        if (enemySpawnTick < enemySpawnTickLimit) {
+            enemySpawnTick++;
         }
         if (waveStartTimer) {
             waveTick++;
@@ -46,14 +45,14 @@ public class WaveManager {
     }
 
     public void increaseWaveIndex() {
-        enemySpownTickLimit = 600 / (waveIndex + 9);
+        enemySpawnTickLimit = 600 / (waveIndex + 9);
         waveIndex++;
         waveTick = 0;
         waveStartTimer = false;
         waveTickTimerOver = false;
         playing.rewardPlayerAfterWave();
         projectileManager.endOfWave();
-        playing.beemReset();
+        playing.beamReset();
     }
 
     public boolean isWaveTimerOver() {
@@ -66,12 +65,12 @@ public class WaveManager {
     }
 
     public int getNextEnemy() {
-        enemySpownTick = 0;
+        enemySpawnTick = 0;
         return waves.get(waveIndex).getEnemyList().get(enemyIndex++);
     }
 
     private void createWaves() {
-        int waveNumberMax=40;
+        int waveNumberMax=100;
         int enemyTypesNumber=5;
         int ran;
         for(int waveNumber=0;waveNumber<waveNumberMax;waveNumber++){
@@ -93,7 +92,7 @@ public class WaveManager {
     }
 
     public boolean isTimeForNewEnemy() {
-        return enemySpownTick >= enemySpownTickLimit;
+        return enemySpawnTick >= enemySpawnTickLimit;
     }
 
     public boolean isTherMoreEnemysInWave() {
@@ -111,7 +110,7 @@ public class WaveManager {
         waveIndex = 0;
         waveStartTimer = false;
         waveTickTimerOver = false;
-        enemySpownTick = enemySpownTickLimit;
+        enemySpawnTick = enemySpawnTickLimit;
         waveTick = 0;
     }
 }

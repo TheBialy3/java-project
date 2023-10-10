@@ -361,7 +361,7 @@ public class PlayingBar extends Bar {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
         } else if (bReset.getBounds().contains(x, y)) {
-            playing.resetEvrything();
+            playing.resetEverything();
         } else {
             if (displayedTower != null) {
                 if (bSell.getBounds().contains(x, y)) {

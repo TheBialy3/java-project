@@ -1,23 +1,35 @@
 package managers;
 
 import helpz.LoadSave;
+import main.Game;
+import objects.Card;
 import scenes.Playing;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class CardMenager {
     private Playing playing;
+    private Game game;
+    ArrayList<Card> allCards=new ArrayList<>();
     private BufferedImage cardImg[];
     public CardMenager(Playing playing) {
         this.playing = playing;
-        importCadrImgs();
+        this.allCards= game.getCards();
     }
-    private void importCadrImgs() {
-        BufferedImage atlas = LoadSave.getCadrSprite();
-        cardImg = new BufferedImage[1];
-        for (int i = 0; i < 1; i++) {
-            cardImg[i] = atlas.getSubimage(0, 0 , 300, 420);
+
+
+    public ArrayList<Card> CardMenager() {
+
+        ArrayList<Card> list=new ArrayList<>();
+        for(Card card:allCards){
+            if (card.isUnlocked()){
+                if(!card.isActive()){
+                    list.add(card);
+                }
+            }
         }
+        return list;
     }
 
 }
