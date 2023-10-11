@@ -148,7 +148,7 @@ public class Game extends JFrame implements Runnable {
 
     }
 
-    public void drawfps(Graphics g) {
+    public void drawsFps(Graphics g) {
         g.setFont(new Font("Monospaced", Font.BOLD, 17));
         g.setColor(new Color(0, 0, 0));
         g.drawString("FPS:" + fps, 2, 16);
@@ -196,7 +196,7 @@ public class Game extends JFrame implements Runnable {
         }
     }
 
-    //Geters and Setters:
+    //Getters and Setters:
     public Render getRender() {
         return render;
     }

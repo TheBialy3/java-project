@@ -59,7 +59,7 @@ public class UpgradesItemsCard {
         //MOUSE_FOLLOWS_TOWER
         cards.add(new Card(id++, "Faster Mouse Follower", "Mouse Follower will now shoot faster", false, 7));
         cards.add(new Card(id++, "Big Gun", "Mouse Follower will now do more damage", false, 7));
-        // cards.add(new Card(id++, "Laser Beem", "Volcano will now exploding 2 times", false, 7));
+        // cards.add(new Card(id++, "Laser Beam", "Volcano will now explode 2 times", false, 7));
         //SNIPER
         cards.add(new Card(id++, "Strong Sniper", "Sniper will now shoot bigger caliber", false, 8));
         cards.add(new Card(id++, "Fast Sniper", "Sniper will now shoot auto rifle", false, 8));
