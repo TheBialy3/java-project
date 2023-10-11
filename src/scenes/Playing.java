@@ -42,7 +42,7 @@ public class Playing extends GameScene implements SceneMethods {
     private ArrayList<Beam> beams = new ArrayList<>();
 
     private Tower selectedTower;
-    private int endWaveGold = 150, goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
+    private int  goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
     private boolean paused, gameOver, startOfGame = false, win = false, cardSelect = false;
     // if showTowersOrEnemyType is false show towers
     private boolean showTowersOrEnemyType = false;
@@ -181,7 +181,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public boolean isAllEnemyDead() {
-        if (waveManager.isTherMoreEnemysInWave()) {
+        if (waveManager.isTheirMoreEnemyInWave()) {
             return false;
         }
         for (Enemy e : enemyMenager.getEnemies()) {
@@ -199,7 +199,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     private boolean isTimeForNewEnemy() {
         if (waveManager.isTimeForNewEnemy()) {
-            if (waveManager.isTherMoreEnemysInWave()) {
+            if (waveManager.isTheirMoreEnemyInWave()) {
                 return true;
             }
         }
@@ -407,6 +407,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void rewardPlayerAfterWave() {
+        int endWaveGold = 150;
         playingBar.earnGold(endWaveGold);
     }
 

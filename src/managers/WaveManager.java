@@ -95,7 +95,7 @@ public class WaveManager {
         return enemySpawnTick >= enemySpawnTickLimit;
     }
 
-    public boolean isTherMoreEnemysInWave() {
+    public boolean isTheirMoreEnemyInWave() {
         return waves.get(waveIndex).getEnemyList().size() > enemyIndex;
     }
 
