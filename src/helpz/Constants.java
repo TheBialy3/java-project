@@ -413,7 +413,7 @@ public class Constants {
                 case FROST_MAGE:
                     return MAGIC;
                 case MINES_FACTORY:
-                    return MAGIC;
+                    return PHYSICAL;
                 case POISON_TOWER:
                     return MAGIC;
                 case BOOM_VOLCANO:

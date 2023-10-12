@@ -43,7 +43,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", false, 2));
         //MINES_FACTORY
         cards.add(new Card(id++, "Long live the Mine", "Mine will now stay for 2 waves", false, 3));
-        cards.add(new Card(id++, "Two Mine for One", "Mine Factory will now sets 2 mines at the time", false, 3));
+        cards.add(new Card(id++, "Two for One", "Mine Factory will now sets 2 mines at the time", false, 3));
         cards.add(new Card(id++, "Big Mines", "Mine Factory will now sets mines that du more damage", false, 3));
         //POISON_TOWER
         cards.add(new Card(id++, "Bigger Potions", "Poison Tower will now splash in bigger radius", false, 4));
