@@ -38,7 +38,7 @@ public class TowerManager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         upgradeImgs = new BufferedImage[4];
         for (int i = 0; i < 4; i++) {
-            upgradeImgs[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29  * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            upgradeImgs[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
 
@@ -48,7 +48,7 @@ public class TowerManager {
         int imageInRow = 9;
         towerImgs = new BufferedImage[towerNumber];
         for (int i = 0; i < towerNumber; i++) {
-            towerImgs[i] = atlas.getSubimage((0+i/9) * tilePixelNumber, (12 + i%9) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            towerImgs[i] = atlas.getSubimage((0 + i / 9) * tilePixelNumber, (12 + i % 9) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         road = playing.getRoadDirArr();
     }
@@ -172,44 +172,46 @@ public class TowerManager {
         if (a != 0) {
             if (!playing.isAllEnemyDead()) {
                 if (t.isCooldownOver()) {
-                    arr = t.getArr();
-                    ran = random.nextInt(a);
-                    switch (arr.get(ran)) {
-                        case 1:
-                            PathPoint a1 = new PathPoint(t.getX() - 64, t.getY() - 64);
-                            e = a1;
-                            break;
-                        case 2:
-                            PathPoint a2 = new PathPoint(t.getX(), t.getY() - 64);
-                            e = a2;
-                            break;
-                        case 3:
-                            PathPoint a3 = new PathPoint(t.getX() + 64, t.getY() - 64);
-                            e = a3;
-                            break;
-                        case 4:
-                            PathPoint a4 = new PathPoint(t.getX() - 64, t.getY());
-                            e = a4;
-                            break;
-                        case 5:
-                            PathPoint a5 = new PathPoint(t.getX() + 64, t.getY());
-                            e = a5;
-                            break;
-                        case 6:
-                            PathPoint a6 = new PathPoint(t.getX() - 64, t.getY() + 64);
-                            e = a6;
-                            break;
-                        case 7:
-                            PathPoint a7 = new PathPoint(t.getX(), t.getY() + 64);
-                            e = a7;
-                            break;
-                        case 8:
-                            PathPoint a8 = new PathPoint(t.getX() + 64, t.getY() + 64);
-                            e = a8;
-                            break;
-                    }
+                    for (int mineNumber = 2; mineNumber >= 0; mineNumber--) {
+                        arr = t.getArr();
+                        ran = random.nextInt(a);
+                        switch (arr.get(ran)) {
+                            case 1:
+                                PathPoint a1 = new PathPoint(t.getX() - 64, t.getY() - 64);
+                                e = a1;
+                                break;
+                            case 2:
+                                PathPoint a2 = new PathPoint(t.getX(), t.getY() - 64);
+                                e = a2;
+                                break;
+                            case 3:
+                                PathPoint a3 = new PathPoint(t.getX() + 64, t.getY() - 64);
+                                e = a3;
+                                break;
+                            case 4:
+                                PathPoint a4 = new PathPoint(t.getX() - 64, t.getY());
+                                e = a4;
+                                break;
+                            case 5:
+                                PathPoint a5 = new PathPoint(t.getX() + 64, t.getY());
+                                e = a5;
+                                break;
+                            case 6:
+                                PathPoint a6 = new PathPoint(t.getX() - 64, t.getY() + 64);
+                                e = a6;
+                                break;
+                            case 7:
+                                PathPoint a7 = new PathPoint(t.getX(), t.getY() + 64);
+                                e = a7;
+                                break;
+                            case 8:
+                                PathPoint a8 = new PathPoint(t.getX() + 64, t.getY() + 64);
+                                e = a8;
+                                break;
+                        }
 
-                    playing.setMine(t, e);
+
+                    playing.setMine(t, e);}
                     t.resetCooldown();
                 }
             }

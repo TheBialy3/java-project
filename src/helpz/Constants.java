@@ -325,7 +325,7 @@ public class Constants {
                 case FROST_MAGE:
                     return 0;
                 case MINES_FACTORY:
-                    return 90;
+                    return 180;
                 case POISON_TOWER:
                     return 90;
                 case BOOM_VOLCANO:
