@@ -9,6 +9,7 @@ import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
 import objects.Beam;
+import objects.Card;
 import objects.PathPoint;
 
 import towers.*;
@@ -19,6 +20,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 import static helpz.Constants.Tiles.*;
@@ -40,9 +42,11 @@ public class Playing extends GameScene implements SceneMethods {
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
-
+    private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> threeCards = new ArrayList<>();
+    private Random random = new Random();
     private Tower selectedTower;
-    private int  goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
+    private int goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
     private boolean paused, gameOver, startOfGame = false, win = false, cardSelect = false;
     // if showTowersOrEnemyType is false show towers
     private boolean showTowersOrEnemyType = false;
@@ -61,6 +65,10 @@ public class Playing extends GameScene implements SceneMethods {
         // xp.UpgradesItemsCard();
     }
 
+    private void getCards() {
+        cards = game.getCards();
+    }
+
     private void initCardButtons() {
         int cardX = 140;
         int cardY = 100;
@@ -70,7 +78,7 @@ public class Playing extends GameScene implements SceneMethods {
 
 
         bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
-        bCard2 = new MyButton("Card2", cardX , cardY+ diffCard, cardW, cardH);
+        bCard2 = new MyButton("Card2", cardX, cardY + diffCard, cardW, cardH);
         bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
     }
 
@@ -91,7 +99,9 @@ public class Playing extends GameScene implements SceneMethods {
 
                                 //start timer or card draw
                                 if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
+
                                     cardSelectStart();
+
                                 }
                                 waveManager.startWaveTimer();
 
@@ -126,8 +136,41 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     private void cardSelectStart() {////////////////////////////////////////////////////////////////////////////
+        threeCards.clear();
+        getCards();
+        get3Cards();
         cardSelect = true;
 
+    }
+
+    private void get3Cards() {
+        while (true) {
+
+            int ran = random.nextInt(cards.size());
+            if (cards.get(ran).isUnlocked()) {
+                if (!cards.get(ran).isActive()) {
+                    if (threeCards.size() == 0) {
+                        threeCards.add(cards.get(ran));
+                    }
+                    if (threeCards.size() == 1) {
+                        if (cards.get(ran) != threeCards.get(0)) {
+                            threeCards.add(cards.get(ran));
+                        }
+                    }
+                    if (threeCards.size() == 2) {
+                        if (cards.get(ran) != threeCards.get(0) && cards.get(ran) != threeCards.get(1)) {
+                            threeCards.add(cards.get(ran));
+                        }
+                    }
+                }
+            }
+            if (threeCards.size() == 3) {
+                System.out.println(threeCards.get(0).toString());
+                System.out.println(threeCards.get(1).toString());
+                System.out.println(threeCards.get(2).toString());
+                return;
+            }
+        }
     }
 
     public void Finish() {
@@ -254,16 +297,19 @@ public class Playing extends GameScene implements SceneMethods {
         } else {
             g.drawImage(cardChoose, cardX, cardY, null);
         }
+
         if (!bCard2.isMouseOver()) {
-            g.drawImage(card, cardX, cardY+ diffCard, null);
+            g.drawImage(card, cardX, cardY + diffCard, null);
         } else {
             g.drawImage(cardChoose, cardX, cardY + diffCard, null);
         }
+
         if (!bCard3.isMouseOver()) {
             g.drawImage(card, cardX, cardY + diffCard + diffCard, null);
         } else {
             g.drawImage(cardChoose, cardX, cardY + diffCard + diffCard, null);
         }
+
 
     }
 
@@ -366,6 +412,18 @@ public class Playing extends GameScene implements SceneMethods {
         mY = y;
         mouseX = (x / 64) * 64;
         mouseY = (y / 64) * 64;
+        if (cardSelect) {
+            bCard1.setMouseOver(false);
+            bCard2.setMouseOver(false);
+            bCard3.setMouseOver(false);
+            if (bCard1.getBounds().contains(x, y)) {
+                bCard1.setMouseOver(true);
+            } else if (bCard2.getBounds().contains(x, y)) {
+                bCard2.setMouseOver(true);
+            } else if (bCard3.getBounds().contains(x, y)) {
+                bCard3.setMouseOver(true);
+            }
+        }
         if (win) {
             bReplay.setMouseOver(false);
         }
@@ -381,6 +439,11 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseReleased(int x, int y) {
+        if (cardSelect) {
+            bCard1.resetBooleans();
+            bCard2.resetBooleans();
+            bCard3.resetBooleans();
+        }
         if (win) {
             bReplay.resetBooleans();
         }
@@ -392,6 +455,15 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mousePressed(int x, int y) {
+        if (cardSelect) {
+            if (bCard1.getBounds().contains(x, y)) {
+
+            } else if (bCard2.getBounds().contains(x, y)) {
+
+            } else if (bCard3.getBounds().contains(x, y)) {
+
+            }
+        }
         if (x >= 1280) {
             playingBar.mousePressed(x, y);
         } else if (win) {

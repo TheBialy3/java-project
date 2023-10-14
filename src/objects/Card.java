@@ -47,4 +47,16 @@ public class Card {
     public int getTowertype() {
         return towertype;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", towertype=" + towertype +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", unlocked=" + unlocked +
+                ", active=" + active +
+                '}';
+    }
 }
