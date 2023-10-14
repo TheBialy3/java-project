@@ -64,7 +64,7 @@ public class Game extends JFrame implements Runnable {
             save = GetXpData();
             this.xp = save.get(0);
             cardSave = GetCardSave();
-            cards = upgrade.getCards();
+            this.cards = upgrade.getCards();
             for (Card card : cards) {
                 card.setUnlocked(cardSave.get(card.getId()));
             }

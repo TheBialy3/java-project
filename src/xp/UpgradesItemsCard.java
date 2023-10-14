@@ -71,4 +71,6 @@ public class UpgradesItemsCard {
     public ArrayList<Card> getCards() {
         return cards;
     }
+
+
 }
