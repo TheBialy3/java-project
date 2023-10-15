@@ -49,6 +49,7 @@ public class UpgradesItemsCard {
         //POISON_TOWER
         cards.add(new Card(id++, "Bigger Potions", "Poison Tower will now splash in bigger radius", false, 4));
         cards.add(new Card(id++, "Stronger Potions", "Poison Tower will now do more damage", false, 4));
+        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", false, 4));
         //BOOM_VOLCANO
         cards.add(new Card(id++, "Volcano Aftershock", "Volcano will now exploding 2 times", false, 5));
         cards.add(new Card(id++, "Faster Volcano Eruptions", "Volcano will now exploding faster", false, 5));

@@ -288,11 +288,13 @@ public class Playing extends GameScene implements SceneMethods {
         int cardY = 100;
         int diffCard = 400;
         int nextLineH=50;
+        int centerH=100;
+        int centerW=100;
 
         bCard1.draw(g);
         bCard2.draw(g);
         bCard3.draw(g);
-
+////make card compinent and add goood background for it
         if (!bCard1.isMouseOver()) {
             g.drawImage(card, cardX, cardY, null);
         } else {
@@ -300,22 +302,22 @@ public class Playing extends GameScene implements SceneMethods {
         }
         g.setColor(new Color(28, 28, 28));
         g.setFont(new Font("Serif", Font.BOLD, 30));
-        g.drawString(threeCards.get(0).getName(), cardX, cardY);
-        g.drawString(threeCards.get(0).getDescription(), cardX, cardY+nextLineH);
+        g.drawString(threeCards.get(0).getName(), cardX+centerW, cardY+centerH);
+        g.drawString(threeCards.get(0).getDescription(), cardX+centerW, cardY+centerH+nextLineH);
         if (!bCard2.isMouseOver()) {
             g.drawImage(card, cardX, cardY + diffCard, null);
         } else {
             g.drawImage(cardChoose, cardX, cardY + diffCard, null);
         }
-        g.drawString(threeCards.get(1).getName(), cardX, cardY+ diffCard );
-        g.drawString(threeCards.get(1).getDescription(), cardX, cardY+nextLineH+ diffCard );
+        g.drawString(threeCards.get(1).getName(), cardX+centerW, cardY+centerH+ diffCard );
+        g.drawString(threeCards.get(1).getDescription(), cardX+centerW, cardY+centerH+nextLineH+ diffCard );
         if (!bCard3.isMouseOver()) {
             g.drawImage(card, cardX, cardY + diffCard + diffCard, null);
         } else {
             g.drawImage(cardChoose, cardX, cardY + diffCard + diffCard, null);
         }
-        g.drawString(threeCards.get(2).getName(), cardX, cardY+ diffCard + diffCard );
-        g.drawString(threeCards.get(2).getDescription(), cardX, cardY+nextLineH+ diffCard + diffCard );
+        g.drawString(threeCards.get(2).getName(), cardX+centerW, cardY+centerH+ diffCard + diffCard );
+        g.drawString(threeCards.get(2).getDescription(), cardX+centerW, cardY+centerH+nextLineH+ diffCard + diffCard );
 
     }
 
