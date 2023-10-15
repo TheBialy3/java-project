@@ -294,7 +294,7 @@ public class Playing extends GameScene implements SceneMethods {
         bCard1.draw(g);
         bCard2.draw(g);
         bCard3.draw(g);
-////make card compinent and add goood background for it
+////make card compinent and add good background for it
         if (!bCard1.isMouseOver()) {
             g.drawImage(card, cardX, cardY, null);
         } else {
