@@ -242,4 +242,14 @@ public class LoadSave {
     }
 
 
+    public static BufferedImage getSpriteLogos() {
+        BufferedImage img = null;
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/logos.png");
+        try {
+            img = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
+    }
 }
