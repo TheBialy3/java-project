@@ -10,6 +10,7 @@ import managers.TowerManager;
 import managers.WaveManager;
 import objects.Beam;
 import objects.Card;
+import objects.CardLook;
 import objects.PathPoint;
 
 import towers.*;
@@ -28,18 +29,18 @@ import static helpz.Constants.TowerType.*;
 import static helpz.LoadSave.*;
 
 public class Playing extends GameScene implements SceneMethods {
-
+private  CardLook cardLook1,cardLook2,cardLook3;
     private static int[][] lvl;
     private int[][] road;
     private PlayingBar playingBar;
-    private int mouseX, mouseY, mX, mY;
+    private int mouseX, mouseY, mX, mY,tilePixelNumber=64;
     private EnemyMenager enemyMenager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
     private MyButton bReplay;
     private MyButton bCard1, bCard2, bCard3;
-    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite();
+    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(),logos[]=getLogos();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
@@ -76,10 +77,10 @@ public class Playing extends GameScene implements SceneMethods {
         int cardH = 300;
         int diffCard = 400;
 
-
         bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
         bCard2 = new MyButton("Card2", cardX, cardY + diffCard, cardW, cardH);
         bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
+
     }
 
     public void update() {
@@ -139,6 +140,13 @@ public class Playing extends GameScene implements SceneMethods {
         threeCards.clear();
         getCards();
         get3Cards();
+        int cardX = 140;
+        int cardY = 100;
+        int diffCard = 400;
+        logos=getLogos();
+        cardLook1=new CardLook(threeCards.get(0).getName(),threeCards.get(0).getDescription(),logos[threeCards.get(0).getId()],card,cardChoose,cardX,cardY);
+        cardLook2=new CardLook(threeCards.get(1).getName(),threeCards.get(1).getDescription(),logos[threeCards.get(1).getId()],card,cardChoose,cardX,cardY+diffCard);
+        cardLook3=new CardLook(threeCards.get(2).getName(),threeCards.get(2).getDescription(),logos[threeCards.get(2).getId()],card,cardChoose,cardX,cardY+diffCard+diffCard);
         cardSelect = true;
 
     }
@@ -177,7 +185,15 @@ public class Playing extends GameScene implements SceneMethods {
         win = true;
         game.saveGame();
     }
-
+    private BufferedImage[] getLogos(){
+        BufferedImage logosAtlas = LoadSave.getSpriteLogos();
+        int logoNr=100;
+        BufferedImage logo[] = new BufferedImage[logoNr];
+        for(int i=0;i<logoNr;i++){
+            logo[i] = logosAtlas.getSubimage((0 + i % 10) * tilePixelNumber, (0 + i / 10) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+        return logo;
+    }
 
     private void passiveIncome() {
         goldTick++;
@@ -284,41 +300,13 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     private void drawCardsToSelect(Graphics g) {
-        int cardX = 140;
-        int cardY = 100;
-        int diffCard = 400;
-        int nextLineH=50;
-        int centerH=100;
-        int centerW=100;
-
         bCard1.draw(g);
         bCard2.draw(g);
         bCard3.draw(g);
-////make card compinent and add good background for it
-        if (!bCard1.isMouseOver()) {
-            g.drawImage(card, cardX, cardY, null);
-        } else {
-            g.drawImage(cardChoose, cardX, cardY, null);
-        }
-        g.setColor(new Color(28, 28, 28));
-        g.setFont(new Font("Serif", Font.BOLD, 30));
-        g.drawString(threeCards.get(0).getName(), cardX+centerW, cardY+centerH);
-        g.drawString(threeCards.get(0).getDescription(), cardX+centerW, cardY+centerH+nextLineH);
-        if (!bCard2.isMouseOver()) {
-            g.drawImage(card, cardX, cardY + diffCard, null);
-        } else {
-            g.drawImage(cardChoose, cardX, cardY + diffCard, null);
-        }
-        g.drawString(threeCards.get(1).getName(), cardX+centerW, cardY+centerH+ diffCard );
-        g.drawString(threeCards.get(1).getDescription(), cardX+centerW, cardY+centerH+nextLineH+ diffCard );
-        if (!bCard3.isMouseOver()) {
-            g.drawImage(card, cardX, cardY + diffCard + diffCard, null);
-        } else {
-            g.drawImage(cardChoose, cardX, cardY + diffCard + diffCard, null);
-        }
-        g.drawString(threeCards.get(2).getName(), cardX+centerW, cardY+centerH+ diffCard + diffCard );
-        g.drawString(threeCards.get(2).getDescription(), cardX+centerW, cardY+centerH+nextLineH+ diffCard + diffCard );
 
+        cardLook1.draw(g,bCard1.isMouseOver());
+        cardLook2.draw(g,bCard2.isMouseOver());
+        cardLook3.draw(g,bCard3.isMouseOver());
     }
 
     private void drawBeam(Graphics g) {
@@ -337,7 +325,7 @@ public class Playing extends GameScene implements SceneMethods {
     private void drawHighlight(Graphics g) {
         g.setColor(Color.white);
         if (mouseX < 1280) {
-            g.drawRect(mouseX, mouseY, 64, 64);
+            g.drawRect(mouseX, mouseY, tilePixelNumber, tilePixelNumber);
         }
     }
 
@@ -354,9 +342,9 @@ public class Playing extends GameScene implements SceneMethods {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
                 if (isAnimation(id)) {
-                    g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
+                    g.drawImage(getSprite(id, animationIndex), x * tilePixelNumber, y * tilePixelNumber, null);
                 } else {
-                    g.drawImage(getSprite(id), x * 64, y * 64, null);
+                    g.drawImage(getSprite(id), x * tilePixelNumber, y * tilePixelNumber, null);
                 }
             }
         }
@@ -371,6 +359,17 @@ public class Playing extends GameScene implements SceneMethods {
             if (bReplay.getBounds().contains(x, y)) {
                 resetEverything();
             }
+        }else if(cardSelect){
+                bCard1.setMouseOver(false);
+                bCard2.setMouseOver(false);
+                bCard3.setMouseOver(false);
+                if (bCard1.getBounds().contains(x, y)) {
+                    bCard1.setMouseOver(true);
+                } else if (bCard2.getBounds().contains(x, y)) {
+                    bCard2.setMouseOver(true);
+                } else if (bCard3.getBounds().contains(x, y)) {
+                    bCard3.setMouseOver(true);
+                }
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -400,7 +399,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     private boolean isTileGrass(int x, int y) {
-        int id = lvl[y / 64][x / 64];
+        int id = lvl[y / tilePixelNumber][x / tilePixelNumber];
         int tileType = game.getTileManager().getTile(id).getTileType();
         return tileType == GRASS_TILE;
     }
@@ -418,8 +417,8 @@ public class Playing extends GameScene implements SceneMethods {
     public void mouseMoved(int x, int y) {
         mX = x;
         mY = y;
-        mouseX = (x / 64) * 64;
-        mouseY = (y / 64) * 64;
+        mouseX = (x / tilePixelNumber) * tilePixelNumber;
+        mouseY = (y / tilePixelNumber) * tilePixelNumber;
         if (cardSelect) {
             bCard1.setMouseOver(false);
             bCard2.setMouseOver(false);
@@ -465,11 +464,11 @@ public class Playing extends GameScene implements SceneMethods {
     public void mousePressed(int x, int y) {
         if (cardSelect) {
             if (bCard1.getBounds().contains(x, y)) {
-
+                cards.get(threeCards.get(0).getId()).setActive(true);
             } else if (bCard2.getBounds().contains(x, y)) {
-
+                cards.get(threeCards.get(1).getId()).setActive(true);
             } else if (bCard3.getBounds().contains(x, y)) {
-
+                cards.get(threeCards.get(2).getId()).setActive(true);
             }
         }
         if (x >= 1280) {
