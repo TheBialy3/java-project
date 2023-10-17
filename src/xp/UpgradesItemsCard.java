@@ -27,7 +27,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Damage Boost", "All your towers do more Damage", false, -1));
         //ENEMY
         cards.add(new Card(id++, "Greed Is Good", "Killing enemies grands more Gold, but they have More HP", false, -2));
-        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they have More HP", false, -2));
+        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they are Faster", false, -2));
         cards.add(new Card(id++, "True POWER", "All towers deal TRUE damage, but they have More HP", false, -2));
         cards.add(new Card(id++, "All target", "All towers can target All type of enemy, but they have More HP", false, -2));
         //ARCHER

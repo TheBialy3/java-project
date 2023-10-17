@@ -48,7 +48,7 @@ public class TowerManager {
         int imageInRow = 9;
         towerImgs = new BufferedImage[towerNumber];
         for (int i = 0; i < towerNumber; i++) {
-            towerImgs[i] = atlas.getSubimage((0 + i / 9) * tilePixelNumber, (12 + i % 9) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            towerImgs[i] = atlas.getSubimage((0 + i / imageInRow) * tilePixelNumber, (12 + i % imageInRow) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         road = playing.getRoadDirArr();
     }
