@@ -29,18 +29,18 @@ import static helpz.Constants.TowerType.*;
 import static helpz.LoadSave.*;
 
 public class Playing extends GameScene implements SceneMethods {
-private  CardLook cardLook1,cardLook2,cardLook3;
+    private CardLook cardLook1, cardLook2, cardLook3;
     private static int[][] lvl;
     private int[][] road;
     private PlayingBar playingBar;
-    private int mouseX, mouseY, mX, mY,tilePixelNumber=64;
+    private int mouseX, mouseY, mX, mY, tilePixelNumber = 64;
     private EnemyMenager enemyMenager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
     private MyButton bReplay;
     private MyButton bCard1, bCard2, bCard3;
-    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(),logos[]=getLogos();
+    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = getLogos();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
@@ -143,13 +143,17 @@ private  CardLook cardLook1,cardLook2,cardLook3;
         int cardX = 140;
         int cardY = 100;
         int diffCard = 400;
-        logos=getLogos();
-        cardLook1=new CardLook(threeCards.get(0).getName(),threeCards.get(0).getDescription(),logos[threeCards.get(0).getId()],card,cardChoose,cardX,cardY);
-        cardLook2=new CardLook(threeCards.get(1).getName(),threeCards.get(1).getDescription(),logos[threeCards.get(1).getId()],card,cardChoose,cardX,cardY+diffCard);
-        cardLook3=new CardLook(threeCards.get(2).getName(),threeCards.get(2).getDescription(),logos[threeCards.get(2).getId()],card,cardChoose,cardX,cardY+diffCard+diffCard);
+        logos = getLogos();
+        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
+        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
+        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
         cardSelect = true;
-
     }
+
+    private void cardSelected(int cardChosen) {
+        cards.get(threeCards.get(cardChosen).getId()).setActive(true);
+    }
+
 
     private void get3Cards() {
         while (true) {
@@ -185,11 +189,12 @@ private  CardLook cardLook1,cardLook2,cardLook3;
         win = true;
         game.saveGame();
     }
-    private BufferedImage[] getLogos(){
+
+    private BufferedImage[] getLogos() {
         BufferedImage logosAtlas = LoadSave.getSpriteLogos();
-        int logoNr=100;
+        int logoNr = 100;
         BufferedImage logo[] = new BufferedImage[logoNr];
-        for(int i=0;i<logoNr;i++){
+        for (int i = 0; i < logoNr; i++) {
             logo[i] = logosAtlas.getSubimage((0 + i % 10) * tilePixelNumber, (0 + i / 10) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         return logo;
@@ -304,9 +309,9 @@ private  CardLook cardLook1,cardLook2,cardLook3;
         bCard2.draw(g);
         bCard3.draw(g);
 
-        cardLook1.draw(g,bCard1.isMouseOver());
-        cardLook2.draw(g,bCard2.isMouseOver());
-        cardLook3.draw(g,bCard3.isMouseOver());
+        cardLook1.draw(g, bCard1.isMouseOver());
+        cardLook2.draw(g, bCard2.isMouseOver());
+        cardLook3.draw(g, bCard3.isMouseOver());
     }
 
     private void drawBeam(Graphics g) {
@@ -359,17 +364,14 @@ private  CardLook cardLook1,cardLook2,cardLook3;
             if (bReplay.getBounds().contains(x, y)) {
                 resetEverything();
             }
-        }else if(cardSelect){
-                bCard1.setMouseOver(false);
-                bCard2.setMouseOver(false);
-                bCard3.setMouseOver(false);
-                if (bCard1.getBounds().contains(x, y)) {
-                    bCard1.setMouseOver(true);
-                } else if (bCard2.getBounds().contains(x, y)) {
-                    bCard2.setMouseOver(true);
-                } else if (bCard3.getBounds().contains(x, y)) {
-                    bCard3.setMouseOver(true);
-                }
+        } else if (cardSelect) {
+            if (bCard1.getBounds().contains(x, y)) {
+                cardSelected(0);
+            } else if (bCard2.getBounds().contains(x, y)) {
+                cardSelected(1);
+            } else if (bCard3.getBounds().contains(x, y)) {
+                cardSelected(2);
+            }
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -389,6 +391,7 @@ private  CardLook cardLook1,cardLook2,cardLook3;
 
         paused = false;
     }
+
 
     private Tower getTowerAt(int x, int y) {
         return towerManager.getTowerAt(x, y);
@@ -464,11 +467,11 @@ private  CardLook cardLook1,cardLook2,cardLook3;
     public void mousePressed(int x, int y) {
         if (cardSelect) {
             if (bCard1.getBounds().contains(x, y)) {
-                cards.get(threeCards.get(0).getId()).setActive(true);
+                bCard1.setMousePressed(true);
             } else if (bCard2.getBounds().contains(x, y)) {
-                cards.get(threeCards.get(1).getId()).setActive(true);
+                bCard2.setMousePressed(true);
             } else if (bCard3.getBounds().contains(x, y)) {
-                cards.get(threeCards.get(2).getId()).setActive(true);
+                bCard3.setMousePressed(true);
             }
         }
         if (x >= 1280) {
@@ -593,6 +596,9 @@ private  CardLook cardLook1,cardLook2,cardLook3;
         goldTick = 0;
         paused = false;
         beamReset();
+        for (Card card : cards) {
+            card.setActive(false);
+        }
     }
 
     public void setMine(Tower t, PathPoint e) {
