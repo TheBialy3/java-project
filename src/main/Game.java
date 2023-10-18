@@ -69,7 +69,7 @@ public class Game extends JFrame implements Runnable {
                 card.setUnlocked(cardSave.get(card.getId()));
             }
         }catch (Exception e){
-            System.out.println("There is no save file");
+            System.out.println("hmmm");
             CreateSaveFile();
         }
     }

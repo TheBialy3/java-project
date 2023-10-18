@@ -11,6 +11,8 @@ import static helpz.Constants.EnemyType.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import static helpz.Constants.Direction.*;
@@ -23,8 +25,8 @@ public class EnemyMenager {
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
-    private int HPbarWidth = 50, i = 0, tilePixelNumber= 64;
-    private int  ranl = random.nextInt(25),ranr = random.nextInt(25);
+    private int HPbarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
+    private int ranl = random.nextInt(25), ranr = random.nextInt(25);
     private BufferedImage[] enemyEfects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
@@ -48,15 +50,17 @@ public class EnemyMenager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyEfects = new BufferedImage[3];
         for (int i = 0; i < 3; i++) {
-            enemyEfects[i] = atlas.getSubimage(0+i*tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        }}
+            enemyEfects[i] = atlas.getSubimage(0 + i * tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+    }
 
     private void loadEnemyImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         enemyImages = new BufferedImage[9];
         for (int i = 0; i < 9; i++) {
-            enemyImages[i] = atlas.getSubimage(0, (2+i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
-        } }
+            enemyImages[i] = atlas.getSubimage(0, (2 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+    }
 
     public void spawnEnemy(int nextEnemy) {
         addEnemy(nextEnemy);
@@ -86,13 +90,28 @@ public class EnemyMenager {
     }
 
     public void update() {
-        i++;
+        indexOfPoisonAnimation++;
         for (Enemy e : enemies) {
             if (e.isAlive()) {
                 updateEnemyMoveNew(e);
+
             }
         }
+        if (indexOfPoisonAnimation > 150) {
+            enemyReorder();
+            indexOfPoisonAnimation = 0;
+            resetRand();
+        }
     }
+
+    private void enemyReorder() {
+        Collections.sort(enemies, new Comparator<Enemy>(){
+            public int compare(Enemy e1, Enemy e2){
+                return Integer.valueOf((int) e2.getDistancePast()).compareTo((int)e1.getDistancePast());
+            }
+        });
+    }
+
 
     public void resetRand() {
         ranl = random.nextInt(25);
@@ -119,17 +138,13 @@ public class EnemyMenager {
         }
         //efect Poison
         if (e.isPoisoned()) {
-            if((i/8)%4==4) {
-                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((i/5) % 2), (int) e.getY() + 25 - (i / 3), null);
-                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((i/5) % 2), (int) e.getY() + 25 - (((i+75)%150) / 3), null);
-            }else {
-            g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr+((i/5)%4), (int) e.getY() + 25 - (i / 3), null);
-            g.drawImage(enemyEfects[2], (int) e.getX() + ranl+((i/5)%4), (int) e.getY() + 25 - (((i+75)%150) / 3), null);}
-            if (i > 150) {
-                i = 0;
-                resetRand();
+            if ((indexOfPoisonAnimation / 8) % 4 == 4) {
+                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
+                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
+            } else {
+                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
+                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
             }
-
 
         }
     }
@@ -177,16 +192,18 @@ public class EnemyMenager {
         }
         return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
     }
-    public void spawnJuniors(float x, float y, int type) {
-        int porzesuniencie=0;
-        for(Enemy e:enemies){
-            if(e.getEnemyType()==type) {
+
+    public void spawnJuniors(float x, float y, int type,float distancePast) {
+        int porzesuniencie = 0;
+        for (Enemy e : enemies) {
+            if (e.getEnemyType() == type) {
                 if (!e.isAlive()) {
-                    e.reuse(x+porzesuniencie,y+porzesuniencie);
+                    e.reuse(x + porzesuniencie, y + porzesuniencie,distancePast);
                     porzesuniencie++;
                 }
             }
         }
+        enemyReorder();
     }
 
     private void drawHealthBar(Enemy e, Graphics g) {
@@ -194,7 +211,7 @@ public class EnemyMenager {
         g.fillRect((int) e.getX() + 32 - (getNewHealthBar(e) / 2), (int) e.getY() - 10, getNewHealthBar(e), 6);
         getNewHealthBar(e);
         g.setColor(Color.BLACK);
-        g.drawRect((int) e.getX() + 32 - (HPbarWidth / 2), (int) e.getY() - 10,HPbarWidth, 6);
+        g.drawRect((int) e.getX() + 32 - (HPbarWidth / 2), (int) e.getY() - 10, HPbarWidth, 6);
 
     }
 

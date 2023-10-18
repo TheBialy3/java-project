@@ -27,7 +27,7 @@ public abstract class Enemy {
     protected int enemyType, damageType;
     protected int lastDir;
     protected boolean alive=false, poisoned = false;
-    protected float slowPower = 1f;
+    public float slowPower = 1f, distancePast = 0;
     protected boolean revive;
 
 
@@ -71,11 +71,12 @@ public abstract class Enemy {
         return tick;
     }
 
-    public void reuse(float x, float y) {
+    public void reuse(float x, float y,float distancePast) {
         this.x = x;
         this.y = y;
         this.alive = true;
         setStartHealth();
+        this.distancePast=distancePast;
     }
 
     public void killed() {
@@ -122,6 +123,7 @@ public abstract class Enemy {
                 this.y += speed;
                 break;
         }
+        distancePast+=speed;
         updateHitbox();
         if (poisoned) {
             poisonDamage();
@@ -151,10 +153,10 @@ public abstract class Enemy {
             if (enemyType == ORK_ZOMBI) {
                 if (this.revive) {
                     killed();
-                    reuse(this.x, this.y);
+                    reuse(this.x, this.y,distancePast);
                 }
             } else if (enemyType == CAMEL) {
-                enemyMenager.spawnJuniors(this.x, this.y, (this.enemyType + 1));
+                enemyMenager.spawnJuniors(this.x, this.y, (this.enemyType + 1),distancePast);
             }
             enemyMenager.rewardPlayer(enemyType);
             Game.addXp();
@@ -210,6 +212,10 @@ public abstract class Enemy {
         return ID;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public int getEnemyType() {
         return enemyType;
     }
@@ -228,6 +234,14 @@ public abstract class Enemy {
 
     public boolean isPoisoned() {
         return poisoned;
+    }
+
+    public float getDistancePast() {
+        return distancePast;
+    }
+
+    public void setDistancePast(float distancePast) {
+        this.distancePast = distancePast;
     }
 
     public void setLastDir(int newDir) {

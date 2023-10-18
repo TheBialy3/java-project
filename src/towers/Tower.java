@@ -167,6 +167,10 @@ public abstract class Tower {
         return dmg;
     }
 
+    public void setDmg(int dmg) {
+        this.dmg = dmg;
+    }
+
     public float getRange() {
         return range;
     }

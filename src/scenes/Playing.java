@@ -97,16 +97,14 @@ public class Playing extends GameScene implements SceneMethods {
                         passiveIncome();
                         if (isAllEnemyDead()) {
                             if (isThereMoreWaves()) {
-
-                                //start timer or card draw
-                                if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
-
-                                    cardSelectStart();
-
-                                }
                                 waveManager.startWaveTimer();
 
                                 if (isWaveTimerOver()) {
+                                    if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
+
+                                        cardSelectStart();
+
+                                    }
                                     waveManager.increaseWaveIndex();
                                     enemyMenager.getEnemies();
                                     waveManager.resetEnemyIndex();
@@ -144,9 +142,9 @@ public class Playing extends GameScene implements SceneMethods {
         int cardY = 100;
         int diffCard = 400;
         logos = getLogos();
-        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
-        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
-        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
+        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(),threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
+        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(),threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
+        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(),threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
         cardSelect = true;
     }
 
@@ -154,6 +152,7 @@ public class Playing extends GameScene implements SceneMethods {
        System.out.println(threeCards.get(cardChosen).getId());
         switch (threeCards.get(cardChosen).getId()){
             case 0:
+                towerManager.damageUp(10);
             case 1:
             case 2:
             case 3:
@@ -226,6 +225,7 @@ public class Playing extends GameScene implements SceneMethods {
             default:
         }
         cards.get(threeCards.get(cardChosen).getId()).setActive(true);
+        cardSelect=false;
     }
 
 

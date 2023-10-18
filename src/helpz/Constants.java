@@ -234,7 +234,7 @@ public class Constants {
                 case CROSSBOW:
                     return "Crossbow";
                 case MOUSE_FOLLOWS_TOWER:
-                    return "Creep";
+                    return "Mouse Follower";
                 case SNIPER:
                     return "Sniper";
                 case LASER_TOWER:
