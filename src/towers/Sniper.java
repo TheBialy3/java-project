@@ -1,8 +1,10 @@
 package towers;
 
+import managers.TowerManager;
+
 public class Sniper extends Tower {
-    public Sniper(int x, int y, int id, int towerType , int[][] road) {
-        super(x, y, id, towerType,road);
+    public Sniper(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType, towerManager, road);
 
     }
 
@@ -18,7 +20,7 @@ public class Sniper extends Tower {
                 this.addDmg(10);
                 return;
             default:
-                return ;
+                return;
         }
 
     }

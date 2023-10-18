@@ -1,8 +1,10 @@
 package towers;
 
+import managers.TowerManager;
+
 public class BoomTower extends Tower {
-    public BoomTower(int x, int y, int id, int towerType , int[][] road) {
-        super(x, y, id, towerType,road);
+    public BoomTower(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType, towerManager, road);
 
     }
 
@@ -18,7 +20,7 @@ public class BoomTower extends Tower {
                 this.addRange(60);
                 return;
             default:
-                return ;
+                return;
         }
 
     }

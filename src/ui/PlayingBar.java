@@ -3,6 +3,7 @@ package ui;
 
 import helpz.Constants;
 import main.Game;
+import managers.TowerManager;
 import scenes.Playing;
 import towers.*;
 
@@ -15,6 +16,7 @@ public class PlayingBar extends Bar {
 
     private Playing playing;
     private Game game;
+    private TowerManager towerManager;
     private MyButton bMenu, bReset;
     private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
@@ -32,11 +34,12 @@ public class PlayingBar extends Bar {
 
     private int[][] road;
 
-    public PlayingBar(int x, int y, int width, int height, Playing playing, Game game) {
+    public PlayingBar(int x, int y, int width, int height, Playing playing, Game game,TowerManager towerManager) {
         super(x, y, width, height);
         this.playing = playing;
         this.game = game;
         initButtons();
+        this.towerManager=towerManager;
     }
 
     public void resetEvrything() {
@@ -401,35 +404,35 @@ public class PlayingBar extends Bar {
                 if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
                     switch (b.getId()) {
                         case ARCHER:
-                            selectedTower = new Archer(x, y, 0, b.getId(), road);
+                            selectedTower = new Archer(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case CANNON:
-                            selectedTower = new Cannon(x, y, 0, b.getId(), road);
+                            selectedTower = new Cannon(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case FROST_MAGE:
-                            selectedTower = new FrostMage(x, y, 0, b.getId(), road);
+                            selectedTower = new FrostMage(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case MINES_FACTORY:
                             road = playing.getRoadDirArr();
-                            selectedTower = new MineFactory(x, y, 0, b.getId(), road);
+                            selectedTower = new MineFactory(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case POISON_TOWER:
-                            selectedTower = new PoisonTower(x, y, 0, b.getId(), road);
+                            selectedTower = new PoisonTower(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case BOOM_VOLCANO:
-                            selectedTower = new BoomTower(x, y, 0, b.getId(), road);
+                            selectedTower = new BoomTower(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case CROSSBOW:
-                            selectedTower = new Crossbow(x, y, 0, b.getId(), road);
+                            selectedTower = new Crossbow(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case MOUSE_FOLLOWS_TOWER:
-                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), road);
+                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case SNIPER:
-                            selectedTower = new Sniper(x, y, 0, b.getId(), road);
+                            selectedTower = new Sniper(x, y, 0, b.getId(),towerManager, road);
                             break;
                         case LASER_TOWER:
-                            selectedTower = new LaserTower(x, y, 0, b.getId(), road);
+                            selectedTower = new LaserTower(x, y, 0, b.getId(),towerManager, road);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);

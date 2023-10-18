@@ -1,10 +1,12 @@
 package towers;
 
 
+import managers.TowerManager;
+
 public class Archer extends Tower {
 
-    public Archer(int x, int y, int id, int towerType, int[][] road) {
-        super(x, y, id, towerType, road);
+    public Archer(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType,towerManager, road);
     }
 
     public void upgrade(int upgrade) {

@@ -56,11 +56,11 @@ public class Playing extends GameScene implements SceneMethods {
     public Playing(Game game) {
         super(game);
         LoadDefaultLevel();
-        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game);
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         enemyMenager = new EnemyMenager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
+        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game,towerManager);
         initCardButtons();
 
         // xp.UpgradesItemsCard();
@@ -153,6 +153,7 @@ public class Playing extends GameScene implements SceneMethods {
         switch (threeCards.get(cardChosen).getId()){
             case 0:
                 towerManager.damageUp(10);
+                towerManager.setCard0(true);
             case 1:
             case 2:
             case 3:
@@ -585,52 +586,52 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))) {
-                selectedTower = new Archer(1555, 15555, 0, ARCHER, road);
+                selectedTower = new Archer(1555, 15555, 0, ARCHER,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CANNON))) {
-                selectedTower = new Cannon(1555, 15555, 0, CANNON, road);
+                selectedTower = new Cannon(1555, 15555, 0, CANNON,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(FROST_MAGE))) {
-                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE, road);
+                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MINES_FACTORY))) {
-                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY, road);
+                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_T) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(POISON_TOWER))) {
-                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER, road);
+                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_Y) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(BOOM_VOLCANO))) {
-                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO, road);
+                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_A) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CROSSBOW))) {
-                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW, road);
+                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MOUSE_FOLLOWS_TOWER))) {
-                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, road);
+                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(SNIPER))) {
-                selectedTower = new Sniper(1555, 15555, 0, SNIPER, road);
+                selectedTower = new Sniper(1555, 15555, 0, SNIPER,towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_F) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
-                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, road);
+                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER,towerManager, road);
             }
         }
     }

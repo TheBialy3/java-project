@@ -1,8 +1,10 @@
 package towers;
 
+import managers.TowerManager;
+
 public class MineFactory extends Tower {
-    public MineFactory(int x, int y, int id, int towerType , int[][] road) {
-        super(x, y, id, towerType,road);
+    public MineFactory(int x, int y, int id, int towerType , TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType,  towerManager,road);
 
     }
 

@@ -27,6 +27,8 @@ public class TowerManager {
     private PathPoint e;
     private int[][] road;
 
+    private boolean Card0 = false,Card1 = false, Card2 = false, Card3 = false,Card4 = false, Card5 = false, Card6 = false;
+
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -56,35 +58,35 @@ public class TowerManager {
     public void addTower(Tower selectedTower, int x, int y) {
         switch (selectedTower.getTowerType()) {
             case ARCHER:
-                towers.add(new Archer(x, y, towerAmount++, ARCHER, road));
+                towers.add(new Archer(x, y, towerAmount++, ARCHER,this, road));
                 break;
             case CANNON:
-                towers.add(new Cannon(x, y, towerAmount++, CANNON, road));
+                towers.add(new Cannon(x, y, towerAmount++, CANNON, this,road));
                 break;
             case FROST_MAGE:
-                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, road));
+                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE,this, road));
                 break;
             case MINES_FACTORY:
-                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, road));
+                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY,this, road));
                 towers.get(towers.size() - 1).isRoadNextTot();
                 break;
             case POISON_TOWER:
-                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, road));
+                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER,this, road));
                 break;
             case BOOM_VOLCANO:
-                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, road));
+                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO,this, road));
                 break;
             case CROSSBOW:
-                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW, road));
+                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW,this, road));
                 break;
             case MOUSE_FOLLOWS_TOWER:
-                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, road));
+                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, this,road));
                 break;
             case SNIPER:
-                towers.add(new Sniper(x, y, towerAmount++, SNIPER, road));
+                towers.add(new Sniper(x, y, towerAmount++, SNIPER, this,road));
                 break;
             case LASER_TOWER:
-                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, road));
+                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER,this, road));
                 break;
             default:
                 break;
@@ -260,6 +262,61 @@ public class TowerManager {
         towerAmount = 0;
     }
 
+    public void setCard0(boolean card0) {
+        Card0 = card0;
+    }
+
+    public void setCard1(boolean card1) {
+        Card1 = card1;
+    }
+
+    public void setCard2(boolean card2) {
+        Card2 = card2;
+    }
+
+    public void setCard3(boolean card3) {
+        Card3 = card3;
+    }
+
+    public void setCard4(boolean card4) {
+        Card4 = card4;
+    }
+
+    public void setCard5(boolean card5) {
+        Card5 = card5;
+    }
+
+    public void setCard6(boolean card6) {
+        Card6 = card6;
+    }
+
+    public boolean isCard0() {
+        return Card0;
+    }
+
+    public boolean isCard1() {
+        return Card1;
+    }
+
+    public boolean isCard2() {
+        return Card2;
+    }
+
+    public boolean isCard3() {
+        return Card3;
+    }
+
+    public boolean isCard4() {
+        return Card4;
+    }
+
+    public boolean isCard5() {
+        return Card5;
+    }
+
+    public boolean isCard6() {
+        return Card6;
+    }
 
     public void damageUp(int percent) {
         int dmg = 0;
@@ -273,4 +330,5 @@ public class TowerManager {
             }
         }
     }
+
 }
