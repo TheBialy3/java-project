@@ -152,6 +152,7 @@ public class Playing extends GameScene implements SceneMethods {
        System.out.println(threeCards.get(cardChosen).getId());
         switch (threeCards.get(cardChosen).getId()){
             case 0:
+                towerManager.damageUp(10);
             case 1:
             case 2:
             case 3:

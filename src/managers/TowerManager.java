@@ -261,4 +261,16 @@ public class TowerManager {
     }
 
 
+    public void damageUp(int percent) {
+        int dmg = 0;
+        for (Tower t : towers) {
+            dmg = t.getDmg();
+            if (dmg < 10) {
+                t.setDmg(dmg + percent/10);
+            } else {
+                dmg = dmg + dmg * percent / 100;
+                t.setDmg(dmg);
+            }
+        }
+    }
 }
