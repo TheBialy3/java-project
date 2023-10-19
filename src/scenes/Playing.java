@@ -4,7 +4,7 @@ import enemies.Enemy;
 import helpz.Constants;
 import helpz.LoadSave;
 import main.Game;
-import managers.EnemyMenager;
+import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TowerManager;
 import managers.WaveManager;
@@ -34,7 +34,7 @@ public class Playing extends GameScene implements SceneMethods {
     private int[][] road;
     private PlayingBar playingBar;
     private int mouseX, mouseY, mX, mY, tilePixelNumber = 64;
-    private EnemyMenager enemyMenager;
+    private EnemyManager enemyManager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
@@ -58,7 +58,7 @@ public class Playing extends GameScene implements SceneMethods {
         LoadDefaultLevel();
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
-        enemyMenager = new EnemyMenager(this, start, end, waveManager);
+        enemyManager = new EnemyManager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game,towerManager);
         initCardButtons();
@@ -106,7 +106,7 @@ public class Playing extends GameScene implements SceneMethods {
 
                                     }
                                     waveManager.increaseWaveIndex();
-                                    enemyMenager.getEnemies();
+                                    enemyManager.getEnemies();
                                     waveManager.resetEnemyIndex();
 
                                 }
@@ -119,7 +119,7 @@ public class Playing extends GameScene implements SceneMethods {
                         if (isTimeForNewEnemy()) {
                             spawnEnemy();
                         }
-                        enemyMenager.update();
+                        enemyManager.update();
                         towerManager.update();
                         projectileManager.update();
                     }
@@ -155,6 +155,8 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.damageUp(10);
                 towerManager.setCard0(true);
             case 1:
+                towerManager.speedUp(10);
+                towerManager.setCard1(true);
             case 2:
             case 3:
             case 4:
@@ -323,7 +325,7 @@ public class Playing extends GameScene implements SceneMethods {
         if (waveManager.isTheirMoreEnemyInWave()) {
             return false;
         }
-        for (Enemy e : enemyMenager.getEnemies()) {
+        for (Enemy e : enemyManager.getEnemies()) {
             if (e.isAlive()) {
                 return false;
             }
@@ -333,7 +335,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     private void spawnEnemy() {
-        enemyMenager.spawnEnemy(waveManager.getNextEnemy());
+        enemyManager.spawnEnemy(waveManager.getNextEnemy());
     }
 
     private boolean isTimeForNewEnemy() {
@@ -357,7 +359,7 @@ public class Playing extends GameScene implements SceneMethods {
     public void render(Graphics g) {
         drawLevel(g);
 
-        enemyMenager.draw(g);
+        enemyManager.draw(g);
         towerManager.draw(g);
 
         drawSelectedTower(g);
@@ -412,7 +414,7 @@ public class Playing extends GameScene implements SceneMethods {
     private void drawSelectedTower(Graphics g) {
         if (selectedTower != null) {
 
-            g.drawImage(towerManager.getTowerImgs()[selectedTower.getTowerType()], mouseX, mouseY, null);
+            g.drawImage(towerManager.getTowerImg()[selectedTower.getTowerType()], mouseX, mouseY, null);
 
         }
     }
@@ -636,8 +638,8 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    public EnemyMenager getEnemyMenager() {
-        return enemyMenager;
+    public EnemyManager getEnemyMenager() {
+        return enemyManager;
     }
 
     public WaveManager getWaveManager() {
@@ -658,7 +660,7 @@ public class Playing extends GameScene implements SceneMethods {
     public void resetEverything() {
         playingBar.resetEvrything();
         win = false;
-        enemyMenager.reset();
+        enemyManager.reset();
         projectileManager.reset();
         towerManager.reset();
         waveManager.reset();
@@ -685,7 +687,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public int[][] getRoadDirArr() {
-        road = enemyMenager.getRoadDirArr();
+        road = enemyManager.getRoadDirArr();
         return road;
     }
 

@@ -18,7 +18,7 @@ import static helpz.Constants.TowerType.*;
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImgs, upgradeImgs;
+    private BufferedImage[] towerImg, upgradeImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arr = new ArrayList<>();
@@ -27,20 +27,20 @@ public class TowerManager {
     private PathPoint e;
     private int[][] road;
 
-    private boolean Card0 = false,Card1 = false, Card2 = false, Card3 = false,Card4 = false, Card5 = false, Card6 = false;
+    private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false;
 
 
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
-        loadUpgradeImgs();
+        loadUpgradeImg();
     }
 
-    private void loadUpgradeImgs() {
+    private void loadUpgradeImg() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        upgradeImgs = new BufferedImage[4];
+        upgradeImg = new BufferedImage[4];
         for (int i = 0; i < 4; i++) {
-            upgradeImgs[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            upgradeImg[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
 
@@ -48,9 +48,9 @@ public class TowerManager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         int towerNumber = 10;
         int imageInRow = 9;
-        towerImgs = new BufferedImage[towerNumber];
+        towerImg = new BufferedImage[towerNumber];
         for (int i = 0; i < towerNumber; i++) {
-            towerImgs[i] = atlas.getSubimage((0 + i / imageInRow) * tilePixelNumber, (12 + i % imageInRow) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            towerImg[i] = atlas.getSubimage((0 + i / imageInRow) * tilePixelNumber, (12 + i % imageInRow) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         road = playing.getRoadDirArr();
     }
@@ -58,35 +58,35 @@ public class TowerManager {
     public void addTower(Tower selectedTower, int x, int y) {
         switch (selectedTower.getTowerType()) {
             case ARCHER:
-                towers.add(new Archer(x, y, towerAmount++, ARCHER,this, road));
+                towers.add(new Archer(x, y, towerAmount++, ARCHER, this, road));
                 break;
             case CANNON:
-                towers.add(new Cannon(x, y, towerAmount++, CANNON, this,road));
+                towers.add(new Cannon(x, y, towerAmount++, CANNON, this, road));
                 break;
             case FROST_MAGE:
-                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE,this, road));
+                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, this, road));
                 break;
             case MINES_FACTORY:
-                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY,this, road));
+                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, this, road));
                 towers.get(towers.size() - 1).isRoadNextTot();
                 break;
             case POISON_TOWER:
-                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER,this, road));
+                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, this, road));
                 break;
             case BOOM_VOLCANO:
-                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO,this, road));
+                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, this, road));
                 break;
             case CROSSBOW:
-                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW,this, road));
+                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW, this, road));
                 break;
             case MOUSE_FOLLOWS_TOWER:
-                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, this,road));
+                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, this, road));
                 break;
             case SNIPER:
-                towers.add(new Sniper(x, y, towerAmount++, SNIPER, this,road));
+                towers.add(new Sniper(x, y, towerAmount++, SNIPER, this, road));
                 break;
             case LASER_TOWER:
-                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER,this, road));
+                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, this, road));
                 break;
             default:
                 break;
@@ -109,9 +109,9 @@ public class TowerManager {
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
             } else if (t.getTowerType() == BOOM_VOLCANO) {
-                if (t.isCooldownOver()) {
-                    hurtAllEnemysIfClose(t);
-                    t.resetCooldown();
+                if (t.isCoolDownOver()) {
+                    hurtAllEnemyIfClose(t);
+                    t.resetCoolDown();
                 }
             } else {
                 attackEnemyIfClose(t);
@@ -120,7 +120,7 @@ public class TowerManager {
     }
 
 
-    private void hurtAllEnemysIfClose(Tower t) {
+    private void hurtAllEnemyIfClose(Tower t) {
         for (Enemy e : playing.getEnemyMenager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
@@ -138,8 +138,6 @@ public class TowerManager {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
                     e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
-                } else {
-                    //nothing
                 }
             }
         }
@@ -148,24 +146,26 @@ public class TowerManager {
 
 
     private void attackEnemyIfClose(Tower t) {
-        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
-            if (e.isAlive()) {
-                if (isEnemyInRange(t, e)) {
-                    if (t.isCooldownOver()) {
-                        if (t.getTowerType() == SNIPER) {
-                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                        } else if (t.getTowerType() == LASER_TOWER) {
-                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                            playing.beamEnemy(t, e);
-                        } else {
-                            playing.shootEnemy(t, e);
+        try {
+            for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+                if (e.isAlive()) {
+                    if (isEnemyInRange(t, e)) {
+                        if (t.isCoolDownOver()) {
+                            if (t.getTowerType() == SNIPER) {
+                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                            } else if (t.getTowerType() == LASER_TOWER) {
+                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                playing.beamEnemy(t, e);
+                            } else {
+                                playing.shootEnemy(t, e);
+                            }
+                            t.resetCoolDown();
                         }
-                        t.resetCooldown();
                     }
-                } else {
-                    //nothing
                 }
             }
+        } catch (Exception e) {
+            System.out.println("ConcurrentModificationException");
         }
     }
 
@@ -173,7 +173,7 @@ public class TowerManager {
         int a = t.arrSize();
         if (a != 0) {
             if (!playing.isAllEnemyDead()) {
-                if (t.isCooldownOver()) {
+                if (t.isCoolDownOver()) {
                     for (int mineNumber = 2; mineNumber >= 0; mineNumber--) {
                         arr = t.getArr();
                         ran = random.nextInt(a);
@@ -213,8 +213,9 @@ public class TowerManager {
                         }
 
 
-                    playing.setMine(t, e);}
-                    t.resetCooldown();
+                        playing.setMine(t, e);
+                    }
+                    t.resetCoolDown();
                 }
             }
         } else {
@@ -230,7 +231,7 @@ public class TowerManager {
 
     public void draw(Graphics g) {
         for (Tower t : towers) {
-            g.drawImage(towerImgs[t.getTowerType()], t.getX(), t.getY(), null);
+            g.drawImage(towerImg[t.getTowerType()], t.getX(), t.getY(), null);
             if (t.getTowerType() == FROST_MAGE) {
                 g.setColor(new Color(0, 254, 255, 38));
                 g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
@@ -238,12 +239,12 @@ public class TowerManager {
         }
     }
 
-    public BufferedImage[] getTowerImgs() {
-        return towerImgs;
+    public BufferedImage[] getTowerImg() {
+        return towerImg;
     }
 
-    public BufferedImage[] getUpgradeImgs() {
-        return upgradeImgs;
+    public BufferedImage[] getUpgradeImg() {
+        return upgradeImg;
     }
 
     public Tower getTowerAt(int x, int y) {
@@ -323,10 +324,28 @@ public class TowerManager {
         for (Tower t : towers) {
             dmg = t.getDmg();
             if (dmg < 10) {
-                t.setDmg(dmg + percent/10);
+                t.setDmg(dmg + percent / 10);
             } else {
                 dmg = dmg + dmg * percent / 100;
                 t.setDmg(dmg);
+            }
+        }
+    }
+
+    public void speedUp(int percent) {
+        float coolDown = 0;
+        for (Tower t : towers) {
+            coolDown = t.getCoolDown();
+            if (coolDown < 10) {
+                int dmg = t.getDmg();
+                if (dmg < 10) {
+                    t.setDmg(dmg+  percent / 10);
+                } else {
+                    t.setDmg(dmg + dmg * percent / 100);
+                }
+            } else {
+                coolDown = coolDown * percent / 100;
+                t.reduceCoolDown(coolDown);
             }
         }
     }

@@ -174,9 +174,9 @@ public class PlayingBar extends Bar {
             g.setColor(new Color(45, 45, 45, 109));
             g.fillRect(1301, 1000, 64, 64);
             if (displayedTower == null) {
-                g.drawImage(playing.getTowerManager().getTowerImgs()[towerCostId], 1301, 1000, 64, 64, null);
+                g.drawImage(playing.getTowerManager().getTowerImg()[towerCostId], 1301, 1000, 64, 64, null);
             } else {
-                g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 1301, 1000, 64, 64, null);
+                g.drawImage(playing.getTowerManager().getTowerImg()[displayedTower.getTowerType()], 1301, 1000, 64, 64, null);
             }
             g.setFont(new Font("Serif", Font.BOLD, 20));
             g.setColor(new Color(15, 15, 15));
@@ -187,7 +187,7 @@ public class PlayingBar extends Bar {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(towerCostId) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
-                    g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCooldown(towerCostId), 1375, 1078);
+                    g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCoolDown(towerCostId), 1375, 1078);
                 }
             } else {
                 g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
@@ -196,7 +196,7 @@ public class PlayingBar extends Bar {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType()) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
-                    g.drawString("AS:" + 60 / displayedTower.getCooldown(), 1375, 1078);
+                    g.drawString("AS:" + 60 / displayedTower.getCoolDown(), 1375, 1078);
                 }
             }
             if (displayedTower != null) {
@@ -275,7 +275,7 @@ public class PlayingBar extends Bar {
             g.fillRect(710, 1000, 64, 64);
             g.setColor(new Color(15, 15, 15));
             g.drawRect(710, 1000, 64, 64);
-            g.drawImage(playing.getTowerManager().getTowerImgs()[displayedTower.getTowerType()], 710, 1000, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getTowerImg()[displayedTower.getTowerType()], 710, 1000, 64, 64, null);
             g.setFont(new Font("Serif", Font.BOLD, 30));
             String text;
             if (bUpgrade1.isMouseOver()) {
@@ -307,7 +307,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1301, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 1)], 1301, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImg()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 1)], 1301, 1095, 64, 64, null);
         }
         if (!displayedTower.isUpgrade2Active()) {
             if (!isEnoughGold(costUp2)) {
@@ -316,7 +316,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1376, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 2)], 1376, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImg()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 2)], 1376, 1095, 64, 64, null);
         }
         if (!displayedTower.isUpgrade3Active()) {
             if (!isEnoughGold(costUp3)) {
@@ -325,7 +325,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(3, 132, 0));
             }
             g.fillRect(1451, 1095, 64, 64);
-            g.drawImage(playing.getTowerManager().getUpgradeImgs()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 3)], 1451, 1095, 64, 64, null);
+            g.drawImage(playing.getTowerManager().getUpgradeImg()[Constants.TowerType.getUpgradeTowerImage(displayedTower.getTowerType(), 3)], 1451, 1095, 64, 64, null);
         }
     }
 
@@ -348,7 +348,7 @@ public class PlayingBar extends Bar {
                 g.setColor(new Color(171, 0, 0));
             }
             g.fillRect(b.x, b.y, b.width, b.height);
-            g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], b.x, b.y, b.width, b.height, null);
+            g.drawImage(playing.getTowerManager().getTowerImg()[b.getId()], b.x, b.y, b.width, b.height, null);
             drawButtonFeedback(g, b);
         }
     }

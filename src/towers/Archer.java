@@ -12,7 +12,7 @@ public class Archer extends Tower {
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(15);
+                this.reduceCoolDown(15);
                 return;
             case 2:
                 this.addDmg(5);

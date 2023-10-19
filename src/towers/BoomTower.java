@@ -11,7 +11,7 @@ public class BoomTower extends Tower {
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(10);
+                this.reduceCoolDown(10);
                 return;
             case 2:
                 this.addDmg(5);

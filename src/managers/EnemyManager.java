@@ -18,27 +18,27 @@ import java.util.Random;
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.ORC;
 
-public class EnemyMenager {
+public class EnemyManager {
 
     private Random random = new Random();
     private Playing playing;
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
-    private int HPbarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
-    private int ranl = random.nextInt(25), ranr = random.nextInt(25);
-    private BufferedImage[] enemyEfects;
+    private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
+    private int ranL = random.nextInt(25), ranR = random.nextInt(25);
+    private BufferedImage[] enemyEffects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
 
-    public EnemyMenager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
+    public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
         this.waveManager = waveManager;
         this.playing = playing;
         this.start = start;
         this.end = end;
         loadRoadDirArr();
         loadEnemyImages();
-        loadEfectsImages();
+        loadEffectsImages();
 
     }
 
@@ -46,11 +46,11 @@ public class EnemyMenager {
         roadDirArr = LoadSave.GetLevelDir();
     }
 
-    private void loadEfectsImages() {
+    private void loadEffectsImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyEfects = new BufferedImage[3];
+        enemyEffects = new BufferedImage[3];
         for (int i = 0; i < 3; i++) {
-            enemyEfects[i] = atlas.getSubimage(0 + i * tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            enemyEffects[i] = atlas.getSubimage(0 + i * tilePixelNumber, 22 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
 
@@ -114,36 +114,38 @@ public class EnemyMenager {
 
 
     public void resetRand() {
-        ranl = random.nextInt(25);
-        ranr = random.nextInt(25);
+        ranL = random.nextInt(25);
+        ranR = random.nextInt(25);
     }
 
     public void draw(Graphics g) {
-        for (Enemy e : enemies) {
+        try{for (Enemy e : enemies) {
             if (e.isAlive()) {
                 drawEnemy(e, g);
                 drawHealthBar(e, g);
-                drawEfects(e, g);
+                drawEffects(e, g);
             }
+        }}catch (Exception e){
+            System.out.println("ConcurrentModificationException draw");
         }
     }
 
-    private void drawEfects(Enemy e, Graphics g) {
+    private void drawEffects(Enemy e, Graphics g) {
 
         if (e.isSlowd()) {
-            g.drawImage(enemyEfects[1], (int) e.getX(), (int) e.getY(), null);
+            g.drawImage(enemyEffects[1], (int) e.getX(), (int) e.getY(), null);
         }
         if (e.doesRevive()) {
-            g.drawImage(enemyEfects[0], (int) e.getX() - 2, (int) e.getY() - 53, null);
+            g.drawImage(enemyEffects[0], (int) e.getX() - 2, (int) e.getY() - 53, null);
         }
-        //efect Poison
+        //effect Poison
         if (e.isPoisoned()) {
             if ((indexOfPoisonAnimation / 8) % 4 == 4) {
-                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
-                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
+                g.drawImage(enemyEffects[2], (int) e.getX() - 26 + ranR + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
+                g.drawImage(enemyEffects[2], (int) e.getX() + ranL + ((indexOfPoisonAnimation / 5) % 2), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
             } else {
-                g.drawImage(enemyEfects[2], (int) e.getX() - 26 + ranr + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
-                g.drawImage(enemyEfects[2], (int) e.getX() + ranl + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
+                g.drawImage(enemyEffects[2], (int) e.getX() - 26 + ranR + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (indexOfPoisonAnimation / 3), null);
+                g.drawImage(enemyEffects[2], (int) e.getX() + ranL + ((indexOfPoisonAnimation / 5) % 4), (int) e.getY() + 25 - (((indexOfPoisonAnimation + 75) % 150) / 3), null);
             }
 
         }
@@ -194,12 +196,12 @@ public class EnemyMenager {
     }
 
     public void spawnJuniors(float x, float y, int type,float distancePast) {
-        int porzesuniencie = 0;
+        int shift = 0;
         for (Enemy e : enemies) {
             if (e.getEnemyType() == type) {
                 if (!e.isAlive()) {
-                    e.reuse(x + porzesuniencie, y + porzesuniencie,distancePast);
-                    porzesuniencie++;
+                    e.reuse(x + shift, y + shift,distancePast);
+                    shift++;
                 }
             }
         }
@@ -211,12 +213,12 @@ public class EnemyMenager {
         g.fillRect((int) e.getX() + 32 - (getNewHealthBar(e) / 2), (int) e.getY() - 10, getNewHealthBar(e), 6);
         getNewHealthBar(e);
         g.setColor(Color.BLACK);
-        g.drawRect((int) e.getX() + 32 - (HPbarWidth / 2), (int) e.getY() - 10, HPbarWidth, 6);
+        g.drawRect((int) e.getX() + 32 - (HPBarWidth / 2), (int) e.getY() - 10, HPBarWidth, 6);
 
     }
 
     private int getNewHealthBar(Enemy e) {
-        return (int) (HPbarWidth * e.getHealthBar());
+        return (int) (HPBarWidth * e.getHealthBar());
     }
 
     public void drawEnemy(Enemy e, Graphics g) {

@@ -316,7 +316,7 @@ public class Constants {
             }
         }
 
-        public static float getDefaultCooldown(int towerType) {
+        public static float getDefaultCoolDown(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return 30;
@@ -598,7 +598,7 @@ public class Constants {
             }
         }
 
-        public static int getDefaulDuration(int towerType) {
+        public static int getDuration(int towerType) {
             if (isSlow(towerType)) {
                 switch (towerType) {
                     case FROST_MAGE:

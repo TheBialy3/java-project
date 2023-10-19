@@ -11,13 +11,13 @@ public class Crossbow  extends Tower {
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(5);
+                this.reduceCoolDown(5);
                 return;
             case 2:
                 this.addDmg(5);
                 return;
             case 3:
-                this.reduceCooldown(10);
+                this.reduceCoolDown(10);
                 return;
             default:
                 return ;

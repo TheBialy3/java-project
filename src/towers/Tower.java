@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public abstract class Tower {
 
     private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
-    private float range, cooldown;
+    private float range, coolDown;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
@@ -26,14 +26,14 @@ public abstract class Tower {
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        this.towerManager=towerManager;
         setDefaultDmg();
         setDefaultRange();
-        setDefaultCooldown();
+        setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
-        this.towerManager=towerManager;
         this.road = road;
         if (Constants.TowerType.isDOT(towerType)) {
-            duration = Constants.TowerType.getDefaulDuration(towerType);
+            duration = Constants.TowerType.getDuration(towerType);
         }
     }
 
@@ -53,16 +53,23 @@ public abstract class Tower {
         this.worthGold += worthGold;
     }
 
-    public boolean isCooldownOver() {
-        return cdTick >= cooldown;
+    public boolean isCoolDownOver() {
+        return cdTick >= coolDown;
     }
 
-    public void resetCooldown() {
+    public void resetCoolDown() {
         cdTick = 0;
     }
 
-    private void setDefaultCooldown() {
-        cooldown = Constants.TowerType.getDefaultCooldown(towerType);
+    private void setDefaultCoolDown() {
+        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
+        if(towerManager.isCard1()){
+            if (coolDown < 10) {
+                dmg=(dmg +1);
+            } else {
+                coolDown = coolDown - coolDown * 10/100;
+            }
+        }
     }
 
     private void setDefaultRange() {
@@ -72,7 +79,11 @@ public abstract class Tower {
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
         if(towerManager.isCard0()){
-            dmg = Constants.TowerType.getDefaultDmg(towerType);
+            if (dmg < 10) {
+                dmg=(dmg +1);
+            } else {
+                dmg = dmg + dmg * 10/100;
+            }
         }
     }
 
@@ -184,8 +195,8 @@ public abstract class Tower {
         return range;
     }
 
-    public float getCooldown() {
-        return cooldown;
+    public float getCoolDown() {
+        return coolDown;
     }
 
     public int getDuration() {
@@ -196,8 +207,8 @@ public abstract class Tower {
         this.duration += duration;
     }
 
-    public void reduceCooldown(float cooldown) {
-        this.cooldown -= cooldown;
+    public void reduceCoolDown(float cooldown) {
+        this.coolDown -= cooldown;
     }
 
     public void addRange(float range) {
