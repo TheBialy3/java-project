@@ -1,17 +1,18 @@
 package towers;
 
 import helpz.Constants;
+import managers.TowerManager;
 
 import java.util.ArrayList;
 
 public abstract class Tower {
 
     private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
-    private float range, cooldown;
+    private float range, coolDown;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
-    private boolean U1 = false, U2 = false, U3 = false;
-
+    private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
+    private TowerManager towerManager;
 
     //upgrades
     public boolean AFTERSHOCK = false;
@@ -20,20 +21,23 @@ public abstract class Tower {
     public boolean RANGE_BOOST = false;
 
 
-    public Tower(int x, int y, int id, int towerType, int[][] road) {
+    public Tower(int x, int y, int id, int towerType,TowerManager towerManager, int[][] road) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        this.towerManager=towerManager;
         setDefaultDmg();
         setDefaultRange();
-        setDefaultCooldown();
+        setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
         if (Constants.TowerType.isDOT(towerType)) {
-            duration = Constants.TowerType.getDefaulDuration(towerType);
+            duration = Constants.TowerType.getDuration(towerType);
         }
     }
+
+
 
     public void update() {
         cdTick++;
@@ -43,20 +47,29 @@ public abstract class Tower {
         return worthGold;
     }
 
+
+
     public void updateTowerWorthGold(int worthGold) {
         this.worthGold += worthGold;
     }
 
-    public boolean isCooldownOver() {
-        return cdTick >= cooldown;
+    public boolean isCoolDownOver() {
+        return cdTick >= coolDown;
     }
 
-    public void resetCooldown() {
+    public void resetCoolDown() {
         cdTick = 0;
     }
 
-    private void setDefaultCooldown() {
-        cooldown = Constants.TowerType.getDefaultCooldown(towerType);
+    private void setDefaultCoolDown() {
+        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
+        if(towerManager.isCard1()){
+            if (coolDown < 10) {
+                dmg=(dmg +1);
+            } else {
+                coolDown = coolDown - coolDown * 10/100;
+            }
+        }
     }
 
     private void setDefaultRange() {
@@ -65,6 +78,13 @@ public abstract class Tower {
 
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
+        if(towerManager.isCard0()){
+            if (dmg < 10) {
+                dmg=(dmg +1);
+            } else {
+                dmg = dmg + dmg * 10/100;
+            }
+        }
     }
 
     public int getX() {
@@ -175,8 +195,8 @@ public abstract class Tower {
         return range;
     }
 
-    public float getCooldown() {
-        return cooldown;
+    public float getCoolDown() {
+        return coolDown;
     }
 
     public int getDuration() {
@@ -187,8 +207,8 @@ public abstract class Tower {
         this.duration += duration;
     }
 
-    public void reduceCooldown(float cooldown) {
-        this.cooldown -= cooldown;
+    public void reduceCoolDown(float cooldown) {
+        this.coolDown -= cooldown;
     }
 
     public void addRange(float range) {
@@ -200,19 +220,19 @@ public abstract class Tower {
     }
 
     public boolean isUpgrade1Active() {
-        return U1;
+        return Upgrade1;
     }
 
     public boolean isUpgrade2Active() {
-        return U2;
+        return Upgrade2;
     }
 
     public boolean isUpgrade3Active() {
-        return U3;
+        return Upgrade3;
     }
 
     public void Upgrade1Activate() {
-        if (!U1) {
+        if (!Upgrade1) {
             if (this instanceof Archer) {
                 ((Archer) this).upgrade(1);
             } else if (this instanceof Cannon) {
@@ -238,11 +258,11 @@ public abstract class Tower {
             }
 
         }
-        U1 = true;
+        Upgrade1 = true;
     }
 
     public void Upgrade2Activate() {
-        if (!U2) {
+        if (!Upgrade2) {
 
             if (this instanceof Archer) {
                 ((Archer) this).upgrade(2);
@@ -268,11 +288,11 @@ public abstract class Tower {
 //                ((BoomTower) this).upgrade(1);
             }
         }
-        U2 = true;
+        Upgrade2 = true;
     }
 
     public void Upgrade3Activate() {
-        if (!U3) {
+        if (!Upgrade3) {
 
             if (this instanceof Archer) {
                 ((Archer) this).upgrade(3);
@@ -298,7 +318,7 @@ public abstract class Tower {
 //                ((BoomTower) this).upgrade(1);
             }
         }
-        U3 = true;
+        Upgrade3 = true;
     }
 
     public boolean isAFTERSHOCK() {

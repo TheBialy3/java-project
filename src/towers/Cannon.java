@@ -1,14 +1,16 @@
 package towers;
 
+import managers.TowerManager;
+
 public class Cannon extends Tower {
-    public Cannon(int x, int y, int id, int towerType, int[][] road) {
-        super(x, y, id, towerType, road);
+    public Cannon(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType, towerManager, road);
     }
 
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(15);
+                this.reduceCoolDown(15);
                 return;
             case 2:
                 this.addDmg(5);

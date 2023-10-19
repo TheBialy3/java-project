@@ -1,21 +1,23 @@
 package towers;
 
+import managers.TowerManager;
+
 public class MauseFollowsTower extends Tower {
-    public MauseFollowsTower(int x, int y, int id, int towerType , int[][] road) {
-        super(x, y, id, towerType,road);
+    public MauseFollowsTower(int x, int y, int id, int towerType , TowerManager towerManager, int[][] road) {
+        super(x, y, id, towerType,  towerManager,road);
 
     }
 
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCooldown(10);
+                this.reduceCoolDown(10);
                 return;
             case 2:
                 this.addDmg(5);
                 return;
             case 3:
-                this.reduceCooldown(5);
+                this.reduceCoolDown(5);
                 return;
             default:
                 return ;

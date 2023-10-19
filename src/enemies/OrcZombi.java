@@ -1,6 +1,6 @@
 package enemies;
 
-import managers.EnemyMenager;
+import managers.EnemyManager;
 
 import static helpz.Constants.EnemyType.*;
 
@@ -9,8 +9,8 @@ import managers.WaveManager;
 
 public class OrcZombi extends Enemy{
 
-    public OrcZombi(float x, float y, int ID, EnemyMenager enemyMenager, WaveManager waveManager) {
-        super(x, y, ID, ORK_ZOMBI, enemyMenager, waveManager);
+    public OrcZombi(float x, float y, int ID, EnemyManager enemyManager, WaveManager waveManager) {
+        super(x, y, ID, ORK_ZOMBI, enemyManager, waveManager);
     }
 
 

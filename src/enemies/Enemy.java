@@ -2,7 +2,7 @@ package enemies;
 
 import helpz.Constants;
 import main.Game;
-import managers.EnemyMenager;
+import managers.EnemyManager;
 import managers.WaveManager;
 
 
@@ -16,7 +16,7 @@ public abstract class Enemy {
 
     private int tick = 0;
 
-    protected EnemyMenager enemyMenager;
+    protected EnemyManager enemyManager;
     protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
@@ -31,12 +31,12 @@ public abstract class Enemy {
     protected boolean revive;
 
 
-    public Enemy(float x, float y, int ID, int enemyType, EnemyMenager enemyMenager, WaveManager waveManager) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
-        this.enemyMenager = enemyMenager;
+        this.enemyManager = enemyManager;
         this.waveManager = waveManager;
         bounds = new Rectangle((int) x, (int) y, 64, 64);
         lastDir = -1;
@@ -156,9 +156,9 @@ public abstract class Enemy {
                     reuse(this.x, this.y,distancePast);
                 }
             } else if (enemyType == CAMEL) {
-                enemyMenager.spawnJuniors(this.x, this.y, (this.enemyType + 1),distancePast);
+                enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1),distancePast);
             }
-            enemyMenager.rewardPlayer(enemyType);
+            enemyManager.rewardPlayer(enemyType);
             Game.addXp();
         }
     }
