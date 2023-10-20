@@ -161,6 +161,8 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.rangeUp(10);
                 towerManager.setCard2(true);
             case 3:
+                towerManager.upgradesTrue(10);
+                towerManager.setCard3(true);
             case 4:
             case 5:
             case 6:

@@ -35,6 +35,12 @@ public abstract class Tower {
         if (Constants.TowerType.isDOT(towerType)) {
             duration = Constants.TowerType.getDuration(towerType);
         }
+        if(this.towerManager.isCard3()){
+            Upgrade1Activate();
+            Upgrade2Activate();
+            Upgrade3Activate();
+        }
+
     }
 
 

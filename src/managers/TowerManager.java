@@ -359,4 +359,12 @@ public class TowerManager {
 
         }
     }
+
+    public void upgradesTrue(int i) {
+        for (Tower t : towers) {
+            t.isUpgrade1Active();
+            t.isUpgrade2Active();
+            t.isUpgrade3Active();
+        }
+    }
 }
