@@ -74,6 +74,9 @@ public abstract class Tower {
 
     private void setDefaultRange() {
         range = Constants.TowerType.getDefaultRange(towerType);
+        if(towerManager.isCard2()){
+            range = range + range * 10/100;
+        }
     }
 
     private void setDefaultDmg() {
@@ -193,6 +196,10 @@ public abstract class Tower {
 
     public float getRange() {
         return range;
+    }
+
+    public void setRange(float range) {
+        this.range = range;
     }
 
     public float getCoolDown() {
@@ -321,35 +328,5 @@ public abstract class Tower {
         Upgrade3 = true;
     }
 
-    public boolean isAFTERSHOCK() {
-        return AFTERSHOCK;
-    }
 
-    public void setAFTERSHOCK(boolean AFTERSHOCK) {
-        this.AFTERSHOCK = AFTERSHOCK;
-    }
-
-    public boolean isATTACK_SPEED_BOOST() {
-        return ATTACK_SPEED_BOOST;
-    }
-
-    public void setATTACK_SPEED_BOOST(boolean ATTACK_SPEED_BOOST) {
-        this.ATTACK_SPEED_BOOST = ATTACK_SPEED_BOOST;
-    }
-
-    public boolean isATTACK_DAMAGE_BOOST() {
-        return ATTACK_DAMAGE_BOOST;
-    }
-
-    public void setATTACK_DAMAGE_BOOST(boolean ATTACK_DAMAGE_BOOST) {
-        this.ATTACK_DAMAGE_BOOST = ATTACK_DAMAGE_BOOST;
-    }
-
-    public boolean isRANGE_BOOST() {
-        return RANGE_BOOST;
-    }
-
-    public void setRANGE_BOOST(boolean RANGE_BOOST) {
-        this.RANGE_BOOST = RANGE_BOOST;
-    }
 }

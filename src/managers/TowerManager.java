@@ -121,7 +121,7 @@ public class TowerManager {
 
 
     private void hurtAllEnemyIfClose(Tower t) {
-        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
                     e.hurt(getDefaultDmg(t.getTowerType()), getDmgType(t.getTowerType()));
@@ -134,7 +134,7 @@ public class TowerManager {
 
 
     private void slowEnemyIfClose(Tower t) {
-        for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
                     e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
@@ -147,7 +147,7 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         try {
-            for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+            for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
                     if (isEnemyInRange(t, e)) {
                         if (t.isCoolDownOver()) {
@@ -350,4 +350,13 @@ public class TowerManager {
         }
     }
 
+    public void rangeUp(int percent) {
+        float range = 0;
+        for (Tower t : towers) {
+            range = t.getRange();
+            range =range+ range * percent / 100;
+                t.setRange(range);
+
+        }
+    }
 }

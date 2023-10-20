@@ -158,6 +158,8 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.speedUp(10);
                 towerManager.setCard1(true);
             case 2:
+                towerManager.rangeUp(10);
+                towerManager.setCard2(true);
             case 3:
             case 4:
             case 5:
@@ -638,7 +640,7 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    public EnemyManager getEnemyMenager() {
+    public EnemyManager getEnemyManager() {
         return enemyManager;
     }
 
