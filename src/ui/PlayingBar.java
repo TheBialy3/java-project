@@ -144,7 +144,7 @@ public class PlayingBar extends Bar {
 
     private void drawEnemisLeftInfo(Graphics g) {
         g.setColor(new Color(9, 255, 255));
-        int currentWave = playing.getEnemyMenager().getAmountOfAliveEnemies();
+        int currentWave = playing.getEnemyManager().getAmountOfAliveEnemies();
         g.drawString("Enemies alive:" + currentWave, 1285, 1250);
     }
 

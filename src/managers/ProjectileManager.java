@@ -182,11 +182,11 @@ public class ProjectileManager {
 
     private boolean isProjHitingEnemy(Projectile p) {
         if (p.isActive()) {
-            for (Enemy e : playing.getEnemyMenager().getEnemies()) {
+            for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
                     if (e.getBounds().contains(p.getPos())) {
                         if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
-                            explodeOnEnemys(p, playing.getEnemyMenager().getEnemies());
+                            explodeOnEnemys(p, playing.getEnemyManager().getEnemies());
                         } else {
                             e.hurt(p.getDmg(),p.getDamageType());
                         }
