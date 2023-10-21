@@ -20,7 +20,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "More Damage", "All your towers do more Damage", true, -1));
         cards.add(new Card(id++, "More Speed", "All your towers gets more Attack Speed", true, -1));
         cards.add(new Card(id++, "More Range", "All your towers gets more Range", true, -1));
-        cards.add(new Card(id++, "Towers Upgrade", "All your towers gets all 3 upgrades", false, -1));
+        cards.add(new Card(id++, "Towers Upgrade", "All your towers gets all 3 upgrades", true, -1));
         cards.add(new Card(id++, "Attack Speed Boost", "All your towers have Attack Speed Boosted", false, -1));
         cards.add(new Card(id++, "Longer duration", "All your towers that do Damage over time (DOT) do it longer", false, -1));
         cards.add(new Card(id++, "Damage Boost", "All your towers do more Damage", false, -1));
