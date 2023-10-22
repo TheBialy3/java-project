@@ -151,7 +151,7 @@ public class Playing extends GameScene implements SceneMethods {
     private void cardSelected(int cardChosen) {
        System.out.println(threeCards.get(cardChosen).getId());
         switch (threeCards.get(cardChosen).getId()){
-            case 0:
+            case 0: //for all
                 towerManager.damageUp(10);
                 towerManager.setCard0(true);
             case 1:
@@ -161,15 +161,25 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.rangeUp(10);
                 towerManager.setCard2(true);
             case 3:
-                towerManager.upgradesTrue(10);
+                towerManager.upgradesTrue();
                 towerManager.setCard3(true);
             case 4:
+                towerManager.speedUp(10);
+                towerManager.setCard4(true);
             case 5:
+                towerManager.damageUp(10);
+                towerManager.setCard5(true);
             case 6:
-            case 7:
+                towerManager.durationUp(10);
+                towerManager.setCard6(true);
+            case 7:   //ENEMY
+                enemyManager.setCard7(true);
             case 8:
+                enemyManager.setCard8(true);
             case 9:
+                enemyManager.setCard9(true);
             case 10:
+                enemyManager.setCard10(true);
             case 11:
             case 12:
             case 13:
@@ -284,6 +294,12 @@ public class Playing extends GameScene implements SceneMethods {
     private void passiveIncome() {
         goldTick++;
         if (goldTick % goldTickLimit == 0) {
+            if(enemyManager.isCard9()){
+                passiveIncomeGold*=2;
+            }
+            if(enemyManager.isCard10()){
+                passiveIncomeGold*=2;
+            }
             playingBar.earnGold(passiveIncomeGold);
         }
     }
@@ -574,8 +590,8 @@ public class Playing extends GameScene implements SceneMethods {
         playingBar.earnGold(endWaveGold);
     }
 
-    public void rewardPlayer(int enemyType) {
-        playingBar.earnGold(Constants.EnemyType.getGoldWorth(enemyType));
+    public void rewardPlayer(int earnGold) {
+        playingBar.earnGold(earnGold);
     }
 
     public TowerManager getTowerManager() {

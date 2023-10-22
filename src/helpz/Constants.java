@@ -81,7 +81,7 @@ public class Constants {
 
     public static class EnemyType {
         public static final int ORC = 0;
-        public static final int ORK_ZOMBI = 1;
+        public static final int ORK_ZOMBIE = 1;
         public static final int TENTACLE = 2;
         public static final int SLIME = 3;
         public static final int CAMEL = 4;
@@ -93,7 +93,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 0.35f;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return 0.3f;
                 case TENTACLE:
                     return 0.4f;
@@ -116,7 +116,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return WALK;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return WALK;
                 case TENTACLE:
                     return WALK;
@@ -135,7 +135,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 300;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return 200;
                 case TENTACLE:
                     return 150;
@@ -154,7 +154,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 0;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return 20;
                 case TENTACLE:
                     return 80;
@@ -172,7 +172,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 40;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return 20;
                 case TENTACLE:
                     return 0;
@@ -190,7 +190,7 @@ public class Constants {
             switch (enemyType) {
                 case ORC:
                     return 10;
-                case ORK_ZOMBI:
+                case ORK_ZOMBIE:
                     return 7;
                 case TENTACLE:
                     return 15;

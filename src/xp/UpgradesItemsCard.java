@@ -16,20 +16,22 @@ public class UpgradesItemsCard {
 
     public void createUpgrades() {
         int id = 0;
-        //for all
+        //for all id0↓
         cards.add(new Card(id++, "More Damage", "All your towers do more Damage", true, -1));
         cards.add(new Card(id++, "More Speed", "All your towers gets more Attack Speed", true, -1));
         cards.add(new Card(id++, "More Range", "All your towers gets more Range", true, -1));
         cards.add(new Card(id++, "Towers Upgrade", "All your towers gets all 3 upgrades", true, -1));
-        cards.add(new Card(id++, "Attack Speed Boost", "All your towers have Attack Speed Boosted", false, -1));
-        cards.add(new Card(id++, "Longer duration", "All your towers that do Damage over time (DOT) do it longer", false, -1));
-        cards.add(new Card(id++, "Damage Boost", "All your towers do more Damage", false, -1));
-        //ENEMY
-        cards.add(new Card(id++, "Greed Is Good", "Killing enemies grands more Gold, but they have More HP", false, -2));
-        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they are Faster", false, -2));
-        cards.add(new Card(id++, "false POWER", "All towers deal false damage, but they have More HP", false, -2));
+        cards.add(new Card(id++, "Attack Speed Boost", "All your towers have Attack Speed Boosted", true, -1));
+        cards.add(new Card(id++, "Damage Boost", "All your towers do more Damage", true, -1));
+        cards.add(new Card(id++, "Longer duration", "All your towers that do Damage over time (DOT) do it longer", true, -1));
+        //ENEMY id7↓
+        cards.add(new Card(id++, "Greed Is Good", "Killing enemies grands more Gold, but they have More HP", true, -2));
+        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they are Faster", true, -2));
+        cards.add(new Card(id++, "Greed Fast Passive", "Passive income grands 2 times more Gold, but they are Faster", true, -2));
+        cards.add(new Card(id++, "Greed BIG Passive", "Passive income grands 2 times more more Gold, but they have More HP", true, -2));
+        cards.add(new Card(id++, "True POWER", "All towers deal true damage, but they have More HP", false, -2));
         cards.add(new Card(id++, "All target", "All towers can target All type of enemy, but they have More HP", false, -2));
-        //ARCHER
+        //ARCHER id13↓
         cards.add(new Card(id++, "Pricing shoot", "Archer will now pierce the first target", false, 0));
         cards.add(new Card(id++, "Faster Bow", "Archer will now shoot faster", false, 0));
         cards.add(new Card(id++, "Stronger Bow", "Archer will now do more damage", false, 0));

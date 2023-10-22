@@ -38,12 +38,12 @@ public abstract class Enemy {
         this.enemyType = enemyType;
         this.enemyManager = enemyManager;
         this.waveManager = waveManager;
-        bounds = new Rectangle((int) x, (int) y, 64, 64);
-        lastDir = -1;
-        setStartHealth();
         if (enemyType != CAMEL_JUNIOR) {
             alive = true;
         }
+        bounds = new Rectangle((int) x, (int) y, 64, 64);
+        lastDir = -1;
+        setStartHealth();
         setRevive();
         setResists(enemyType);
     }
@@ -54,7 +54,7 @@ public abstract class Enemy {
     }
 
     private void setRevive() {
-        if (this.enemyType == ORK_ZOMBI) {
+        if (this.enemyType == ORK_ZOMBIE) {
             revive = true;
         }
     }
@@ -105,6 +105,12 @@ public abstract class Enemy {
 
     public void move(float speed, int dir) {
         lastDir = dir;
+        if (enemyManager.isCard8()){
+            speed=speed+0.1f;
+        }
+        if (enemyManager.isCard9()){
+            speed=speed+0.1f;
+        }
         if (slowTick < slowTickLimit) {
             slowTick++;
             speed *= slowPower;
@@ -142,6 +148,12 @@ public abstract class Enemy {
     protected void setStartHealth() {
         int waveIndex = waveManager.getWaveIndex();
         health = Constants.EnemyType.getStartHealth(enemyType) * (5 + waveIndex)/2;//(5 + waveIndex) / 10
+        if(enemyManager.isCard7()){
+            health=health+health*10/100;
+        }
+        if(enemyManager.isCard10()){
+            health=health+health*10/100;
+        }
         maxHealth = health;
     }
 
@@ -150,7 +162,7 @@ public abstract class Enemy {
         this.health -= calDMG;//calculateDMG(dmg, DMGType) ;
         if (health <= 0) {
             alive = false;
-            if (enemyType == ORK_ZOMBI) {
+            if (enemyType == ORK_ZOMBIE) {
                 if (this.revive) {
                     killed();
                     reuse(this.x, this.y,distancePast);
