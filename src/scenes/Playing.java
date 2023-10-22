@@ -181,7 +181,9 @@ public class Playing extends GameScene implements SceneMethods {
             case 10:
                 enemyManager.setCard10(true);
             case 11:
+                enemyManager.setCard11(true);
             case 12:
+                enemyManager.setCard12(true);
             case 13:
             case 14:
             case 15:
