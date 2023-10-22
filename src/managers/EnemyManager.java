@@ -94,10 +94,14 @@ public class EnemyManager {
 
     public void update() {
         indexOfPoisonAnimation++;
-        for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                updateEnemyMoveNew(e);
+        try{
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    updateEnemyMoveNew(e);
+                }
             }
+        }catch (Exception e){
+            System.out.println("ConcurrentModificationException update");
         }
         if (indexOfPoisonAnimation > 150) {
             enemyReorder();
