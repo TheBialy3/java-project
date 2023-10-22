@@ -360,11 +360,26 @@ public class TowerManager {
         }
     }
 
-    public void upgradesTrue(int i) {
+    public void upgradesTrue() {
         for (Tower t : towers) {
             t.isUpgrade1Active();
             t.isUpgrade2Active();
             t.isUpgrade3Active();
+        }
+    }
+
+    public void durationUp(int percent) {
+        int duration = 0;
+        for (Tower t : towers) {
+            if(Constants.TowerType.isDOT(t.getTowerType())){
+                duration = t.getDuration();
+                if (duration < 10) {
+                    t.setDmg(duration + percent / 10);
+                } else {
+                    duration = duration + duration * percent / 100;
+                    t.setDmg(duration);
+                }
+            }
         }
     }
 }

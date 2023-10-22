@@ -1,6 +1,7 @@
 package managers;
 
 import enemies.*;
+import helpz.Constants;
 import helpz.LoadSave;
 
 import objects.PathPoint;
@@ -30,6 +31,8 @@ public class EnemyManager {
     private BufferedImage[] enemyEffects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
+
+    private boolean Card7 = false, Card8 = false, Card9 = false, Card10 = false, Card11 = false;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
         this.waveManager = waveManager;
@@ -79,7 +82,7 @@ public class EnemyManager {
             case TENTACLE:
                 enemies.add(new Tentacle(x, y, 0, this, waveManager));
                 break;
-            case ORK_ZOMBI:
+            case ORK_ZOMBIE:
                 enemies.add(new OrcZombi(x, y, 0, this, waveManager));
                 break;
             case CAMEL:
@@ -94,7 +97,6 @@ public class EnemyManager {
         for (Enemy e : enemies) {
             if (e.isAlive()) {
                 updateEnemyMoveNew(e);
-
             }
         }
         if (indexOfPoisonAnimation > 150) {
@@ -223,7 +225,7 @@ public class EnemyManager {
 
     public void drawEnemy(Enemy e, Graphics g) {
 
-        if (e.getEnemyType() == ORK_ZOMBI) {
+        if (e.getEnemyType() == ORK_ZOMBIE) {
             e.tickUp();
             if (e.getTick() < 50) {
                 g.drawImage(enemyImages[1], (int) e.getX(), (int) e.getY(), null);
@@ -250,7 +252,22 @@ public class EnemyManager {
     }
 
     public void rewardPlayer(int enemyType) {
-        playing.rewardPlayer(enemyType);
+        int earnGold=Constants.EnemyType.getGoldWorth(enemyType);
+        if(isCard7()){
+            if(Constants.EnemyType.getGoldWorth(enemyType)<10){
+                earnGold=earnGold*2;
+            }else {
+            earnGold=earnGold+10;
+            }
+        }
+        if(isCard8()){
+            if(Constants.EnemyType.getGoldWorth(enemyType)<10){
+                earnGold=earnGold*2;
+            }else {
+                earnGold=earnGold+10;
+            }
+        }
+        playing.rewardPlayer(earnGold);
     }
 
     public void reset() {
@@ -261,5 +278,45 @@ public class EnemyManager {
         return roadDirArr;
     }
 
+
+    public boolean isCard7() {
+        return Card7;
+    }
+
+    public void setCard7(boolean card7) {
+        Card7 = card7;
+    }
+
+    public boolean isCard8() {
+        return Card8;
+    }
+
+    public void setCard8(boolean card8) {
+        Card8 = card8;
+    }
+
+    public boolean isCard9() {
+        return Card9;
+    }
+
+    public void setCard9(boolean card9) {
+        Card9 = card9;
+    }
+
+    public boolean isCard10() {
+        return Card10;
+    }
+
+    public void setCard10(boolean card10) {
+        Card10 = card10;
+    }
+
+    public boolean isCard11() {
+        return Card11;
+    }
+
+    public void setCard11(boolean card11) {
+        Card11 = card11;
+    }
 
 }

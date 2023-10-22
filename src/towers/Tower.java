@@ -32,9 +32,7 @@ public abstract class Tower {
         setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
-        if (Constants.TowerType.isDOT(towerType)) {
-            duration = Constants.TowerType.getDuration(towerType);
-        }
+        setDefaultDuration();
         if(this.towerManager.isCard3()){
             Upgrade1Activate();
             Upgrade2Activate();
@@ -43,6 +41,14 @@ public abstract class Tower {
 
     }
 
+    private void setDefaultDuration() {
+        if (Constants.TowerType.isDOT(towerType)) {
+            duration = Constants.TowerType.getDuration(towerType);
+            if(towerManager.isCard6()){
+                duration = duration + duration * 10/100;
+            }
+        }
+    }
 
 
     public void update() {
@@ -76,6 +82,13 @@ public abstract class Tower {
                 coolDown = coolDown - coolDown * 10/100;
             }
         }
+        if(towerManager.isCard4()){
+            if (coolDown < 10) {
+                dmg=(dmg +1);
+            } else {
+                coolDown = coolDown - coolDown * 10/100;
+            }
+        }
     }
 
     private void setDefaultRange() {
@@ -88,6 +101,13 @@ public abstract class Tower {
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
         if(towerManager.isCard0()){
+            if (dmg < 10) {
+                dmg=(dmg +1);
+            } else {
+                dmg = dmg + dmg * 10/100;
+            }
+        }
+        if(towerManager.isCard5()){
             if (dmg < 10) {
                 dmg=(dmg +1);
             } else {
