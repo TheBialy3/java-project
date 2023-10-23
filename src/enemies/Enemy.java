@@ -151,6 +151,12 @@ public abstract class Enemy {
         if(enemyManager.isCard7()){
             health=health+health*10/100;
         }
+        if(enemyManager.isCard11()){
+            health=health+health*20/100;
+        }
+        if(enemyManager.isCard12()){
+            health=health+health*10/100;
+        }
         if(enemyManager.isCard10()){
             health=health+health*10/100;
         }
@@ -176,6 +182,9 @@ public abstract class Enemy {
     }
 
     private int calculateDMG(int dmg, int dmgType) {
+        if(enemyManager.isCard11()){
+            return dmg;
+        }
         if (dmgType==PHYSICAL){
             return  ((100-armor)*dmg/100);
         } else if (dmgType==MAGIC){

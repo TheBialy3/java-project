@@ -32,7 +32,7 @@ public class EnemyManager {
     private int[][] roadDirArr;
     protected WaveManager waveManager;
 
-    private boolean Card7 = false, Card8 = false, Card9 = false, Card10 = false, Card11 = false;
+    private boolean Card7 = false, Card8 = false, Card9 = false, Card10 = false, Card11 = false, Card12 = false;
 
     public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
         this.waveManager = waveManager;
@@ -94,10 +94,14 @@ public class EnemyManager {
 
     public void update() {
         indexOfPoisonAnimation++;
-        for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                updateEnemyMoveNew(e);
+        try{
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    updateEnemyMoveNew(e);
+                }
             }
+        }catch (Exception e){
+            System.out.println("ConcurrentModificationException update");
         }
         if (indexOfPoisonAnimation > 150) {
             enemyReorder();
@@ -316,6 +320,13 @@ public class EnemyManager {
     }
 
     public void setCard11(boolean card11) {
+        Card11 = card11;
+    }
+    public boolean isCard12() {
+        return Card11;
+    }
+
+    public void setCard12(boolean card11) {
         Card11 = card11;
     }
 
