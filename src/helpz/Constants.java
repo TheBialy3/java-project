@@ -86,7 +86,7 @@ public class Constants {
         public static final int SLIME = 3;
         public static final int CAMEL = 4;
         public static final int CAMEL_JUNIOR = 5;
-//        public static final int TENTACLE = 6;
+        public static final int BIRD = 6;
 //        public static final int SLIME = 7;
 
         public static float getSpeed(int enemyType) {
@@ -103,6 +103,8 @@ public class Constants {
                     return 0.25f;
                 case CAMEL_JUNIOR:
                     return 1f;
+                case BIRD:
+                    return 0.75f;
             }
             return 0;
         }
@@ -126,6 +128,9 @@ public class Constants {
                     return WALK;
                 case CAMEL_JUNIOR:
                     return WALK;
+                case BIRD:
+                    return FLY;
+
             }
             return 0;
         }
@@ -145,6 +150,8 @@ public class Constants {
                     return 500;
                 case CAMEL_JUNIOR:
                     return 50;
+                case BIRD:
+                    return 100;
             }
             return 0;
         }
@@ -164,6 +171,8 @@ public class Constants {
                     return 0;
                 case CAMEL_JUNIOR:
                     return 60;
+                case BIRD:
+                    return 0;
             }
             return 0;
         }
@@ -181,6 +190,8 @@ public class Constants {
                 case CAMEL:
                     return 60;
                 case CAMEL_JUNIOR:
+                    return 20;
+                case BIRD:
                     return 20;
             }
             return 0;
@@ -200,6 +211,8 @@ public class Constants {
                     return 30;
                 case CAMEL_JUNIOR:
                     return 3;
+                case BIRD:
+                    return 9;
             }
             return 0;
         }
