@@ -323,11 +323,11 @@ public class EnemyManager {
         Card11 = card11;
     }
     public boolean isCard12() {
-        return Card11;
+        return Card12;
     }
 
-    public void setCard12(boolean card11) {
-        Card11 = card11;
+    public void setCard12(boolean card12) {
+        Card12 = card12;
     }
 
 }
