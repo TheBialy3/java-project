@@ -184,6 +184,7 @@ public class Playing extends GameScene implements SceneMethods {
                 enemyManager.setCard11(true);
             case 12:
                 enemyManager.setCard12(true);
+                towerManager.setCard12(true);//do when u add flying enemy
             case 13:
             case 14:
             case 15:
