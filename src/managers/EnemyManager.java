@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.Random;
 
 import static helpz.Constants.Direction.*;
-import static helpz.Constants.EnemyType.ORC;
 
 public class EnemyManager {
 
@@ -69,7 +68,7 @@ public class EnemyManager {
         addEnemy(nextEnemy);
     }
 
-    public void addEnemy(int enemyType) {
+    public void addEnemy(int enemyType) {///modify wave manager
         int x = start.getxCord() * tilePixelNumber;
         int y = start.getyCord() * tilePixelNumber;
         switch (enemyType) {
@@ -88,6 +87,18 @@ public class EnemyManager {
             case CAMEL:
                 enemies.add(new Camel(x, y, 0, this, waveManager));
                 enemies.add(new CamelJunior(x, y, 0, this, waveManager));
+                break;
+            case CAMEL_JUNIOR:
+                enemies.add(new CamelJunior(x, y, 0, this, waveManager));
+                break;
+            case BIRD:
+                enemies.add(new Bird(x, y, 0, this, waveManager));
+                break;
+            case GHOST:
+                enemies.add(new Ghost(x, y, 0, this, waveManager));
+                break;
+            case ROCK:
+                enemies.add(new Rock(x, y, 0, this, waveManager));
                 break;
         }
     }

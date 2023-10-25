@@ -87,7 +87,10 @@ public class Constants {
         public static final int CAMEL = 4;
         public static final int CAMEL_JUNIOR = 5;
         public static final int BIRD = 6;
-//        public static final int SLIME = 7;
+        public static final int GHOST = 7;
+        public static final int ROCK = 8;
+//        public static final int SLIME = 9;
+//        public static final int SLIME = 10;
 
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
@@ -105,6 +108,10 @@ public class Constants {
                     return 1f;
                 case BIRD:
                     return 0.75f;
+                case GHOST:
+                    return 0.4f;
+                case ROCK:
+                    return 0.25f;
             }
             return 0;
         }
@@ -130,6 +137,10 @@ public class Constants {
                     return WALK;
                 case BIRD:
                     return FLY;
+                case GHOST:
+                    return WALK;
+                case ROCK:
+                    return WALK;
 
             }
             return 0;
@@ -152,6 +163,10 @@ public class Constants {
                     return 50;
                 case BIRD:
                     return 100;
+                case GHOST:
+                    return 250;
+                case ROCK:
+                    return 450;
             }
             return 0;
         }
@@ -173,6 +188,10 @@ public class Constants {
                     return 60;
                 case BIRD:
                     return 0;
+                case GHOST:
+                    return 40;
+                case ROCK:
+                    return 100;
             }
             return 0;
         }
@@ -193,6 +212,10 @@ public class Constants {
                     return 20;
                 case BIRD:
                     return 20;
+                case GHOST:
+                    return 100;
+                case ROCK:
+                    return 40;
             }
             return 0;
         }
@@ -213,6 +236,10 @@ public class Constants {
                     return 3;
                 case BIRD:
                     return 9;
+                case GHOST:
+                    return 13;
+                case ROCK:
+                    return 14;
             }
             return 0;
         }
@@ -476,7 +503,7 @@ public class Constants {
         }
 
 
-        public static int getUpgradeTowerImage(int towerType,int upgrade) {
+        public static int getUpgradeTowerImage(int towerType, int upgrade) {
             switch (towerType) {
                 case ARCHER:
                     switch (upgrade) {
