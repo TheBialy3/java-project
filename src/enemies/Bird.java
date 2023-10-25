@@ -10,4 +10,5 @@ public class Bird extends Enemy{
         super(x, y, ID, BIRD, em, wm);
 
     }
+
 }
