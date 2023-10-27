@@ -76,7 +76,24 @@ public class Constants {
             }
             return 0;
         }
-
+        public static final int BOTH = 0;
+        public static final int FLYING = 1;
+        public static final int WALKING = 2;
+        public static int getProjectileTargetMoveType(int projectileType) {
+            switch (projectileType) {
+                case ARROW:
+                    return BOTH;
+                case BOMB:
+                    return WALKING;
+                case SHORT_BEEM:
+                    return WALKING;
+                case MINES:
+                    return WALKING;
+                case POISON_POTION:
+                    return WALKING;
+            }
+            return 0;
+        }
     }
 
     public static class EnemyType {
@@ -116,10 +133,10 @@ public class Constants {
             return 0;
         }
 
-
-        public static final int WALK = 0;
+        //public static final int TENTACLE = 0;
         public static final int FLY = 1;
-        //public static final int TENTACLE = 2;
+        public static final int WALK = 2;
+
 
         public static int getMoveType(int enemyType) {
             switch (enemyType) {
@@ -472,7 +489,7 @@ public class Constants {
         }
 
         public static final int BOTH = 0;
-        public static final int FLY = 1;
+        public static final int FLYING = 1;
         public static final int WALKING = 2;
 
         public static int getTargetMoveType(int towerType) {

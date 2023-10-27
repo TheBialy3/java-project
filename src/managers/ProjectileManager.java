@@ -14,7 +14,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static helpz.Constants.EnemyType.getMoveType;
 import static helpz.Constants.ProjectileType.*;
+import static helpz.Constants.ProjectileType.BOTH;
 import static helpz.Constants.TowerType.*;
 
 public class ProjectileManager {
@@ -184,16 +186,28 @@ public class ProjectileManager {
         if (p.isActive()) {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
-                    if (e.getBounds().contains(p.getPos())) {
-                        if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
-                            explodeOnEnemys(p, playing.getEnemyManager().getEnemies());
-                        } else {
-                            e.hurt(p.getDmg(),p.getDamageType());
+                    if (isTowerTargetingEnemy(p, e)) {
+                        if (e.getBounds().contains(p.getPos())) {
+                            if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
+                                explodeOnEnemys(p, playing.getEnemyManager().getEnemies());
+                            } else {
+                                e.hurt(p.getDmg(), p.getDamageType());
+                            }
+                            return true;
                         }
-                        return true;
                     }
                 }
             }
+        }
+        return false;
+    }
+
+    private boolean isTowerTargetingEnemy(Projectile p, Enemy e) {
+        if (getProjectileTargetMoveType(p.getProjectileType()) == BOTH) {
+            return true;
+        }
+        if (getProjectileTargetMoveType(p.getProjectileType()) == getMoveType(e.getEnemyType())) {
+            return true;
         }
         return false;
     }
