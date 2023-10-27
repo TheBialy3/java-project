@@ -28,6 +28,8 @@ public class ProjectileManager {
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
+    private boolean Card12 = false;
+
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
@@ -203,6 +205,9 @@ public class ProjectileManager {
     }
 
     private boolean isTowerTargetingEnemy(Projectile p, Enemy e) {
+        if(Card12){
+            return true;
+        }
         if (getProjectileTargetMoveType(p.getProjectileType()) == BOTH) {
             return true;
         }
@@ -278,6 +283,10 @@ public class ProjectileManager {
             projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType())));
 
         }
+    }
+
+    public void setCard12(boolean card12) {
+        Card12 = card12;
     }
 
     public class Explosion {

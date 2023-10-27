@@ -173,6 +173,9 @@ public class TowerManager {
     }
 
     private boolean isTowerTargetingEnemy(Tower t, Enemy e) {
+        if(Card12){
+            return true;
+        }
         if(getTargetMoveType(t.getTowerType())==BOTH){
             return true;
         }
