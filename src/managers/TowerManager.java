@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static helpz.Constants.EnemyType.*;
 import static helpz.Constants.TowerType.*;
 
 
@@ -149,17 +150,19 @@ public class TowerManager {
         try {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
-                    if (isEnemyInRange(t, e)) {
-                        if (t.isCoolDownOver()) {
-                            if (t.getTowerType() == SNIPER) {
-                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                            } else if (t.getTowerType() == LASER_TOWER) {
-                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                playing.beamEnemy(t, e);
-                            } else {
-                                playing.shootEnemy(t, e);
+                    if (isTowerTargetingEnemy(t,e)) {
+                        if (isEnemyInRange(t, e)) {
+                            if (t.isCoolDownOver()) {
+                                if (t.getTowerType() == SNIPER) {
+                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                } else if (t.getTowerType() == LASER_TOWER) {
+                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                    playing.beamEnemy(t, e);
+                                } else {
+                                    playing.shootEnemy(t, e);
+                                }
+                                t.resetCoolDown();
                             }
-                            t.resetCoolDown();
                         }
                     }
                 }
@@ -167,6 +170,16 @@ public class TowerManager {
         } catch (Exception e) {
             System.out.println("ConcurrentModificationException");
         }
+    }
+
+    private boolean isTowerTargetingEnemy(Tower t, Enemy e) {
+        if(getTargetMoveType(t.getTowerType())==BOTH){
+            return true;
+        }
+        if(getTargetMoveType(t.getTowerType())==getMoveType( e.getEnemyType())){
+           return true;
+        }
+        return false;
     }
 
     private void setMine(Tower t) {
@@ -211,8 +224,6 @@ public class TowerManager {
                                 e = a8;
                                 break;
                         }
-
-
                         playing.setMine(t, e);
                     }
                     t.resetCoolDown();
@@ -328,7 +339,6 @@ public class TowerManager {
     }
 
 
-
     public void damageUp(int percent) {
         int dmg = 0;
         for (Tower t : towers) {
@@ -349,7 +359,7 @@ public class TowerManager {
             if (coolDown < 10) {
                 int dmg = t.getDmg();
                 if (dmg < 10) {
-                    t.setDmg(dmg+  percent / 10);
+                    t.setDmg(dmg + percent / 10);
                 } else {
                     t.setDmg(dmg + dmg * percent / 100);
                 }
@@ -364,8 +374,8 @@ public class TowerManager {
         float range = 0;
         for (Tower t : towers) {
             range = t.getRange();
-            range =range+ range * percent / 100;
-                t.setRange(range);
+            range = range + range * percent / 100;
+            t.setRange(range);
 
         }
     }
@@ -381,7 +391,7 @@ public class TowerManager {
     public void durationUp(int percent) {
         int duration = 0;
         for (Tower t : towers) {
-            if(Constants.TowerType.isDOT(t.getTowerType())){
+            if (Constants.TowerType.isDOT(t.getTowerType())) {
                 duration = t.getDuration();
                 if (duration < 10) {
                     t.setDmg(duration + percent / 10);
