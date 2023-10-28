@@ -28,7 +28,7 @@ public class ProjectileManager {
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
-    private boolean Card12 = false;
+    private boolean Card12 = false, Card13 = false;
 
 
     public ProjectileManager(Playing playing) {
@@ -110,17 +110,17 @@ public class ProjectileManager {
             }
         }
         if (t.getTowerType() == POISON_TOWER) {
-            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration()));
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration(), this));
             return;
         }
-        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, getDmgType(t.getTowerType())));
+        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, getDmgType(t.getTowerType()), this));
     }
 
     public void newMine(Tower t, PathPoint e) {
         int type = getProjType(t);
         ranx = random.nextInt(44);
         rany = random.nextInt(44);
-        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type, getDmgType(t.getTowerType())));
+        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type, getDmgType(t.getTowerType()), this));
     }
 
     public void update() {
@@ -128,7 +128,9 @@ public class ProjectileManager {
             if (p.isActive()) {
                 p.move();
                 if (isProjHitingEnemy(p)) {
-                    p.setActive(false);
+                    if (!p.isProjectilePricing()) {
+                        p.setActive(false);
+                    }
                     if (helpz.Constants.ProjectileType.isAoe(p.getProjectileType())) {
                         if (p.getProjectileType() == BOMB) {
                             explosions.add(new Explosion(p.getPos(), p.getProjectileType()));
@@ -205,7 +207,7 @@ public class ProjectileManager {
     }
 
     private boolean isTowerTargetingEnemy(Projectile p, Enemy e) {
-        if(Card12){
+        if (Card12) {
             return true;
         }
         if (getProjectileTargetMoveType(p.getProjectileType()) == BOTH) {
@@ -280,7 +282,7 @@ public class ProjectileManager {
             } else {
                 neg = 1;
             }
-            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType())));
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType()), this));
 
         }
     }
@@ -289,8 +291,15 @@ public class ProjectileManager {
         Card12 = card12;
     }
 
-    public class Explosion {
+    public void setCard13(boolean card13) {
+        Card13 = card13;
+    }
 
+    public boolean isCard13() {
+        return Card13;
+    }
+
+    public class Explosion {
         private int exploTick = 0, exploIndex = 0, type;
         private Point2D.Float pos;
 
