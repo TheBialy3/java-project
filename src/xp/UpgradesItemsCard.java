@@ -30,9 +30,9 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Greed Fast Passive", "Passive income grands 2 times more Gold, but enemies are Faster", true, -2));
         cards.add(new Card(id++, "Greed BIG Passive", "Passive income grands 2 times more more Gold, but enemies have More HP", true, -2));
         cards.add(new Card(id++, "True POWER", "All towers deal true damage, but enemies have More HP", true, -2));
-        cards.add(new Card(id++, "All target", "All towers can target All type of enemy, but they have More HP", false, -2));
+        cards.add(new Card(id++, "All target", "All towers can target All type of enemy, but they have More HP", true, -2));
         //ARCHER id13↓
-        cards.add(new Card(id++, "Pricing shoot", "Archer will now pierce the first target", false, 0));
+        cards.add(new Card(id++, "Pricing shoot", "Archer will now pierce the first target", true, 0));
         cards.add(new Card(id++, "Faster Bow", "Archer will now shoot faster", false, 0));
         cards.add(new Card(id++, "Stronger Bow", "Archer will now do more damage", false, 0));
         //CANNON

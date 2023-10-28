@@ -29,7 +29,7 @@ public class TowerManager {
     private int[][] road;
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
-
+    private boolean Card14 = false, Card15 = false;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -150,7 +150,7 @@ public class TowerManager {
         try {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
-                    if (isTowerTargetingEnemy(t,e)) {
+                    if (isTowerTargetingEnemy(t, e)) {
                         if (isEnemyInRange(t, e)) {
                             if (t.isCoolDownOver()) {
                                 if (t.getTowerType() == SNIPER) {
@@ -173,14 +173,14 @@ public class TowerManager {
     }
 
     private boolean isTowerTargetingEnemy(Tower t, Enemy e) {
-        if(Card12){
+        if (Card12) {
             return true;
         }
-        if(getTargetMoveType(t.getTowerType())==BOTH){
+        if (getTargetMoveType(t.getTowerType()) == BOTH) {
             return true;
         }
-        if(getTargetMoveType(t.getTowerType())==getMoveType( e.getEnemyType())){
-           return true;
+        if (getTargetMoveType(t.getTowerType()) == getMoveType(e.getEnemyType())) {
+            return true;
         }
         return false;
     }
@@ -309,6 +309,14 @@ public class TowerManager {
         Card12 = card12;
     }
 
+    public void setCard14(boolean card14) {
+        Card14 = card14;
+    }
+
+    public void setCard15(boolean card15) {
+        Card15 = card15;
+    }
+
     public boolean isCard0() {
         return Card0;
     }
@@ -339,6 +347,14 @@ public class TowerManager {
 
     public boolean isCard12() {
         return Card12;
+    }
+
+    public boolean isCard14() {
+        return Card14;
+    }
+
+    public boolean isCard15() {
+        return Card15;
     }
 
 

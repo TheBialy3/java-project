@@ -1,5 +1,7 @@
 package objects;
 
+import managers.ProjectileManager;
+
 import java.awt.geom.Point2D;
 
 public class Projectile {
@@ -8,9 +10,10 @@ public class Projectile {
     private int id, projectileType, dmg, duration, damageType;
     private boolean active = true;
     private float speedx, speedy, rotation;
+    private int projectilePricing = 1;
+    private ProjectileManager projectileManager;
 
-
-    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType) {
+    public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType, ProjectileManager projectileManager) {
         pos = new Point2D.Float(x, y);
         this.speedx = speedx;
         this.speedy = speedy;
@@ -19,8 +22,9 @@ public class Projectile {
         this.id = id;
         this.projectileType = projectileType;
         this.damageType = damageType;
+        this.projectileManager=projectileManager;
+        setProjectilePricing();
     }
-
 
 
     public void reuse(float x, float y, float speedx, float speedy, int dmg, float rotation, int duration) {
@@ -31,6 +35,7 @@ public class Projectile {
         this.rotation = rotation;
         this.active = true;
         this.duration = duration;
+        setProjectilePricing();
     }
 
     public void reuse(float x, float y, float speedx, float speedy, int dmg, float rotation) {
@@ -40,6 +45,7 @@ public class Projectile {
         this.dmg = dmg;
         this.rotation = rotation;
         this.active = true;
+        setProjectilePricing();
     }
 
     public void move() {
@@ -86,5 +92,19 @@ public class Projectile {
 
     public int getDamageType() {
         return damageType;
+    }
+
+    public void setProjectilePricing() {
+        if(projectileManager.isCard13()){
+            projectilePricing ++;
+        }
+    }
+
+    public boolean isProjectilePricing() {
+       if (projectilePricing>1){
+           projectilePricing--;
+           return true;
+       }
+       return false;
     }
 }
