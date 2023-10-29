@@ -190,8 +190,10 @@ public class Playing extends GameScene implements SceneMethods {
                 projectileManager.setCard13(true);
             case 14:
                 towerManager.setCard14(true);
+                towerManager.speedUp(30);
             case 15:
                 towerManager.setCard15(true);
+                towerManager.damageUp(30);
             case 16:
             case 17:
             case 18:

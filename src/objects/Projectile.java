@@ -4,6 +4,8 @@ import managers.ProjectileManager;
 
 import java.awt.geom.Point2D;
 
+import static helpz.Constants.ProjectileType.ARROW;
+
 public class Projectile {
 
     private Point2D.Float pos;
@@ -22,7 +24,7 @@ public class Projectile {
         this.id = id;
         this.projectileType = projectileType;
         this.damageType = damageType;
-        this.projectileManager=projectileManager;
+        this.projectileManager = projectileManager;
         setProjectilePricing();
     }
 
@@ -95,16 +97,18 @@ public class Projectile {
     }
 
     public void setProjectilePricing() {
-        if(projectileManager.isCard13()){
-            projectilePricing ++;
+        if (projectileManager.isCard13()) {
+            if (projectileType == ARROW) {
+                projectilePricing++;
+            }
         }
     }
 
     public boolean isProjectilePricing() {
-       if (projectilePricing>1){
-           projectilePricing--;
-           return true;
-       }
-       return false;
+        if (projectilePricing > 1) {
+            projectilePricing--;
+            return true;
+        }
+        return false;
     }
 }
