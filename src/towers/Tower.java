@@ -14,42 +14,26 @@ public abstract class Tower {
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
     private TowerManager towerManager;
 
-    //upgrades
-    public boolean AFTERSHOCK = false;
-    public boolean ATTACK_SPEED_BOOST = false;
-    public boolean ATTACK_DAMAGE_BOOST = false;
-    public boolean RANGE_BOOST = false;
 
-
-    public Tower(int x, int y, int id, int towerType,TowerManager towerManager, int[][] road) {
+    public Tower(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.towerType = towerType;
-        this.towerManager=towerManager;
+        this.towerManager = towerManager;
         setDefaultDmg();
         setDefaultRange();
         setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
         setDefaultDuration();
-        if(this.towerManager.isCard3()){
+        if (this.towerManager.isCard3()) {
             Upgrade1Activate();
             Upgrade2Activate();
             Upgrade3Activate();
         }
 
     }
-
-    private void setDefaultDuration() {
-        if (Constants.TowerType.isDOT(towerType)) {
-            duration = Constants.TowerType.getDuration(towerType);
-            if(towerManager.isCard6()){
-                duration = duration + duration * 10/100;
-            }
-        }
-    }
-
 
     public void update() {
         cdTick++;
@@ -58,7 +42,6 @@ public abstract class Tower {
     public int getWorthGold() {
         return worthGold;
     }
-
 
 
     public void updateTowerWorthGold(int worthGold) {
@@ -73,48 +56,87 @@ public abstract class Tower {
         cdTick = 0;
     }
 
-    private void setDefaultCoolDown() {
-        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
-        if(towerManager.isCard1()){
-            if (coolDown < 10) {
-                dmg=(dmg +1);
-            } else {
-                coolDown = coolDown - coolDown * 10/100;
+    private void setDefaultDuration() {
+        if (Constants.TowerType.isDOT(towerType)) {
+            duration = Constants.TowerType.getDuration(towerType);
+            if (towerManager.isCard6()) {
+                DurationUp(10);
             }
         }
-        if(towerManager.isCard4()){
-            if (coolDown < 10) {
-                dmg=(dmg +1);
-            } else {
-                coolDown = coolDown - coolDown * 10/100;
+    }
+
+    private void DurationUp(int percent) {
+        duration = duration + duration * percent / 100;
+    }
+
+
+    private void setDefaultCoolDown() {
+        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
+        if (towerManager.isCard1()) {
+            CoolDown(10);
+        }
+        if (towerManager.isCard4()) {
+            CoolDown(10);
+        }
+        if (towerManager.isCard14()) {
+            if (this instanceof Archer) {
+                CoolDown(30);
             }
+        }
+        if (towerManager.isCard17()) {
+            if (this instanceof Cannon) {
+                CoolDown(30);
+            }
+        }
+    }
+
+    private void CoolDown(int percent) {
+        if (coolDown < 10) {
+            dmg = (dmg + percent / 10);
+        } else {
+            coolDown = coolDown - coolDown * percent / 100;
         }
     }
 
     private void setDefaultRange() {
         range = Constants.TowerType.getDefaultRange(towerType);
-        if(towerManager.isCard2()){
-            range = range + range * 10/100;
+        if (towerManager.isCard2()) {
+            RangeUp(10);
         }
+    }
+
+    private void RangeUp(int percent) {
+        range = range + range * percent / 100;
     }
 
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
-        if(towerManager.isCard0()){
-            if (dmg < 10) {
-                dmg=(dmg +1);
-            } else {
-                dmg = dmg + dmg * 10/100;
+        if (towerManager.isCard0()) {
+            damageUp(10);
+        }
+        if (towerManager.isCard5()) {
+            damageUp(10);
+        }
+        if (towerManager.isCard15()) {
+            if (this instanceof Archer) {
+                damageUp(30);
             }
         }
-        if(towerManager.isCard5()){
-            if (dmg < 10) {
-                dmg=(dmg +1);
-            } else {
-                dmg = dmg + dmg * 10/100;
+        if (towerManager.isCard18()) {
+            if (this instanceof Cannon) {
+                damageUp(30);
             }
         }
     }
+
+    public void damageUp(int percent) {
+        if (dmg < 10) {
+            dmg = dmg + percent / 10;
+        } else {
+            dmg = dmg + dmg * percent / 100;
+        }
+    }
+
 
     public int getX() {
         return x;

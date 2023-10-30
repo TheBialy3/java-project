@@ -60,7 +60,7 @@ public class Playing extends GameScene implements SceneMethods {
         waveManager = new WaveManager(this);
         enemyManager = new EnemyManager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
-        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game,towerManager);
+        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         initCardButtons();
 
         // xp.UpgradesItemsCard();
@@ -142,15 +142,15 @@ public class Playing extends GameScene implements SceneMethods {
         int cardY = 100;
         int diffCard = 400;
         logos = getLogos();
-        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(),threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
-        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(),threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
-        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(),threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
+        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
+        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
+        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
         cardSelect = true;
     }
 
     private void cardSelected(int cardChosen) {
-       System.out.println(threeCards.get(cardChosen).getId());
-        switch (threeCards.get(cardChosen).getId()){
+        System.out.println(threeCards.get(cardChosen).getId());
+        switch (threeCards.get(cardChosen).getId()) {
             case 0: //for all
                 towerManager.damageUp(10);
                 towerManager.setCard0(true);
@@ -190,16 +190,24 @@ public class Playing extends GameScene implements SceneMethods {
                 projectileManager.setCard13(true);
             case 14:
                 towerManager.setCard14(true);
-                towerManager.speedUp(30);
+                towerManager.speedUp(30, ARCHER);
             case 15:
                 towerManager.setCard15(true);
-                towerManager.damageUp(30);
-            case 16:
+                towerManager.damageUp(30, ARCHER);
+            case 16:////////
+                projectileManager.setCard16(true);
             case 17:
+                towerManager.setCard17(true);
+                towerManager.speedUp(30, CANNON);
             case 18:
+                towerManager.setCard18(true);
+                towerManager.damageUp(30, CANNON);
             case 19:
+
             case 20:
+
             case 21:
+
             case 22:
             case 23:
             case 24:
@@ -251,7 +259,7 @@ public class Playing extends GameScene implements SceneMethods {
             default:
         }
         cards.get(threeCards.get(cardChosen).getId()).setActive(true);
-        cardSelect=false;
+        cardSelect = false;
     }
 
 
@@ -303,11 +311,11 @@ public class Playing extends GameScene implements SceneMethods {
     private void passiveIncome() {
         goldTick++;
         if (goldTick % goldTickLimit == 0) {
-            if(enemyManager.isCard9()){
-                passiveIncomeGold*=2;
+            if (enemyManager.isCard9()) {
+                passiveIncomeGold *= 2;
             }
-            if(enemyManager.isCard10()){
-                passiveIncomeGold*=2;
+            if (enemyManager.isCard10()) {
+                passiveIncomeGold *= 2;
             }
             playingBar.earnGold(passiveIncomeGold);
         }
@@ -617,52 +625,52 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))) {
-                selectedTower = new Archer(1555, 15555, 0, ARCHER,towerManager, road);
+                selectedTower = new Archer(1555, 15555, 0, ARCHER, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CANNON))) {
-                selectedTower = new Cannon(1555, 15555, 0, CANNON,towerManager, road);
+                selectedTower = new Cannon(1555, 15555, 0, CANNON, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(FROST_MAGE))) {
-                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE,towerManager, road);
+                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MINES_FACTORY))) {
-                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY,towerManager, road);
+                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_T) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(POISON_TOWER))) {
-                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER,towerManager, road);
+                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_Y) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(BOOM_VOLCANO))) {
-                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO,towerManager, road);
+                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_A) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CROSSBOW))) {
-                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW,towerManager, road);
+                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MOUSE_FOLLOWS_TOWER))) {
-                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER,towerManager, road);
+                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(SNIPER))) {
-                selectedTower = new Sniper(1555, 15555, 0, SNIPER,towerManager, road);
+                selectedTower = new Sniper(1555, 15555, 0, SNIPER, towerManager, road);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_F) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
-                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER,towerManager, road);
+                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, towerManager, road);
             }
         }
     }

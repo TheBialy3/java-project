@@ -29,7 +29,7 @@ public class TowerManager {
     private int[][] road;
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
-    private boolean Card14 = false, Card15 = false;
+    private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -316,6 +316,12 @@ public class TowerManager {
     public void setCard15(boolean card15) {
         Card15 = card15;
     }
+    public void setCard17(boolean card17) {
+        Card17 = card17;
+    }
+    public void setCard18(boolean card18) {
+        Card18 = card18;
+    }
 
     public boolean isCard0() {
         return Card0;
@@ -356,6 +362,12 @@ public class TowerManager {
     public boolean isCard15() {
         return Card15;
     }
+    public boolean isCard17() {
+        return Card17;
+    }
+    public boolean isCard18() {
+        return Card18;
+    }
 
 
     public void damageUp(int percent) {
@@ -367,6 +379,21 @@ public class TowerManager {
             } else {
                 dmg = dmg + dmg * percent / 100;
                 t.setDmg(dmg);
+            }
+        }
+    }
+
+    public void damageUp(int percent, int towerType) {
+        int dmg = 0;
+        for (Tower t : towers) {
+            if (t.getTowerType() == towerType) {
+                dmg = t.getDmg();
+                if (dmg < 10) {
+                    t.setDmg(dmg + percent / 10);
+                } else {
+                    dmg = dmg + dmg * percent / 100;
+                    t.setDmg(dmg);
+                }
             }
         }
     }
@@ -385,6 +412,26 @@ public class TowerManager {
             } else {
                 coolDown = coolDown * percent / 100;
                 t.reduceCoolDown(coolDown);
+            }
+        }
+    }
+
+    public void speedUp(int percent, int towerType) {
+        float coolDown = 0;
+        for (Tower t : towers) {
+            coolDown = t.getCoolDown();
+            if (t.getTowerType() == towerType) {
+                if (coolDown < 10) {
+                    int dmg = t.getDmg();
+                    if (dmg < 10) {
+                        t.setDmg(dmg + percent / 10);
+                    } else {
+                        t.setDmg(dmg + dmg * percent / 100);
+                    }
+                } else {
+                    coolDown = coolDown * percent / 100;
+                    t.reduceCoolDown(coolDown);
+                }
             }
         }
     }
