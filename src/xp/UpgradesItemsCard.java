@@ -41,8 +41,8 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Strong Canon", "CANNON will now do more damage", true, 1));
         //FROST_MAGE id19↓
         cards.add(new Card(id++, "Global Frost Mage", "Frost Mage will now slow all enemies, but weaker", true, 2));
-        cards.add(new Card(id++, "Frost Damage", "Frost Mage will now deal a little magic damage", false, 2));
-        cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", false, 2));
+        cards.add(new Card(id++, "Frost Damage", "Frost Mage will now deal a little magic damage", true, 2));
+        cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", true, 2));
         //MINES_FACTORY id22↓
         cards.add(new Card(id++, "Long live the Mine", "Mine will now stay for 2 waves", false, 3));
         cards.add(new Card(id++, "Two for One", "Mine Factory will now sets 2 mines at the time", false, 3));
