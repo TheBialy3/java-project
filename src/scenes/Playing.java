@@ -224,10 +224,15 @@ public class Playing extends GameScene implements SceneMethods {
             case 19:
                 towerManager.setCard19(true);
                 towerManager.rangeUp(3000, FROST_MAGE);
+                towerManager.slowChange(160, FROST_MAGE);//weaker slow
                 break;
             case 20:
+                towerManager.setCard20(true);
+                towerManager.setDamage(5, FROST_MAGE);
                 break;
             case 21:
+                towerManager.setCard21(true);
+                towerManager.slowChange(63, FROST_MAGE);//stronger slow
                 break;
             case 22:
             case 23:

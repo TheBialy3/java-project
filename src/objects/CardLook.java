@@ -42,7 +42,7 @@ public class CardLook {
         g.setFont(new Font("Serif", Font.BOLD, 30));
         g.drawString(name, x + centerW, y + centerH);
 
-        g.drawString(towerType, x + centerW + centerW + centerW, y + centerH);
+        g.drawString(towerType, x + centerW *5, y + centerH);
         g.drawString(description, x + centerW, y + centerH + nextLineH);
         g.drawImage(logo, x + logoX, y + nextLineH, null);
     }

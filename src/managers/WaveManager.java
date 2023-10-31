@@ -70,11 +70,11 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        int waveNumberMax=100;
+        int waveNumberMax=101;
         int enemyTypesNumber=9;
         //enemyTypesNumber=6;
         int ran;
-        for(int waveNumber=0;waveNumber<waveNumberMax;waveNumber++){
+        for(int waveNumber=1;waveNumber<waveNumberMax;waveNumber++){
             ArrayList<Integer> randList=new ArrayList<>();
             for(int waveEnemyNumber=0;waveEnemyNumber<waveNumber*2;waveEnemyNumber++){
                 ran = random.nextInt(enemyTypesNumber);

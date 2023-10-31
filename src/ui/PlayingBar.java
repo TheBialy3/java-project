@@ -8,6 +8,7 @@ import scenes.Playing;
 import towers.*;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 import static helpz.Constants.TowerType.*;
 import static main.GameStates.*;
@@ -33,6 +34,8 @@ public class PlayingBar extends Bar {
     private int lives = 5;
 
     private int[][] road;
+
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");
 
     public PlayingBar(int x, int y, int width, int height, Playing playing, Game game,TowerManager towerManager) {
         super(x, y, width, height);
@@ -60,7 +63,7 @@ public class PlayingBar extends Bar {
         drawButtons(g);
 
         //displayTower
-        drawDispalyTower(g);
+        drawDisplayTower(g);
 
         //waveInfo
         drawWaveInfo(g);
@@ -163,7 +166,7 @@ public class PlayingBar extends Bar {
     }
 
     //256, 1280,
-    private void drawDispalyTower(Graphics g) {
+    private void drawDisplayTower(Graphics g) {
         if (displayedTower != null || showTowerCost) {
             g.setColor(new Color(100, 45, 15));
             g.fillRect(1290, 990, 236, 180);
@@ -187,7 +190,8 @@ public class PlayingBar extends Bar {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(towerCostId) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
-                    g.drawString("AS:" + 60 / Constants.TowerType.getDefaultCoolDown(towerCostId), 1375, 1078);
+
+                    g.drawString("AS:" + decfor.format(60 / Constants.TowerType.getDefaultCoolDown(towerCostId)), 1375, 1078);
                 }
             } else {
                 g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
@@ -196,7 +200,7 @@ public class PlayingBar extends Bar {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType()) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
-                    g.drawString("AS:" + 60 / displayedTower.getCoolDown(), 1375, 1078);
+                    g.drawString("AS:" +  decfor.format(60 / displayedTower.getCoolDown()), 1375, 1078);
                 }
             }
             if (displayedTower != null) {
@@ -211,9 +215,9 @@ public class PlayingBar extends Bar {
                     bUpgrade3.draw(g);
                 }
                 drawUpgrade(g);
-                drawDisplayedTower(g);
+                drawDisplayedTowerRect(g);
                 drawDisplayedTowerRange(g);
-                upgradeDescryption(g);
+                upgradeDescription(g);
             }
         }
     }
@@ -235,7 +239,7 @@ public class PlayingBar extends Bar {
         }
     }
 
-    private void drawDisplayedTower(Graphics g) {
+    private void drawDisplayedTowerRect(Graphics g) {
         g.setColor(Color.BLACK);
         g.drawRect(displayedTower.getX(), displayedTower.getY(), 64, 64);
     }
@@ -266,7 +270,7 @@ public class PlayingBar extends Bar {
 
     }
 
-    public void upgradeDescryption(Graphics g) {
+    public void upgradeDescription(Graphics g) {
         if (bUpgrade1.isMouseOver() || bUpgrade2.isMouseOver() || bUpgrade3.isMouseOver()) {
             g.setColor(new Color(100, 45, 15));
             g.fillRect(700, 990, 566, 84);

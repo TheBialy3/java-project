@@ -63,13 +63,21 @@ public abstract class Tower {
     private void setDefaultSlow() {
         if (Constants.TowerType.isSlow(towerType)) {
             slow = Constants.TowerType.getPowerOfSlow(towerType);
-            if (towerManager.isCard6()) {
-                SlowSet(slow);
+            if (towerManager.isCard19()) {
+                if (this instanceof FrostMage) {
+                    slow=slow*160/100;
+                }
             }
+            if (towerManager.isCard21()) {
+                if (this instanceof FrostMage) {
+                    slow=slow*63/100;
+                }
+            }
+            slowSet(slow);
         }
     }
 
-    private void SlowSet(float slowSet) {
+    public void slowSet(float slowSet) {
         slow = slowSet;
     }
 
@@ -83,7 +91,7 @@ public abstract class Tower {
         }
     }
 
-    private void DurationUp(int percent) {
+    public void DurationUp(int percent) {
         duration = duration + duration * percent / 100;
     }
 
@@ -148,6 +156,11 @@ public abstract class Tower {
         if (towerManager.isCard18()) {
             if (this instanceof Cannon) {
                 damageUp(30);
+            }
+        }
+        if(towerManager.isCard20()){
+            if (this instanceof FrostMage) {
+                damageUp(1);
             }
         }
     }

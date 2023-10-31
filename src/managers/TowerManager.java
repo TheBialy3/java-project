@@ -29,7 +29,7 @@ public class TowerManager {
     private int[][] road;
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
-    private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false;
+    private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -109,6 +109,9 @@ public class TowerManager {
                 setMine(t);
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
+                if (Card20) {
+                    hurtAllEnemyIfClose(t);
+                }
             } else if (t.getTowerType() == BOOM_VOLCANO) {
                 if (t.isCoolDownOver()) {
                     hurtAllEnemyIfClose(t);
@@ -125,7 +128,7 @@ public class TowerManager {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-                    e.hurt(getDefaultDmg(t.getTowerType()), getDmgType(t.getTowerType()));
+                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                 } else {
                     //nothing
                 }
@@ -138,9 +141,9 @@ public class TowerManager {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-                    float slow=t.getSlow();
-                    if(isCard19()){
-                        slow=0.7f;
+                    float slow = t.getSlow();
+                    if (isCard19()) {
+                        slow = 0.7f;
                     }
                     e.slow(slow);
                 }
@@ -166,7 +169,7 @@ public class TowerManager {
                                     playing.shootEnemy(t, e);
                                 }
                                 if (Constants.TowerType.isSlow(t.getTowerType())) {
-                                    float slow=t.getSlow();
+                                    float slow = t.getSlow();
                                     e.slow(slow);
                                 }
                                 t.resetCoolDown();
@@ -324,14 +327,24 @@ public class TowerManager {
     public void setCard15(boolean card15) {
         Card15 = card15;
     }
+
     public void setCard17(boolean card17) {
         Card17 = card17;
     }
+
     public void setCard18(boolean card18) {
         Card18 = card18;
     }
+
     public void setCard19(boolean card19) {
-        Card18 = card19;
+        Card19 = card19;
+    }
+
+    public void setCard20(boolean card20) {
+        Card20 = card20;
+    }
+    public void setCard21(boolean card21) {
+        Card21 = card21;
     }
 
     public boolean isCard0() {
@@ -362,10 +375,6 @@ public class TowerManager {
         return Card6;
     }
 
-    public boolean isCard12() {
-        return Card12;
-    }
-
     public boolean isCard14() {
         return Card14;
     }
@@ -373,14 +382,33 @@ public class TowerManager {
     public boolean isCard15() {
         return Card15;
     }
+
     public boolean isCard17() {
         return Card17;
     }
+
     public boolean isCard18() {
         return Card18;
     }
+
     public boolean isCard19() {
         return Card19;
+    }
+
+    public boolean isCard20() {
+        return Card20;
+    }
+    public boolean isCard21() {
+        return Card21;
+    }
+    public void slowChange(int percent, int towerType) {
+        float slow=0;
+        for (Tower t : towers) {
+            if (t.getTowerType() == towerType) {
+                slow=t.getSlow();
+                t.slowSet(slow* percent / 100);
+            }
+        }
     }
 
     public void damageUp(int percent) {
@@ -407,6 +435,14 @@ public class TowerManager {
                     dmg = dmg + dmg * percent / 100;
                     t.setDmg(dmg);
                 }
+            }
+        }
+    }
+
+    public void setDamage(int dmg, int towerType) {
+        for (Tower t : towers) {
+            if (t.getTowerType() == towerType) {
+                    t.setDmg(dmg);
             }
         }
     }
@@ -459,7 +495,7 @@ public class TowerManager {
         }
     }
 
-    public void rangeUp(int percent, int towerType ) {
+    public void rangeUp(int percent, int towerType) {
         float range = 0;
         for (Tower t : towers) {
             if (t.getTowerType() == towerType) {
