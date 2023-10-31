@@ -198,13 +198,13 @@ public class LoadSave {
     }
 
     public static void CreateSaveFile() {
-        File newLvl = new File("res/textFile/save.txt");
-        if (newLvl.exists()) {
+        File saveFile = new File("res/textFile/save.txt");
+        if (saveFile.exists()) {
             System.out.println("file save.txt exists");
 
         } else {
             try {
-                newLvl.createNewFile();
+                saveFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }

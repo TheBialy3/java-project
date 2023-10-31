@@ -66,6 +66,8 @@ public class Upgrade extends GameScene implements SceneMethods {
                 g.setColor(new Color(161, 0, 0));
             }
             g.fillRect(40+(diff*(card.getId()%15)),50+(diff*(card.getId()/15)), tilePixelNumber,tilePixelNumber);
+            g.setColor(new Color(0, 26, 147));
+            g.drawString(String.valueOf(card.getId()), 40+(diff*(card.getId()%15))+25, 50+(diff*(card.getId()/15))+39);
             //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(card.getId()%15)), 50+(diff*(card.getId()/15)), tilePixelNumber, tilePixelNumber, null);
 
         }
