@@ -334,9 +334,9 @@ public class Constants {
                     case FROST_MAGE:
                         return 0.5f;
                     case POISON_TOWER:
-                        return 0.5f;
+                        return 0.8f;
                     case LASER_TOWER:
-                        return 0.2f;
+                        return 0.9f;
 //                    case POISON_TOWER:
 //                        return 0.5f;
                     default:

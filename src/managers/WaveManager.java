@@ -71,7 +71,7 @@ public class WaveManager {
 
     private void createWaves() {
         int waveNumberMax=100;
-        int enemyTypesNumber=8;
+        int enemyTypesNumber=9;
         //enemyTypesNumber=6;
         int ran;
         for(int waveNumber=0;waveNumber<waveNumberMax;waveNumber++){

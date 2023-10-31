@@ -36,11 +36,11 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Faster Bow", "Archer will now shoot faster", true, 0));
         cards.add(new Card(id++, "Stronger Bow", "Archer will now do more damage", true, 0));
         //CANNON id16↓
-        cards.add(new Card(id++, "Big Canon", "CANNON will now exploding in bigger radius", false, 1));
-        cards.add(new Card(id++, "Fast Canon", "CANNON will now shoot faster", false, 1));
-        cards.add(new Card(id++, "Strong Canon", "CANNON will now do more damage", false, 1));
+        cards.add(new Card(id++, "Big Canon", "CANNON will now exploding in bigger radius", true, 1));
+        cards.add(new Card(id++, "Fast Canon", "CANNON will now shoot faster", true, 1));
+        cards.add(new Card(id++, "Strong Canon", "CANNON will now do more damage", true, 1));
         //FROST_MAGE id19↓
-        cards.add(new Card(id++, "Global Frost Mage", "Frost Mage will now slow all enemies, but weaker", false, 2));
+        cards.add(new Card(id++, "Global Frost Mage", "Frost Mage will now slow all enemies, but weaker", true, 2));
         cards.add(new Card(id++, "Frost Damage", "Frost Mage will now deal a little magic damage", false, 2));
         cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", false, 2));
         //MINES_FACTORY id22↓

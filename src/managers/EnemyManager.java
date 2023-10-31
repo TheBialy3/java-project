@@ -340,5 +340,11 @@ public class EnemyManager {
     public void setCard12(boolean card12) {
         Card12 = card12;
     }
+//    public boolean isCard19() {
+//        return Card19;
+//    }
+//    public void setCard19(boolean card19) {
+//        Card19 = card19;
+//    }
 
 }
