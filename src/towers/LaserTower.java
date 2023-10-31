@@ -12,15 +12,15 @@ public class LaserTower extends Tower {
         switch (upgrade) {
             case 1:
                 this.addRange(100);
-                return;
+                break;
             case 2:
                 this.addDmg(1);
-                return;
+                break;
             case 3:
-                this.addDmg(1);
-                return;
+                this.addDmg(2);
+                break;
             default:
-                return ;
+                break;
         }
 
     }

@@ -12,15 +12,15 @@ public class BoomTower extends Tower {
         switch (upgrade) {
             case 1:
                 this.reduceCoolDown(10);
-                return;
+                break;
             case 2:
                 this.addDmg(5);
-                return;
+                break;
             case 3:
                 this.addRange(60);
-                return;
+                break;
             default:
-                return;
+                break;
         }
 
     }
@@ -33,8 +33,10 @@ public class BoomTower extends Tower {
                 return 150;
             case 3:
                 return 200;
+            default:
+                return 0;
         }
-        return 0;
+
     }
 
     public String getName(int upgrade) {

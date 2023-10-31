@@ -154,61 +154,81 @@ public class Playing extends GameScene implements SceneMethods {
             case 0: //for all
                 towerManager.damageUp(10);
                 towerManager.setCard0(true);
+                break;
             case 1:
                 towerManager.speedUp(10);
                 towerManager.setCard1(true);
+                break;
             case 2:
                 towerManager.rangeUp(10);
                 towerManager.setCard2(true);
+                break;
             case 3:
                 towerManager.upgradesTrue();
                 towerManager.setCard3(true);
+                break;
             case 4:
                 towerManager.speedUp(10);
                 towerManager.setCard4(true);
+                break;
             case 5:
                 towerManager.damageUp(10);
                 towerManager.setCard5(true);
+                break;
             case 6:
                 towerManager.durationUp(10);
                 towerManager.setCard6(true);
+                break;
             case 7:   //ENEMY
                 enemyManager.setCard7(true);
+                break;
             case 8:
                 enemyManager.setCard8(true);
+                break;
             case 9:
                 enemyManager.setCard9(true);
+                break;
             case 10:
                 enemyManager.setCard10(true);
+                break;
             case 11:
                 enemyManager.setCard11(true);
+                break;
             case 12:
                 enemyManager.setCard12(true);
                 towerManager.setCard12(true);
                 projectileManager.setCard12(true);
+                break;
             case 13:
                 projectileManager.setCard13(true);
+                break;
             case 14:
                 towerManager.setCard14(true);
                 towerManager.speedUp(30, ARCHER);
+                break;
             case 15:
                 towerManager.setCard15(true);
                 towerManager.damageUp(30, ARCHER);
+                break;
             case 16:////////
                 projectileManager.setCard16(true);
+                break;
             case 17:
                 towerManager.setCard17(true);
                 towerManager.speedUp(30, CANNON);
+                break;
             case 18:
                 towerManager.setCard18(true);
                 towerManager.damageUp(30, CANNON);
+                break;
             case 19:
                 towerManager.setCard19(true);
                 towerManager.rangeUp(3000, FROST_MAGE);
+                break;
             case 20:
-
+                break;
             case 21:
-
+                break;
             case 22:
             case 23:
             case 24:

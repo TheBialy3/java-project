@@ -12,15 +12,15 @@ public class MineFactory extends Tower {
         switch (upgrade) {
             case 1:
                 this.reduceCoolDown(10);
-                return;
+                break;
             case 2:
                 this.addDmg(5);
-                return;
+                break;
             case 3:
                 this.reduceCoolDown(20);
-                return;
+                break;
             default:
-                return ;
+                break;
         }
 
     }

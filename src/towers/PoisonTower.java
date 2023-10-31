@@ -13,13 +13,13 @@ public class PoisonTower extends Tower {
         switch (upgrade) {
             case 1:
                 this.addDmg(1);
-                return;
+                break;
             case 2:
                 this.addDuration(50);
-                return;
+                break;
             case 3:
                 this.addRange(100);
-                return;
+                break;
         }
         return;
     }
