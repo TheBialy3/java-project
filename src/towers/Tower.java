@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public abstract class Tower {
 
     private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
-    private float range, coolDown;
+    private float range, coolDown, slow;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
@@ -26,6 +26,7 @@ public abstract class Tower {
         setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
         this.road = road;
+        setDefaultSlow();
         setDefaultDuration();
         if (this.towerManager.isCard3()) {
             Upgrade1Activate();
@@ -43,6 +44,9 @@ public abstract class Tower {
         return worthGold;
     }
 
+    public float getSlow() {
+        return slow;
+    }
 
     public void updateTowerWorthGold(int worthGold) {
         this.worthGold += worthGold;
@@ -55,6 +59,20 @@ public abstract class Tower {
     public void resetCoolDown() {
         cdTick = 0;
     }
+
+    private void setDefaultSlow() {
+        if (Constants.TowerType.isSlow(towerType)) {
+            slow = Constants.TowerType.getPowerOfSlow(towerType);
+            if (towerManager.isCard6()) {
+                SlowSet(slow);
+            }
+        }
+    }
+
+    private void SlowSet(float slowSet) {
+        slow = slowSet;
+    }
+
 
     private void setDefaultDuration() {
         if (Constants.TowerType.isDOT(towerType)) {
@@ -102,6 +120,11 @@ public abstract class Tower {
         range = Constants.TowerType.getDefaultRange(towerType);
         if (towerManager.isCard2()) {
             RangeUp(10);
+        }
+        if (towerManager.isCard19()) {
+            if (this instanceof FrostMage) {
+                RangeUp(3000);
+            }
         }
     }
 

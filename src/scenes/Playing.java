@@ -134,7 +134,7 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    private void cardSelectStart() {////////////////////////////////////////////////////////////////////////////
+    private void cardSelectStart() {
         threeCards.clear();
         getCards();
         get3Cards();
@@ -203,7 +203,8 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard18(true);
                 towerManager.damageUp(30, CANNON);
             case 19:
-
+                towerManager.setCard19(true);
+                towerManager.rangeUp(3000, FROST_MAGE);
             case 20:
 
             case 21:

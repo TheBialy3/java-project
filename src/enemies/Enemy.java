@@ -21,7 +21,7 @@ public abstract class Enemy {
     protected float x, y;
     protected Rectangle bounds;
     protected int dmg, duration = 0;
-    protected int slowTickLimit = 3, slowTick = slowTickLimit;
+    protected int slowTickLimit = 10, slowTick = slowTickLimit;
     protected int maxHealth, health, mr, armor;
     protected int ID;
     protected int enemyType, damageType;
@@ -203,6 +203,7 @@ public abstract class Enemy {
     }
 
     public void slow(float powerOfSlow) {
+
         slowTick = 0;
         slowPower = powerOfSlow;
     }

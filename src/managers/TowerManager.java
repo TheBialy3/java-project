@@ -29,7 +29,7 @@ public class TowerManager {
     private int[][] road;
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
-    private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false;
+    private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -138,7 +138,11 @@ public class TowerManager {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-                    e.slow(Constants.TowerType.getPowerOfSlow(t.getTowerType()));
+                    float slow=t.getSlow();
+                    if(isCard19()){
+                        slow=0.7f;
+                    }
+                    e.slow(slow);
                 }
             }
         }
@@ -160,6 +164,10 @@ public class TowerManager {
                                     playing.beamEnemy(t, e);
                                 } else {
                                     playing.shootEnemy(t, e);
+                                }
+                                if (Constants.TowerType.isSlow(t.getTowerType())) {
+                                    float slow=t.getSlow();
+                                    e.slow(slow);
                                 }
                                 t.resetCoolDown();
                             }
@@ -322,6 +330,9 @@ public class TowerManager {
     public void setCard18(boolean card18) {
         Card18 = card18;
     }
+    public void setCard19(boolean card19) {
+        Card18 = card19;
+    }
 
     public boolean isCard0() {
         return Card0;
@@ -368,7 +379,9 @@ public class TowerManager {
     public boolean isCard18() {
         return Card18;
     }
-
+    public boolean isCard19() {
+        return Card19;
+    }
 
     public void damageUp(int percent) {
         int dmg = 0;
@@ -443,6 +456,17 @@ public class TowerManager {
             range = range + range * percent / 100;
             t.setRange(range);
 
+        }
+    }
+
+    public void rangeUp(int percent, int towerType ) {
+        float range = 0;
+        for (Tower t : towers) {
+            if (t.getTowerType() == towerType) {
+                range = t.getRange();
+                range = range + range * percent / 100;
+                t.setRange(range);
+            }
         }
     }
 
