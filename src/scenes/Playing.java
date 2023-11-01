@@ -210,7 +210,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard15(true);
                 towerManager.damageUp(30, ARCHER);
                 break;
-            case 16:////////
+            case 16:
                 projectileManager.setCard16(true);
                 break;
             case 17:
@@ -235,6 +235,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.slowChange(63, FROST_MAGE);//stronger slow
                 break;
             case 22:
+                projectileManager.setCard22(true);
             case 23:
             case 24:
             case 25:

@@ -28,7 +28,7 @@ public class ProjectileManager {
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
-    private boolean Card12 = false, Card13 = false, Card16 = false;
+    private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false;
 
 
     public ProjectileManager(Playing playing) {
@@ -275,7 +275,13 @@ public class ProjectileManager {
     }
 
     public void endOfWave() {
-        projectiles.clear();
+        if(Card22){
+            for(Projectile p:projectiles){
+                p.endOfTurn();
+            }
+        }else{
+            projectiles.clear();
+        }
     }
 
     public void crossbowNewProjectile(Tower t) {
@@ -304,9 +310,15 @@ public class ProjectileManager {
     public void setCard16(boolean card16) {
         Card16 = card16;
     }
+    public void setCard22(boolean card22) {
+        Card22 = card22;
+    }
 
     public boolean isCard13() {
         return Card13;
+    }
+    public boolean isCard22() {
+        return Card22;
     }
 
     public class Explosion {
