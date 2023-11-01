@@ -380,7 +380,7 @@ public class Constants {
                 case CANNON:
                     return 90;
                 case FROST_MAGE:
-                    return 0;
+                    return 5;
                 case MINES_FACTORY:
                     return 180;
                 case POISON_TOWER:
@@ -659,7 +659,7 @@ public class Constants {
             if (isSlow(towerType)) {
                 switch (towerType) {
                     case FROST_MAGE:
-                        return 3;
+                        return 10;
                     case POISON_TOWER:
                         return 300;
                     default:

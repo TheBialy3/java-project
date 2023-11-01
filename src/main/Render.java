@@ -33,6 +33,9 @@ public class Render {
             case UPGRADE:
                 game.getUpgrade().render(g);
                 break;
+            case BESTIARY:
+                game.getBestiary().render(g);
+                break;
         }
     }
 

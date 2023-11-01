@@ -71,6 +71,7 @@ public class Game extends JFrame implements Runnable {
         }catch (Exception e){
             System.out.println("hmmm");
             CreateSaveFile();
+            saveGame();
         }
     }
 

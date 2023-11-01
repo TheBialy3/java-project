@@ -5,6 +5,7 @@ import managers.ProjectileManager;
 import java.awt.geom.Point2D;
 
 import static helpz.Constants.ProjectileType.ARROW;
+import static helpz.Constants.ProjectileType.MINES;
 
 public class Projectile {
 
@@ -12,7 +13,7 @@ public class Projectile {
     private int id, projectileType, dmg, duration, damageType;
     private boolean active = true;
     private float speedx, speedy, rotation;
-    private int projectilePricing = 1;
+    private int projectilePricing = 1,projectileRoundsTimer = 1;
     private ProjectileManager projectileManager;
 
     public Projectile(float x, float y, float speedx, float speedy, int dmg, float rotation, int id, int projectileType, int damageType, ProjectileManager projectileManager) {
@@ -25,7 +26,8 @@ public class Projectile {
         this.projectileType = projectileType;
         this.damageType = damageType;
         this.projectileManager = projectileManager;
-        setProjectilePricing();
+        increaseProjectilePricing();
+        increaseProjectileRoundsTimer();
     }
 
 
@@ -37,7 +39,8 @@ public class Projectile {
         this.rotation = rotation;
         this.active = true;
         this.duration = duration;
-        setProjectilePricing();
+        increaseProjectilePricing();
+        increaseProjectileRoundsTimer();
     }
 
     public void reuse(float x, float y, float speedx, float speedy, int dmg, float rotation) {
@@ -47,7 +50,8 @@ public class Projectile {
         this.dmg = dmg;
         this.rotation = rotation;
         this.active = true;
-        setProjectilePricing();
+        increaseProjectilePricing();
+        increaseProjectileRoundsTimer();
     }
 
     public void move() {
@@ -96,10 +100,18 @@ public class Projectile {
         return damageType;
     }
 
-    public void setProjectilePricing() {
+    public void increaseProjectilePricing() {
         if (projectileManager.isCard13()) {
             if (projectileType == ARROW) {
                 projectilePricing++;
+            }
+        }
+    }
+
+    public void increaseProjectileRoundsTimer() {
+        if (projectileManager.isCard22()) {
+            if (projectileType == MINES) {
+                projectileRoundsTimer++;
             }
         }
     }
@@ -110,5 +122,13 @@ public class Projectile {
             return true;
         }
         return false;
+    }
+
+    public void endOfTurn() {
+        if(projectileRoundsTimer>1){
+            projectileRoundsTimer--;
+        }else {
+            setActive(false);
+        }
     }
 }

@@ -10,15 +10,15 @@ public class FrostMage extends Tower{
         switch (upgrade) {
             case 1:
                 this.addRange(40);
-                return;
+                break;
             case 2:
                 this.addRange(50);
-                return;
+                break;
             case 3:
                 this.addRange(60);
-                return;
+                break;
             default:
-                return ;
+                break;
         }
     }
 

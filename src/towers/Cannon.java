@@ -11,15 +11,17 @@ public class Cannon extends Tower {
         switch (upgrade) {
             case 1:
                 this.reduceCoolDown(15);
-                return;
+                break;
             case 2:
                 this.addDmg(5);
-                return;
+                break;
             case 3:
                 this.addDmg(10);
-                return;
+                break;
+            default:
+                break;
         }
-        return;
+
     }
 
     public int getCost(int upgrade) {
