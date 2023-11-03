@@ -142,6 +142,11 @@ public abstract class Tower {
 
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
+        if(towerManager.isCard20()){//to add more dmg
+            if (this instanceof FrostMage) {
+                dmg=1;
+            }
+        }
         if (towerManager.isCard0()) {
             damageUp(10);
         }
@@ -158,9 +163,9 @@ public abstract class Tower {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard20()){
-            if (this instanceof FrostMage) {
-                damageUp(1);
+        if(towerManager.isCard24()){
+            if (this instanceof MineFactory) {
+                damageUp(30);
             }
         }
     }
