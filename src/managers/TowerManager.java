@@ -31,6 +31,7 @@ public class TowerManager {
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
 
+    private boolean Card23 = false,Card24 = false;
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -201,7 +202,11 @@ public class TowerManager {
         if (a != 0) {
             if (!playing.isAllEnemyDead()) {
                 if (t.isCoolDownOver()) {
-                    for (int mineNumber = 2; mineNumber >= 0; mineNumber--) {
+                    int mineNumber = 3;
+                    if(Card23){
+                        mineNumber*=2;
+                    }
+                    for (int i =mineNumber; i > 0; i--) {
                         arr = t.getArr();
                         ran = random.nextInt(a);
                         switch (arr.get(ran)) {
@@ -346,6 +351,13 @@ public class TowerManager {
     public void setCard21(boolean card21) {
         Card21 = card21;
     }
+    public void setCard23(boolean card23) {
+        Card23 = card23;
+    }
+
+    public void setCard24(boolean card24) {
+        Card24 = card24;
+    }
 
     public boolean isCard0() {
         return Card0;
@@ -400,6 +412,8 @@ public class TowerManager {
     }
     public boolean isCard21() {
         return Card21;
+    }public boolean isCard24() {
+        return Card24;
     }
     public void slowChange(int percent, int towerType) {
         float slow=0;

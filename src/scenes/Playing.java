@@ -238,8 +238,11 @@ public class Playing extends GameScene implements SceneMethods {
                 projectileManager.setCard22(true);
                 break;
             case 23:
+                towerManager.setCard23(true);
                 break;
             case 24:
+                towerManager.setCard24(true);
+                towerManager.damageUp(30, MINES_FACTORY);
                 break;
             case 25:
                 break;
