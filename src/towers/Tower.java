@@ -88,6 +88,11 @@ public abstract class Tower {
             if (towerManager.isCard6()) {
                 DurationUp(10);
             }
+            if (towerManager.isCard27()) {
+                if (this instanceof PoisonTower) {
+                    DurationUp(30);
+                }
+            }
         }
     }
 
@@ -142,7 +147,7 @@ public abstract class Tower {
 
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
-        if(towerManager.isCard20()){//to add more dmg
+        if(towerManager.isCard20()){//to add more dmg it go 1st
             if (this instanceof FrostMage) {
                 dmg=1;
             }
@@ -166,6 +171,11 @@ public abstract class Tower {
         if(towerManager.isCard24()){
             if (this instanceof MineFactory) {
                 damageUp(30);
+            }
+        }
+        if(towerManager.isCard26()){
+            if (this instanceof PoisonTower) {
+                damageUp(100);
             }
         }
     }

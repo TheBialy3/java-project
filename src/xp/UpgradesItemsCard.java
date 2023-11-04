@@ -50,7 +50,7 @@ public class UpgradesItemsCard {
         //POISON_TOWER id25↓
         cards.add(new Card(id++, "Bigger Potions", "Poison Tower will now splash in bigger radius", true, 4));
         cards.add(new Card(id++, "Stronger Potions", "Poison Tower will now do more damage", true, 4));
-        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", true, 4));
+        cards.add(new Card(id++, "Longer Poison Effect", "Poison Tower will now least longer", true, 4));
         //BOOM_VOLCANO id28↓
         cards.add(new Card(id++, "Volcano Aftershock", "Volcano will now exploding 2 times", true, 5));
         cards.add(new Card(id++, "Faster Volcano Eruptions", "Volcano will now exploding faster", true, 5));
@@ -76,7 +76,7 @@ public class UpgradesItemsCard {
         //locked id43↓
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
-
+        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", true, 4));
         System.out.println(id+"locked cards");
 
     }

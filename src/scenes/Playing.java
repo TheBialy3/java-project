@@ -245,10 +245,15 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.damageUp(30, MINES_FACTORY);
                 break;
             case 25:
+                projectileManager.setCard25(true);
                 break;
             case 26:
+                towerManager.setCard26(true);
+                towerManager.damageUp(100, POISON_TOWER);
                 break;
             case 27:
+                towerManager.durationUp(30,POISON_TOWER);
+                towerManager.setCard27(true);
                 break;
             case 28:
                 break;
