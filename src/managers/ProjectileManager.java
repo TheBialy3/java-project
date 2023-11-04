@@ -28,7 +28,7 @@ public class ProjectileManager {
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
-    private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false;
+    private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false, Card25 = false;
 
 
     public ProjectileManager(Playing playing) {
@@ -181,6 +181,11 @@ public class ProjectileManager {
                         radiusExplosion = radiusExplosion * 15 / 10;
                     }
                 }
+                if (Card25) {
+                    if (p.getProjectileType() == POISON_POTION) {
+                        radiusExplosion = radiusExplosion * 15 / 10;
+                    }
+                }
                 if (realDist <= radiusExplosion) {
                     if (p.getProjectileType() == POISON_POTION) {
                         e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
@@ -312,6 +317,9 @@ public class ProjectileManager {
     }
     public void setCard22(boolean card22) {
         Card22 = card22;
+    }
+    public void setCard25(boolean card25) {
+        Card25 = card25;
     }
 
     public boolean isCard13() {
