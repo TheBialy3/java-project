@@ -30,7 +30,7 @@ public class TowerManager {
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
-    private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false;
+    private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
 
 
     public TowerManager(Playing playing) {
@@ -112,25 +112,34 @@ public class TowerManager {
             } else if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
                 if (Card20) {
-                    hurtAllEnemyIfClose(t);
+                    hurtAllEnemyIfClose(t, 100);
                 }
             } else if (t.getTowerType() == BOOM_VOLCANO) {
-                if (t.isCoolDownOver()) {
-                    hurtAllEnemyIfClose(t);
-                    t.resetCoolDown();
-                }
+                boomTowerAtack(t);
             } else {
                 attackEnemyIfClose(t);
             }
         }
     }
 
+    private void boomTowerAtack(Tower t) {
+        if (t.isCoolDownOver()) {
+            hurtAllEnemyIfClose(t, 100);
+            t.resetCoolDown();
+        }
+        if (Card28) {
+            if (t.isSomeCoolDownOver()) {
+                hurtAllEnemyIfClose(t, 50);
+            }
+        }
+    }
 
-    private void hurtAllEnemyIfClose(Tower t) {
+
+    private void hurtAllEnemyIfClose(Tower t, int percent) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (isEnemyInRange(t, e)) {
-                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                    e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
                 } else {
                     //nothing
                 }
@@ -261,11 +270,22 @@ public class TowerManager {
     }
 
     public void draw(Graphics g) {
+
         for (Tower t : towers) {
             g.drawImage(towerImg[t.getTowerType()], t.getX(), t.getY(), null);
             if (t.getTowerType() == FROST_MAGE) {
                 g.setColor(new Color(0, 254, 255, 38));
                 g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+            }
+            if (t.getTowerType() == BOOM_VOLCANO) {
+                if (t.getCdTick()<=4) {
+                    g.setColor(new Color(255, 0, 0, 38));
+                    g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+                }if(Card28){
+                if (t.getCdTick()<=11&&t.getCdTick()>7) {
+                    g.setColor(new Color(255, 0, 0, 38));
+                    g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+                }}
             }
         }
     }
@@ -365,8 +385,21 @@ public class TowerManager {
     public void setCard26(boolean card26) {
         Card26 = card26;
     }
+
     public void setCard27(boolean card27) {
         Card27 = card27;
+    }
+
+    public void setCard28(boolean card28) {
+        Card28 = card28;
+    }
+
+    public void setCard29(boolean card29) {
+        Card29 = card29;
+    }
+
+    public void setCard30(boolean card30) {
+        Card30 = card30;
     }
 
     public boolean isCard0() {
@@ -432,8 +465,17 @@ public class TowerManager {
     public boolean isCard26() {
         return Card26;
     }
+
     public boolean isCard27() {
         return Card27;
+    }
+
+    public boolean isCard29() {
+        return Card29;
+    }
+
+    public boolean isCard30() {
+        return Card30;
     }
 
     public void slowChange(int percent, int towerType) {

@@ -15,6 +15,8 @@ public abstract class Tower {
     private TowerManager towerManager;
 
 
+
+
     public Tower(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
         this.x = x;
         this.y = y;
@@ -54,6 +56,14 @@ public abstract class Tower {
 
     public boolean isCoolDownOver() {
         return cdTick >= coolDown;
+    }
+
+    public int getCdTick() {
+        return cdTick;
+    }
+
+    public boolean isSomeCoolDownOver() {
+        return cdTick == 7;
     }
 
     public void resetCoolDown() {
@@ -119,6 +129,11 @@ public abstract class Tower {
                 CoolDown(30);
             }
         }
+        if (towerManager.isCard29()) {
+            if (this instanceof BoomTower) {
+                CoolDown(30);
+            }
+        }
     }
 
     private void CoolDown(int percent) {
@@ -176,6 +191,11 @@ public abstract class Tower {
         if(towerManager.isCard26()){
             if (this instanceof PoisonTower) {
                 damageUp(100);
+            }
+        }
+        if(towerManager.isCard30()){
+            if (this instanceof BoomTower) {
+                damageUp(30);
             }
         }
     }
