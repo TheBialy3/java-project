@@ -134,6 +134,11 @@ public abstract class Tower {
                 CoolDown(30);
             }
         }
+        if (towerManager.isCard32()) {
+            if (this instanceof Crossbow) {
+                CoolDown(30);
+            }
+        }
     }
 
     private void CoolDown(int percent) {
@@ -195,6 +200,11 @@ public abstract class Tower {
         }
         if(towerManager.isCard30()){
             if (this instanceof BoomTower) {
+                damageUp(30);
+            }
+        }
+        if(towerManager.isCard31()){
+            if (this instanceof Crossbow) {
                 damageUp(30);
             }
         }
