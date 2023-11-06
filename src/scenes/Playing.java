@@ -275,6 +275,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.speedUp(30, CROSSBOW);
                 break;
             case 33:
+                projectileManager.setCard33(true);
                 break;
             case 34:
                 break;
