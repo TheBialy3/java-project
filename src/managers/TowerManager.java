@@ -31,7 +31,7 @@ public class TowerManager {
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
     private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
-
+    private boolean Card31 = false,Card32 = false;
 
     public TowerManager(Playing playing) {
         this.playing = playing;
@@ -278,14 +278,16 @@ public class TowerManager {
                 g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
             }
             if (t.getTowerType() == BOOM_VOLCANO) {
-                if (t.getCdTick()<=4) {
+                if (t.getCdTick() <= 4) {
                     g.setColor(new Color(255, 0, 0, 38));
                     g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
-                }if(Card28){
-                if (t.getCdTick()<=11&&t.getCdTick()>7) {
-                    g.setColor(new Color(255, 0, 0, 38));
-                    g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
-                }}
+                }
+                if (Card28) {
+                    if (t.getCdTick() <= 11 && t.getCdTick() > 7) {
+                        g.setColor(new Color(255, 0, 0, 38));
+                        g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+                    }
+                }
             }
         }
     }
@@ -402,6 +404,13 @@ public class TowerManager {
         Card30 = card30;
     }
 
+    public void setCard31(boolean card31) {
+        Card31 = card31;
+    }
+    public void setCard32(boolean card32) {
+        Card32 = card32;
+    }
+
     public boolean isCard0() {
         return Card0;
     }
@@ -476,6 +485,13 @@ public class TowerManager {
 
     public boolean isCard30() {
         return Card30;
+    }
+
+    public boolean isCard31() {
+        return Card31;
+    }
+    public boolean isCard32() {
+        return Card32;
     }
 
     public void slowChange(int percent, int towerType) {
