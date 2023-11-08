@@ -14,7 +14,8 @@ public class Constants {
         public static final int BOMB = 1;
         public static final int MINES = 2;
         public static final int POISON_POTION = 3;
-        public static final int SHORT_BEEM = 4;
+        public static final int SHORT_BEM = 4;
+        public static final int BULLET = 5;
 
 
         public static float getSpeed(int projectileType) {
@@ -23,12 +24,14 @@ public class Constants {
                     return 8f;
                 case BOMB:
                     return 4f;
-                case SHORT_BEEM:
+                case SHORT_BEM:
                     return 10f;
                 case MINES:
                     return 3f;
                 case POISON_POTION:
                     return 5f;
+                case BULLET:
+                    return 9f;
             }
             return 0;
         }
@@ -39,12 +42,14 @@ public class Constants {
                     return true;
                 case BOMB:
                     return false;
-                case SHORT_BEEM:
+                case SHORT_BEM:
                     return true;
                 case MINES:
                     return false;
                 case POISON_POTION:
                     return false;
+                case BULLET:
+                    return true;
             }
             return false;
         }
@@ -55,12 +60,14 @@ public class Constants {
                     return false;
                 case BOMB:
                     return true;
-                case SHORT_BEEM:
+                case SHORT_BEM:
                     return false;
                 case MINES:
                     return false;
                 case POISON_POTION:
                     return true;
+                case BULLET:
+                    return false;
             }
             return false;
         }
@@ -85,12 +92,14 @@ public class Constants {
                     return BOTH;
                 case BOMB:
                     return WALKING;
-                case SHORT_BEEM:
+                case SHORT_BEM:
                     return WALKING;
                 case MINES:
                     return WALKING;
                 case POISON_POTION:
                     return WALKING;
+                case BULLET:
+                    return BOTH;
             }
             return 0;
         }

@@ -28,7 +28,8 @@ public class ProjectileManager {
     private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
-    private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false, Card25 = false;
+    private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false, Card25 = false, Card33 = false;
+    private boolean Card36 = false;
 
 
     public ProjectileManager(Playing playing) {
@@ -42,10 +43,10 @@ public class ProjectileManager {
         for (int i = 0; i < 5; i++) {
             proj_imgs[i] = atlas.getSubimage(0 + i * tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
-        implortExplosion(atlas);
+        importExplosion(atlas);
     }
 
-    private void implortExplosion(BufferedImage atlas) {
+    private void importExplosion(BufferedImage atlas) {
         explo_imgs = new BufferedImage[10];
         for (int i = 0; i < 10; i++) {
             explo_imgs[i] = atlas.getSubimage(i * tilePixelNumber, 26 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
@@ -170,30 +171,34 @@ public class ProjectileManager {
     }
 
     private void explodeOnEnemys(Projectile p, ArrayList<Enemy> enemies) {
-        for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                float xDist = Math.abs(p.getPos().x - e.getX());
-                float yDist = Math.abs(p.getPos().y - e.getY());
-                float realDist = (float) Math.hypot(xDist, yDist);
-                float radiusExplosion = Constants.ProjectileType.getRadiusExplosion(p.getProjectileType());
-                if (Card16) {
-                    if (p.getProjectileType() == BOMB) {
-                        radiusExplosion = radiusExplosion * 15 / 10;
+        try {
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    float xDist = Math.abs(p.getPos().x - e.getX());
+                    float yDist = Math.abs(p.getPos().y - e.getY());
+                    float realDist = (float) Math.hypot(xDist, yDist);
+                    float radiusExplosion = Constants.ProjectileType.getRadiusExplosion(p.getProjectileType());
+                    if (Card16) {
+                        if (p.getProjectileType() == BOMB) {
+                            radiusExplosion = radiusExplosion * 15 / 10;
+                        }
                     }
-                }
-                if (Card25) {
-                    if (p.getProjectileType() == POISON_POTION) {
-                        radiusExplosion = radiusExplosion * 15 / 10;
+                    if (Card25) {
+                        if (p.getProjectileType() == POISON_POTION) {
+                            radiusExplosion = radiusExplosion * 15 / 10;
+                        }
                     }
-                }
-                if (realDist <= radiusExplosion) {
-                    if (p.getProjectileType() == POISON_POTION) {
-                        e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
-                    } else {
-                        e.hurt(p.getDmg(), p.getDamageType());
+                    if (realDist <= radiusExplosion) {
+                        if (p.getProjectileType() == POISON_POTION) {
+                            e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
+                        } else {
+                            e.hurt(p.getDmg(), p.getDamageType());
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("ConcurrentModificationException explodeOnEnemys");
         }
     }
 
@@ -273,18 +278,20 @@ public class ProjectileManager {
             case POISON_TOWER:
                 return POISON_POTION;
             case CROSSBOW:
-                return SHORT_BEEM;
+                return SHORT_BEM;
+            case MOUSE_FOLLOWS_TOWER:
+                return BULLET;
             default:
                 return 0;
         }
     }
 
     public void endOfWave() {
-        if(Card22){
-            for(Projectile p:projectiles){
+        if (Card22) {
+            for (Projectile p : projectiles) {
                 p.endOfTurn();
             }
-        }else{
+        } else {
             projectiles.clear();
         }
     }
@@ -302,6 +309,27 @@ public class ProjectileManager {
             projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType()), this));
 
         }
+        if (Card33) {
+            float negX = 0.85f;
+            float negY = 0.85f;
+            for (int i = 0; i < 4; i++) {
+                if (i == 0) {
+                    negX = -1;
+                    negY = -1;
+                } else if (i == 1) {
+                    negX = -1;
+                    negY = 1;
+                } else if (i == 2) {
+                    negX = 1;
+                    negY = 1;
+                } else {
+                    negX = 1;
+                    negY = -1;
+                }
+                projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * negY, Speed * negX, t.getDmg(), 90 * i + 45, proj_id++, type, getDmgType(t.getTowerType()), this));
+
+            }
+        }
     }
 
     public void setCard12(boolean card12) {
@@ -315,18 +343,31 @@ public class ProjectileManager {
     public void setCard16(boolean card16) {
         Card16 = card16;
     }
+
     public void setCard22(boolean card22) {
         Card22 = card22;
     }
+
     public void setCard25(boolean card25) {
         Card25 = card25;
+    }
+
+    public void setCard33(boolean card33) {
+        Card33 = card33;
+    }
+    public void setCard36(boolean card36) {
+        Card36 = card36;
     }
 
     public boolean isCard13() {
         return Card13;
     }
+
     public boolean isCard22() {
         return Card22;
+    }
+    public boolean isCard36() {
+        return Card36;
     }
 
     public class Explosion {
