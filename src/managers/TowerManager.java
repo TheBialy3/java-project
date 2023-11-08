@@ -31,8 +31,8 @@ public class TowerManager {
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
     private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
-    private boolean Card31 = false, Card32 = false;
-
+    private boolean Card31 = false, Card32 = false, Card34 = false, Card35 = false, Card37 = false, Card38 = false;
+    private boolean Card39 = false;
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -419,6 +419,22 @@ public class TowerManager {
     public void setCard32(boolean card32) {
         Card32 = card32;
     }
+    public void setCard34(boolean card34) {
+        Card34 = card34;
+    }
+    public void setCard35(boolean card35) {
+        Card35 = card35;
+    }
+    public void setCard37(boolean card37) {
+        Card37 = card37;
+    }
+    public void setCard38(boolean card38) {
+        Card38 = card38;
+    }
+
+    public void setCard39(boolean card39) {
+        Card39 = card39;
+    }
 
     public boolean isCard0() {
         return Card0;
@@ -502,6 +518,18 @@ public class TowerManager {
 
     public boolean isCard32() {
         return Card32;
+    }
+    public boolean isCard34() {
+        return Card34;
+    }
+    public boolean isCard35() {
+        return Card35;
+    }
+    public boolean isCard37() {
+        return Card37;
+    }
+    public boolean isCard38() {
+        return Card38;
     }
 
     public void slowChange(int percent, int towerType) {

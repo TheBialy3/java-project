@@ -139,6 +139,16 @@ public abstract class Tower {
                 CoolDown(30);
             }
         }
+        if (towerManager.isCard34()) {
+            if (this instanceof MauseFollowsTower) {
+                CoolDown(30);
+            }
+        }
+        if (towerManager.isCard38()) {
+            if (this instanceof Sniper) {
+                CoolDown(30);
+            }
+        }
     }
 
     private void CoolDown(int percent) {
@@ -205,6 +215,16 @@ public abstract class Tower {
         }
         if(towerManager.isCard31()){
             if (this instanceof Crossbow) {
+                damageUp(30);
+            }
+        }
+        if(towerManager.isCard35()){
+            if (this instanceof MauseFollowsTower) {
+                damageUp(30);
+            }
+        }
+        if(towerManager.isCard37()){
+            if (this instanceof Sniper) {
                 damageUp(30);
             }
         }

@@ -278,16 +278,26 @@ public class Playing extends GameScene implements SceneMethods {
                 projectileManager.setCard33(true);
                 break;
             case 34:
+                towerManager.setCard34(true);
+                towerManager.speedUp(30, MOUSE_FOLLOWS_TOWER);
                 break;
             case 35:
+                towerManager.damageUp(30,MOUSE_FOLLOWS_TOWER);
+                towerManager.setCard35(true);
                 break;
             case 36:
+                projectileManager.setCard36(true);
                 break;
             case 37:
+                towerManager.damageUp(30,SNIPER);
+                towerManager.setCard37(true);
                 break;
             case 38:
+                towerManager.setCard38(true);
+                towerManager.speedUp(30, SNIPER);
                 break;
             case 39:
+                towerManager.setCard39(true);
                 break;
             case 40:
                 break;

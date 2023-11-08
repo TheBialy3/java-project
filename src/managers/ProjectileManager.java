@@ -29,6 +29,7 @@ public class ProjectileManager {
     private BufferedImage[] proj_imgs, explo_imgs, splash_imgs;
     private int proj_id = 0, ranx, rany, tilePixelNumber = 64, halfTilePixelNumber = 32;
     private boolean Card12 = false, Card13 = false, Card16 = false, Card22 = false, Card25 = false, Card33 = false;
+    private boolean Card36 = false;
 
 
     public ProjectileManager(Playing playing) {
@@ -170,30 +171,34 @@ public class ProjectileManager {
     }
 
     private void explodeOnEnemys(Projectile p, ArrayList<Enemy> enemies) {
-        for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                float xDist = Math.abs(p.getPos().x - e.getX());
-                float yDist = Math.abs(p.getPos().y - e.getY());
-                float realDist = (float) Math.hypot(xDist, yDist);
-                float radiusExplosion = Constants.ProjectileType.getRadiusExplosion(p.getProjectileType());
-                if (Card16) {
-                    if (p.getProjectileType() == BOMB) {
-                        radiusExplosion = radiusExplosion * 15 / 10;
+        try {
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    float xDist = Math.abs(p.getPos().x - e.getX());
+                    float yDist = Math.abs(p.getPos().y - e.getY());
+                    float realDist = (float) Math.hypot(xDist, yDist);
+                    float radiusExplosion = Constants.ProjectileType.getRadiusExplosion(p.getProjectileType());
+                    if (Card16) {
+                        if (p.getProjectileType() == BOMB) {
+                            radiusExplosion = radiusExplosion * 15 / 10;
+                        }
                     }
-                }
-                if (Card25) {
-                    if (p.getProjectileType() == POISON_POTION) {
-                        radiusExplosion = radiusExplosion * 15 / 10;
+                    if (Card25) {
+                        if (p.getProjectileType() == POISON_POTION) {
+                            radiusExplosion = radiusExplosion * 15 / 10;
+                        }
                     }
-                }
-                if (realDist <= radiusExplosion) {
-                    if (p.getProjectileType() == POISON_POTION) {
-                        e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
-                    } else {
-                        e.hurt(p.getDmg(), p.getDamageType());
+                    if (realDist <= radiusExplosion) {
+                        if (p.getProjectileType() == POISON_POTION) {
+                            e.setPoisonOn(p.getDmg(), p.getDuration(), p.getDamageType());
+                        } else {
+                            e.hurt(p.getDmg(), p.getDamageType());
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("ConcurrentModificationException explodeOnEnemys");
         }
     }
 
@@ -273,7 +278,9 @@ public class ProjectileManager {
             case POISON_TOWER:
                 return POISON_POTION;
             case CROSSBOW:
-                return SHORT_BEEM;
+                return SHORT_BEM;
+            case MOUSE_FOLLOWS_TOWER:
+                return BULLET;
             default:
                 return 0;
         }
@@ -310,16 +317,16 @@ public class ProjectileManager {
                     negX = -1;
                     negY = -1;
                 } else if (i == 1) {
-                    negX = 1;
-                    negY = -1;
-                } else if (i == 2) {
                     negX = -1;
+                    negY = 1;
+                } else if (i == 2) {
+                    negX = 1;
                     negY = 1;
                 } else {
                     negX = 1;
-                    negY = 1;
+                    negY = -1;
                 }
-                projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * negY, Speed * negX, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType()), this));
+                projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * negY, Speed * negX, t.getDmg(), 90 * i + 45, proj_id++, type, getDmgType(t.getTowerType()), this));
 
             }
         }
@@ -348,6 +355,9 @@ public class ProjectileManager {
     public void setCard33(boolean card33) {
         Card33 = card33;
     }
+    public void setCard36(boolean card36) {
+        Card36 = card36;
+    }
 
     public boolean isCard13() {
         return Card13;
@@ -355,6 +365,9 @@ public class ProjectileManager {
 
     public boolean isCard22() {
         return Card22;
+    }
+    public boolean isCard36() {
+        return Card36;
     }
 
     public class Explosion {

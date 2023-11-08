@@ -4,8 +4,7 @@ import managers.ProjectileManager;
 
 import java.awt.geom.Point2D;
 
-import static helpz.Constants.ProjectileType.ARROW;
-import static helpz.Constants.ProjectileType.MINES;
+import static helpz.Constants.ProjectileType.*;
 
 public class Projectile {
 
@@ -103,6 +102,11 @@ public class Projectile {
     public void increaseProjectilePricing() {
         if (projectileManager.isCard13()) {
             if (projectileType == ARROW) {
+                projectilePricing++;
+            }
+        }
+        if (projectileManager.isCard36()) {
+            if (projectileType == BULLET) {
                 projectilePricing++;
             }
         }
