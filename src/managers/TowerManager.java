@@ -32,7 +32,8 @@ public class TowerManager {
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
     private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
     private boolean Card31 = false, Card32 = false, Card34 = false, Card35 = false, Card37 = false, Card38 = false;
-    private boolean Card39 = false;
+    private boolean Card39 = false,Card40 = false,Card41 = false;
+
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -174,14 +175,18 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         try {
+            Enemy hurted = null;
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
-                    if (isTowerTargetingEnemy(t, e)) {
+                    if (t.getTowerType() == SNIPER) {
+                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                        if (Card39) {
+                            hurted = e;
+                        }
+                    } else if (isTowerTargetingEnemy(t, e)) {
                         if (isEnemyInRange(t, e)) {
                             if (t.isCoolDownOver()) {
-                                if (t.getTowerType() == SNIPER) {
-                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                } else if (t.getTowerType() == LASER_TOWER) {
+                                if (t.getTowerType() == LASER_TOWER) {
                                     e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                                     playing.beamEnemy(t, e);
                                 } else {
@@ -193,6 +198,15 @@ public class TowerManager {
                                 }
                                 t.resetCoolDown();
                             }
+                        }
+                    }
+                }
+            }
+            if (t.getTowerType() == SNIPER && Card39) {
+                for (Enemy e : playing.getEnemyManager().getEnemies()) {
+                    if (e.isAlive()) {
+                        if (e != hurted) {
+                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                         }
                     }
                 }
@@ -419,21 +433,31 @@ public class TowerManager {
     public void setCard32(boolean card32) {
         Card32 = card32;
     }
+
     public void setCard34(boolean card34) {
         Card34 = card34;
     }
+
     public void setCard35(boolean card35) {
         Card35 = card35;
     }
+
     public void setCard37(boolean card37) {
         Card37 = card37;
     }
+
     public void setCard38(boolean card38) {
         Card38 = card38;
     }
 
     public void setCard39(boolean card39) {
         Card39 = card39;
+    }
+    public void setCard40(boolean card40) {
+        Card40 = card40;
+    }
+    public void setCard41(boolean card41) {
+        Card41 = card41;
     }
 
     public boolean isCard0() {
@@ -519,15 +543,19 @@ public class TowerManager {
     public boolean isCard32() {
         return Card32;
     }
+
     public boolean isCard34() {
         return Card34;
     }
+
     public boolean isCard35() {
         return Card35;
     }
+
     public boolean isCard37() {
         return Card37;
     }
+
     public boolean isCard38() {
         return Card38;
     }

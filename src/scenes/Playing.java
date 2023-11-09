@@ -300,10 +300,14 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard39(true);
                 break;
             case 40:
+                towerManager.setCard40(true);
                 break;
             case 41:
+                towerManager.rangeUp(20,LASER_TOWER);
+                towerManager.setCard41(true);
                 break;
             case 42:
+
                 break;
             case 43:
                 break;
