@@ -169,6 +169,11 @@ public abstract class Tower {
                 RangeUp(3000);
             }
         }
+        if (towerManager.isCard41()) {
+            if (this instanceof LaserTower) {
+                RangeUp(20);
+            }
+        }
     }
 
     private void RangeUp(int percent) {
@@ -225,6 +230,11 @@ public abstract class Tower {
         }
         if(towerManager.isCard37()){
             if (this instanceof Sniper) {
+                damageUp(30);
+            }
+        }
+        if(towerManager.isCard42()){
+            if (this instanceof LaserTower) {
                 damageUp(30);
             }
         }

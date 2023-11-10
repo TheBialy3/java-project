@@ -307,7 +307,8 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard41(true);
                 break;
             case 42:
-
+                towerManager.damageUp(30,LASER_TOWER);
+                towerManager.setCard42(true);
                 break;
             case 43:
                 break;
