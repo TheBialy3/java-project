@@ -32,7 +32,8 @@ public class TowerManager {
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
     private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
     private boolean Card31 = false, Card32 = false, Card34 = false, Card35 = false, Card37 = false, Card38 = false;
-    private boolean Card39 = false;
+    private boolean Card39 = false, Card40 = true, Card41 = false, Card42 = false;
+
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -174,16 +175,52 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         try {
-            for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                if (e.isAlive()) {
-                    if (isTowerTargetingEnemy(t, e)) {
-                        if (isEnemyInRange(t, e)) {
-                            if (t.isCoolDownOver()) {
-                                if (t.getTowerType() == SNIPER) {
+            Enemy hurted = null;
+            if (Card39 || Card40) {
+                for (Enemy e : playing.getEnemyManager().getEnemies()) {
+                    if (t.isCoolDownOver()) {
+                        if (e.isAlive()) {
+                            if (t.getTowerType() == SNIPER) {
+                                if (hurted == null) {
                                     e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                } else if (t.getTowerType() == LASER_TOWER) {
+                                    hurted = e;
+                                }
+                            }
+                            if (t.getTowerType() == LASER_TOWER) {
+                                if (hurted == null) {
                                     e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                                     playing.beamEnemy(t, e);
+                                    hurted = e;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (Enemy e : playing.getEnemyManager().getEnemies()) {
+                if (t.isCoolDownOver()) {
+                    if (e.isAlive()) {
+                        if (t.getTowerType() == SNIPER) {
+                            if (Card39) {
+                                if (e != hurted) {
+                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                }
+                            } else {
+                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                            }
+                        } else if (isTowerTargetingEnemy(t, e)) {
+                            if (isEnemyInRange(t, e)) {
+                                if (t.getTowerType() == LASER_TOWER) {
+                                    if (Card40) {////////////////////////////////////////
+                                        if (e != hurted) {
+                                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                            playing.beamEnemy(t, e);
+                                        }
+                                    } else {
+                                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                        playing.beamEnemy(t, e);
+                                    }
+
                                 } else {
                                     playing.shootEnemy(t, e);
                                 }
@@ -197,6 +234,7 @@ public class TowerManager {
                     }
                 }
             }
+
         } catch (Exception e) {
             System.out.println("ConcurrentModificationException attackEnemyIfClose");
         }
@@ -419,21 +457,37 @@ public class TowerManager {
     public void setCard32(boolean card32) {
         Card32 = card32;
     }
+
     public void setCard34(boolean card34) {
         Card34 = card34;
     }
+
     public void setCard35(boolean card35) {
         Card35 = card35;
     }
+
     public void setCard37(boolean card37) {
         Card37 = card37;
     }
+
     public void setCard38(boolean card38) {
         Card38 = card38;
     }
 
     public void setCard39(boolean card39) {
         Card39 = card39;
+    }
+
+    public void setCard40(boolean card40) {
+        Card40 = card40;
+    }
+
+    public void setCard41(boolean card41) {
+        Card41 = card41;
+    }
+
+    public void setCard42(boolean card42) {
+        Card42 = card42;
     }
 
     public boolean isCard0() {
@@ -519,17 +573,29 @@ public class TowerManager {
     public boolean isCard32() {
         return Card32;
     }
+
     public boolean isCard34() {
         return Card34;
     }
+
     public boolean isCard35() {
         return Card35;
     }
+
     public boolean isCard37() {
         return Card37;
     }
+
     public boolean isCard38() {
         return Card38;
+    }
+
+    public boolean isCard41() {
+        return Card41;
+    }
+
+    public boolean isCard42() {
+        return Card42;
     }
 
     public void slowChange(int percent, int towerType) {
