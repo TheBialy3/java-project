@@ -32,8 +32,9 @@ public class TowerManager {
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
     private boolean Card23 = false, Card24 = false, Card26 = false, Card27 = false, Card28 = false, Card29 = false, Card30 = false;
     private boolean Card31 = false, Card32 = false, Card34 = false, Card35 = false, Card37 = false, Card38 = false;
-    private boolean Card39 = false, Card40 = true, Card41 = false, Card42 = false;
+    private boolean Card39 = false, Card40 = false, Card41 = false, Card42 = false;
 
+    ///////////////////////////
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -175,52 +176,22 @@ public class TowerManager {
 
     private void attackEnemyIfClose(Tower t) {
         try {
-            Enemy hurted = null;
-            if (Card39 || Card40) {
-                for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                    if (t.isCoolDownOver()) {
-                        if (e.isAlive()) {
-                            if (t.getTowerType() == SNIPER) {
-                                if (hurted == null) {
-                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                    hurted = e;
-                                }
-                            }
-                            if (t.getTowerType() == LASER_TOWER) {
-                                if (hurted == null) {
-                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                    playing.beamEnemy(t, e);
-                                    hurted = e;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (t.isCoolDownOver()) {
                     if (e.isAlive()) {
                         if (t.getTowerType() == SNIPER) {
+                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                             if (Card39) {
-                                if (e != hurted) {
-                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                }
-                            } else {
-                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                attackEnemyIfClose(t, e);
                             }
                         } else if (isTowerTargetingEnemy(t, e)) {
                             if (isEnemyInRange(t, e)) {
                                 if (t.getTowerType() == LASER_TOWER) {
-                                    if (Card40) {////////////////////////////////////////
-                                        if (e != hurted) {
-                                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                            playing.beamEnemy(t, e);
-                                        }
-                                    } else {
-                                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                        playing.beamEnemy(t, e);
+                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                    if (Card40) {
+                                        attackEnemyIfClose(t, e);
                                     }
-
+                                    playing.beamEnemy(t, e);
                                 } else {
                                     playing.shootEnemy(t, e);
                                 }
@@ -239,6 +210,31 @@ public class TowerManager {
             System.out.println("ConcurrentModificationException attackEnemyIfClose");
         }
     }
+
+
+    private void attackEnemyIfClose(Tower t, Enemy hurted) {
+        for (Enemy e : playing.getEnemyManager().getEnemies()) {
+            if (e.isAlive()) {
+                if (t.getTowerType() == SNIPER) {
+                    if (hurted != e) {
+                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                        return;
+                    }
+                }
+                if (isEnemyInRange(t, e)) {
+                    if (t.getTowerType() == LASER_TOWER) {
+                        if (hurted != e) {
+                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                            playing.beamEnemy(t, e);
+                            return;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
 
     private boolean isTowerTargetingEnemy(Tower t, Enemy e) {
         if (Card12) {
