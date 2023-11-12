@@ -34,7 +34,7 @@ public class TowerManager {
     private boolean Card31 = false, Card32 = false, Card34 = false, Card35 = false, Card37 = false, Card38 = false;
     private boolean Card39 = false, Card40 = false, Card41 = false, Card42 = false;
 
-    ///////////////////////////
+
     public TowerManager(Playing playing) {
         this.playing = playing;
         loadTowerImages();
@@ -212,18 +212,18 @@ public class TowerManager {
     }
 
 
-    private void attackEnemyIfClose(Tower t, Enemy hurted) {
+    private void attackEnemyIfClose(Tower t, Enemy hurt) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (t.getTowerType() == SNIPER) {
-                    if (hurted != e) {
+                    if (hurt != e) {
                         e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                         return;
                     }
                 }
                 if (isEnemyInRange(t, e)) {
                     if (t.getTowerType() == LASER_TOWER) {
-                        if (hurted != e) {
+                        if (hurt != e) {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                             playing.beamEnemy(t, e);
                             return;
