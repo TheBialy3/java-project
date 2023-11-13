@@ -92,7 +92,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
 
         //POISON_TOWER
-        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", true, 4));
+        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", false, 4));
 
         //BOOM_VOLCANO
 
