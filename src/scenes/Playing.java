@@ -199,7 +199,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard12(true);
                 projectileManager.setCard12(true);
                 break;
-            case 13:
+            case 13: //ARCHER
                 projectileManager.setCard13(true);
                 break;
             case 14:
@@ -210,7 +210,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard15(true);
                 towerManager.damageUp(30, ARCHER);
                 break;
-            case 16:
+            case 16:    //CANNON
                 projectileManager.setCard16(true);
                 break;
             case 17:
@@ -221,7 +221,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard18(true);
                 towerManager.damageUp(30, CANNON);
                 break;
-            case 19:
+            case 19:  //FROST_MAGE
                 towerManager.setCard19(true);
                 towerManager.rangeUp(3000, FROST_MAGE);
                 towerManager.slowChange(160, FROST_MAGE);//weaker slow
@@ -234,7 +234,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard21(true);
                 towerManager.slowChange(63, FROST_MAGE);//stronger slow
                 break;
-            case 22:
+            case 22:        //MINES_FACTORY
                 projectileManager.setCard22(true);
                 break;
             case 23:
@@ -244,7 +244,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.setCard24(true);
                 towerManager.damageUp(30, MINES_FACTORY);
                 break;
-            case 25:
+            case 25:        //POISON_TOWER
                 projectileManager.setCard25(true);
                 break;
             case 26:
@@ -255,7 +255,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.durationUp(30,POISON_TOWER);
                 towerManager.setCard27(true);
                 break;
-            case 28:
+            case 28://BOOM_VOLCANO
                 towerManager.setCard28(true);
                 break;
             case 29:
@@ -266,7 +266,7 @@ public class Playing extends GameScene implements SceneMethods {
                 towerManager.damageUp(30,BOOM_VOLCANO);
                 towerManager.setCard30(true);
                 break;
-            case 31:
+            case 31://CROSSBOW
                 towerManager.damageUp(30,CROSSBOW);
                 towerManager.setCard31(true);
                 break;
@@ -277,7 +277,7 @@ public class Playing extends GameScene implements SceneMethods {
             case 33:
                 projectileManager.setCard33(true);
                 break;
-            case 34:
+            case 34://MOUSE_FOLLOWS_TOWER
                 towerManager.setCard34(true);
                 towerManager.speedUp(30, MOUSE_FOLLOWS_TOWER);
                 break;
@@ -288,7 +288,7 @@ public class Playing extends GameScene implements SceneMethods {
             case 36:
                 projectileManager.setCard36(true);
                 break;
-            case 37:
+            case 37:  //SNIPER
                 towerManager.damageUp(30,SNIPER);
                 towerManager.setCard37(true);
                 break;
@@ -299,7 +299,7 @@ public class Playing extends GameScene implements SceneMethods {
             case 39:
                 towerManager.setCard39(true);
                 break;
-            case 40:
+            case 40: //LASER_TOWER
                 towerManager.setCard40(true);
                 break;
             case 41:
