@@ -71,13 +71,40 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Double Laser", "Laser eye will now shoot 2 targets", true, 9));
         cards.add(new Card(id++, "Global Laser", "Laser eye will now have bigger radius", true, 9));
         cards.add(new Card(id++, "Hot Laser", "Laser eye will now do more damage", true, 9));
-        System.out.println(id+"unlocked cards");
-        //locked
-        //locked id43↓
-        cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
+        System.out.println(id + "unlocked cards");
+        //unlocked
+        //locked id 43↓
+        //ALL
+        cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, -1));
+
+        //ENEMY
+        cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));
+
+        //ARCHER
+
+        //CANNON
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
+        cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, 1));
+
+        //FROST_MAGE
+
+        //MINES_FACTORY
+        cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
+
+        //POISON_TOWER
         cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", true, 4));
-        System.out.println(id+"locked cards");
+
+        //BOOM_VOLCANO
+
+        //CROSSBOW
+
+        //MOUSE_FOLLOWS_TOWER
+
+        //SNIPER
+
+        //LASER_TOWER
+
+        System.out.println(id + "locked cards");
 
     }
 
