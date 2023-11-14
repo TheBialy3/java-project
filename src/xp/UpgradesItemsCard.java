@@ -66,7 +66,7 @@ public class UpgradesItemsCard {
         //SNIPER id37↓
         cards.add(new Card(id++, "Strong Sniper", "Sniper will now shoot bigger caliber", true, 8));
         cards.add(new Card(id++, "Fast Sniper", "Sniper will now shoot auto rifle", true, 8));
-        cards.add(new Card(id++, "Double Sniper", "Sniper will now shoot 2 targets at the time", true, 8));
+        cards.add(new Card(id++, "Double Rifle", "Sniper will now shoot 2 targets at the time", true, 8));
         //LASER_TOWER id40↓
         cards.add(new Card(id++, "Double Laser", "Laser eye will now shoot 2 targets", true, 9));
         cards.add(new Card(id++, "Global Laser", "Laser eye will now have bigger radius", true, 9));
@@ -92,11 +92,12 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
 
         //POISON_TOWER
-        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", true, 4));
+        cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", false, 4));
 
         //BOOM_VOLCANO
 
         //CROSSBOW
+        cards.add(new Card(id++, "Pricing Cross", "CrossBow will now Price first enemy", false, 6));
 
         //MOUSE_FOLLOWS_TOWER
 
