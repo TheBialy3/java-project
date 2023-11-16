@@ -22,7 +22,7 @@ public class Editing extends GameScene implements SceneMethods {
     private int mouseX, mouseY;
     private boolean drawSelect;
     private int tileXLast, tileYLast, lastTileId;
-    private static int chosenLvl=1;
+    private static int chosenLvl = 1;
 
     private ToolBar toolBar;
     private PathPoint start, end;
@@ -36,9 +36,9 @@ public class Editing extends GameScene implements SceneMethods {
     public void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData();
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
-        start=points.get(0);
-        end=points.get(1);
-        dirArr=LoadSave.GetLevelDir();
+        start = points.get(0);
+        end = points.get(1);
+        dirArr = LoadSave.GetLevelDir();
     }
 
 
@@ -56,7 +56,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void drawDirArr(Graphics g) {
-        if(dirArr!=null){
+        if (dirArr != null) {
             for (int y = 0; y < lvl.length; y++) {
                 for (int x = 0; x < lvl[y].length; x++) {
                     int id = dirArr[y][x];
@@ -71,11 +71,11 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void drawPathPoint(Graphics g) {
-        if(start!=null){
-            g.drawImage(toolBar.getPathStartImg(),start.getxCord()*64, start.getyCord()*64,64,64, null);
+        if (start != null) {
+            g.drawImage(toolBar.getPathStartImg(), start.getxCord() * 64, start.getyCord() * 64, 64, 64, null);
         }
-        if(end!=null){
-            g.drawImage(toolBar.getPathEndImg(),end.getxCord()*64, end.getyCord()*64,64,64, null);
+        if (end != null) {
+            g.drawImage(toolBar.getPathEndImg(), end.getxCord() * 64, end.getyCord() * 64, 64, 64, null);
         }
     }
 
@@ -102,7 +102,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("level"+chosenLvl, lvl, start, end, dirArr);
+        LoadSave.SaveLevel("level" + chosenLvl, lvl, start, end, dirArr);
         game.getPlaying().resetEverything();
         game.initClasses();
     }
@@ -124,23 +124,23 @@ public class Editing extends GameScene implements SceneMethods {
                 tileXLast = tileX;
                 tileYLast = tileY;
                 lastTileId = selectedTile.getId();
-                if(selectedTile.getId()>16){
+                if (selectedTile.getId() > 16) {
                     dirArr[tileY][tileX] = selectedTile.getId();
-                }else {
-                lvl[tileY][tileX] = selectedTile.getId();}
+                } else {
+                    lvl[tileY][tileX] = selectedTile.getId();
+                }
             } else {
                 int id = lvl[tileY][tileX];
                 if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
                     if (selectedTile.getId() == -1) {
                         start = new PathPoint(tileX, tileY);
-                    }  else if(selectedTile.getId() == -2) {
+                    } else if (selectedTile.getId() == -2) {
                         end = new PathPoint(tileX, tileY);
                     }
                 }
             }
         }
     }
-
 
 
     @Override
@@ -180,12 +180,16 @@ public class Editing extends GameScene implements SceneMethods {
 
     @Override
     public void mouseDragged(int x, int y) {
-        mouseClicked(x,y);
+        mouseClicked(x, y);
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_R) {
-            toolBar.rotateSprite();
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_R:
+                toolBar.rotateSprite();
+                break;
+            case KeyEvent.VK_1:
+                break;
         }
     }
 

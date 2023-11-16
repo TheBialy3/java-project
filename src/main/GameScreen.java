@@ -13,7 +13,6 @@ public class GameScreen extends JPanel {
 
 
     private Game game;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private Dimension size;
 
     private MyMouseListener myMouseListener;
