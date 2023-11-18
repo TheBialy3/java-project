@@ -151,6 +151,32 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
+    @Override
+    public void render(Graphics g) {
+        drawLevel(g);
+
+        enemyManager.draw(g);
+        towerManager.draw(g);
+
+        drawSelectedTower(g);
+        drawHighlight(g);
+
+        playingBar.draw(g);
+        projectileManager.draw(g);
+        drawBeam(g);
+
+        if (playState.equals(PlayGameState.PLAY_CARD_SELECT)) {
+            drawCardsToSelect(g);
+        }
+        if (playState.equals(PlayGameState.PLAY_WIN)) {
+            drawWinScreen(g);
+        }
+        if (playState.equals(PlayGameState.PLAY_PAUSED)) {
+            drawPause(g);
+        }
+
+    }
+
     private void cardSelectStart() {
         threeCards.clear();
         getCards();
@@ -518,31 +544,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     }
 
-    @Override
-    public void render(Graphics g) {
-        drawLevel(g);
 
-        enemyManager.draw(g);
-        towerManager.draw(g);
-
-        drawSelectedTower(g);
-        drawHighlight(g);
-
-        playingBar.draw(g);
-        projectileManager.draw(g);
-        drawBeam(g);
-
-        if (playState.equals(PlayGameState.PLAY_CARD_SELECT)) {
-            drawCardsToSelect(g);
-        }
-        if (playState.equals(PlayGameState.PLAY_WIN)) {
-            drawWinScreen(g);
-        }
-        if (playState.equals(PlayGameState.PLAY_PAUSED)) {
-            drawPause(g);
-        }
-
-    }
 
     private void drawCardsToSelect(Graphics g) {
         bCard1.draw(g);

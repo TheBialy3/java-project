@@ -3,8 +3,6 @@ package helpz;
 import objects.Card;
 import objects.PathPoint;
 
-
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
