@@ -31,11 +31,8 @@ public class WaveManager {
         }
         if (waveStartTimer) {
             waveTick++;
-            if (waveStartTimer) {
-
-                if (waveTick >= waveTickLimit) {
-                    waveTickTimerOver = true;
-                }
+            if (waveTick >= waveTickLimit) {
+                waveTickTimerOver = true;
             }
         }
     }
@@ -70,13 +67,13 @@ public class WaveManager {
     }
 
     private void createWaves() {
-        int waveNumberMax=101;
-        int enemyTypesNumber=9;
+        int waveNumberMax = 101;
+        int enemyTypesNumber = 9;
         //enemyTypesNumber=6;
         int ran;
-        for(int waveNumber=1;waveNumber<waveNumberMax;waveNumber++){
-            ArrayList<Integer> randList=new ArrayList<>();
-            for(int waveEnemyNumber=0;waveEnemyNumber<waveNumber*2;waveEnemyNumber++){
+        for (int waveNumber = 1; waveNumber < waveNumberMax; waveNumber++) {
+            ArrayList<Integer> randList = new ArrayList<>();
+            for (int waveEnemyNumber = 0; waveEnemyNumber < waveNumber * 2; waveEnemyNumber++) {
                 ran = random.nextInt(enemyTypesNumber);
                 randList.add(ran);
             }
