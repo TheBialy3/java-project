@@ -545,7 +545,6 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
-
     private void drawCardsToSelect(Graphics g) {
         bCard1.draw(g);
         bCard2.draw(g);
@@ -750,8 +749,13 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (playState.equals(PlayGameState.PLAY_PLAY)) {
-            playState = PlayGameState.PLAY_PAUSED;
+        if (playState.equals(PlayGameState.PLAY_PAUSED)) {
+            playState = PlayGameState.PLAY_PLAY;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (playState.equals(PlayGameState.PLAY_PLAY)) {
+                playState = PlayGameState.PLAY_PAUSED;
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))) {
