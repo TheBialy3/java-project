@@ -41,11 +41,58 @@ public abstract class Enemy {
         if (enemyType != CAMEL_JUNIOR) {
             alive = true;
         }
-        bounds = new Rectangle((int) x, (int) y, 64, 64);
+        setBounds(enemyType);
         lastDir = -1;
         setStartHealth();
         setRevive();
         setResists(enemyType);
+    }
+
+    private void setBounds(int enemyType) {
+        int w,h;
+        switch (enemyType){
+            case ORC:
+                w= 44;
+                h=50;
+                break;
+            case ORK_ZOMBIE:
+                w= 44;
+                h=50;
+                break;
+            case TENTACLE:
+                w= 40;
+                h=54;
+                break;
+            case SLIME:
+                w=54;
+                h=30;
+                break;
+            case CAMEL:
+                w= 60;
+                h=50;
+                break;
+            case CAMEL_JUNIOR:
+                w= 12;
+                h=12;
+                break;
+            case BIRD:
+                w= 60;
+                h=40;
+                break;
+            case GHOST:
+                w= 30;
+                h=50;
+                break;
+            case ROCK:
+                w= 34;
+                h=58;
+                break;
+            default:
+                w=56;
+                h=62;
+                break;
+        }
+        bounds = new Rectangle((int) (x+(64-w)/2), (int) (y+(64-h)/2), w, h);
     }
 
     private void setResists(int enemyType) {
