@@ -184,6 +184,7 @@ public class TowerManager {
                             if (Card39) {
                                 attackEnemyIfClose(t, e);
                             }
+                            t.resetCoolDown();
                         } else if (isTowerTargetingEnemy(t, e)) {
                             if (isEnemyInRange(t, e)) {
                                 if (t.getTowerType() == LASER_TOWER) {
@@ -212,18 +213,18 @@ public class TowerManager {
     }
 
 
-    private void attackEnemyIfClose(Tower t, Enemy hurt) {
+    private void attackEnemyIfClose(Tower t, Enemy hurted) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (t.getTowerType() == SNIPER) {
-                    if (hurt != e) {
+                    if (hurted != e) {
                         e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                         return;
                     }
                 }
                 if (isEnemyInRange(t, e)) {
                     if (t.getTowerType() == LASER_TOWER) {
-                        if (hurt != e) {
+                        if (hurted != e) {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                             playing.beamEnemy(t, e);
                             return;
