@@ -83,9 +83,11 @@ public class Constants {
             }
             return 0;
         }
+
         public static final int BOTH = 0;
         public static final int FLYING = 1;
         public static final int WALKING = 2;
+
         public static int getProjectileTargetMoveType(int projectileType) {
             switch (projectileType) {
                 case ARROW:
@@ -167,11 +169,59 @@ public class Constants {
                     return WALK;
                 case ROCK:
                     return WALK;
-
             }
             return 0;
         }
 
+        public static int getHeightOfHitbox(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 50;
+                case ORK_ZOMBIE:
+                    return 50;
+                case TENTACLE:
+                    return 54;
+                case SLIME:
+                    return 30;
+                case CAMEL:
+                    return 50;
+                case CAMEL_JUNIOR:
+                    return 12;
+                case BIRD:
+                    return 40;
+                case GHOST:
+                    return 50;
+                case ROCK:
+                    return 58;
+                default:
+                    return 62;
+            }
+        }
+
+        public static int getWightOfHitbox(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return 44;
+                case ORK_ZOMBIE:
+                    return 44;
+                case TENTACLE:
+                    return 40;
+                case SLIME:
+                    return 54;
+                case CAMEL:
+                    return 60;
+                case CAMEL_JUNIOR:
+                    return 12;
+                case BIRD:
+                    return 60;
+                case GHOST:
+                    return 30;
+                case ROCK:
+                    return 34;
+                default:
+                    return 56;
+            }
+        }
 
         public static int getStartHealth(int enemyType) {
             switch (enemyType) {
