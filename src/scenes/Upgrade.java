@@ -85,10 +85,6 @@ public class Upgrade extends GameScene implements SceneMethods {
 
     @Override
     public void mouseMoved(int x, int y) {
-//        bSound.setMouseOver(false);
-//        if (bSound.getBounds().contains(x, y)) {
-//            bSound.setMouseOver(true);
-//        }
         bMenu.setMouseOver(false);
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
@@ -101,22 +97,17 @@ public class Upgrade extends GameScene implements SceneMethods {
     }
 
     private void resetButtons() {
-//        bSound.resetBooleans();
         bMenu.resetBooleans();
     }
 
     @Override
     public void mousePressed(int x, int y) {
-// if (bSound.getBounds().contains(x, y)) {
-//            bSound.setMousePressed(true);
-//        } else
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePressed(true);
         }
     }
 
     private void drawButtons(Graphics g) {
-//        bSound.draw(g);
         bMenu.draw(g);
     }
 

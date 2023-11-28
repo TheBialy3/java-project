@@ -14,19 +14,16 @@ import static main.GameStates.*;
 
 public class Settings extends GameScene implements SceneMethods {
 
-    private BufferedImage img;
-
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
     private int[][] lvl;
-    private TileManager tileManager;
+
 
     private MyButton bMusic, bSound, bMenu;
 
     public Settings(Game game) {
         super(game);
         lvl = LevelBuild.getLevelData();
-        tileManager = new TileManager();
+
 
         initButtons();
     }

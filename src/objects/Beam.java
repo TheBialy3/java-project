@@ -4,7 +4,7 @@ public class Beam {
 
     private int xStart, yStart;
     private int xEnd, yEnd;
-    private int beemTimer;
+    private int beamTimer;
     private boolean active = true;
 
     public Beam(int xStart, int yCord, int xEnd, int yEnd) {
@@ -12,15 +12,15 @@ public class Beam {
         this.yStart = yCord;
         this.xEnd = xEnd;
         this.yEnd = yEnd;
-        beemTimer = 8;
+        beamTimer = 8;
     }
     public boolean getActive(){
         return active;
     }
 
     public void timerDown() {
-        beemTimer--;
-        if(beemTimer<0){
+        beamTimer--;
+        if(beamTimer <0){
             this.active=false;
         }
     }
@@ -43,13 +43,5 @@ public class Beam {
         return yEnd;
     }
 
-    @Override
-    public String toString() {
-        return "Beem{" +
-                "xStart=" + xStart +
-                ", yStart=" + yStart +
-                "xEnd=" + xEnd +
-                ", yEnd=" + yEnd +
-                '}';
-    }
+
 }

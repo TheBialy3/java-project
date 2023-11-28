@@ -20,10 +20,9 @@ import static main.GameStates.*;
 public class Menu extends GameScene implements SceneMethods {
 
     private BufferedImage img;
-    private PathPoint start, end;
+
     private int[][] lvl;
     private int xlevelSprite = -64, tilePixelNumber = 64, ran;
-    private TileManager tileManager;
     private BufferedImage[] moveImages;
     private Random random = new Random();
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
@@ -33,7 +32,6 @@ public class Menu extends GameScene implements SceneMethods {
     public Menu(Game game) {
         super(game);
         lvl = LevelBuild.getLevelData();
-        tileManager = new TileManager();
         importImg();
         loadSprites();
         initButtons();

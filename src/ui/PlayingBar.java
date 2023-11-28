@@ -546,7 +546,7 @@ public class PlayingBar extends Bar {
     public int getLives() {
         return lives;
     }
-
+ // need to rework it to switch
     public void displayTower(Tower t) {
         displayedTower = t;
         if (displayedTower instanceof Archer) {

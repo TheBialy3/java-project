@@ -1,8 +1,10 @@
 package helpz;
 
 public class LevelBuild {
+    //menu background
     public static int[][] getLevelData(){
         //every value is a tile on the level.
+
 
         int[][] lvl={
                 { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 6,10, 0},
