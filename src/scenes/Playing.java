@@ -48,9 +48,6 @@ public class Playing extends GameScene implements SceneMethods {
     private Random random = new Random();
     private Tower selectedTower;
     private int goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
-    // if showTowersOrEnemyType is false show towers
-    private boolean showTowersOrEnemyType = false;
-    private static int chosenLvl = 1;
     PlayGameState playState = PlayGameState.PLAY_PLAY;
 
     public Playing(Game game) {
@@ -62,9 +59,6 @@ public class Playing extends GameScene implements SceneMethods {
         towerManager = new TowerManager(this);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         initCardButtons();
-
-
-        // xp.UpgradesItemsCard();
     }
 
     private void getCards() {

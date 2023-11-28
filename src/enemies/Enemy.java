@@ -14,7 +14,6 @@ import static helpz.Constants.TowerType.*;
 
 public abstract class Enemy {
 
-    private int tick = 0;
 
     protected EnemyManager enemyManager;
     protected WaveManager waveManager;
@@ -26,7 +25,7 @@ public abstract class Enemy {
     protected int ID;
     protected int enemyType, damageType;
     protected int lastDir;
-    protected boolean alive=false, poisoned = false;
+    protected boolean alive = false, poisoned = false;
     public float slowPower = 1f, distancePast = 0;
     protected boolean revive;
 
@@ -49,14 +48,14 @@ public abstract class Enemy {
     }
 
     private void setBounds(int enemyType) {
-        int w=getHeightOfHitbox(enemyType);
-        int h=getWightOfHitbox(enemyType);
-                bounds = new Rectangle((int) (x+(64-w)/2), (int) (y+(64-h)/2), w, h);
+        int w = getHeightOfHitbox(enemyType);
+        int h = getWightOfHitbox(enemyType);
+        bounds = new Rectangle((int) (x + (64 - w) / 2), (int) (y + (64 - h) / 2), w, h);
     }
 
     private void setResists(int enemyType) {
-        this.mr=getMR(enemyType);
-        this.armor=getArmor(enemyType);
+        this.mr = getMR(enemyType);
+        this.armor = getArmor(enemyType);
     }
 
     private void setRevive() {
@@ -65,24 +64,12 @@ public abstract class Enemy {
         }
     }
 
-    public void tickUp() {
-        tick++;
-        if (tick < 100) {
-            tick = 0;
-        }
-    }
-
-
-    public int getTick() {
-        return tick;
-    }
-
-    public void reuse(float x, float y,float distancePast) {
+    public void reuse(float x, float y, float distancePast) {
         this.x = x;
         this.y = y;
         this.alive = true;
         setStartHealth();
-        this.distancePast=distancePast;
+        this.distancePast = distancePast;
     }
 
     public void killed() {
@@ -92,7 +79,7 @@ public abstract class Enemy {
     public void setPoisonOn(int dmg, int duration, int damageType) {
         this.dmg = dmg;
         this.duration = duration;
-        this.damageType=damageType;
+        this.damageType = damageType;
         poisoned = true;
     }
 
@@ -100,7 +87,7 @@ public abstract class Enemy {
         if (0 < duration) {
             duration--;
             if (0 == duration % 10) {
-                hurt(dmg,damageType);
+                hurt(dmg, damageType);
             }
 
         }
@@ -111,11 +98,11 @@ public abstract class Enemy {
 
     public void move(float speed, int dir) {
         lastDir = dir;
-        if (enemyManager.isCard8()){
-            speed=speed+0.1f;
+        if (enemyManager.isCard8()) {
+            speed = speed + 0.1f;
         }
-        if (enemyManager.isCard9()){
-            speed=speed+0.1f;
+        if (enemyManager.isCard9()) {
+            speed = speed + 0.1f;
         }
         if (slowTick < slowTickLimit) {
             slowTick++;
@@ -135,7 +122,7 @@ public abstract class Enemy {
                 this.y += speed;
                 break;
         }
-        distancePast+=speed;
+        distancePast += speed;
         updateHitbox();
         if (poisoned) {
             poisonDamage();
@@ -153,34 +140,34 @@ public abstract class Enemy {
 
     protected void setStartHealth() {
         int waveIndex = waveManager.getWaveIndex();
-        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + waveIndex)/2;//(5 + waveIndex) / 10
-        if(enemyManager.isCard7()){
-            health=health+health*10/100;
+        health = Constants.EnemyType.getStartHealth(enemyType) * (5 + waveIndex) / 2;//(5 + waveIndex) / 10
+        if (enemyManager.isCard7()) {
+            health = health + health * 10 / 100;
         }
-        if(enemyManager.isCard11()){
-            health=health+health*20/100;
+        if (enemyManager.isCard11()) {
+            health = health + health * 20 / 100;
         }
-        if(enemyManager.isCard12()){
-            health=health+health*10/100;
+        if (enemyManager.isCard12()) {
+            health = health + health * 10 / 100;
         }
-        if(enemyManager.isCard10()){
-            health=health+health*10/100;
+        if (enemyManager.isCard10()) {
+            health = health + health * 10 / 100;
         }
         maxHealth = health;
     }
 
     public void hurt(int dmg, int DMGType) {
-        int calDMG=calculateDMG(dmg, DMGType) ;
+        int calDMG = calculateDMG(dmg, DMGType);
         this.health -= calDMG;//calculateDMG(dmg, DMGType) ;
         if (health <= 0) {
             alive = false;
             if (enemyType == ORK_ZOMBIE) {
                 if (this.revive) {
                     killed();
-                    reuse(this.x, this.y,distancePast);
+                    reuse(this.x, this.y, distancePast);
                 }
             } else if (enemyType == CAMEL) {
-                enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1),distancePast);
+                enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
             }
             enemyManager.rewardPlayer(enemyType);
             Game.addXp();
@@ -188,14 +175,16 @@ public abstract class Enemy {
     }
 
     private int calculateDMG(int dmg, int dmgType) {
-        if(enemyManager.isCard11()){
+        if (enemyManager.isCard11()) {
             return dmg;
         }
-        if (dmgType==PHYSICAL){
-            return  ((100-armor)*dmg/100);
-        } else if (dmgType==MAGIC){
-            return  ((100-mr)*dmg/100);
-        }else {return dmg;}
+        if (dmgType == PHYSICAL) {
+            return ((100 - armor) * dmg / 100);
+        } else if (dmgType == MAGIC) {
+            return ((100 - mr) * dmg / 100);
+        } else {
+            return dmg;
+        }
     }
 
 
@@ -232,18 +221,6 @@ public abstract class Enemy {
         return bounds;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public int getEnemyType() {
         return enemyType;
     }
@@ -266,10 +243,6 @@ public abstract class Enemy {
 
     public float getDistancePast() {
         return distancePast;
-    }
-
-    public void setDistancePast(float distancePast) {
-        this.distancePast = distancePast;
     }
 
     public void setLastDir(int newDir) {

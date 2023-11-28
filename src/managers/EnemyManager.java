@@ -82,7 +82,7 @@ public class EnemyManager {
                 enemies.add(new Tentacle(x, y, 0, this, waveManager));
                 break;
             case ORK_ZOMBIE:
-                enemies.add(new OrcZombi(x, y, 0, this, waveManager));
+                enemies.add(new OrcZombie(x, y, 0, this, waveManager));
                 break;
             case CAMEL:
                 enemies.add(new Camel(x, y, 0, this, waveManager));
@@ -239,17 +239,7 @@ public class EnemyManager {
     }
 
     public void drawEnemy(Enemy e, Graphics g) {
-
-        if (e.getEnemyType() == ORK_ZOMBIE) {
-            e.tickUp();
-            if (e.getTick() < 50) {
-                g.drawImage(enemyImages[1], (int) e.getX(), (int) e.getY(), null);
-            } else {
-                g.drawImage(enemyImages[4], (int) e.getX(), (int) e.getY(), null);
-            }
-        } else {
             g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
-        }
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -340,11 +330,6 @@ public class EnemyManager {
     public void setCard12(boolean card12) {
         Card12 = card12;
     }
-//    public boolean isCard19() {
-//        return Card19;
-//    }
-//    public void setCard19(boolean card19) {
-//        Card19 = card19;
-//    }
+
 
 }

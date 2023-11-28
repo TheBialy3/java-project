@@ -79,7 +79,7 @@ public class Game extends JFrame implements Runnable {
     public static void addXp() {
         xp++;
     }
-
+    //can be used in future
     public static void costXp(int cost) {
         xp-=cost;
     }
@@ -102,7 +102,7 @@ public class Game extends JFrame implements Runnable {
         bestiary = new Bestiary(this);
     }
 
-    //for lvl chose
+    //for lvl chose, not added yet
     public void initClasses(int lvl) {
         tileManager = new TileManager();
         gameScreen = new GameScreen(this);

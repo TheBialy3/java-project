@@ -117,8 +117,6 @@ public class Constants {
         public static final int BIRD = 6;
         public static final int GHOST = 7;
         public static final int ROCK = 8;
-//        public static final int SLIME = 9;
-//        public static final int SLIME = 10;
 
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
@@ -143,8 +141,6 @@ public class Constants {
             }
             return 0;
         }
-
-        //public static final int TENTACLE = 0;
         public static final int FLY = 1;
         public static final int WALK = 2;
 
@@ -396,8 +392,6 @@ public class Constants {
                         return 0.8f;
                     case LASER_TOWER:
                         return 0.9f;
-//                    case POISON_TOWER:
-//                        return 0.5f;
                     default:
                         return 0;
                 }

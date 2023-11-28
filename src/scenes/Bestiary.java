@@ -9,6 +9,7 @@ import ui.MyButton;
 import java.awt.*;
 import java.util.ArrayList;
 
+//future scene for showing all possible enemies and towers
 public class Bestiary extends GameScene implements SceneMethods{
     private ArrayList<Enemy> enemies=new ArrayList<>();
     private ArrayList<Tower> towers=new ArrayList<>();

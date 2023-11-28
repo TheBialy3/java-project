@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static helpz.Constants.Tiles.*;
 
 public class TileManager {
-
+    //commented can be used in future ass well as not used but i need to add mos sprites
     public Tile GRASS, WATER, ROAD, ROAD_TB, GRASS_DARK, GRASS_ORANGE;
     public Tile TL_WATER_CORNER, TR_WATER_CORNER, BR_WATER_CORNER, BL_WATER_CORNER;
     public Tile TL_ROAD, TR_ROAD, BR_ROAD, BL_ROAD;
@@ -21,7 +21,7 @@ public class TileManager {
     public ArrayList<Tile> grassT = new ArrayList<>();
     public ArrayList<Tile> tiles = new ArrayList<>();
     public ArrayList<Tile> roadS = new ArrayList<>();
-    public ArrayList<Tile> roadC = new ArrayList<>();
+//    public ArrayList<Tile> roadC = new ArrayList<>();
     public ArrayList<Tile> roadDir = new ArrayList<>();
     public ArrayList<Tile> roadDirNull = new ArrayList<>();
     public ArrayList<Tile> waterC = new ArrayList<>();
@@ -63,6 +63,7 @@ public class TileManager {
         roadS.add(ROAD = new Tile(getSprite(2, 1), id++, ROAD_TILE));
         roadS.add(ROAD_TB = new Tile(ImgFix.getRotImg(getSprite(2, 1), 90), id++, ROAD_TILE));
 
+//can be used in future
 //        roadC.add(TL_ROAD = new Tile(getSprite(2, 1), id++, ROAD_TILE));
 //        roadC.add(TR_ROAD = new Tile(ImgFix.getRotImg(getSprite(2, 1), 90), id++, ROAD_TILE));
 //        roadC.add(BR_ROAD = new Tile(ImgFix.getRotImg(getSprite(2, 1), 180), id++, ROAD_TILE));
@@ -85,6 +86,7 @@ public class TileManager {
         tiles.addAll(roadDir);
     }
 
+//can be used in future
 //    private BufferedImage[] getImgs(int fX, int fY, int sX, int sY) {
 //        return new BufferedImage[]{getSprite(fX, fY), getSprite(sX, sY)};
 //    }
@@ -152,9 +154,9 @@ public class TileManager {
         return roadDirNull;
     }
 
-    public ArrayList<Tile> getRoadC() {
-        return roadC;
-    }
+//    public ArrayList<Tile> getRoadC() {
+//        return roadC;
+//    }
 
     public ArrayList<Tile> getWaterC() {
         return waterC;

@@ -19,6 +19,8 @@ public class ImgFix {
         return newImg;
     }
 
+    //can be used in future
+
     //Img layer build
     public static BufferedImage buildImg(BufferedImage[] imgs) {
         int w = imgs[0].getWidth();
@@ -34,7 +36,7 @@ public class ImgFix {
         return newImg;
     }
 
-    //Rotate Secend Img Only
+    //Rotate Second Img Only
     public static BufferedImage getBuildRotImg(BufferedImage[] imgs, int rotAngle, int rotAtIndex) {
         int w = imgs[0].getWidth();
         int h = imgs[0].getHeight();
