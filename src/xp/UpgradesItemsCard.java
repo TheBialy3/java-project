@@ -79,6 +79,7 @@ public class UpgradesItemsCard {
 
         //ENEMY
         cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));
+        cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 
         //ARCHER
 
