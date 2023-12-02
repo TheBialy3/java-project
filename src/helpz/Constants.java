@@ -118,6 +118,31 @@ public class Constants {
         public static final int GHOST = 7;
         public static final int ROCK = 8;
 
+        public static String getName(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return "Ork";
+                case ORK_ZOMBIE:
+                    return "Ork Zombie";
+                case TENTACLE:
+                    return "Tentacle";
+                case SLIME:
+                    return "Slime";
+                case CAMEL:
+                    return "Camel";
+                case CAMEL_JUNIOR:
+                    return "Camel Spown";
+                case BIRD:
+                    return "Bird";
+                case GHOST:
+                    return "Ghost ";
+                case ROCK:
+                    return "Rock Golem";
+                default:
+                    return "";
+            }
+        }
+
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
                 case ORC:
