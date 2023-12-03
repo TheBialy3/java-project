@@ -82,11 +82,12 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 
         //ARCHER
+        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 1));
 
         //CANNON
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
         cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, 1));
-
+        cards.add(new Card(id++, "Molotov cocktail", "Bombs will now set enemies on fire", false, 1));
         //FROST_MAGE
 
         //MINES_FACTORY
