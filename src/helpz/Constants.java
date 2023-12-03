@@ -424,6 +424,33 @@ public class Constants {
             return 1f;
         }
 
+        public static boolean isAoe(int projectileType) {
+            switch (projectileType) {
+                case ARCHER:
+                    return false;
+                case CANNON:
+                    return true;
+                case FROST_MAGE:
+                    return false;
+                case MINES_FACTORY:
+                    return false;
+                case POISON_TOWER:
+                    return true;
+                case BOOM_VOLCANO:
+                    return true;
+                case CROSSBOW:
+                    return false;
+                case MOUSE_FOLLOWS_TOWER:
+                    return false;
+                case SNIPER:
+                    return false;
+                case LASER_TOWER:
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
         public static int getCost(int towerType) {
             switch (towerType) {
                 case ARCHER:
