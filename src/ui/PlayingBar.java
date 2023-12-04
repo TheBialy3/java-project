@@ -37,12 +37,12 @@ public class PlayingBar extends Bar {
 
     private static final DecimalFormat decfor = new DecimalFormat("0.00");
 
-    public PlayingBar(int x, int y, int width, int height, Playing playing, Game game,TowerManager towerManager) {
+    public PlayingBar(int x, int y, int width, int height, Playing playing, Game game, TowerManager towerManager) {
         super(x, y, width, height);
         this.playing = playing;
         this.game = game;
         initButtons();
-        this.towerManager=towerManager;
+        this.towerManager = towerManager;
     }
 
     public void resetEvrything() {
@@ -185,7 +185,11 @@ public class PlayingBar extends Bar {
             g.setColor(new Color(15, 15, 15));
             if (displayedTower == null) {
                 g.drawString("" + Constants.TowerType.getName(towerCostId), 1375, 1018);
-                g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
+                if (Constants.TowerType.getDefaultRange(towerCostId) > 1200) {
+                    g.drawString("Range: Infinite", 1375, 1038);
+                } else {
+                    g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
+                }
                 if (towerCostId == FROST_MAGE) {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(towerCostId) + "%", 1375, 1058);
                 } else {
@@ -200,7 +204,7 @@ public class PlayingBar extends Bar {
                     g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType()) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
-                    g.drawString("AS:" +  decfor.format(60 / displayedTower.getCoolDown()), 1375, 1078);
+                    g.drawString("AS:" + decfor.format(60 / displayedTower.getCoolDown()), 1375, 1078);
                 }
             }
             if (displayedTower != null) {
@@ -408,35 +412,35 @@ public class PlayingBar extends Bar {
                 if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
                     switch (b.getId()) {
                         case ARCHER:
-                            selectedTower = new Archer(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new Archer(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case CANNON:
-                            selectedTower = new Cannon(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new Cannon(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case FROST_MAGE:
-                            selectedTower = new FrostMage(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new FrostMage(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case MINES_FACTORY:
                             road = playing.getRoadDirArr();
-                            selectedTower = new MineFactory(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new MineFactory(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case POISON_TOWER:
-                            selectedTower = new PoisonTower(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new PoisonTower(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case BOOM_VOLCANO:
-                            selectedTower = new BoomTower(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new BoomTower(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case CROSSBOW:
-                            selectedTower = new Crossbow(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new Crossbow(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case MOUSE_FOLLOWS_TOWER:
-                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case SNIPER:
-                            selectedTower = new Sniper(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new Sniper(x, y, 0, b.getId(), towerManager, road);
                             break;
                         case LASER_TOWER:
-                            selectedTower = new LaserTower(x, y, 0, b.getId(),towerManager, road);
+                            selectedTower = new LaserTower(x, y, 0, b.getId(), towerManager, road);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);
@@ -546,7 +550,8 @@ public class PlayingBar extends Bar {
     public int getLives() {
         return lives;
     }
- // need to rework it to switch
+
+    // need to rework it to switch
     public void displayTower(Tower t) {
         displayedTower = t;
         if (displayedTower instanceof Archer) {
