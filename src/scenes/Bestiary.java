@@ -64,7 +64,7 @@ for(int i=0;i<=numberOfEnemiesType;i++){
     }
 
 
-    private void drawUpgradeImg(Graphics g) {
+    public void drawUpgradeImg(Graphics g) {
         int diff=99;
 
         int tilePixelNumber=64;
