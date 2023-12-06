@@ -10,6 +10,7 @@ public class TowerBestiaryLook {
     private int targetMoveType, damageType, cost, dmg;
     private float range, coolDown;
     private boolean aoe, slow, dot;
+    private boolean locked=false;
 
     public TowerBestiaryLook(int towerType) {
         this.towerType = towerType;
@@ -108,6 +109,10 @@ public class TowerBestiaryLook {
         }
     }
 
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
     public String getName() {
         return name;
     }
@@ -146,5 +151,13 @@ public class TowerBestiaryLook {
 
     public int getDmg() {
         return dmg;
+    }
+
+    public int getTowerType() {
+        return towerType;
+    }
+
+    public boolean isUnlocked() {
+        return locked;
     }
 }

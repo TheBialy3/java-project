@@ -38,6 +38,7 @@ public class Playing extends GameScene implements SceneMethods {
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
+    private Bestiary bestiary;
     private MyButton bReplay;
     private MyButton bCard1, bCard2, bCard3;
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = getLogos();
@@ -58,6 +59,7 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager = new EnemyManager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
+        bestiary=game.getBestiary();
         initCardButtons();
     }
 
@@ -84,7 +86,8 @@ public class Playing extends GameScene implements SceneMethods {
         PLAY_GAME_OVER,
         PLAY_START_OF_GAME,
         PLAY_WIN,
-        PLAY_CARD_SELECT;
+        PLAY_CARD_SELECT,
+        PLAY_BESTIARY;
     }
 
 
@@ -97,24 +100,18 @@ public class Playing extends GameScene implements SceneMethods {
                 if (isAllEnemyDead()) {
                     if (isThereMoreWaves()) {
                         waveManager.startWaveTimer();
-
                         if (isWaveTimerOver()) {
                             if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
-
                                 cardSelectStart();
-
                             }
                             waveManager.increaseWaveIndex();
                             enemyManager.getEnemies();
                             waveManager.resetEnemyIndex();
-
                         }
                     } else {
                         Finish();
                     }
                 }
-
-
                 if (isTimeForNewEnemy()) {
                     spawnEnemy();
                 }
@@ -139,6 +136,9 @@ public class Playing extends GameScene implements SceneMethods {
 
                 break;
             case PLAY_CARD_SELECT:
+
+                break;
+            case PLAY_BESTIARY:
 
                 break;
 
@@ -167,6 +167,9 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (playState.equals(PlayGameState.PLAY_PAUSED)) {
             drawPause(g);
+        }
+        if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            bestiary.drawUpgradeImg(g);
         }
 
     }
@@ -681,6 +684,9 @@ public class Playing extends GameScene implements SceneMethods {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMouseOver(true);
             }
+        }
+        if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+           bestiary.mouseMoved(x,y);
         }
     }
 

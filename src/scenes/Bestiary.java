@@ -1,9 +1,11 @@
 package scenes;
 
-import enemies.Enemy;
+
 import main.Game;
 import objects.Card;
-import towers.Tower;
+import objects.EnemyBestiaryLook;
+
+import objects.TowerBestiaryLook;
 import ui.MyButton;
 
 import java.awt.*;
@@ -11,8 +13,10 @@ import java.util.ArrayList;
 
 //future scene for showing all possible enemies and towers
 public class Bestiary extends GameScene implements SceneMethods{
-    private ArrayList<Enemy> enemies=new ArrayList<>();
-    private ArrayList<Tower> towers=new ArrayList<>();
+    private ArrayList<EnemyBestiaryLook> enemies=new ArrayList<>();
+    int numberOfEnemiesType=8;
+    private ArrayList<TowerBestiaryLook> towers=new ArrayList<>();
+    int numberOfTowersType=9;
     private MyButton  bMenu;
     public Bestiary(Game game) {
         super(game);
@@ -45,28 +49,48 @@ public class Bestiary extends GameScene implements SceneMethods{
     }
 
     private void initEnemies() {
+
+for(int i=0;i<=numberOfEnemiesType;i++){
+    enemies.add(new EnemyBestiaryLook(i));
+}
+
     }
 
     private void initTowers() {
+
+        for(int i=0;i<=numberOfTowersType;i++){
+            towers.add(new TowerBestiaryLook(i));
+        }
     }
 
 
-    private void drawUpgradeImg(Graphics g) {
+    public void drawUpgradeImg(Graphics g) {
         int diff=99;
 
-//        int tilePixelNumber=64;
-//        for (Card card:cards) {
-//            if (card.isUnlocked()) {///////////////////////////
-//                g.setColor(new Color(200, 200, 200));
-//            } else {
-//                g.setColor(new Color(161, 0, 0));
-//            }
-//            g.fillRect(40+(diff*(card.getId()%15)),50+(diff*(card.getId()/15)), tilePixelNumber,tilePixelNumber);
-//            g.setColor(new Color(0, 26, 147));
-//            g.drawString(String.valueOf(card.getId()), 40+(diff*(card.getId()%15))+25, 50+(diff*(card.getId()/15))+39);
-//            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(card.getId()%15)), 50+(diff*(card.getId()/15)), tilePixelNumber, tilePixelNumber, null);
-//
-//        }
+        int tilePixelNumber=64;
+        int hightDifrenceForSectionToters=500;
+        for (EnemyBestiaryLook enemy:enemies) {
+            if (enemy.isUnlocked()) {
+                g.setColor(new Color(200, 200, 200));
+            } else {
+                g.setColor(new Color(161, 0, 0));
+            }
+            g.fillRect(40+(diff*(enemy.getEnemyType()%15)),50+(diff*(enemy.getEnemyType()/15)), tilePixelNumber,tilePixelNumber);
+            g.setColor(new Color(0, 26, 147));
+            g.drawString(String.valueOf(enemy.getEnemyType()), 40+(diff*(enemy.getEnemyType()%15))+25, 50+(diff*(enemy.getEnemyType()/15))+39);
+            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(enemy.getEnemyType()%15)), 50+(diff*(enemy.getEnemyType()/15)), tilePixelNumber, tilePixelNumber, null);
+        }
+        for (TowerBestiaryLook tower:towers) {
+            if (tower.isUnlocked()) {
+                g.setColor(new Color(200, 200, 200));
+            } else {
+                g.setColor(new Color(161, 0, 0));
+            }
+            g.fillRect(40+(diff*(tower.getTowerType()%15)),hightDifrenceForSectionToters+50+(diff*(tower.getTowerType()/15)), tilePixelNumber,tilePixelNumber);
+            g.setColor(new Color(0, 26, 147));
+            g.drawString(String.valueOf(tower.getTowerType()), 40+(diff*(tower.getTowerType()%15))+25, hightDifrenceForSectionToters+50+(diff*(tower.getTowerType()/15))+39);
+            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(tower.getTowerType()%15)), 50+(diff*(tower.getTowerType()/15)), tilePixelNumber, tilePixelNumber, null);
+        }
     }
 
 

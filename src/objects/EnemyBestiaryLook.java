@@ -9,6 +9,7 @@ public class EnemyBestiaryLook {
     private String name, speedName, moveTypeName, hitboxName;
     private int enemyMoveType, heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
     private float speed;
+    private boolean locked=false;
 
     public EnemyBestiaryLook(int enemyType) {
         this.enemyType = enemyType;
@@ -65,6 +66,9 @@ public class EnemyBestiaryLook {
         return "Average";
     }
 
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 
     public String getName() {
         return name;
@@ -93,6 +97,11 @@ public class EnemyBestiaryLook {
     public int getGoldWorth() {
         return goldWorth;
     }
+    public int getEnemyType() {
+        return enemyType;
+    }
 
-
+    public boolean isUnlocked() {
+        return locked;
+    }
 }
