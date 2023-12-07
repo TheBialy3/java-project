@@ -89,12 +89,14 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, 1));
         cards.add(new Card(id++, "Molotov cocktail", "Bombs will now set enemies on fire", false, 1));
         //FROST_MAGE
+        cards.add(new Card(id++, "Frost Nova", "Frost Mage will now stun enemies in low range", true, 2));
 
         //MINES_FACTORY
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
 
         //POISON_TOWER
         cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", false, 4));
+        cards.add(new Card(id++, "Stinky Poison", "Poison Tower will spawn flies", false, 4));
 
         //BOOM_VOLCANO
 
