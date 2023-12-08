@@ -131,14 +131,14 @@ public class MyButton {
 
     private void drawBorderQuit(Graphics g) {
         g.setColor(Color.black);
-        g.drawRect(x + width / 4, y + height / 4, width / 2, height / 2);
+        g.drawRect(x, y, width, height);
         if (mouseOver) {
             g.setColor(new Color(9, 255, 255));
         }
         if (mousePressed) {
             g.setColor(new Color(9, 255, 255));
-            g.drawRect(x + 5 + width / 4, y + 5 + height / 4, width / 2 - 10, height / 2 - 10);
-            g.drawRect(x + 6 + width / 4, y + 6 + height / 4, width / 2 - 12, height / 2 - 12);
+            g.drawRect(x + 5, y + 5, width - 10, height - 10);
+            g.drawRect(x + 6, y + 6, width - 12, height - 12);
         }
     }
 
@@ -149,6 +149,6 @@ public class MyButton {
 
             g.setColor(new Color(169, 0, 0));
         }
-        g.fillRect(x + width / 4, y + height / 4, width / 2, height / 2);
+        g.fillRect(x, y, width, height);
     }
 }
