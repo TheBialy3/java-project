@@ -40,6 +40,7 @@ public class Playing extends GameScene implements SceneMethods {
     private WaveManager waveManager;
     private Bestiary bestiary;
     private MyButton bReplay;
+    private MyButton reshuffle;
     private MyButton bCard1, bCard2, bCard3;
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = getLogos();
     private PathPoint start, end;
@@ -73,11 +74,15 @@ public class Playing extends GameScene implements SceneMethods {
         int cardW = 1000;
         int cardH = 300;
         int diffCard = 400;
+        int shuffleX = 640-75;
+        int shuffleY = 20;
+        int shuffleW = 100;
+        int shuffleH = 50;
 
         bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
         bCard2 = new MyButton("Card2", cardX, cardY + diffCard, cardW, cardH);
         bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
-
+        reshuffle=new MyButton("Shuffle", shuffleX, shuffleY, shuffleW, shuffleH);
     }
 
     public enum PlayGameState {
@@ -550,6 +555,7 @@ public class Playing extends GameScene implements SceneMethods {
         cardLook1.draw(g, bCard1.isMouseOver());
         cardLook2.draw(g, bCard2.isMouseOver());
         cardLook3.draw(g, bCard3.isMouseOver());
+        reshuffle.draw(g);
     }
 
     private void drawBeam(Graphics g) {
@@ -609,6 +615,8 @@ public class Playing extends GameScene implements SceneMethods {
                 cardSelected(1);
             } else if (bCard3.getBounds().contains(x, y)) {
                 cardSelected(2);
+            } else if (reshuffle.getBounds().contains(x, y)) {
+                ////
             }
         } else {
             if (selectedTower != null) {
@@ -628,6 +636,9 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (playState.equals(PlayGameState.PLAY_PAUSED)) {
             playState = PlayGameState.PLAY_PLAY;
+        }
+        if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            bestiary.mouseClicked(x,y);
         }
 
     }
@@ -666,12 +677,16 @@ public class Playing extends GameScene implements SceneMethods {
             bCard1.setMouseOver(false);
             bCard2.setMouseOver(false);
             bCard3.setMouseOver(false);
+            reshuffle.setMouseOver(false);
             if (bCard1.getBounds().contains(x, y)) {
                 bCard1.setMouseOver(true);
             } else if (bCard2.getBounds().contains(x, y)) {
                 bCard2.setMouseOver(true);
             } else if (bCard3.getBounds().contains(x, y)) {
                 bCard3.setMouseOver(true);
+            }
+            else if (reshuffle.getBounds().contains(x, y)) {
+                reshuffle.setMouseOver(true);
             }
         }
         if (playState.equals(PlayGameState.PLAY_WIN)) {
@@ -696,6 +711,7 @@ public class Playing extends GameScene implements SceneMethods {
             bCard1.resetBooleans();
             bCard2.resetBooleans();
             bCard3.resetBooleans();
+            reshuffle.resetBooleans();
         }
         if (playState.equals(PlayGameState.PLAY_WIN)) {
             bReplay.resetBooleans();
@@ -715,6 +731,8 @@ public class Playing extends GameScene implements SceneMethods {
                 bCard2.setMousePressed(true);
             } else if (bCard3.getBounds().contains(x, y)) {
                 bCard3.setMousePressed(true);
+            }else if (reshuffle.getBounds().contains(x, y)) {
+                reshuffle.setMousePressed(true);
             }
         }
         if (x >= 1280) {
