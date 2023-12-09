@@ -110,6 +110,10 @@ public class MyButton {
         return id;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public boolean isMouseOver() {
         return mouseOver;
     }

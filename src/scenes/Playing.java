@@ -12,10 +12,9 @@ import objects.Beam;
 import objects.Card;
 import objects.CardLook;
 import objects.PathPoint;
-
 import towers.*;
-import ui.PlayingBar;
 import ui.MyButton;
+import ui.PlayingBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -23,10 +22,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-import static helpz.Constants.Tiles.*;
+import static helpz.Constants.Tiles.GRASS_TILE;
 import static helpz.Constants.TowerType.*;
-import static helpz.LoadSave.*;
+import static helpz.LoadSave.getCardChooseSprite;
+import static helpz.LoadSave.getCardSprite;
 
 public class Playing extends GameScene implements SceneMethods {
     private CardLook cardLook1, cardLook2, cardLook3;
@@ -40,6 +39,7 @@ public class Playing extends GameScene implements SceneMethods {
     private WaveManager waveManager;
     private Bestiary bestiary;
     private MyButton bReplay;
+    private int shuffles = 2;
     private MyButton reshuffle;
     private MyButton bCard1, bCard2, bCard3;
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = getLogos();
@@ -60,7 +60,7 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager = new EnemyManager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
-        bestiary=game.getBestiary();
+        bestiary = game.getBestiary();
         initCardButtons();
     }
 
@@ -74,15 +74,15 @@ public class Playing extends GameScene implements SceneMethods {
         int cardW = 1000;
         int cardH = 300;
         int diffCard = 400;
-        int shuffleX = 640-75;
+        int shuffleX = 640 - 75;
         int shuffleY = 20;
-        int shuffleW = 100;
+        int shuffleW = 150;
         int shuffleH = 50;
 
         bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
         bCard2 = new MyButton("Card2", cardX, cardY + diffCard, cardW, cardH);
         bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
-        reshuffle=new MyButton("Shuffle", shuffleX, shuffleY, shuffleW, shuffleH);
+        reshuffle = new MyButton("Shuffle ("+shuffles+")", shuffleX, shuffleY, shuffleW, shuffleH);
     }
 
     public enum PlayGameState {
@@ -106,7 +106,7 @@ public class Playing extends GameScene implements SceneMethods {
                     if (isThereMoreWaves()) {
                         waveManager.startWaveTimer();
                         if (isWaveTimerOver()) {
-                            if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 2) {
+                            if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 1) {
                                 cardSelectStart();
                             }
                             waveManager.increaseWaveIndex();
@@ -183,6 +183,11 @@ public class Playing extends GameScene implements SceneMethods {
         threeCards.clear();
         getCards();
         get3Cards();
+        getLookOfCards();
+      playState = PlayGameState.PLAY_CARD_SELECT;
+    }
+
+    private void getLookOfCards() {
         int cardX = 140;
         int cardY = 100;
         int diffCard = 400;
@@ -190,7 +195,7 @@ public class Playing extends GameScene implements SceneMethods {
         cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
         cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
         cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
-        playState = PlayGameState.PLAY_CARD_SELECT;
+
     }
 
     private void cardSelected(int cardChosen) {
@@ -419,7 +424,6 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void get3Cards() {
         while (true) {
-
             int ran = random.nextInt(cards.size());
             if (cards.get(ran).isUnlocked()) {
                 if (!cards.get(ran).isActive()) {
@@ -445,6 +449,14 @@ public class Playing extends GameScene implements SceneMethods {
                 return;
             }
         }
+    }
+
+    private void shuffleCards() {
+        shuffles--;
+        threeCards.clear();
+        get3Cards();
+        getLookOfCards();
+        reshuffle.setText("Shuffle ("+shuffles+")");
     }
 
     public void Finish() {
@@ -559,6 +571,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     private void drawBeam(Graphics g) {
+        try{
         for (Beam beam : beams) {
             if (beam.getActive()) {
                 g.setColor(new Color(255, 0, 0));
@@ -566,6 +579,9 @@ public class Playing extends GameScene implements SceneMethods {
                 beam.timerDown();
 
             }
+        }}catch (Exception e){
+            System.out.println("ConcurrentModificationException beam");
+            
         }
 
     }
@@ -616,8 +632,14 @@ public class Playing extends GameScene implements SceneMethods {
             } else if (bCard3.getBounds().contains(x, y)) {
                 cardSelected(2);
             } else if (reshuffle.getBounds().contains(x, y)) {
-                ////
+                if(shuffles>0) {
+                    shuffleCards();
+                }
             }
+        } else if (playState.equals(PlayGameState.PLAY_PAUSED)) {
+            playState = PlayGameState.PLAY_PLAY;
+        } else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            bestiary.mouseClicked(x, y);
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -633,12 +655,6 @@ public class Playing extends GameScene implements SceneMethods {
                 playingBar.displayTower(t);
 
             }
-        }
-        if (playState.equals(PlayGameState.PLAY_PAUSED)) {
-            playState = PlayGameState.PLAY_PLAY;
-        }
-        if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
-            bestiary.mouseClicked(x,y);
         }
 
     }
@@ -684,8 +700,7 @@ public class Playing extends GameScene implements SceneMethods {
                 bCard2.setMouseOver(true);
             } else if (bCard3.getBounds().contains(x, y)) {
                 bCard3.setMouseOver(true);
-            }
-            else if (reshuffle.getBounds().contains(x, y)) {
+            } else if (reshuffle.getBounds().contains(x, y)) {
                 reshuffle.setMouseOver(true);
             }
         }
@@ -701,7 +716,7 @@ public class Playing extends GameScene implements SceneMethods {
             }
         }
         if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
-           bestiary.mouseMoved(x,y);
+            bestiary.mouseMoved(x, y);
         }
     }
 
@@ -724,6 +739,9 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void mousePressed(int x, int y) {
+        if (x >= 1280) {
+            playingBar.mousePressed(x, y);
+        }
         if (playState.equals(PlayGameState.PLAY_CARD_SELECT)) {
             if (bCard1.getBounds().contains(x, y)) {
                 bCard1.setMousePressed(true);
@@ -731,12 +749,9 @@ public class Playing extends GameScene implements SceneMethods {
                 bCard2.setMousePressed(true);
             } else if (bCard3.getBounds().contains(x, y)) {
                 bCard3.setMousePressed(true);
-            }else if (reshuffle.getBounds().contains(x, y)) {
+            } else if (reshuffle.getBounds().contains(x, y)) {
                 reshuffle.setMousePressed(true);
             }
-        }
-        if (x >= 1280) {
-            playingBar.mousePressed(x, y);
         } else if (playState.equals(PlayGameState.PLAY_WIN)) {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMousePressed(true);
@@ -857,6 +872,7 @@ public class Playing extends GameScene implements SceneMethods {
         mouseY = 0;
         selectedTower = null;
         goldTick = 0;
+        shuffles = 2;
         beamReset();
         playState = PlayGameState.PLAY_PLAY;
         for (Card card : cards) {
