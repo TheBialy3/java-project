@@ -567,7 +567,12 @@ public class Playing extends GameScene implements SceneMethods {
         cardLook1.draw(g, bCard1.isMouseOver());
         cardLook2.draw(g, bCard2.isMouseOver());
         cardLook3.draw(g, bCard3.isMouseOver());
-        reshuffle.draw(g);
+        if(shuffles>0){
+            reshuffle.draw(g);
+        }else {
+            reshuffle.drawUnActive(g);
+        }
+
     }
 
     private void drawBeam(Graphics g) {
