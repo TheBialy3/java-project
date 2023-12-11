@@ -38,11 +38,12 @@ public class Playing extends GameScene implements SceneMethods {
     private TowerManager towerManager;
     private WaveManager waveManager;
     private Bestiary bestiary;
+    private MyButton bReturn;
     private MyButton bReplay;
     private int shuffles = 2;
     private MyButton reshuffle;
     private MyButton bCard1, bCard2, bCard3;
-    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = getLogos();
+    private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = loadLogos();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
@@ -62,10 +63,16 @@ public class Playing extends GameScene implements SceneMethods {
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         bestiary = game.getBestiary();
         initCardButtons();
+        initBestiaryButton();
     }
 
-    private void getCards() {
-        cards = game.getCards();
+    private void initBestiaryButton() {
+        int w = 200;
+        int h = w / 4;
+        int x = 1536 / 2 - w / 2;
+        int y = 1150;
+
+        bReturn = new MyButton("Return", x, y, w, h);
     }
 
     private void initCardButtons() {
@@ -175,6 +182,7 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
             bestiary.drawUpgradeImg(g);
+            bReturn.draw(g);
         }
 
     }
@@ -182,20 +190,19 @@ public class Playing extends GameScene implements SceneMethods {
     private void cardSelectStart() {
         threeCards.clear();
         getCards();
-        get3Cards();
-        getLookOfCards();
+        choose3RandomCards();
+        createLookOfCards();
       playState = PlayGameState.PLAY_CARD_SELECT;
     }
 
-    private void getLookOfCards() {
+    private void createLookOfCards() {
         int cardX = 140;
         int cardY = 100;
         int diffCard = 400;
-        logos = getLogos();
+        logos = loadLogos();
         cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
         cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
         cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
-
     }
 
     private void cardSelected(int cardChosen) {
@@ -422,7 +429,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
-    private void get3Cards() {
+    private void choose3RandomCards() {
         while (true) {
             int ran = random.nextInt(cards.size());
             if (cards.get(ran).isUnlocked()) {
@@ -454,8 +461,8 @@ public class Playing extends GameScene implements SceneMethods {
     private void shuffleCards() {
         shuffles--;
         threeCards.clear();
-        get3Cards();
-        getLookOfCards();
+        choose3RandomCards();
+        createLookOfCards();
         reshuffle.setText("Shuffle ("+shuffles+")");
     }
 
@@ -464,7 +471,7 @@ public class Playing extends GameScene implements SceneMethods {
         playState = PlayGameState.PLAY_WIN;
     }
 
-    private BufferedImage[] getLogos() {
+    private BufferedImage[] loadLogos() {
         BufferedImage logosAtlas = LoadSave.getSpriteLogos();
         int logoNr = 100;
         BufferedImage logo[] = new BufferedImage[logoNr];
@@ -510,10 +517,7 @@ public class Playing extends GameScene implements SceneMethods {
 
         bReplay = new MyButton("Replay", x, y, w, h);
         bReplay.draw(g);
-
-
     }
-
 
     private boolean isWaveTimerOver() {
         return waveManager.isWaveTimerOver();
@@ -533,7 +537,6 @@ public class Playing extends GameScene implements SceneMethods {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -567,12 +570,12 @@ public class Playing extends GameScene implements SceneMethods {
         cardLook1.draw(g, bCard1.isMouseOver());
         cardLook2.draw(g, bCard2.isMouseOver());
         cardLook3.draw(g, bCard3.isMouseOver());
+
         if(shuffles>0){
             reshuffle.draw(g);
         }else {
             reshuffle.drawUnActive(g);
         }
-
     }
 
     private void drawBeam(Graphics g) {
@@ -582,13 +585,10 @@ public class Playing extends GameScene implements SceneMethods {
                 g.setColor(new Color(255, 0, 0));
                 g.drawLine(beam.getxStart(), beam.getyStart(), beam.getxEnd(), beam.getyEnd());
                 beam.timerDown();
-
             }
         }}catch (Exception e){
             System.out.println("ConcurrentModificationException beam");
-            
         }
-
     }
 
 
@@ -601,9 +601,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     private void drawSelectedTower(Graphics g) {
         if (selectedTower != null) {
-
             g.drawImage(towerManager.getTowerImg()[selectedTower.getTowerType()], mouseX, mouseY, null);
-
         }
     }
 
@@ -618,6 +616,25 @@ public class Playing extends GameScene implements SceneMethods {
                 }
             }
         }
+    }
+
+    public void removeTower(Tower displayedTower) {
+        towerManager.removeTower(displayedTower);
+    }
+
+    private boolean isTileGrass(int x, int y) {
+        int id = lvl[y / tilePixelNumber][x / tilePixelNumber];
+        int tileType = game.getTileManager().getTile(id).getTileType();
+        return tileType == GRASS_TILE;
+    }
+
+    public void shootEnemy(Tower t, Enemy e) {
+        if (t.getTowerType() == CROSSBOW) {
+            projectileManager.crossbowNewProjectile(t);
+        } else {
+            projectileManager.newProjectile(t, e);
+        }
+
     }
 
 
@@ -644,7 +661,9 @@ public class Playing extends GameScene implements SceneMethods {
         } else if (playState.equals(PlayGameState.PLAY_PAUSED)) {
             playState = PlayGameState.PLAY_PLAY;
         } else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
-            bestiary.mouseClicked(x, y);
+            if (bReturn.getBounds().contains(x, y)) {
+                playState = PlayGameState.PLAY_PLAY;
+            }
         } else {
             if (selectedTower != null) {
                 if (isTileGrass(mouseX, mouseY)) {
@@ -665,28 +684,6 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
-    private Tower getTowerAt(int x, int y) {
-        return towerManager.getTowerAt(x, y);
-    }
-
-    public void removeTower(Tower displayedTower) {
-        towerManager.removeTower(displayedTower);
-    }
-
-    private boolean isTileGrass(int x, int y) {
-        int id = lvl[y / tilePixelNumber][x / tilePixelNumber];
-        int tileType = game.getTileManager().getTile(id).getTileType();
-        return tileType == GRASS_TILE;
-    }
-
-    public void shootEnemy(Tower t, Enemy e) {
-        if (t.getTowerType() == CROSSBOW) {
-            projectileManager.crossbowNewProjectile(t);
-        } else {
-            projectileManager.newProjectile(t, e);
-        }
-
-    }
 
     @Override
     public void mouseMoved(int x, int y) {
@@ -721,7 +718,11 @@ public class Playing extends GameScene implements SceneMethods {
             }
         }
         if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            bReturn.setMouseOver(false);
             bestiary.mouseMoved(x, y);
+            if (bReturn.getBounds().contains(x, y)) {
+                bReturn.setMouseOver(true);
+            }
         }
     }
 
@@ -732,9 +733,10 @@ public class Playing extends GameScene implements SceneMethods {
             bCard2.resetBooleans();
             bCard3.resetBooleans();
             reshuffle.resetBooleans();
-        }
-        if (playState.equals(PlayGameState.PLAY_WIN)) {
+        }else if (playState.equals(PlayGameState.PLAY_WIN)) {
             bReplay.resetBooleans();
+        }else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            bReturn.resetBooleans();
         }
         if (x >= 1280) {
             playingBar.mouseReleased(x, y);
@@ -761,29 +763,16 @@ public class Playing extends GameScene implements SceneMethods {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMousePressed(true);
             }
+        }else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+            if (bReturn.getBounds().contains(x, y)) {
+                bReturn.setMousePressed(true);
+            }
         }
     }
 
     @Override
     public void mouseDragged(int x, int y) {
         mouseClicked(x, y);
-    }
-
-    public void rewardPlayerAfterWave() {
-        int endWaveGold = 150;
-        playingBar.earnGold(endWaveGold);
-    }
-
-    public void rewardPlayer(int earnGold) {
-        playingBar.earnGold(earnGold);
-    }
-
-    public TowerManager getTowerManager() {
-        return towerManager;
-    }
-
-    public void setSelectedTower(Tower selectedTower) {
-        this.selectedTower = selectedTower;
     }
 
     public void keyPressed(KeyEvent e) {
@@ -847,14 +836,6 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    public EnemyManager getEnemyManager() {
-        return enemyManager;
-    }
-
-    public WaveManager getWaveManager() {
-        return waveManager;
-    }
-
 
     public void mouseClickedR() {
         setSelectedTower(null);
@@ -863,8 +844,27 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
+    public void rewardPlayerAfterWave() {
+        int endWaveGold = 150;
+        playingBar.earnGold(endWaveGold);
+    }
+
+    public void rewardPlayer(int earnGold) {
+        playingBar.earnGold(earnGold);
+    }
+
+    public void setSelectedTower(Tower selectedTower) {
+        this.selectedTower = selectedTower;
+    }
+
     public void removeOneLive() {
         playingBar.removeOneLive();
+    }
+
+
+
+    public void setMine(Tower t, PathPoint e) {
+        projectileManager.newMine(t, e);
     }
 
     public void resetEverything() {
@@ -884,13 +884,24 @@ public class Playing extends GameScene implements SceneMethods {
             card.setActive(false);
         }
     }
-
-    public void setMine(Tower t, PathPoint e) {
-        projectileManager.newMine(t, e);
-    }
-
     public ProjectileManager getProjectileManager() {
         return projectileManager;
+    }
+
+    public void beamEnemy(Tower t, Enemy e) {
+        beams.add(new Beam(t.getX() + 45, t.getY() + 20, (int) e.getX() + 32, (int) e.getY() + 32));
+    }
+
+    public void beamReset() {
+        beams.clear();
+    }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
+
+    public WaveManager getWaveManager() {
+        return waveManager;
     }
 
     public int[][] getRoadDirArr() {
@@ -906,11 +917,16 @@ public class Playing extends GameScene implements SceneMethods {
         return mY;
     }
 
-    public void beamEnemy(Tower t, Enemy e) {
-        beams.add(new Beam(t.getX() + 45, t.getY() + 20, (int) e.getX() + 32, (int) e.getY() + 32));
+    private void getCards() {
+        cards = game.getCards();
     }
 
-    public void beamReset() {
-        beams.clear();
+    private Tower getTowerAt(int x, int y) {
+        return towerManager.getTowerAt(x, y);
     }
+
+    public TowerManager getTowerManager() {
+        return towerManager;
+    }
+
 }
