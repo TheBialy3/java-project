@@ -137,8 +137,6 @@ public class MyButton {
 
         //Body
         drawBodyUnActive(g);
-        //Border
-        drawBorderQuit(g);
         //Text
         drawText(g);
 
@@ -175,5 +173,6 @@ public class MyButton {
             g.setColor(new Color(80, 80, 80));
         }
         g.fillRect(x, y, width, height);
+        g.setColor(new Color(0, 0, 0));
     }
 }

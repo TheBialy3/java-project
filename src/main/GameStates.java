@@ -13,4 +13,8 @@ public enum GameStates {
     public static void SetGameState(GameStates state){
         gameStates = state;
     }
+
+    public static GameStates getGameStates() {
+        return gameStates;
+    }
 }
