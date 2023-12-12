@@ -2,6 +2,7 @@ package objects;
 
 import helpz.Constants;
 
+import java.awt.*;
 
 
 public class EnemyBestiaryLook {
@@ -11,10 +12,19 @@ public class EnemyBestiaryLook {
     private float speed;
     private boolean locked=false;
 
+    private Rectangle bounds;
+    public int x, y, width, height;
+
     public EnemyBestiaryLook(int enemyType) {
         this.enemyType = enemyType;
         getNumbers();
         getStrings();
+        initBounds();
+    }
+
+    private void initBounds() {
+        //x, y, width, height; for z enemyType dla kazdego wroga z dzielnikiem na linie
+        this.bounds = new Rectangle(x, y, width, height);
     }
 
     private void getNumbers() {
