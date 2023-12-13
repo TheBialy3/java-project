@@ -13,7 +13,7 @@ public class EnemyBestiaryLook {
     private boolean locked=false;
 
     private Rectangle bounds;
-    public int x, y, width, height;
+    public int x, y, tilePixelNumber=64;
 
     public EnemyBestiaryLook(int enemyType) {
         this.enemyType = enemyType;
@@ -23,8 +23,8 @@ public class EnemyBestiaryLook {
     }
 
     private void initBounds() {
-        //x, y, width, height; for z enemyType dla kazdego wroga z dzielnikiem na linie
-        this.bounds = new Rectangle(x, y, width, height);
+        int diff=99;
+        this.bounds = new Rectangle(40+(diff*(enemyType%15)),50+(diff*(enemyType/15)), tilePixelNumber,tilePixelNumber);
     }
 
     private void getNumbers() {
@@ -113,5 +113,9 @@ public class EnemyBestiaryLook {
 
     public boolean isUnlocked() {
         return locked;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
     }
 }

@@ -2,6 +2,8 @@ package objects;
 
 import helpz.Constants;
 
+import java.awt.*;
+
 import static helpz.Constants.TowerType.*;
 
 public class TowerBestiaryLook {
@@ -12,10 +14,21 @@ public class TowerBestiaryLook {
     private boolean aoe, slow, dot;
     private boolean locked=false;
 
+    private Rectangle bounds;
+
+    public int x, y, tilePixelNumber=64;
+
     public TowerBestiaryLook(int towerType) {
         this.towerType = towerType;
         getNumbers();
         getStrings();
+        initBounds();
+    }
+
+    private void initBounds() {
+        int halfOfScreenHight=640;
+        int diff=99;
+        this.bounds = new Rectangle(40+(diff*(towerType%15)),halfOfScreenHight+50+(diff*(towerType/15)), tilePixelNumber,tilePixelNumber);
     }
 
     private void getNumbers() {
@@ -159,5 +172,9 @@ public class TowerBestiaryLook {
 
     public boolean isUnlocked() {
         return locked;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
     }
 }
