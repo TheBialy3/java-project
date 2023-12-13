@@ -177,4 +177,5 @@ public class TowerBestiaryLook {
     public Rectangle getBounds() {
         return bounds;
     }
+
 }

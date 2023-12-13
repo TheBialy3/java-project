@@ -3,8 +3,6 @@ package scenes;
 import helpz.LevelBuild;
 import helpz.LoadSave;
 import main.Game;
-import managers.TileManager;
-import objects.PathPoint;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -23,11 +21,13 @@ public class Menu extends GameScene implements SceneMethods {
 
     private int[][] lvl;
     private int xlevelSprite = -64, tilePixelNumber = 64, ran;
-    private BufferedImage[] moveImages;
+    private BufferedImage moveImages[],towerImage;
     private Random random = new Random();
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
     private MyButton bPlaing, bEditing, bSettings, bQuit, bUpgrade;
+    private MyButton bEnemy, bTower;
+    private int levelHeightForEnemy=507;
 
     public Menu(Game game) {
         super(game);
@@ -49,6 +49,9 @@ public class Menu extends GameScene implements SceneMethods {
         bSettings = new MyButton("Settings", x, y + (yOffset * 2), w, h);
         bUpgrade = new MyButton("Upgrade", x, y + (yOffset * 3), w, h);
         bQuit = new MyButton("Quit", x, y + (yOffset * 4), w, h);
+        bEnemy=new MyButton("Enemy Info", x, levelHeightForEnemy, tilePixelNumber, tilePixelNumber);
+        bTower=new MyButton("Tower Info", tilePixelNumber*4, tilePixelNumber*7, tilePixelNumber, tilePixelNumber);
+        bTower.setImg(towerImage);
     }
 
     protected void updateTick() {
@@ -87,13 +90,14 @@ public class Menu extends GameScene implements SceneMethods {
         if (xlevelSprite > 1600) {
             resetDrawIt(g);
         }
-        g.drawImage(moveImages[ran], xlevelSprite, 507, tilePixelNumber, tilePixelNumber, null);
-    }
+        bEnemy.setImg(moveImages[ran]);
+        bEnemy.setX(xlevelSprite);
+        bEnemy.drawBodyImage(g);
+        }
 
     private void resetDrawIt(Graphics g) {
         xlevelSprite = -64;
         ran = random.nextInt(10);
-
     }
 
     @Override
@@ -108,7 +112,11 @@ public class Menu extends GameScene implements SceneMethods {
             System.exit(0);
         } else if (bUpgrade.getBounds().contains(x, y)) {
             SetGameState(UPGRADE);
+        }else if (bEnemy.getBounds().contains(x, y)  ||  bTower.getBounds().contains(x, y)) {
+            SetGameState(BESTIARY);
         }
+
+
     }
 
     @Override
@@ -163,12 +171,20 @@ public class Menu extends GameScene implements SceneMethods {
         }
     }
 
+
+
+    @Override
+    public void mouseDragged(int x, int y) {
+        mouseClicked(x,y);
+    }
+
     private void drawButtons(Graphics g) {
         bPlaing.draw(g);
         bEditing.draw(g);
         bSettings.draw(g);
         bUpgrade.draw(g);
         bQuit.drawQuit(g);
+        bTower.drawBodyImage(g);
     }
 
     private void loadSprites() {
@@ -191,10 +207,6 @@ public class Menu extends GameScene implements SceneMethods {
         for (int i = 0; i < 10; i++) {
             moveImages[i] = atlas.getSubimage(0, (2 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
-    }
-
-    @Override
-    public void mouseDragged(int x, int y) {
-        mouseClicked(x,y);
+        towerImage= atlas.getSubimage(0, 17 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 }
