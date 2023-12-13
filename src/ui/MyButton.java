@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class MyButton {
 
@@ -8,6 +9,7 @@ public class MyButton {
     private String text;
     private boolean mouseOver, mousePressed, mouseReleased;
     private Rectangle bounds;
+    private BufferedImage img;
 
 
     //NormalButtons
@@ -82,45 +84,7 @@ public class MyButton {
     }
 
 
-    public void setMouseOver(boolean mouseOver) {
-        this.mouseOver = mouseOver;
-    }
 
-    public void setMousePressed(boolean mousePressed) {
-        this.mousePressed = mousePressed;
-    }
-
-    public void setMouseReleased(boolean mouseReleased) {
-        this.mouseReleased = mouseReleased;
-    }
-
-
-
-
-    public void resetBooleans() {
-        this.mousePressed = false;
-        this.mouseOver = false;
-    }
-
-    public Rectangle getBounds() {
-        return bounds;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isMouseOver() {
-        return mouseOver;
-    }
-
-    public boolean isMousePressed() {
-        return mousePressed;
-    }
 
     public void drawQuit(Graphics g) {
 
@@ -174,5 +138,62 @@ public class MyButton {
         }
         g.fillRect(x, y, width, height);
         g.setColor(new Color(0, 0, 0));
+    }
+
+    public void drawBodyImage(Graphics g) {
+        g.drawImage(img, x, y, width, height, null);
+    }
+
+
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+    }
+
+    public void setMousePressed(boolean mousePressed) {
+        this.mousePressed = mousePressed;
+    }
+
+    public void setMouseReleased(boolean mouseReleased) {
+        this.mouseReleased = mouseReleased;
+    }
+
+
+
+
+    public void resetBooleans() {
+        this.mousePressed = false;
+        this.mouseOver = false;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
+
+    public boolean isMousePressed() {
+        return mousePressed;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setImg(BufferedImage img) {
+        this.img = img;
     }
 }

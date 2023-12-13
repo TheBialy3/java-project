@@ -118,4 +118,5 @@ public class EnemyBestiaryLook {
     public Rectangle getBounds() {
         return bounds;
     }
+
 }
