@@ -117,6 +117,7 @@ public class Constants {
         public static final int BIRD = 6;
         public static final int GHOST = 7;
         public static final int ROCK = 8;
+        public static final int CREEPY_CAT = 9;
 
         public static String getName(int enemyType) {
             switch (enemyType) {
@@ -137,6 +138,8 @@ public class Constants {
                 case GHOST:
                     return "Ghost ";
                 case ROCK:
+                    return "Rock Golem";
+                case CREEPY_CAT:
                     return "Rock Golem";
                 default:
                     return "";
@@ -163,6 +166,8 @@ public class Constants {
                     return 0.4f;
                 case ROCK:
                     return 0.25f;
+                case CREEPY_CAT:
+                    return 0.65f;
             }
             return 0;
         }
@@ -190,6 +195,8 @@ public class Constants {
                     return WALK;
                 case ROCK:
                     return WALK;
+                case CREEPY_CAT:
+                return WALK;
             }
             return 0;
         }
@@ -214,6 +221,8 @@ public class Constants {
                     return 50;
                 case ROCK:
                     return 58;
+                case CREEPY_CAT:
+                    return 64;
                 default:
                     return 62;
             }
@@ -239,6 +248,8 @@ public class Constants {
                     return 30;
                 case ROCK:
                     return 34;
+                case CREEPY_CAT:
+                    return 64;
                 default:
                     return 56;
             }
@@ -264,6 +275,8 @@ public class Constants {
                     return 250;
                 case ROCK:
                     return 450;
+                case CREEPY_CAT:
+                    return 300;
             }
             return 0;
         }
@@ -289,6 +302,8 @@ public class Constants {
                     return 40;
                 case ROCK:
                     return 100;
+                case CREEPY_CAT:
+                    return 40;
             }
             return 0;
         }
@@ -313,6 +328,8 @@ public class Constants {
                     return 100;
                 case ROCK:
                     return 40;
+                case CREEPY_CAT:
+                    return 20;
             }
             return 0;
         }
@@ -337,6 +354,8 @@ public class Constants {
                     return 13;
                 case ROCK:
                     return 14;
+                case CREEPY_CAT:
+                    return 20;
             }
             return 0;
         }
