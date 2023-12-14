@@ -187,10 +187,12 @@ public class MyButton {
 
     public void setX(int x) {
         this.x = x;
+        initBounds();
     }
 
     public void setY(int y) {
         this.y = y;
+        initBounds();
     }
 
     public void setImg(BufferedImage img) {

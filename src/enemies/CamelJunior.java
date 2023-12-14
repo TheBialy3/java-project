@@ -12,7 +12,4 @@ public class CamelJunior extends Enemy{
     }
 
 
-
-
-
 }
