@@ -100,6 +100,9 @@ public class EnemyManager {
             case ROCK:
                 enemies.add(new Rock(x, y, 0, this, waveManager));
                 break;
+            case CREEPY_CAT:
+                enemies.add(new CreepyCat(x, y, 0, this, waveManager));
+                break;
         }
     }
 
