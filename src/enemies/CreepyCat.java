@@ -11,4 +11,6 @@ public class CreepyCat  extends Enemy{
         super(x, y, ID, CREEPY_CAT, enemyManager, waveManager);
     }
 
+
+
 }
