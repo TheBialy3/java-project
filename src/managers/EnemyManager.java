@@ -26,6 +26,7 @@ public class EnemyManager {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
     private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
+    private int numberOfEnemyTypes = 10;
     private int ranL = random.nextInt(25), ranR = random.nextInt(25);
     private BufferedImage[] enemyEffects;
     private int[][] roadDirArr;
@@ -44,6 +45,20 @@ public class EnemyManager {
 
     }
 
+    public void draw(Graphics g) {
+        try {
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    drawEnemy(e, g);
+                    drawHealthBar(e, g);
+                    drawEffects(e, g);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("ConcurrentModificationException draw");
+        }
+    }
+
     private void loadRoadDirArr() {
         roadDirArr = LoadSave.GetLevelDir();
     }
@@ -58,10 +73,11 @@ public class EnemyManager {
 
     private void loadEnemyImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyImages = new BufferedImage[9];
-        for (int i = 0; i < 9; i++) {
+        enemyImages = new BufferedImage[numberOfEnemyTypes + 1];
+        for (int i = 0; i < numberOfEnemyTypes; i++) {
             enemyImages[i] = atlas.getSubimage(0, (2 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
+        enemyImages[numberOfEnemyTypes] = atlas.getSubimage(1 * tilePixelNumber, (2 + numberOfEnemyTypes - 1) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void spawnEnemy(int nextEnemy) {
@@ -108,13 +124,14 @@ public class EnemyManager {
 
     public void update() {
         indexOfPoisonAnimation++;
-        try{
+        try {
             for (Enemy e : enemies) {
                 if (e.isAlive()) {
                     updateEnemyMoveNew(e);
+                    e.updateEnemyCountdown();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ConcurrentModificationException update");
         }
         if (indexOfPoisonAnimation > 150) {
@@ -125,9 +142,9 @@ public class EnemyManager {
     }
 
     private void enemyReorder() {
-        Collections.sort(enemies, new Comparator<Enemy>(){
-            public int compare(Enemy e1, Enemy e2){
-                return Integer.valueOf((int) e2.getDistancePast()).compareTo((int)e1.getDistancePast());
+        Collections.sort(enemies, new Comparator<Enemy>() {
+            public int compare(Enemy e1, Enemy e2) {
+                return Integer.valueOf((int) e2.getDistancePast()).compareTo((int) e1.getDistancePast());
             }
         });
     }
@@ -138,17 +155,6 @@ public class EnemyManager {
         ranR = random.nextInt(25);
     }
 
-    public void draw(Graphics g) {
-        try{for (Enemy e : enemies) {
-            if (e.isAlive()) {
-                drawEnemy(e, g);
-                drawHealthBar(e, g);
-                drawEffects(e, g);
-            }
-        }}catch (Exception e){
-            System.out.println("ConcurrentModificationException draw");
-        }
-    }
 
     private void drawEffects(Enemy e, Graphics g) {
 
@@ -215,12 +221,12 @@ public class EnemyManager {
         return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
     }
 
-    public void spawnJuniors(float x, float y, int type,float distancePast) {
+    public void spawnJuniors(float x, float y, int type, float distancePast) {
         int shift = 0;
         for (Enemy e : enemies) {
             if (e.getEnemyType() == type) {
                 if (!e.isAlive()) {
-                    e.reuse(x + shift, y + shift,distancePast);
+                    e.reuse(x + shift, y + shift, distancePast);
                     shift++;
                 }
             }
@@ -241,8 +247,16 @@ public class EnemyManager {
         return (int) (HPBarWidth * e.getHealthBar());
     }
 
-    public void drawEnemy(Enemy e, Graphics g) {
+    public void drawEnemy(Enemy e, Graphics g) {/////////to fix
+        if (e.getEnemyType() == CREEPY_CAT) {
+            if (!e.isTargetable()) {
+                g.drawImage(enemyImages[numberOfEnemyTypes], (int) e.getX(), (int) e.getY(), null);
+            } else {
+                g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
+            }
+        } else {
             g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
+        }
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -260,19 +274,19 @@ public class EnemyManager {
     }
 
     public void rewardPlayer(int enemyType) {
-        int earnGold=Constants.EnemyType.getGoldWorth(enemyType);
-        if(isCard7()){
-            if(Constants.EnemyType.getGoldWorth(enemyType)<10){
-                earnGold=earnGold*2;
-            }else {
-            earnGold=earnGold+10;
+        int earnGold = Constants.EnemyType.getGoldWorth(enemyType);
+        if (isCard7()) {
+            if (Constants.EnemyType.getGoldWorth(enemyType) < 10) {
+                earnGold = earnGold * 2;
+            } else {
+                earnGold = earnGold + 10;
             }
         }
-        if(isCard8()){
-            if(Constants.EnemyType.getGoldWorth(enemyType)<10){
-                earnGold=earnGold*2;
-            }else {
-                earnGold=earnGold+10;
+        if (isCard8()) {
+            if (Constants.EnemyType.getGoldWorth(enemyType) < 10) {
+                earnGold = earnGold * 2;
+            } else {
+                earnGold = earnGold + 10;
             }
         }
         playing.rewardPlayer(earnGold);
@@ -326,6 +340,7 @@ public class EnemyManager {
     public void setCard11(boolean card11) {
         Card11 = card11;
     }
+
     public boolean isCard12() {
         return Card12;
     }

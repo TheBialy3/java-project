@@ -21,13 +21,15 @@ public abstract class Enemy {
     protected Rectangle bounds;
     protected int dmg, duration = 0;
     protected int slowTickLimit = 10, slowTick = slowTickLimit;
+    protected int countdown = 0;
     protected int maxHealth, health, mr, armor;
     protected int ID;
     protected int enemyType, damageType;
     protected int lastDir;
     protected boolean alive = false, poisoned = false;
     public float slowPower = 1f, distancePast = 0;
-    protected boolean revive;
+    protected boolean power=false;
+    protected boolean targetable = true;
 
 
     public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager) {
@@ -43,7 +45,7 @@ public abstract class Enemy {
         setBounds(enemyType);
         lastDir = -1;
         setStartHealth();
-        setRevive();
+        setPower();
         setResists(enemyType);
     }
 
@@ -58,9 +60,11 @@ public abstract class Enemy {
         this.armor = getArmor(enemyType);
     }
 
-    private void setRevive() {
+    private void setPower() {
         if (this.enemyType == ORK_ZOMBIE) {
-            revive = true;
+            power = true;
+        } else if (this.enemyType == CREEPY_CAT) {
+            power = true;
         }
     }
 
@@ -72,9 +76,6 @@ public abstract class Enemy {
         this.distancePast = distancePast;
     }
 
-    public void killed() {
-        revive = false;
-    }
 
     public void setPoisonOn(int dmg, int duration, int damageType) {
         this.dmg = dmg;
@@ -159,11 +160,20 @@ public abstract class Enemy {
     public void hurt(int dmg, int DMGType) {
         int calDMG = calculateDMG(dmg, DMGType);
         this.health -= calDMG;//calculateDMG(dmg, DMGType) ;
+        if (enemyType == CREEPY_CAT) {
+            if (this.power) {
+                if (health < maxHealth / 2) {
+                    setTargetable(false);
+                    startCountdown(240);
+                    power = false;
+                }
+            }
+        }
         if (health <= 0) {
             alive = false;
             if (enemyType == ORK_ZOMBIE) {
-                if (this.revive) {
-                    killed();
+                if (this.power) {
+                    power = false;
                     reuse(this.x, this.y, distancePast);
                 }
             } else if (enemyType == CAMEL) {
@@ -172,6 +182,30 @@ public abstract class Enemy {
             enemyManager.rewardPlayer(enemyType);
             Game.addXp();
         }
+    }
+
+    public void updateEnemyCountdown() {
+        if (countdown > 0) {
+            countdown--;
+        }
+        fixPower();
+    }
+
+    private void fixPower() {
+        if (!targetable) {
+            if (isCountdownOver()) {
+                targetable = true;
+            }
+        }
+    }
+
+    public boolean isCountdownOver() {
+        return countdown == 0;
+    }
+
+
+    private void startCountdown(int countdownTime) {
+        countdown =countdownTime;
     }
 
     private int calculateDMG(int dmg, int dmgType) {
@@ -194,11 +228,13 @@ public abstract class Enemy {
     }
 
     public boolean doesRevive() {
-        return revive;
+        if (enemyType == ORK_ZOMBIE) {
+            return power;
+        }
+        return false;
     }
 
     public void slow(float powerOfSlow) {
-
         slowTick = 0;
         slowPower = powerOfSlow;
     }
@@ -248,4 +284,14 @@ public abstract class Enemy {
     public void setLastDir(int newDir) {
         this.lastDir = newDir;
     }
+
+    public boolean isTargetable() {
+        return targetable;
+    }
+
+    public void setTargetable(boolean targetable) {
+        this.targetable = targetable;
+    }
+
+
 }
