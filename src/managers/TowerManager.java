@@ -179,28 +179,30 @@ public class TowerManager {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (t.isCoolDownOver()) {
                     if (e.isAlive()) {
-                        if (t.getTowerType() == SNIPER) {
-                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                            if (Card39) {
-                                attackEnemyIfClose(t, e);
-                            }
-                            t.resetCoolDown();
-                        } else if (isTowerTargetingEnemy(t, e)) {
-                            if (isEnemyInRange(t, e)) {
-                                if (t.getTowerType() == LASER_TOWER) {
-                                    e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                    if (Card40) {
-                                        attackEnemyIfClose(t, e);
-                                    }
-                                    playing.beamEnemy(t, e);
-                                } else {
-                                    playing.shootEnemy(t, e);
-                                }
-                                if (Constants.TowerType.isSlow(t.getTowerType())) {
-                                    float slow = t.getSlow();
-                                    e.slow(slow);
+                        if (e.isTargetable()) {
+                            if (t.getTowerType() == SNIPER) {
+                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                if (Card39) {
+                                    attackEnemyIfClose(t, e);
                                 }
                                 t.resetCoolDown();
+                            } else if (isTowerTargetingEnemy(t, e)) {
+                                if (isEnemyInRange(t, e)) {
+                                    if (t.getTowerType() == LASER_TOWER) {
+                                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                        if (Card40) {
+                                            attackEnemyIfClose(t, e);
+                                        }
+                                        playing.beamEnemy(t, e);
+                                    } else {
+                                        playing.shootEnemy(t, e);
+                                    }
+                                    if (Constants.TowerType.isSlow(t.getTowerType())) {
+                                        float slow = t.getSlow();
+                                        e.slow(slow);
+                                    }
+                                    t.resetCoolDown();
+                                }
                             }
                         }
                     }
@@ -216,18 +218,20 @@ public class TowerManager {
     private void attackEnemyIfClose(Tower t, Enemy hurted) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
-                if (t.getTowerType() == SNIPER) {
-                    if (hurted != e) {
-                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                        return;
-                    }
-                }
-                if (isEnemyInRange(t, e)) {
-                    if (t.getTowerType() == LASER_TOWER) {
+                if (e.isTargetable()) {
+                    if (t.getTowerType() == SNIPER) {
                         if (hurted != e) {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                            playing.beamEnemy(t, e);
                             return;
+                        }
+                    }
+                    if (isEnemyInRange(t, e)) {
+                        if (t.getTowerType() == LASER_TOWER) {
+                            if (hurted != e) {
+                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                playing.beamEnemy(t, e);
+                                return;
+                            }
                         }
                     }
                 }
