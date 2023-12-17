@@ -252,11 +252,15 @@ public class EnemyManager {
             if (!e.isTargetable()) {
                 g.drawImage(enemyImages[numberOfEnemyTypes], (int) e.getX(), (int) e.getY(), null);
             } else {
-                g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
+                drawBasic(e,g);
             }
         } else {
-            g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
+           drawBasic(e,g);
         }
+    }
+
+    private void drawBasic(Enemy e, Graphics g) {
+        g.drawImage(enemyImages[e.getEnemyType()], (int) e.getX(), (int) e.getY(), null);
     }
 
     public ArrayList<Enemy> getEnemies() {
