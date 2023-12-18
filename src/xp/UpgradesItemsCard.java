@@ -93,6 +93,8 @@ public class UpgradesItemsCard {
 
         //MINES_FACTORY
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
+        cards.add(new Card(id++, "Triple Mines", "Mines will now be triggered tree timer", false, 3));
+
 
         //POISON_TOWER
         cards.add(new Card(id++, "Poison Pool", "Poison Tower will leave a pool in place where it splash", false, 4));
