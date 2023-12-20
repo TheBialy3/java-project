@@ -83,18 +83,21 @@ public class UpgradesItemsCard {
 
         //ARCHER
         cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 1));
+        cards.add(new Card(id++, "Arrow split", "Arrows will split after hitting enemy", false, 1));
+
 
         //CANNON
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
         cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, 1));
         cards.add(new Card(id++, "Molotov cocktail", "Bombs will now set enemies on fire", false, 1));
+
         //FROST_MAGE
         cards.add(new Card(id++, "Frost Nova", "Frost Mage will now stun enemies in low range", false, 2));
 
         //MINES_FACTORY
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
         cards.add(new Card(id++, "Triple Mines", "Mines will now be triggered tree timer", false, 3));
-
+        cards.add(new Card(id++, "Minefield", "Set mines everywhere", false, 3));
 
         //POISON_TOWER
         cards.add(new Card(id++, "Poison Pool", "Poison Tower will set a pool of poison in near place", false, 4));
@@ -108,6 +111,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Pricing Cross", "CrossBow will now Price first enemy", false, 6));
 
         //MOUSE_FOLLOWS_TOWER
+
 
         //SNIPER
 
