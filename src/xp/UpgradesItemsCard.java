@@ -82,8 +82,8 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 
         //ARCHER
-        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 1));
-        cards.add(new Card(id++, "Arrow split", "Arrows will split after hitting enemy", false, 1));
+        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 0));
+        cards.add(new Card(id++, "Arrow split", "Arrows will split after hitting enemy", false, 0));
 
 
         //CANNON
@@ -111,6 +111,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Pricing Cross", "CrossBow will now Price first enemy", false, 6));
 
         //MOUSE_FOLLOWS_TOWER
+        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 7));
 
 
         //SNIPER
