@@ -361,6 +361,42 @@ public class TowerManager {
     public void reset() {
         towers.clear();
         towerAmount = 0;
+       setAllCardsBoolFalse();
+    }
+
+    private void setAllCardsBoolFalse() {
+        Card0 = false;
+        Card1 = false;
+        Card2 = false;
+        Card3 = false;
+        Card4 = false;
+        Card5 = false;
+        Card6 = false;
+        Card12 = false;
+        Card14 = false;
+        Card15 = false;
+        Card17 = false;
+        Card18 = false;
+        Card19 = false;
+        Card20 = false;
+        Card21 = false;
+        Card23 = false;
+        Card24 = false;
+        Card26 = false;
+        Card27 = false;
+        Card28 = false;
+        Card29 = false;
+        Card30 = false;
+        Card31 = false;
+        Card32 = false;
+        Card34 = false;
+        Card35 = false;
+        Card37 = false;
+        Card38 = false;
+        Card39 = false;
+        Card40 = false;
+        Card41 = false;
+        Card42 = false;
     }
 
     public void setCard0(boolean card0) {

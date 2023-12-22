@@ -298,6 +298,17 @@ public class EnemyManager {
 
     public void reset() {
         enemies.clear();
+        setAllCardsBoolFalse();
+
+    }
+
+    private void setAllCardsBoolFalse() {
+        Card7 = false;
+        Card8 = false;
+        Card9 = false;
+        Card10 = false;
+        Card11 = false;
+        Card12 = false;
     }
 
     public int[][] getRoadDirArr() {
