@@ -355,6 +355,7 @@ public class ProjectileManager {
     public void setCard33(boolean card33) {
         Card33 = card33;
     }
+
     public void setCard36(boolean card36) {
         Card36 = card36;
     }
@@ -366,6 +367,7 @@ public class ProjectileManager {
     public boolean isCard22() {
         return Card22;
     }
+
     public boolean isCard36() {
         return Card36;
     }
@@ -404,7 +406,20 @@ public class ProjectileManager {
         projectiles.clear();
         explosions.clear();
         proj_id = 0;
+        setAllCardsBoolFalse();
     }
+
+    private void setAllCardsBoolFalse() {
+        Card12 = false;
+        Card13 = false;
+        Card16 = false;
+        Card22 = false;
+        Card25 = false;
+        Card33 = false;
+        Card36 = false;
+    }
+
+
 }
 
 
