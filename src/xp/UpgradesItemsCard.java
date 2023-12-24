@@ -105,6 +105,7 @@ public class UpgradesItemsCard {
 
         //BOOM_VOLCANO
         cards.add(new Card(id++, "Volcano Power", "Volcano will now bust random stats of near towers", false, 5));
+        cards.add(new Card(id++, "", "", false, 5));
 
 
         //CROSSBOW
