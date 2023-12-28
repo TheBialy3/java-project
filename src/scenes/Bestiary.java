@@ -1,6 +1,7 @@
 package scenes;
 
 
+import helpz.Constants;
 import main.Game;
 import objects.EnemyBestiaryLook;
 
@@ -15,9 +16,9 @@ import static main.GameStates.*;
 //future scene for showing all possible enemies and towers
 public class Bestiary extends GameScene implements SceneMethods {
     private ArrayList<EnemyBestiaryLook> enemies = new ArrayList<>();
-    int numberOfEnemiesType = 8;
+    int numberOfEnemiesType = Constants.NumbersOf.NUMBER_OF_ENEMIES;
     private ArrayList<TowerBestiaryLook> towers = new ArrayList<>();
-    int numberOfTowersType = 9;
+    int numberOfTowersType =  Constants.NumbersOf.NUMBER_OF_TOWERS;
     private MyButton bReturn;
 
     public Bestiary(Game game) {
@@ -33,8 +34,13 @@ public class Bestiary extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
+        drawBackground(g);
         drawButtons(g);
         drawUpgradeImg(g);
+    }
+
+    private void drawBackground(Graphics g) {
+        g.drawImage(helpz.LoadSave.getImg("BackgroundBestiary"), 0, 0, 1536, 1280, null);
     }
 
     private void drawButtons(Graphics g) {
@@ -52,7 +58,7 @@ public class Bestiary extends GameScene implements SceneMethods {
 
     private void initEnemies() {
 
-        for (int i = 0; i <= numberOfEnemiesType; i++) {
+        for (int i = 0; i < numberOfEnemiesType; i++) {
             enemies.add(new EnemyBestiaryLook(i));
         }
 
@@ -60,7 +66,7 @@ public class Bestiary extends GameScene implements SceneMethods {
 
     private void initTowers() {
 
-        for (int i = 0; i <= numberOfTowersType; i++) {
+        for (int i = 0; i < numberOfTowersType; i++) {
             towers.add(new TowerBestiaryLook(i));
         }
     }
@@ -68,9 +74,7 @@ public class Bestiary extends GameScene implements SceneMethods {
 
     public void drawUpgradeImg(Graphics g) {
         int diff = 99;
-
         int tilePixelNumber = 64;
-        int heightDifferenceForSectionTowers = 500;
         for (EnemyBestiaryLook enemy : enemies) {
             if (enemy.isUnlocked()) {
                 g.setColor(new Color(200, 200, 200));
@@ -80,8 +84,10 @@ public class Bestiary extends GameScene implements SceneMethods {
             g.fillRect(40 + (diff * (enemy.getEnemyType() % 15)), 50 + (diff * (enemy.getEnemyType() / 15)), tilePixelNumber, tilePixelNumber);
             g.setColor(new Color(0, 26, 147));
             g.drawString(String.valueOf(enemy.getEnemyType()), 40 + (diff * (enemy.getEnemyType() % 15)) + 25, 50 + (diff * (enemy.getEnemyType() / 15)) + 39);
-            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(enemy.getEnemyType()%15)), 50+(diff*(enemy.getEnemyType()/15)), tilePixelNumber, tilePixelNumber, null);
+            g.drawImage(game.getPlaying().getEnemyManager().getEnemyImages()[enemy.getEnemyType()], 40+(diff*(enemy.getEnemyType()%15)), 50+(diff*(enemy.getEnemyType()/15)), tilePixelNumber, tilePixelNumber, null);
         }
+
+        int heightDifferenceForSectionTowers = 640;
         for (TowerBestiaryLook tower : towers) {
             if (tower.isUnlocked()) {
                 g.setColor(new Color(200, 200, 200));
@@ -91,7 +97,7 @@ public class Bestiary extends GameScene implements SceneMethods {
             g.fillRect(40 + (diff * (tower.getTowerType() % 15)), heightDifferenceForSectionTowers + 50 + (diff * (tower.getTowerType() / 15)), tilePixelNumber, tilePixelNumber);
             g.setColor(new Color(0, 26, 147));
             g.drawString(String.valueOf(tower.getTowerType()), 40 + (diff * (tower.getTowerType() % 15)) + 25, heightDifferenceForSectionTowers + 50 + (diff * (tower.getTowerType() / 15)) + 39);
-            //g.drawImage(playing.getTowerManager().getTowerImgs()[b.getId()], (40+(diff*(tower.getTowerType()%15)), 50+(diff*(tower.getTowerType()/15)), tilePixelNumber, tilePixelNumber, null);
+            g.drawImage(game.getPlaying().getTowerManager().getTowerImg()[tower.getTowerType()], 40+(diff*(tower.getTowerType()%15)), heightDifferenceForSectionTowers+50+(diff*(tower.getTowerType()/15)), tilePixelNumber, tilePixelNumber, null);
         }
     }
 

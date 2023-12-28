@@ -8,9 +8,9 @@ import java.awt.*;
 public class EnemyBestiaryLook {
     private int enemyType;
     private String name, speedName, moveTypeName, hitboxName;
-    private int enemyMoveType, heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
+    private int  heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
     private float speed;
-    private boolean locked=false;
+    private boolean unlocked =true;
 
     private Rectangle bounds;
     public int x, y, tilePixelNumber=64;
@@ -28,7 +28,6 @@ public class EnemyBestiaryLook {
     }
 
     private void getNumbers() {
-        enemyMoveType =  Constants.EnemyType.getMoveType(enemyType);
         getHitbox();
         mr = Constants.EnemyType.getMR(enemyType);
         armor = Constants.EnemyType.getArmor(enemyType);
@@ -76,8 +75,8 @@ public class EnemyBestiaryLook {
         return "Average";
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void setUnlocked(boolean unlocked) {
+        this.unlocked = unlocked;
     }
 
     public String getName() {
@@ -112,7 +111,7 @@ public class EnemyBestiaryLook {
     }
 
     public boolean isUnlocked() {
-        return locked;
+        return unlocked;
     }
 
     public Rectangle getBounds() {

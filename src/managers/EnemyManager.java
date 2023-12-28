@@ -364,5 +364,7 @@ public class EnemyManager {
         Card12 = card12;
     }
 
-
+    public BufferedImage[] getEnemyImages() {
+        return enemyImages;
+    }
 }

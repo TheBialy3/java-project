@@ -2,6 +2,11 @@ package helpz;
 
 public class Constants {
 
+    public static class  NumbersOf{
+        public static final int NUMBER_OF_ENEMIES=10;
+        public static final int NUMBER_OF_TOWERS=10;
+    }
+
     public static class Direction {
         public static final int LEFT = 20;
         public static final int UP = 21;
