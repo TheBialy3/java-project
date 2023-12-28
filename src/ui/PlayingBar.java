@@ -259,7 +259,7 @@ public class PlayingBar extends Bar {
         bMenu = new MyButton("Menu", 1293, 10, 108, 40);
         bReset = new MyButton("Reset", 1417, 10, 108, 40);
 
-        towerButtons = new MyButton[10];
+        towerButtons = new MyButton[Constants.NumbersOf.NUMBER_OF_TOWERS];
 
         for (int i = 0; i < towerButtons.length; i++) {
             int row = i / 3;
