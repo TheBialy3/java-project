@@ -76,7 +76,8 @@ public class UpgradesItemsCard {
         //locked id 43↓
         //ALL
         cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, -1));
-        cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, -1));
+        cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
+
 
         //ENEMY
         cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));

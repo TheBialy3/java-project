@@ -267,7 +267,7 @@ public class PlayingBar extends Bar {
             towerButtons[i] = new MyButton("", x + diff * rest, y + diff * row, w, h, i);
         }
 
-        bSell = new MyButton("Sell ", 1401, 1180, 125, 27);
+        bSell = new MyButton("Sell", 1401, 1180, 125, 27);
         bUpgrade1 = new MyButton("", 1301, 1095, 64, 64);
         bUpgrade2 = new MyButton("", 1376, 1095, 64, 64);
         bUpgrade3 = new MyButton("", 1451, 1095, 64, 64);
