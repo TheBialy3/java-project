@@ -47,6 +47,7 @@ public class Playing extends GameScene implements SceneMethods {
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> winCards = new ArrayList<>();
     private ArrayList<Card> threeCards = new ArrayList<>();
     private Random random = new Random();
     private Tower selectedTower;
@@ -467,6 +468,7 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
     public void Finish() {
+        game.checkLocked(cards);
         game.saveGame();
         playState = PlayGameState.PLAY_WIN;
     }
@@ -883,6 +885,7 @@ public class Playing extends GameScene implements SceneMethods {
         for (Card card : cards) {
             card.setActive(false);
         }
+        winCards.clear();
     }
     public ProjectileManager getProjectileManager() {
         return projectileManager;

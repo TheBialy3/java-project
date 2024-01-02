@@ -16,7 +16,7 @@ public class Game extends JFrame implements Runnable {
 
     public static int xp = 0;
     private ArrayList<Integer> save;
-    ArrayList<Boolean> cardSave=new ArrayList<>();
+    ArrayList<Boolean> cardSave = new ArrayList<>();
     private GameScreen gameScreen;
     private Thread threadGame;
 
@@ -36,6 +36,7 @@ public class Game extends JFrame implements Runnable {
     private TileManager tileManager;
     private GameOver gameOver;
     private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> winCards = new ArrayList<>();
 
     public static void main(String[] args) {
         Game game = new Game();
@@ -60,7 +61,7 @@ public class Game extends JFrame implements Runnable {
     }
 
     private void getCardSave() {
-        try{
+        try {
             save = GetXpData();
             this.xp = save.get(0);
             cardSave = GetCardSave();
@@ -68,7 +69,7 @@ public class Game extends JFrame implements Runnable {
             for (Card card : cards) {
                 card.setUnlocked(cardSave.get(card.getId()));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("hmmm");
             CreateSaveFile();
             saveGame();
@@ -79,14 +80,46 @@ public class Game extends JFrame implements Runnable {
     public static void addXp() {
         xp++;
     }
+
     //can be used in future
     public static void costXp(int cost) {
-        xp-=cost;
+        xp -= cost;
     }
 
-    public  void saveGame(){
-        cards=upgrade.getCards();
+    public void saveGame() {
+        cards = upgrade.getCards();
         SaveXpToFile(xp, cards);
+    }
+
+    public void unlock(int id) {
+        if (!cards.get(id).isUnlocked()) {
+            cards.get(id).setUnlocked(true);
+        }
+    }
+
+    public void checkLocked(ArrayList<Card> cardsActive) {
+        cards = cardsActive;
+        for (Card card : cardsActive) {
+            if (card.isActive()) {
+                winCards.add(card);
+            }
+        }
+        drawInConsol(winCards);
+
+        if (areTheseCardsActive(32, 17, 14)) {
+            unlock(43);
+       // }else if (){
+
+        }
+    }
+
+    private void drawInConsol(ArrayList<Card> winCards) {
+        for (Card card : winCards) {
+            System.out.println(card.getId());
+            System.out.println(card.getDescription());
+            System.out.println(card.getName());
+            System.out.println(card.isActive());
+        }
     }
 
     public void initClasses() {
@@ -153,7 +186,7 @@ public class Game extends JFrame implements Runnable {
         g.setFont(new Font("Monospaced", Font.BOLD, 17));
         g.setColor(new Color(0, 0, 0));
         g.drawString("FPS:" + fps, 2, 16);
-       // g.drawString("xp:" + xp, 2, 32);
+        // g.drawString("xp:" + xp, 2, 32);
     }
 
 
@@ -236,5 +269,22 @@ public class Game extends JFrame implements Runnable {
 
     public ArrayList<Card> getCards() {
         return cards;
+    }
+
+    private boolean areTheseCardsActive(int id1) {
+        return cards.get(id1).isActive();
+    }
+
+    private boolean areTheseCardsActive(int id1, int id2) {
+        return cards.get(id1).isActive() && cards.get(id2).isActive();
+    }
+
+    private boolean areTheseCardsActive(int id1, int id2, int id3) {
+        return cards.get(id1).isActive() && cards.get(id2).isActive() && cards.get(id3).isActive();
+    }
+
+    private boolean areTheseCardsActive(int id1, int id2, int id3, int id4) {
+        return cards.get(id1).isActive() && cards.get(id2).isActive() && cards.get(id3).isActive() && cards.get(id4).isActive();
+
     }
 }
