@@ -108,8 +108,8 @@ public class Game extends JFrame implements Runnable {
 
         if (areTheseCardsActive(32, 17, 14)) {
             unlock(43);
-       // }else if (){
-
+       // }else if (areTheseCardsActive(32, 17, 14)) {
+            //            unlock(43);
         }
     }
 
