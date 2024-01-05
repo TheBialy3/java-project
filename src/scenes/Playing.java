@@ -10,7 +10,7 @@ import managers.TowerManager;
 import managers.WaveManager;
 import objects.Beam;
 import objects.Card;
-import objects.CardLook;
+import looks.CardLook;
 import objects.PathPoint;
 import towers.*;
 import ui.MyButton;

@@ -3,9 +3,9 @@ package scenes;
 
 import helpz.Constants;
 import main.Game;
-import objects.EnemyBestiaryLook;
+import looks.EnemyBestiaryLook;
 
-import objects.TowerBestiaryLook;
+import looks.TowerBestiaryLook;
 import ui.MyButton;
 
 import java.awt.*;

@@ -137,11 +137,11 @@ public class Constants {
                 case CAMEL:
                     return "Camel";
                 case CAMEL_JUNIOR:
-                    return "Camel Spown";
+                    return "Camel Spawn";
                 case BIRD:
                     return "Bird";
                 case GHOST:
-                    return "Ghost ";
+                    return "Ghost";
                 case ROCK:
                     return "Rock Golem";
                 case CREEPY_CAT:
