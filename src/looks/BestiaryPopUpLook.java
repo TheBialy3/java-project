@@ -13,7 +13,7 @@ public class BestiaryPopUpLook {
         this.x = x;
         this.y = y;
         this.enemy=enemy;
-        getEnenyBackground();
+        getEnemyBackground();
     }
 
 
@@ -25,10 +25,12 @@ public class BestiaryPopUpLook {
         getTowerBackground();
     }
 
-    private void getEnenyBackground() {
+    private void getEnemyBackground() {
+
     }
 
     private void getTowerBackground() {
+
     }
 
     public void draw(Graphics g) {
