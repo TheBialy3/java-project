@@ -1,5 +1,7 @@
 package looks;
 
+import helpz.LoadSave;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -26,11 +28,11 @@ public class BestiaryPopUpLook {
     }
 
     private void getEnemyBackground() {
-
+        LoadSave.getImg("");
     }
 
     private void getTowerBackground() {
-
+        LoadSave.getImg("");
     }
 
     public void draw(Graphics g) {
