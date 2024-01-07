@@ -28,11 +28,11 @@ public class BestiaryPopUpLook {
     }
 
     private void getEnemyBackground() {
-        LoadSave.getImg("");
+        LoadSave.getImg("enemyBackground");
     }
 
     private void getTowerBackground() {
-        LoadSave.getImg("");
+        LoadSave.getImg("towerBackground");
     }
 
     public void draw(Graphics g) {
