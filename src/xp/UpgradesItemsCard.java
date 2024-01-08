@@ -76,17 +76,18 @@ public class UpgradesItemsCard {
         //locked id 43↓
         //ALL
         cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
-        cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, -1));
+        cards.add(new Card(id++, "Merchant", "There will be e chance to merchant appearance", false, -1));
 
 
         //ENEMY
         cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));
         cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
+        cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 
         //ARCHER
         cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 0));
         cards.add(new Card(id++, "Arrow split", "Arrows will split after hitting enemy", false, 0));
-
+        cards.add(new Card(id++, "Quiver", "Archer will now stash arrows in quiver and spray them faster if enemy is near", false, 0));
 
         //CANNON
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
