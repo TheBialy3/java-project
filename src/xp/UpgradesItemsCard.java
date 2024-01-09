@@ -77,6 +77,7 @@ public class UpgradesItemsCard {
         //ALL
         cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
         cards.add(new Card(id++, "Merchant", "There will be e chance to merchant appearance", false, -1));
+        cards.add(new Card(id++, "Lucky shot", "Active 1 random card", false, -1));
 
 
         //ENEMY
