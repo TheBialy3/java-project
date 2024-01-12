@@ -28,11 +28,11 @@ public class BestiaryPopUpLook {
     }
 
     private void getEnemyBackground() {
-        LoadSave.getImg("enemyBackground");
+        background=LoadSave.getImg("enemyBackground");
     }
 
     private void getTowerBackground() {
-        LoadSave.getImg("towerBackground");
+        background=LoadSave.getImg("towerBackground");
     }
 
     public void draw(Graphics g) {
@@ -44,10 +44,12 @@ public class BestiaryPopUpLook {
         g.setColor(new Color(28, 28, 28));
         g.setFont(new Font("Serif", Font.BOLD, 30));
         if(tower==null){
+            g.drawImage(background,x,y,null);
             g.drawString(enemy.getName(), x + centerW, y + centerH);
             g.drawString(enemy.getHitboxName(), x + centerW * 5, y + centerH);
             g.drawString(enemy.getMoveTypeName(), x + centerW, y + centerH + nextLineH);
         } else {
+            g.drawImage(background,x,y,null);
             g.drawString(tower.getName(), x + centerW, y + centerH);
             g.drawString(tower.getCoolDownName(), x + centerW * 5, y + centerH);
             g.drawString(tower.getDamageTypeName(), x + centerW, y + centerH + nextLineH);
