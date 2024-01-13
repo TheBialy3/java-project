@@ -12,11 +12,11 @@ public class TowerBestiaryLook {
     private int targetMoveType, damageType, cost, dmg;
     private float range, coolDown;
     private boolean aoe, slow, dot;
-    private boolean unlocked =true;
+    private boolean unlocked = true, mouseOver;
 
     private Rectangle bounds;
 
-    public int x, y, tilePixelNumber=64;
+    public int x, y, tilePixelNumber = 64;
 
     public TowerBestiaryLook(int towerType) {
         this.towerType = towerType;
@@ -26,9 +26,9 @@ public class TowerBestiaryLook {
     }
 
     private void initBounds() {
-        int halfOfScreenHight=640;
-        int diff=99;
-        this.bounds = new Rectangle(40+(diff*(towerType%15)),halfOfScreenHight+50+(diff*(towerType/15)), tilePixelNumber,tilePixelNumber);
+        int halfOfScreenHight = 640;
+        int diff = 99;
+        this.bounds = new Rectangle(40 + (diff * (towerType % 15)), halfOfScreenHight + 50 + (diff * (towerType / 15)), tilePixelNumber, tilePixelNumber);
     }
 
     private void getNumbers() {
@@ -79,9 +79,9 @@ public class TowerBestiaryLook {
     }
 
     private String getTargetMoveTypeString() {
-        if (targetMoveType==BOTH) {
+        if (targetMoveType == BOTH) {
             return "Ground and Flying Units";
-        } else if (targetMoveType==FLYING) {
+        } else if (targetMoveType == FLYING) {
             return "Flying Units";
         } else {
             return "Ground Units";
@@ -89,9 +89,9 @@ public class TowerBestiaryLook {
     }
 
     private String getDamageTypeString() {
-        if (damageType==TRUE) {
+        if (damageType == TRUE) {
             return "True damage";
-        } else if (damageType==PHYSICAL) {
+        } else if (damageType == PHYSICAL) {
             return "Physical damage";
         } else {
             return "Magic damage";
@@ -99,11 +99,11 @@ public class TowerBestiaryLook {
     }
 
     private String getRangeString() {
-        if (range>1200) {
+        if (range > 1200) {
             return "Infinite";
-        } else if (range>250) {
+        } else if (range > 250) {
             return "Big";
-        } else if (range<129) {
+        } else if (range < 129) {
             return "Small";
         } else {
             return "Average";
@@ -111,11 +111,11 @@ public class TowerBestiaryLook {
     }
 
     private String getCoolDownString() {
-        if (coolDown>60) {
+        if (coolDown > 60) {
             return "slow";
-        } else if (coolDown<10) {
+        } else if (coolDown < 10) {
             return "Constant damage";
-        } else if (coolDown<45) {
+        } else if (coolDown < 45) {
             return "Fast";
         } else {
             return "Average";
@@ -176,6 +176,14 @@ public class TowerBestiaryLook {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+    }
+
+    public boolean isMouseOver() {
+        return mouseOver;
     }
 
 }
