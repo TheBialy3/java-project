@@ -2,6 +2,7 @@ package scenes;
 
 
 import helpz.Constants;
+import looks.BestiaryPopUpLook;
 import main.Game;
 import looks.EnemyBestiaryLook;
 
@@ -16,9 +17,10 @@ import static main.GameStates.*;
 //future scene for showing all possible enemies and towers
 public class Bestiary extends GameScene implements SceneMethods {
     private ArrayList<EnemyBestiaryLook> enemies = new ArrayList<>();
+    private ArrayList<BestiaryPopUpLook> popUp = new ArrayList<>();
     int numberOfEnemiesType = Constants.NumbersOf.NUMBER_OF_ENEMIES;
     private ArrayList<TowerBestiaryLook> towers = new ArrayList<>();
-    int numberOfTowersType =  Constants.NumbersOf.NUMBER_OF_TOWERS;
+    int numberOfTowersType = Constants.NumbersOf.NUMBER_OF_TOWERS;
     private MyButton bReturn;
 
     public Bestiary(Game game) {
@@ -26,6 +28,17 @@ public class Bestiary extends GameScene implements SceneMethods {
         initButtons();
         initTowers();
         initEnemies();
+        initPopUp();
+    }
+
+    private void initPopUp() {
+        for (EnemyBestiaryLook enemy : enemies) {
+            popUp.add(new BestiaryPopUpLook(enemy, 50, 640));
+        }
+        for (TowerBestiaryLook tower : towers) {
+            popUp.add(new BestiaryPopUpLook(tower, 50,50 ));
+        }
+
     }
 
     public void update() {
@@ -36,7 +49,8 @@ public class Bestiary extends GameScene implements SceneMethods {
     public void render(Graphics g) {
         drawBackground(g);
         drawButtons(g);
-        drawUpgradeImg(g);
+        drawIconsImg(g);
+        drawDetailInfo(g);
     }
 
     private void drawBackground(Graphics g) {
@@ -72,7 +86,7 @@ public class Bestiary extends GameScene implements SceneMethods {
     }
 
 
-    public void drawUpgradeImg(Graphics g) {
+    public void drawIconsImg(Graphics g) {
         int diff = 99;
         int tilePixelNumber = 64;
         for (EnemyBestiaryLook enemy : enemies) {
@@ -84,7 +98,7 @@ public class Bestiary extends GameScene implements SceneMethods {
             g.fillRect(40 + (diff * (enemy.getEnemyType() % 15)), 50 + (diff * (enemy.getEnemyType() / 15)), tilePixelNumber, tilePixelNumber);
             g.setColor(new Color(0, 26, 147));
             g.drawString(String.valueOf(enemy.getEnemyType()), 40 + (diff * (enemy.getEnemyType() % 15)) + 25, 50 + (diff * (enemy.getEnemyType() / 15)) + 39);
-            g.drawImage(game.getPlaying().getEnemyManager().getEnemyImages()[enemy.getEnemyType()], 40+(diff*(enemy.getEnemyType()%15)), 50+(diff*(enemy.getEnemyType()/15)), tilePixelNumber, tilePixelNumber, null);
+            g.drawImage(game.getPlaying().getEnemyManager().getEnemyImages()[enemy.getEnemyType()], 40 + (diff * (enemy.getEnemyType() % 15)), 50 + (diff * (enemy.getEnemyType() / 15)), tilePixelNumber, tilePixelNumber, null);
         }
 
         int heightDifferenceForSectionTowers = 640;
@@ -97,20 +111,36 @@ public class Bestiary extends GameScene implements SceneMethods {
             g.fillRect(40 + (diff * (tower.getTowerType() % 15)), heightDifferenceForSectionTowers + 50 + (diff * (tower.getTowerType() / 15)), tilePixelNumber, tilePixelNumber);
             g.setColor(new Color(0, 26, 147));
             g.drawString(String.valueOf(tower.getTowerType()), 40 + (diff * (tower.getTowerType() % 15)) + 25, heightDifferenceForSectionTowers + 50 + (diff * (tower.getTowerType() / 15)) + 39);
-            g.drawImage(game.getPlaying().getTowerManager().getTowerImg()[tower.getTowerType()], 40+(diff*(tower.getTowerType()%15)), heightDifferenceForSectionTowers+50+(diff*(tower.getTowerType()/15)), tilePixelNumber, tilePixelNumber, null);
+            g.drawImage(game.getPlaying().getTowerManager().getTowerImg()[tower.getTowerType()], 40 + (diff * (tower.getTowerType() % 15)), heightDifferenceForSectionTowers + 50 + (diff * (tower.getTowerType() / 15)), tilePixelNumber, tilePixelNumber, null);
+        }
+    }
+
+    private void drawDetailInfo(Graphics g) {
+        for (BestiaryPopUpLook pop : popUp) {
+            if (pop.isMouseOver()) {
+                pop.draw(g);
+            }
         }
     }
 
 
     @Override
     public void mouseClicked(int x, int y) {
-        if(bReturn.getBounds().contains(x,y)){
+        if (bReturn.getBounds().contains(x, y)) {
             SetGameState(MENU);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        for (BestiaryPopUpLook pop:popUp) {
+            pop.setMouseOver(false);
+        }
+        for (BestiaryPopUpLook pop:popUp) {
+            if(pop.getBounds().contains(x,y)){
+                pop.setMouseOver(true);
+            }
+        }
 
     }
 

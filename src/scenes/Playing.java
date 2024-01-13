@@ -182,7 +182,7 @@ public class Playing extends GameScene implements SceneMethods {
             drawPause(g);
         }
         if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
-            bestiary.drawUpgradeImg(g);
+            bestiary.drawIconsImg(g);
             bReturn.draw(g);
         }
 

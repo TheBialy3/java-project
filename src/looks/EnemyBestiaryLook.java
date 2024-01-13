@@ -8,12 +8,12 @@ import java.awt.*;
 public class EnemyBestiaryLook {
     private int enemyType;
     private String name, speedName, moveTypeName, hitboxName;
-    private int  heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
+    private int heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
     private float speed;
-    private boolean unlocked =true;
+    private boolean unlocked = true, mouseOver;
 
     private Rectangle bounds;
-    public int x, y, tilePixelNumber=64;
+    public int x, y, tilePixelNumber = 64;
 
     public EnemyBestiaryLook(int enemyType) {
         this.enemyType = enemyType;
@@ -23,8 +23,8 @@ public class EnemyBestiaryLook {
     }
 
     private void initBounds() {
-        int diff=99;
-        this.bounds = new Rectangle(40+(diff*(enemyType%15)),50+(diff*(enemyType/15)), tilePixelNumber,tilePixelNumber);
+        int diff = 99;
+        this.bounds = new Rectangle(40 + (diff * (enemyType % 15)), 50 + (diff * (enemyType / 15)), tilePixelNumber, tilePixelNumber);
     }
 
     private void getNumbers() {
@@ -32,44 +32,46 @@ public class EnemyBestiaryLook {
         mr = Constants.EnemyType.getMR(enemyType);
         armor = Constants.EnemyType.getArmor(enemyType);
         goldWorth = Constants.EnemyType.getGoldWorth(enemyType);
-        speed= Constants.EnemyType.getSpeed(enemyType);
+        speed = Constants.EnemyType.getSpeed(enemyType);
     }
 
     private void getHitbox() {
         heightOfHitbox = Constants.EnemyType.getHeightOfHitbox(enemyType);
-        wightOfHitbox =  Constants.EnemyType.getWightOfHitbox(enemyType);
+        wightOfHitbox = Constants.EnemyType.getWightOfHitbox(enemyType);
         hitbox = heightOfHitbox * wightOfHitbox;
     }
 
     private void getStrings() {
         name = Constants.EnemyType.getName(enemyType);
-        speedName= getSpeedName(speed);
-        moveTypeName=getMoveTypeNameInClass();
-        hitboxName=getHitboxNameInClass();
+        speedName = getSpeedName(speed);
+        moveTypeName = getMoveTypeNameInClass();
+        hitboxName = getHitboxNameInClass();
     }
 
     private String getSpeedName(float speed) {
-        if (speed<= 0.3f){
+        if (speed <= 0.3f) {
             return "Slow";
         }
-        if (speed> 0.5f){
+        if (speed > 0.5f) {
             return "Fast";
         }
         return "Average";
     }
+
     private String getMoveTypeNameInClass() {
-        if( Constants.EnemyType.getMoveType(enemyType)==1){
+        if (Constants.EnemyType.getMoveType(enemyType) == 1) {
             return "Flying";
-        }else {
+        } else {
             return "Walking";
         }
 
     }
+
     private String getHitboxNameInClass() {
-        if(hitbox>2500){
+        if (hitbox > 2500) {
             return "Big";
         }
-        if(hitbox<500){
+        if (hitbox < 500) {
             return "Small";
         }
         return "Average";
@@ -106,6 +108,7 @@ public class EnemyBestiaryLook {
     public int getGoldWorth() {
         return goldWorth;
     }
+
     public int getEnemyType() {
         return enemyType;
     }
@@ -118,4 +121,11 @@ public class EnemyBestiaryLook {
         return bounds;
     }
 
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+    }
+
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
 }

@@ -10,12 +10,16 @@ public class BestiaryPopUpLook {
     private EnemyBestiaryLook enemy=null;
     private TowerBestiaryLook tower=null;
     private int x, y;
+    private boolean mouseOver;
+
+    private Rectangle bounds;
 
     public BestiaryPopUpLook(EnemyBestiaryLook enemy, int x, int y) {
         this.x = x;
         this.y = y;
         this.enemy=enemy;
         getEnemyBackground();
+        getRectangleEnemy();
     }
 
 
@@ -25,6 +29,14 @@ public class BestiaryPopUpLook {
         this.y = y;
         this.tower=tower;
         getTowerBackground();
+        getRectangleTower();
+    }
+
+    private void getRectangleEnemy() {
+        bounds=enemy.getBounds();
+    }
+    private void getRectangleTower() {
+        bounds=tower.getBounds();
     }
 
     private void getEnemyBackground() {
@@ -44,17 +56,36 @@ public class BestiaryPopUpLook {
         g.setColor(new Color(28, 28, 28));
         g.setFont(new Font("Serif", Font.BOLD, 30));
         if(tower==null){
+            g.setColor(new Color(124, 6, 6));
             g.drawImage(background,x,y,null);
             g.drawString(enemy.getName(), x + centerW, y + centerH);
             g.drawString(enemy.getHitboxName(), x + centerW * 5, y + centerH);
             g.drawString(enemy.getMoveTypeName(), x + centerW, y + centerH + nextLineH);
         } else {
+            g.setColor(new Color(0, 0, 0));
             g.drawImage(background,x,y,null);
             g.drawString(tower.getName(), x + centerW, y + centerH);
             g.drawString(tower.getCoolDownName(), x + centerW * 5, y + centerH);
             g.drawString(tower.getDamageTypeName(), x + centerW, y + centerH + nextLineH);
         }
         g.drawImage(icon, x + logoX, y + nextLineH, null);
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+        if(tower==null){
+            enemy.setMouseOver(mouseOver);
+        }else {
+            tower.setMouseOver(mouseOver);
+        }
+    }
+
+    public boolean isMouseOver() {
+        return mouseOver;
     }
 }
 
