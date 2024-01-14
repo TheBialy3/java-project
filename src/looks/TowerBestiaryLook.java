@@ -64,7 +64,7 @@ public class TowerBestiaryLook {
 
     private String getSlowString() {
         if (slow) {
-            return "Can slow";
+            return "Can slowFor "+slow+"%";
         } else {
             return null;
         }
@@ -80,11 +80,11 @@ public class TowerBestiaryLook {
 
     private String getTargetMoveTypeString() {
         if (targetMoveType == BOTH) {
-            return "Ground and Flying Units";
+            return "Attacks: Ground and Flying Units";
         } else if (targetMoveType == FLYING) {
-            return "Flying Units";
+            return "Attacks: Flying Units";
         } else {
-            return "Ground Units";
+            return "Attacks: Ground Units";
         }
     }
 
@@ -100,19 +100,19 @@ public class TowerBestiaryLook {
 
     private String getRangeString() {
         if (range > 1200) {
-            return "Infinite";
+            return "Range: Infinite";
         } else if (range > 250) {
-            return "Big";
+            return "Range: Big";
         } else if (range < 129) {
-            return "Small";
+            return "Range: Small";
         } else {
-            return "Average";
+            return "Range: Average";
         }
     }
 
     private String getCoolDownString() {
         if (coolDown > 60) {
-            return "slow";
+            return "Slow";
         } else if (coolDown < 10) {
             return "Constant damage";
         } else if (coolDown < 45) {
@@ -158,12 +158,12 @@ public class TowerBestiaryLook {
         return coolDownName;
     }
 
-    public int getCost() {
-        return cost;
+    public String getCost() {
+        return "Cost: "+cost;
     }
 
-    public int getDmg() {
-        return dmg;
+    public String getDmg() {
+        return "DMG: "+dmg;
     }
 
     public int getTowerType() {
