@@ -2,13 +2,16 @@ package looks;
 
 import helpz.Constants;
 
+
 import java.awt.*;
+
+import static helpz.Constants.EnemyType.*;
 
 
 public class EnemyBestiaryLook {
     private int enemyType;
-    private String name, speedName, moveTypeName, hitboxName;
-    private int heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth;
+    private String name, speedName, moveTypeName, hitboxName,power;
+    private int heightOfHitbox, wightOfHitbox, hitbox, mr, armor, goldWorth,hp;
     private float speed;
     private boolean unlocked = true, mouseOver;
 
@@ -29,6 +32,7 @@ public class EnemyBestiaryLook {
 
     private void getNumbers() {
         getHitbox();
+        hp=Constants.EnemyType.getStartHealth(enemyType);
         mr = Constants.EnemyType.getMR(enemyType);
         armor = Constants.EnemyType.getArmor(enemyType);
         goldWorth = Constants.EnemyType.getGoldWorth(enemyType);
@@ -46,6 +50,19 @@ public class EnemyBestiaryLook {
         speedName = getSpeedName(speed);
         moveTypeName = getMoveTypeNameInClass();
         hitboxName = getHitboxNameInClass();
+        power=powerStringGenerator();
+    }
+
+    private String powerStringGenerator() {
+        if(enemyType==ORK_ZOMBIE){
+            return "Will rise one time";
+        } else if(enemyType==CAMEL){
+            return "After death spawn all Camel Spawns that died this game(+2)";
+        } else if(enemyType==CREEPY_CAT){
+            return "Become undetectable when his Hp drop below half";
+        } else{
+            return null;
+        }
     }
 
     private String getSpeedName(float speed) {
@@ -77,10 +94,18 @@ public class EnemyBestiaryLook {
         return "Average";
     }
 
+
     public void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;
     }
 
+    public String getPower() {
+        return power;
+    }
+
+    public String getHP(){
+       return "Starting HP: "+hp;
+}
     public String getName() {
         return name;
     }
@@ -97,16 +122,16 @@ public class EnemyBestiaryLook {
         return hitboxName;
     }
 
-    public int getMr() {
-        return mr;
+    public String getMr() {
+        return "Magic Resist: "+mr;
     }
 
-    public int getArmor() {
-        return armor;
+    public String getArmor() {
+        return "Armor: "+armor;
     }
 
-    public int getGoldWorth() {
-        return goldWorth;
+    public String getGoldWorth() {
+        return "Gold for kill: "+goldWorth;
     }
 
     public int getEnemyType() {

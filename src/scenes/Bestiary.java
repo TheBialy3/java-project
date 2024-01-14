@@ -33,10 +33,10 @@ public class Bestiary extends GameScene implements SceneMethods {
 
     private void initPopUp() {
         for (EnemyBestiaryLook enemy : enemies) {
-            popUp.add(new BestiaryPopUpLook(enemy, 50, 640));
+            popUp.add(new BestiaryPopUpLook(enemy, 10, 620));
         }
         for (TowerBestiaryLook tower : towers) {
-            popUp.add(new BestiaryPopUpLook(tower, 50,50 ));
+            popUp.add(new BestiaryPopUpLook(tower, 0,-30 ));
         }
 
     }
