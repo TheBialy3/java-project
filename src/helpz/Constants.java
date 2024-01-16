@@ -2,9 +2,9 @@ package helpz;
 
 public class Constants {
 
-    public static class  NumbersOf{
-        public static final int NUMBER_OF_ENEMIES=10;
-        public static final int NUMBER_OF_TOWERS=10;
+    public static class NumbersOf {
+        public static final int NUMBER_OF_ENEMIES = 10;
+        public static final int NUMBER_OF_TOWERS = 10;
     }
 
     public static class Direction {
@@ -123,6 +123,7 @@ public class Constants {
         public static final int GHOST = 7;
         public static final int ROCK = 8;
         public static final int CREEPY_CAT = 9;
+        public static final int BANSHEE = 10;
 
         public static String getName(int enemyType) {
             switch (enemyType) {
@@ -146,6 +147,8 @@ public class Constants {
                     return "Rock Golem";
                 case CREEPY_CAT:
                     return "Rock Golem";
+                case BANSHEE:
+                    return "Banshee";
                 default:
                     return "";
             }
@@ -173,9 +176,12 @@ public class Constants {
                     return 0.25f;
                 case CREEPY_CAT:
                     return 0.65f;
+                case BANSHEE:
+                    return 0.7f;
             }
             return 0;
         }
+
         public static final int FLY = 1;
         public static final int WALK = 2;
 
@@ -201,7 +207,9 @@ public class Constants {
                 case ROCK:
                     return WALK;
                 case CREEPY_CAT:
-                return WALK;
+                    return WALK;
+                case BANSHEE:
+                    return WALK;
             }
             return 0;
         }
@@ -228,6 +236,8 @@ public class Constants {
                     return 58;
                 case CREEPY_CAT:
                     return 64;
+               // case BANSHEE:
+
                 default:
                     return 62;
             }
@@ -255,6 +265,7 @@ public class Constants {
                     return 34;
                 case CREEPY_CAT:
                     return 64;
+               // case BANSHEE:
                 default:
                     return 56;
             }
@@ -282,6 +293,8 @@ public class Constants {
                     return 450;
                 case CREEPY_CAT:
                     return 300;
+                case BANSHEE:
+                    return 350;
             }
             return 0;
         }
@@ -309,6 +322,8 @@ public class Constants {
                     return 100;
                 case CREEPY_CAT:
                     return 40;
+                case BANSHEE:
+                return 20;
             }
             return 0;
         }
@@ -335,6 +350,8 @@ public class Constants {
                     return 40;
                 case CREEPY_CAT:
                     return 20;
+                case BANSHEE:
+                    return 60;
             }
             return 0;
         }
@@ -361,6 +378,8 @@ public class Constants {
                     return 14;
                 case CREEPY_CAT:
                     return 20;
+                case BANSHEE:
+                    return 25;
             }
             return 0;
         }

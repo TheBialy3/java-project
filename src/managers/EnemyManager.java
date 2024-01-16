@@ -31,11 +31,13 @@ public class EnemyManager {
     private BufferedImage[] enemyEffects;
     private int[][] roadDirArr;
     protected WaveManager waveManager;
+    protected TowerManager towerManager;
 
     private boolean Card7 = false, Card8 = false, Card9 = false, Card10 = false, Card11 = false, Card12 = false;
 
-    public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager) {
+    public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager ,TowerManager towerManager) {
         this.waveManager = waveManager;
+        this.towerManager=towerManager;
         this.playing = playing;
         this.start = start;
         this.end = end;
@@ -89,35 +91,38 @@ public class EnemyManager {
         int y = start.getyCord() * tilePixelNumber;
         switch (enemyType) {
             case ORC:
-                enemies.add(new Orc(x, y, 0, this, waveManager));
+                enemies.add(new Orc(x, y, 0, this, waveManager, towerManager));
                 break;
             case SLIME:
-                enemies.add(new Slime(x, y, 0, this, waveManager));
+                enemies.add(new Slime(x, y, 0, this, waveManager, towerManager));
                 break;
             case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0, this, waveManager));
+                enemies.add(new Tentacle(x, y, 0, this, waveManager, towerManager));
                 break;
             case ORK_ZOMBIE:
-                enemies.add(new OrcZombie(x, y, 0, this, waveManager));
+                enemies.add(new OrcZombie(x, y, 0, this, waveManager, towerManager));
                 break;
             case CAMEL:
-                enemies.add(new Camel(x, y, 0, this, waveManager));
-                enemies.add(new CamelJunior(x, y, 0, this, waveManager));
+                enemies.add(new Camel(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new CamelJunior(x, y, 0, this, waveManager, towerManager));
                 break;
             case CAMEL_JUNIOR:
-                enemies.add(new CamelJunior(x, y, 0, this, waveManager));
+                enemies.add(new CamelJunior(x, y, 0, this, waveManager, towerManager));
                 break;
             case BIRD:
-                enemies.add(new Bird(x, y, 0, this, waveManager));
+                enemies.add(new Bird(x, y, 0, this, waveManager, towerManager));
                 break;
             case GHOST:
-                enemies.add(new Ghost(x, y, 0, this, waveManager));
+                enemies.add(new Ghost(x, y, 0, this, waveManager, towerManager));
                 break;
             case ROCK:
-                enemies.add(new Rock(x, y, 0, this, waveManager));
+                enemies.add(new Rock(x, y, 0, this, waveManager, towerManager));
                 break;
             case CREEPY_CAT:
-                enemies.add(new CreepyCat(x, y, 0, this, waveManager));
+                enemies.add(new CreepyCat(x, y, 0, this, waveManager, towerManager));
+                break;
+            case BANSHEE:
+                enemies.add(new Banshee(x, y, 0, this, waveManager, towerManager));
                 break;
         }
     }

@@ -3,6 +3,7 @@ package enemies;
 import helpz.Constants;
 import main.Game;
 import managers.EnemyManager;
+import managers.TowerManager;
 import managers.WaveManager;
 
 
@@ -16,6 +17,7 @@ public abstract class Enemy {
 
 
     protected EnemyManager enemyManager;
+    protected TowerManager towerManager;
     protected WaveManager waveManager;
     protected float x, y;
     protected Rectangle bounds;
@@ -32,13 +34,14 @@ public abstract class Enemy {
     protected boolean targetable = true;
 
 
-    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager ) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
         this.enemyManager = enemyManager;
         this.waveManager = waveManager;
+        this.towerManager=towerManager;
         if (enemyType != CAMEL_JUNIOR) {
             alive = true;
         }
@@ -65,7 +68,10 @@ public abstract class Enemy {
             power = true;
         } else if (this.enemyType == CREEPY_CAT) {
             power = true;
+        } else if (this.enemyType == BANSHEE) {
+            power = true;
         }
+
     }
 
     public void reuse(float x, float y, float distancePast) {
@@ -178,6 +184,8 @@ public abstract class Enemy {
                 }
             } else if (enemyType == CAMEL) {
                 enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
+            } else if (enemyType == BANSHEE) {
+              //  enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
             }
             enemyManager.rewardPlayer(enemyType);
             Game.addXp();
