@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public abstract class Tower {
 
-    private int x, y, id, towerType, cdTick, dmg, worthGold, duration;
+    private int tickSlow=0, tickStun=0, cdTick, standardCD;
+    private int x, y, id, towerType, dmg, worthGold, duration;
     private float range, coolDown, slow;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
+    private boolean stun= false,attackSlow= false;
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
     private TowerManager towerManager;
-
-
 
 
     public Tower(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
@@ -35,13 +35,45 @@ public abstract class Tower {
             Upgrade2Activate();
             Upgrade3Activate();
         }
-
     }
 
     public void update() {
+        if(!stun){
         cdTick++;
+        }
+        if(tickStun>0){
+            tickStun--;
+        }else if(tickStun<=0){
+           stun=false;
+        }
+
+        if(tickSlow>0){
+            tickSlow--;
+        }else if(tickSlow<=0){
+            attackSlow=false;
+            setStandardCD();
+        }
     }
 
+    private void setStandardCD() {
+        coolDown=standardCD;
+    }
+
+    public void setStun(float time){
+        if(tickStun<(int)time*60){
+        tickStun=(int)time*60;
+        stun=true;}
+    }
+//    public void setSlow(float time,int percent){
+//
+//            tickSlow = (int) time * 60;
+//            setBiggerCD(percent);
+//            attackSlow = true;
+//
+//    }
+    public void setBiggerCD(int percent){
+
+    }
     public int getWorthGold() {
         return worthGold;
     }
@@ -66,6 +98,10 @@ public abstract class Tower {
         return cdTick == 7;
     }
 
+    public boolean isStun() {
+        return stun;
+    }
+
     public void resetCoolDown() {
         cdTick = 0;
     }
@@ -75,12 +111,12 @@ public abstract class Tower {
             slow = Constants.TowerType.getPowerOfSlow(towerType);
             if (towerManager.isCard19()) {
                 if (this instanceof FrostMage) {
-                    slow=slow*160/100;
+                    slow = slow * 160 / 100;
                 }
             }
             if (towerManager.isCard21()) {
                 if (this instanceof FrostMage) {
-                    slow=slow*63/100;
+                    slow = slow * 63 / 100;
                 }
             }
             slowSet(slow);
@@ -149,6 +185,7 @@ public abstract class Tower {
                 CoolDown(30);
             }
         }
+        standardCD=(int) coolDown;
     }
 
     private void CoolDown(int percent) {
@@ -182,9 +219,9 @@ public abstract class Tower {
 
     private void setDefaultDmg() {
         dmg = Constants.TowerType.getDefaultDmg(towerType);
-        if(towerManager.isCard20()){//to add more dmg it go 1st
+        if (towerManager.isCard20()) {//to add more dmg it go 1st
             if (this instanceof FrostMage) {
-                dmg=1;
+                dmg = 1;
             }
         }
         if (towerManager.isCard0()) {
@@ -203,37 +240,37 @@ public abstract class Tower {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard24()){
+        if (towerManager.isCard24()) {
             if (this instanceof MineFactory) {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard26()){
+        if (towerManager.isCard26()) {
             if (this instanceof PoisonTower) {
                 damageUp(100);
             }
         }
-        if(towerManager.isCard30()){
+        if (towerManager.isCard30()) {
             if (this instanceof BoomTower) {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard31()){
+        if (towerManager.isCard31()) {
             if (this instanceof Crossbow) {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard35()){
+        if (towerManager.isCard35()) {
             if (this instanceof MauseFollowsTower) {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard37()){
+        if (towerManager.isCard37()) {
             if (this instanceof Sniper) {
                 damageUp(30);
             }
         }
-        if(towerManager.isCard42()){
+        if (towerManager.isCard42()) {
             if (this instanceof LaserTower) {
                 damageUp(30);
             }

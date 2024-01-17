@@ -44,7 +44,6 @@ public class EnemyManager {
         loadRoadDirArr();
         loadEnemyImages();
         loadEffectsImages();
-
     }
 
     public void draw(Graphics g) {
