@@ -34,7 +34,7 @@ public abstract class Enemy {
     protected boolean targetable = true;
 
 
-    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager ) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager,TowerManager towerManager ) {
         this.x = x;
         this.y = y;
         this.ID = ID;
@@ -185,7 +185,7 @@ public abstract class Enemy {
             } else if (enemyType == CAMEL) {
                 enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
             } else if (enemyType == BANSHEE) {
-              //  enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
+                towerManager.stunCloseTower(x,y);
             }
             enemyManager.rewardPlayer(enemyType);
             Game.addXp();

@@ -14,6 +14,7 @@ import java.util.Random;
 
 import static helpz.Constants.EnemyType.*;
 import static helpz.Constants.TowerType.*;
+import static java.lang.Math.sqrt;
 
 
 public class TowerManager {
@@ -22,7 +23,7 @@ public class TowerManager {
     private BufferedImage[] towerImg, upgradeImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
-    private ArrayList<Integer> arr = new ArrayList<>();
+    private ArrayList<Integer> arrForMineTower = new ArrayList<>();
     private int towerAmount = 0, ran, tilePixelNumber = 64;
     private Random random = new Random();
     private PathPoint e;
@@ -39,6 +40,7 @@ public class TowerManager {
         this.playing = playing;
         loadTowerImages();
         loadUpgradeImg();
+        loadRoadDirArr();
     }
 
     private void loadUpgradeImg() {
@@ -47,6 +49,9 @@ public class TowerManager {
         for (int i = 0; i < 4; i++) {
             upgradeImg[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
+    }
+    private void loadRoadDirArr() {
+        road = LoadSave.GetLevelDir();
     }
 
     private void loadTowerImages() {
@@ -57,7 +62,6 @@ public class TowerManager {
         for (int i = 0; i < towerNumber; i++) {
             towerImg[i] = atlas.getSubimage((0 + i / imageInRow) * tilePixelNumber, (12 + i % imageInRow) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
-        road = playing.getRoadDirArr();
     }
 
     public void addTower(Tower selectedTower, int x, int y) {
@@ -254,6 +258,28 @@ public class TowerManager {
         return false;
     }
 
+    public void stunCloseTower(float x, float y){
+        int closeTower=0;
+        float closeDistance=2000;
+        float distance;
+        for(Tower tower:towers){
+            distance=getDistance(x,y,tower);
+            if(closeDistance>distance){
+                closeTower=tower.getId();
+                closeDistance=distance;
+            }
+        }
+        towers.get(closeTower).setStun(2);
+    }
+
+    private float getDistance(float x,float y,Tower tower) {
+        int xTower=tower.getX()*tilePixelNumber;
+        int yTower=tower.getY()*tilePixelNumber;
+        float xDiff=xTower-x;
+        float yDiff=yTower-y;
+        return (float) sqrt(xDiff*xDiff+yDiff*yDiff);
+    }
+
     private void setMine(Tower t) {
         int a = t.arrSize();
         if (a != 0) {
@@ -264,9 +290,9 @@ public class TowerManager {
                         mineNumber *= 2;
                     }
                     for (int i = mineNumber; i > 0; i--) {
-                        arr = t.getArr();
+                        arrForMineTower = t.getArr();
                         ran = random.nextInt(a);
-                        switch (arr.get(ran)) {
+                        switch (arrForMineTower.get(ran)) {
                             case 1:
                                 PathPoint a1 = new PathPoint(t.getX() - 64, t.getY() - 64);
                                 e = a1;

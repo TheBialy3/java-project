@@ -59,8 +59,8 @@ public class Playing extends GameScene implements SceneMethods {
         LoadDefaultLevel();
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
-        enemyManager = new EnemyManager(this, start, end, waveManager);
         towerManager = new TowerManager(this);
+        enemyManager = new EnemyManager(this, start, end, waveManager,towerManager);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         bestiary = game.getBestiary();
         initCardButtons();
