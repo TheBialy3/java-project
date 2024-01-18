@@ -120,6 +120,9 @@ public class EnemyManager {
             case CREEPY_CAT:
                 enemies.add(new CreepyCat(x, y, 0, this, waveManager, towerManager));
                 break;
+            case BIRD_SKELETON:
+                enemies.add(new BirdSkeleton(x, y, 0, this, waveManager, towerManager));
+                break;
             case BANSHEE:
                 enemies.add(new Banshee(x, y, 0, this, waveManager, towerManager));
                 break;
