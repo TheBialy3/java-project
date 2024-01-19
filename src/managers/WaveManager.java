@@ -1,6 +1,7 @@
 package managers;
 
 import events.Wave;
+import helpz.Constants;
 import scenes.Playing;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class WaveManager {
 
     private void createWaves() {
         int waveNumberMax = 101;
-        int enemyTypesNumber = 10;
+        int enemyTypesNumber = Constants.NumbersOf.NUMBER_OF_ENEMIES;
         //enemyTypesNumber=6;
         int ran;
         for (int waveNumber = 1; waveNumber < waveNumberMax; waveNumber++) {
