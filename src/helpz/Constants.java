@@ -418,6 +418,7 @@ public class Constants {
         public static final int MOUSE_FOLLOWS_TOWER = 7;
         public static final int SNIPER = 8;
         public static final int LASER_TOWER = 9;
+        public static final int Scarecrow = 10;
 
         public static String getName(int towerType) {
             switch (towerType) {
