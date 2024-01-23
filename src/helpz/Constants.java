@@ -418,7 +418,7 @@ public class Constants {
         public static final int MOUSE_FOLLOWS_TOWER = 7;
         public static final int SNIPER = 8;
         public static final int LASER_TOWER = 9;
-        public static final int Scarecrow = 10;
+        public static final int SCARECROW = 10;
 
         public static String getName(int towerType) {
             switch (towerType) {
@@ -442,6 +442,8 @@ public class Constants {
                     return "Sniper";
                 case LASER_TOWER:
                     return "Eye laser Tower";
+                case SCARECROW:
+                    return "Scarecrow";
                 default:
                     return "";
             }
@@ -469,6 +471,8 @@ public class Constants {
                     return false;
                 case LASER_TOWER:
                     return true;
+                case SCARECROW:
+                    return true;
                 default:
                     return false;
             }
@@ -483,6 +487,8 @@ public class Constants {
                         return 0.8f;
                     case LASER_TOWER:
                         return 0.9f;
+                    case SCARECROW:
+                        return 0.7f;
                     default:
                         return 0;
                 }
@@ -512,6 +518,8 @@ public class Constants {
                     return false;
                 case LASER_TOWER:
                     return false;
+                case SCARECROW:
+                    return false;
                 default:
                     return false;
             }
@@ -539,6 +547,8 @@ public class Constants {
                     return 425;
                 case LASER_TOWER:
                     return 800;
+                case SCARECROW:
+                    return 500;
                 default:
                     return 0;
             }
@@ -566,6 +576,8 @@ public class Constants {
                     return 110;
                 case LASER_TOWER:
                     return 2;
+                case SCARECROW:
+                    return 10;
                 default:
                     return 0;
             }
@@ -594,6 +606,8 @@ public class Constants {
                     return 2000;
                 case LASER_TOWER:
                     return 325;
+                case SCARECROW:
+                    return 220;
                 default:
                     return 0;
             }
@@ -621,6 +635,8 @@ public class Constants {
                     return 30;
                 case LASER_TOWER:
                     return 1;
+                case SCARECROW:
+                    return 10;
                 default:
                     return 0;
             }
@@ -654,6 +670,8 @@ public class Constants {
                     return TRUE;
                 case LASER_TOWER:
                     return TRUE;
+                case SCARECROW:
+                    return MAGIC;
                 default:
                     return 0;
             }
@@ -685,12 +703,14 @@ public class Constants {
                     return BOTH;
                 case LASER_TOWER:
                     return BOTH;
+                case SCARECROW:
+                    return FLYING;
                 default:
                     return 0;
             }
         }
 
-
+        //0=range, 1=dmg, 2=attackSpeed, 3=duration,
         public static int getUpgradeTowerImage(int towerType, int upgrade) {
             switch (towerType) {
                 case ARCHER:
@@ -793,6 +813,16 @@ public class Constants {
                             return 1;
                     }
                     return 1;
+                case SCARECROW:
+                    switch (upgrade) {
+                        case 1:
+                            return 1;
+                        case 2:
+                            return 0;
+                        case 3:
+                            return 0;
+                    }
+                    return 1;
                 default:
                     return 1;
             }
@@ -820,6 +850,8 @@ public class Constants {
                 case SNIPER:
                     return false;
                 case LASER_TOWER:
+                    return false;
+                case SCARECROW:
                     return false;
                 default:
                     return false;
