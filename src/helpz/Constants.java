@@ -4,7 +4,7 @@ public class Constants {
 
     public static class NumbersOf {
         public static final int NUMBER_OF_ENEMIES = 12;
-        public static final int NUMBER_OF_TOWERS = 10;
+        public static final int NUMBER_OF_TOWERS = 11;
     }
 
     public static class Direction {
