@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static helpz.Constants.EnemyType.*;
+import static helpz.Constants.NumbersOf.NUMBER_OF_TOWERS;
 import static helpz.Constants.TowerType.*;
 import static java.lang.Math.sqrt;
 
@@ -20,11 +21,11 @@ import static java.lang.Math.sqrt;
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImg, upgradeImg;
+    private BufferedImage[] towerImg, upgradeImg,BuffsImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arrForMineTower = new ArrayList<>();
-    private int towerAmount = 0, ran, tilePixelNumber = 64;
+    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber=4,BuffsImgNumber=1;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;
@@ -41,13 +42,47 @@ public class TowerManager {
         loadTowerImages();
         loadUpgradeImg();
         loadRoadDirArr();
+        loadTowerBuffsImg();
+    }
+
+    public void draw(Graphics g) {
+        for (Tower t : towers) {
+            g.drawImage(towerImg[t.getTowerType()], t.getX(), t.getY(), null);
+            if (t.getTowerType() == FROST_MAGE) {
+                g.setColor(new Color(0, 254, 255, 38));
+                g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+            }
+            if (t.getTowerType() == BOOM_VOLCANO) {
+                if (t.getCdTick() <= 4) {
+                    g.setColor(new Color(255, 0, 0, 38));
+                    g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+                }
+                if (Card28) {
+                    if (t.getCdTick() <= 11 && t.getCdTick() > 7) {
+                        g.setColor(new Color(255, 0, 0, 38));
+                        g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
+                    }
+                }
+            }
+            if(t.isStun()){
+                g.drawImage(BuffsImg[0], t.getX(), t.getY(), null);
+            }
+        }
     }
 
     private void loadUpgradeImg() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        upgradeImg = new BufferedImage[4];
-        for (int i = 0; i < 4; i++) {
+        upgradeImg = new BufferedImage[upgradeImgNumber];
+        for (int i = 0; i < upgradeImgNumber; i++) {
             upgradeImg[i] = atlas.getSubimage((0 + i) * tilePixelNumber, 29 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        }
+    }
+
+    private void loadTowerBuffsImg() {
+        BufferedImage atlas = LoadSave.getSpriteAtlas();
+        BuffsImg = new BufferedImage[BuffsImgNumber];
+        for (int i = 0; i < BuffsImgNumber; i++) {
+            BuffsImg[i] = atlas.getSubimage(( i) * tilePixelNumber, 23 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
     private void loadRoadDirArr() {
@@ -56,10 +91,9 @@ public class TowerManager {
 
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        int towerNumber = 10;
         int imageInRow = 9;
-        towerImg = new BufferedImage[towerNumber];
-        for (int i = 0; i < towerNumber; i++) {
+        towerImg = new BufferedImage[NUMBER_OF_TOWERS];
+        for (int i = 0; i < NUMBER_OF_TOWERS; i++) {
             towerImg[i] = atlas.getSubimage((0 + i / imageInRow) * tilePixelNumber, (12 + i % imageInRow) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
@@ -342,28 +376,7 @@ public class TowerManager {
         return range < t.getRange();
     }
 
-    public void draw(Graphics g) {
 
-        for (Tower t : towers) {
-            g.drawImage(towerImg[t.getTowerType()], t.getX(), t.getY(), null);
-            if (t.getTowerType() == FROST_MAGE) {
-                g.setColor(new Color(0, 254, 255, 38));
-                g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
-            }
-            if (t.getTowerType() == BOOM_VOLCANO) {
-                if (t.getCdTick() <= 4) {
-                    g.setColor(new Color(255, 0, 0, 38));
-                    g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
-                }
-                if (Card28) {
-                    if (t.getCdTick() <= 11 && t.getCdTick() > 7) {
-                        g.setColor(new Color(255, 0, 0, 38));
-                        g.fillOval((int) (t.getX() - t.getRange()) + 32, (int) (t.getY() - t.getRange()) + 32, (int) (t.getRange() * 2), (int) (t.getRange()) * 2);
-                    }
-                }
-            }
-        }
-    }
 
     public BufferedImage[] getTowerImg() {
         return towerImg;
