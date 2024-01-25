@@ -17,6 +17,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 import static helpz.Constants.Direction.*;
+import static helpz.Constants.NumbersOf.NUMBER_OF_ENEMIES;
 
 public class EnemyManager {
 
@@ -26,7 +27,7 @@ public class EnemyManager {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private PathPoint start, end;
     private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
-    private int numberOfEnemyTypes = 10;
+
     private int ranL = random.nextInt(25), ranR = random.nextInt(25);
     private BufferedImage[] enemyEffects;
     private int[][] roadDirArr;
@@ -56,7 +57,7 @@ public class EnemyManager {
                 }
             }
         } catch (Exception e) {
-            System.out.println("ConcurrentModificationException draw");
+            System.out.println("ConcurrentModificationException draw EnemyManager");
         }
     }
 
@@ -74,11 +75,11 @@ public class EnemyManager {
 
     private void loadEnemyImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        enemyImages = new BufferedImage[numberOfEnemyTypes + 1];
-        for (int i = 0; i < numberOfEnemyTypes; i++) {
-            enemyImages[i] = atlas.getSubimage(0, (2 + i) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages = new BufferedImage[NUMBER_OF_ENEMIES + 1];
+        for (int i = 0; i < NUMBER_OF_ENEMIES; i++) {
+            enemyImages[i] = atlas.getSubimage(0+(i/10)*2* tilePixelNumber , (2 + i%10 ) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
-        enemyImages[numberOfEnemyTypes] = atlas.getSubimage(1 * tilePixelNumber, (2 + numberOfEnemyTypes - 1) * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+        enemyImages[NUMBER_OF_ENEMIES] = atlas.getSubimage(1 * tilePixelNumber, (11)* tilePixelNumber, tilePixelNumber, tilePixelNumber);
     }
 
     public void spawnEnemy(int nextEnemy) {
@@ -126,6 +127,7 @@ public class EnemyManager {
             case BANSHEE:
                 enemies.add(new Banshee(x, y, 0, this, waveManager, towerManager));
                 break;
+
         }
     }
 
@@ -257,7 +259,7 @@ public class EnemyManager {
     public void drawEnemy(Enemy e, Graphics g) {/////////to fix
         if (e.getEnemyType() == CREEPY_CAT) {
             if (!e.isTargetable()) {
-                g.drawImage(enemyImages[numberOfEnemyTypes], (int) e.getX(), (int) e.getY(), null);
+                g.drawImage(enemyImages[NUMBER_OF_ENEMIES], (int) e.getX(), (int) e.getY(), null);
             } else {
                 drawBasic(e,g);
             }

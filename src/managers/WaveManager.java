@@ -7,6 +7,8 @@ import scenes.Playing;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static helpz.Constants.NumbersOf.NUMBER_OF_ENEMIES;
+
 public class WaveManager {
 
     private Playing playing;
@@ -69,14 +71,14 @@ public class WaveManager {
 
     private void createWaves() {
         int waveNumberMax = 101;
-        int enemyTypesNumber = Constants.NumbersOf.NUMBER_OF_ENEMIES;
-        //enemyTypesNumber=6;
+//        int enemyTypesNumber = NUMBER_OF_ENEMIES;
         int ran;
         for (int waveNumber = 1; waveNumber < waveNumberMax; waveNumber++) {
             ArrayList<Integer> randList = new ArrayList<>();
             for (int waveEnemyNumber = 0; waveEnemyNumber < waveNumber * 2; waveEnemyNumber++) {
-                ran = random.nextInt(enemyTypesNumber);
+                ran = random.nextInt(NUMBER_OF_ENEMIES);
                 randList.add(ran);
+                System.out.println(ran);
             }
             waves.add(new Wave(randList));
         }
@@ -109,7 +111,7 @@ public class WaveManager {
         waveIndex = 0;
         waveStartTimer = false;
         waveTickTimerOver = false;
-        enemySpawnTick = enemySpawnTickLimit;
+        enemySpawnTick = 0;
         waveTick = 0;
     }
 }
