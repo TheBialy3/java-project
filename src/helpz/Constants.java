@@ -148,7 +148,7 @@ public class Constants {
                 case ROCK:
                     return "Rock Golem";
                 case CREEPY_CAT:
-                    return "Rock Golem";
+                    return "Creepy Cat";
                 case BIRD_SKELETON:
                     return "Bird Skeleton";
                 case BANSHEE:

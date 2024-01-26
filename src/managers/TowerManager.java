@@ -21,11 +21,11 @@ import static java.lang.Math.sqrt;
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImg, upgradeImg,BuffsImg;
+    private BufferedImage[] towerImg, upgradeImg, BuffsImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arrForMineTower = new ArrayList<>();
-    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber=4,BuffsImgNumber=1;
+    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 4, BuffsImgNumber = 1;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;
@@ -64,7 +64,7 @@ public class TowerManager {
                     }
                 }
             }
-            if(t.isStun()){
+            if (t.isStun()) {
                 g.drawImage(BuffsImg[0], t.getX(), t.getY(), null);
             }
         }
@@ -82,9 +82,10 @@ public class TowerManager {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         BuffsImg = new BufferedImage[BuffsImgNumber];
         for (int i = 0; i < BuffsImgNumber; i++) {
-            BuffsImg[i] = atlas.getSubimage(( i) * tilePixelNumber, 23 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+            BuffsImg[i] = atlas.getSubimage((i) * tilePixelNumber, 23 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
     }
+
     private void loadRoadDirArr() {
         road = LoadSave.GetLevelDir();
     }
@@ -156,6 +157,8 @@ public class TowerManager {
                 }
             } else if (t.getTowerType() == BOOM_VOLCANO) {
                 boomTowerAtack(t);
+            } else if (t.getTowerType() == SCARECROW) {
+                boomTowerAtack(t);
             } else {
                 attackEnemyIfClose(t);
             }
@@ -180,7 +183,13 @@ public class TowerManager {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (e.isAlive()) {
                     if (isEnemyInRange(t, e)) {
-                        e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
+                        if (t.getTowerType() == SCARECROW) {
+                            if (e.isTargetable()) {
+                                e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
+                            }
+                        } else {
+                            e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
+                        }
                     } else {
                         //nothing
                     }
@@ -292,26 +301,26 @@ public class TowerManager {
         return false;
     }
 
-    public void stunCloseTower(float x, float y){
-        int closeTower=0;
-        float closeDistance=2000;
+    public void stunCloseTower(float x, float y) {
+        int closeTower = 0;
+        float closeDistance = 2000;
         float distance;
-        for(Tower tower:towers){
-            distance=getDistance(x,y,tower);
-            if(closeDistance>distance){
-                closeTower=tower.getId();
-                closeDistance=distance;
+        for (Tower tower : towers) {
+            distance = getDistance(x, y, tower);
+            if (closeDistance > distance) {
+                closeTower = tower.getId();
+                closeDistance = distance;
             }
         }
         towers.get(closeTower).setStun(2);
     }
 
-    private float getDistance(float x,float y,Tower tower) {
-        int xTower=tower.getX()*tilePixelNumber;
-        int yTower=tower.getY()*tilePixelNumber;
-        float xDiff=xTower-x;
-        float yDiff=yTower-y;
-        return (float) sqrt(xDiff*xDiff+yDiff*yDiff);
+    private float getDistance(float x, float y, Tower tower) {
+        int xTower = tower.getX() * tilePixelNumber;
+        int yTower = tower.getY() * tilePixelNumber;
+        float xDiff = xTower - x;
+        float yDiff = yTower - y;
+        return (float) sqrt(xDiff * xDiff + yDiff * yDiff);
     }
 
     private void setMine(Tower t) {
@@ -377,7 +386,6 @@ public class TowerManager {
     }
 
 
-
     public BufferedImage[] getTowerImg() {
         return towerImg;
     }
@@ -400,7 +408,7 @@ public class TowerManager {
     public void reset() {
         towers.clear();
         towerAmount = 0;
-       setAllCardsBoolFalse();
+        setAllCardsBoolFalse();
     }
 
     private void setAllCardsBoolFalse() {
