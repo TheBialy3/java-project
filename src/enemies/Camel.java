@@ -11,7 +11,9 @@ public class Camel extends Enemy{
     public Camel(float x, float y, int ID, EnemyManager em, WaveManager wm, TowerManager tm) {
         super(x, y, ID, CAMEL, em, wm,tm);
     }
+    public void powerUse(){
 
+    }
 
 
 }

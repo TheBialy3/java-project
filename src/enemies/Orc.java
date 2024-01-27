@@ -12,5 +12,8 @@ public class Orc extends Enemy{
 
     }
 
-
+    //healOnUpdate * 60
+    public void heal(int heal) {
+        this.heal(heal);
+    }
 }

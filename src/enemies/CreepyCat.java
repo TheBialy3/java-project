@@ -12,6 +12,8 @@ public class CreepyCat  extends Enemy{
         super(x, y, ID, CREEPY_CAT, em, wm,tm);
     }
 
+    public void powerUse(){
 
+    }
 
 }
