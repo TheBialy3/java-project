@@ -11,5 +11,7 @@ public class Bird extends Enemy{
         super(x, y, ID, BIRD, em, wm,tm);
 
     }
-
+    public void heal(int heal) {
+        this.heal(heal);
+    }
 }

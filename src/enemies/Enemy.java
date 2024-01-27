@@ -5,6 +5,7 @@ import main.Game;
 import managers.EnemyManager;
 import managers.TowerManager;
 import managers.WaveManager;
+import towers.Archer;
 
 
 import java.awt.*;
@@ -52,6 +53,62 @@ public abstract class Enemy {
         setResists(enemyType);
     }
 
+    public void move(float speed, int dir) {
+        lastDir = dir;
+        if (enemyManager.isCard8()) {
+            speed = speed + 0.1f;
+        }
+        if (enemyManager.isCard9()) {
+            speed = speed + 0.1f;
+        }
+        if (slowTick < slowTickLimit) {
+            slowTick++;
+            speed *= slowPower;
+        }
+        switch (dir) {
+            case LEFT:
+                this.x -= speed;
+                break;
+            case UP:
+                this.y -= speed;
+                break;
+            case RIGHT:
+                this.x += speed;
+                break;
+            case DOWN:
+                this.y += speed;
+                break;
+        }
+        distancePast += speed;
+        updateHitbox();
+        if (poisoned) {
+            poisonDamage();
+        }
+        if(isRegainHP(enemyType)){
+            regenHp();
+        }
+    }
+
+    private void regenHp() {
+        if (this instanceof Orc) {
+            ((Orc) this).heal(2);}
+        else if (this instanceof Tentacle) {
+            ((Tentacle) this).heal(3);}
+        else if (this instanceof Slime) {
+            ((Slime) this).heal(2);}
+        else if (this instanceof Bird) {
+            ((Bird) this).heal(1);}
+
+    }
+
+    private void heal(int heal) {
+       if(health+heal>maxHealth){
+           health=maxHealth;
+       }else {
+           health+=heal;
+       }
+    }
+
     private void setBounds(int enemyType) {
         int w = getHeightOfHitbox(enemyType);
         int h = getWightOfHitbox(enemyType);
@@ -96,45 +153,13 @@ public abstract class Enemy {
             if (0 == duration % 10) {
                 hurt(dmg, damageType);
             }
-
         }
         if (duration == 0) {
             poisoned = false;
         }
     }
 
-    public void move(float speed, int dir) {
-        lastDir = dir;
-        if (enemyManager.isCard8()) {
-            speed = speed + 0.1f;
-        }
-        if (enemyManager.isCard9()) {
-            speed = speed + 0.1f;
-        }
-        if (slowTick < slowTickLimit) {
-            slowTick++;
-            speed *= slowPower;
-        }
-        switch (dir) {
-            case LEFT:
-                this.x -= speed;
-                break;
-            case UP:
-                this.y -= speed;
-                break;
-            case RIGHT:
-                this.x += speed;
-                break;
-            case DOWN:
-                this.y += speed;
-                break;
-        }
-        distancePast += speed;
-        updateHitbox();
-        if (poisoned) {
-            poisonDamage();
-        }
-    }
+
 
     private void updateHitbox() {
         bounds.x = (int) x;

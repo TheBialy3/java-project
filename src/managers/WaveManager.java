@@ -78,7 +78,6 @@ public class WaveManager {
             for (int waveEnemyNumber = 0; waveEnemyNumber < waveNumber * 2; waveEnemyNumber++) {
                 ran = random.nextInt(NUMBER_OF_ENEMIES);
                 randList.add(ran);
-                System.out.println(ran);
             }
             waves.add(new Wave(randList));
         }

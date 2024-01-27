@@ -13,5 +13,7 @@ public class Slime extends Enemy {
 
     }
 
-
+    public void heal(int heal) {
+        this.heal(heal);
+    }
 }

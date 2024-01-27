@@ -12,5 +12,7 @@ public class Banshee extends Enemy{
         super(x, y, ID, BANSHEE, em, wm,tm);
 
     }
+    public void powerUse(){
 
+    }
 }

@@ -405,6 +405,37 @@ public class Constants {
             }
             return 0;
         }
+        public static boolean isRegainHP(int enemyType) {
+            switch (enemyType) {
+                case ORC:
+                    return true;
+                case ORK_ZOMBIE:
+                    return false;
+                case TENTACLE:
+                    return true;
+                case SLIME:
+                    return true;
+                case CAMEL:
+                    return false;
+                case CAMEL_JUNIOR:
+                    return false;
+                case BIRD:
+                    return true;
+                case GHOST:
+                    return false;
+                case ROCK:
+                    return false;
+                case CREEPY_CAT:
+                    return false;
+                case BIRD_SKELETON:
+                    return false;
+                case BANSHEE:
+                    return false;
+                default:
+                    return false;
+            }
+
+        }
     }
 
     public static class TowerType {

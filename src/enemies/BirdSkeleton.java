@@ -12,4 +12,8 @@ public class BirdSkeleton extends Enemy{
 
     }
 
+    public void powerUse(){
+
+    }
+
 }

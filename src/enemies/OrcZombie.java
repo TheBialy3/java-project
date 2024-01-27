@@ -15,7 +15,9 @@ public class OrcZombie extends Enemy{
     }
 
 
+    public void powerUse(){
 
+    }
 
 
 }
