@@ -12,6 +12,6 @@ public class Bird extends Enemy{
 
     }
     public void heal(int heal) {
-        this.heal(heal);
+        this.healThis(heal);
     }
 }
