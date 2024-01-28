@@ -101,7 +101,7 @@ public abstract class Enemy {
 
     }
 
-    private void heal(int heal) {
+    public void healThis(int heal) {
        if(health+heal>maxHealth){
            health=maxHealth;
        }else {
