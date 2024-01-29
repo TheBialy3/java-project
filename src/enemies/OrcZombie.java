@@ -14,7 +14,9 @@ public class OrcZombie extends Enemy{
         super(x, y, ID, ORK_ZOMBIE, em, wm,tm);
     }
 
-
+    public void heal(int heal) {
+        this.healThis(heal);
+    }
     public void powerUse(){
 
     }
