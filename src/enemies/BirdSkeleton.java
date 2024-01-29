@@ -11,7 +11,9 @@ public class BirdSkeleton extends Enemy{
         super(x, y, ID, BIRD_SKELETON, em, wm,tm);
 
     }
-
+    public void heal(int heal) {
+        this.healThis(heal);
+    }
     public void powerUse(){
 
     }

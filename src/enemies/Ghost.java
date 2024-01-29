@@ -12,5 +12,8 @@ public class Ghost extends Enemy{
         super(x, y, ID, GHOST, em, wm,tm);
 
     }
+    public void heal(int heal) {
+        this.healThis(heal);
+    }
 
 }
