@@ -5,7 +5,6 @@ import main.Game;
 import managers.EnemyManager;
 import managers.TowerManager;
 import managers.WaveManager;
-import towers.Archer;
 
 
 import java.awt.*;
@@ -110,8 +109,8 @@ public abstract class Enemy {
     }
 
     private void setBounds(int enemyType) {
-        int w = getHeightOfHitbox(enemyType);
-        int h = getWightOfHitbox(enemyType);
+        int w = getHeightOfHitBox(enemyType);
+        int h = getWightOfHitBox(enemyType);
         bounds = new Rectangle((int) (x + (64 - w) / 2), (int) (y + (64 - h) / 2), w, h);
     }
 

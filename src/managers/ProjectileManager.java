@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static helpz.Constants.EnemyType.getMoveType;
+import static helpz.Constants.NumbersOf.NUMBER_OF_PROJECTILE;
 import static helpz.Constants.ProjectileType.*;
 import static helpz.Constants.ProjectileType.BOTH;
 import static helpz.Constants.TowerType.*;
@@ -39,8 +40,8 @@ public class ProjectileManager {
 
     private void importImgs() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
-        proj_imgs = new BufferedImage[5];
-        for (int i = 0; i < 5; i++) {
+        proj_imgs = new BufferedImage[NUMBER_OF_PROJECTILE];
+        for (int i = 0; i < NUMBER_OF_PROJECTILE; i++) {
             proj_imgs[i] = atlas.getSubimage(0 + i * tilePixelNumber, 21 * tilePixelNumber, tilePixelNumber, tilePixelNumber);
         }
         importExplosion(atlas);
@@ -87,7 +88,7 @@ public class ProjectileManager {
         }
         float rotate = 0;
         try {
-            if (helpz.Constants.ProjectileType.isRorating(type)) {
+            if (helpz.Constants.ProjectileType.isRotating(type)) {
                 float arcValue = (float) Math.atan(yDist / (float) xDist);
                 rotate = (float) Math.toDegrees(arcValue);
 
@@ -239,7 +240,7 @@ public class ProjectileManager {
         Graphics2D g2d = (Graphics2D) g;
         for (Projectile p : projectiles) {
             if (p.isActive()) {
-                if (helpz.Constants.ProjectileType.isRorating(p.getProjectileType())) {
+                if (helpz.Constants.ProjectileType.isRotating(p.getProjectileType())) {
                     g2d.translate(p.getPos().x, p.getPos().y);
                     g2d.rotate(Math.toRadians(p.getRotation()));
                     g2d.drawImage(proj_imgs[p.getProjectileType()], -halfTilePixelNumber, -halfTilePixelNumber, null);

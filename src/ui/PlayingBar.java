@@ -442,6 +442,9 @@ public class PlayingBar extends Bar {
                         case LASER_TOWER:
                             selectedTower = new LaserTower(x, y, 0, b.getId(), towerManager, road);
                             break;
+                        case SCARECROW:
+                            selectedTower = new Scarecrow(x, y, 0, b.getId(), towerManager, road);
+                            break;
                     }
                     playing.setSelectedTower(selectedTower);
                     return;
@@ -584,6 +587,9 @@ public class PlayingBar extends Bar {
         } else if (displayedTower instanceof LaserTower) {
             costUp1 = ((LaserTower) displayedTower).getCost(1);
             textUp1 = ((LaserTower) displayedTower).getName(1);
+        } else if (displayedTower instanceof Scarecrow) {
+            costUp1 = ((Scarecrow) displayedTower).getCost(1);
+            textUp1 = ((Scarecrow) displayedTower).getName(1);
         } else {
             System.out.println("cost error 1");
         }
@@ -617,6 +623,9 @@ public class PlayingBar extends Bar {
         } else if (displayedTower instanceof LaserTower) {
             costUp2 = ((LaserTower) displayedTower).getCost(2);
             textUp2 = ((LaserTower) displayedTower).getName(2);
+        } else if (displayedTower instanceof Scarecrow) {
+            costUp2 = ((Scarecrow) displayedTower).getCost(2);
+            textUp2 = ((Scarecrow) displayedTower).getName(2);
         } else {
             System.out.println("cost error 2");
         }
@@ -650,6 +659,9 @@ public class PlayingBar extends Bar {
         } else if (displayedTower instanceof LaserTower) {
             costUp3 = ((LaserTower) displayedTower).getCost(3);
             textUp3 = ((LaserTower) displayedTower).getName(3);
+        } else if (displayedTower instanceof Scarecrow) {
+            costUp3 = ((Scarecrow) displayedTower).getCost(3);
+            textUp3 = ((Scarecrow) displayedTower).getName(3);
         } else {
             System.out.println("cost error 3");
         }

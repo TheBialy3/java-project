@@ -38,11 +38,11 @@ public class Scarecrow extends Tower {
     public String getName(int upgrade) {
         switch (upgrade) {
             case 1:
-                return "Doubl damage";
+                return "Add damage";
             case 2:
-                return "Poison duration";
+                return "Increase range";
             case 3:
-                return "Range +100";
+                return "Increase range more";
         }
         return "";
     }

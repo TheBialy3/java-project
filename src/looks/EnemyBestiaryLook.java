@@ -40,8 +40,8 @@ public class EnemyBestiaryLook {
     }
 
     private void getHitbox() {
-        heightOfHitbox = Constants.EnemyType.getHeightOfHitbox(enemyType);
-        wightOfHitbox = Constants.EnemyType.getWightOfHitbox(enemyType);
+        heightOfHitbox = Constants.EnemyType.getHeightOfHitBox(enemyType);
+        wightOfHitbox = Constants.EnemyType.getWightOfHitBox(enemyType);
         hitbox = heightOfHitbox * wightOfHitbox;
     }
 
