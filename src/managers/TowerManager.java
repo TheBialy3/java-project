@@ -15,17 +15,18 @@ import java.util.Random;
 import static helpz.Constants.EnemyType.*;
 import static helpz.Constants.NumbersOf.NUMBER_OF_TOWERS;
 import static helpz.Constants.TowerType.*;
+import static helpz.ImgFix.getRotImg;
 import static java.lang.Math.sqrt;
 
 
 public class TowerManager {
 
     private Playing playing;
-    private BufferedImage[] towerImg, upgradeImg, BuffsImg;
+    private BufferedImage[] towerImg, upgradeImg, BuffsImg, towersSideImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arrForMineTower = new ArrayList<>();
-    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 4, BuffsImgNumber = 1;
+    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 4, BuffsImgNumber = 1, TowersSideImgNumber = 180, animationIndex;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;
@@ -43,9 +44,12 @@ public class TowerManager {
         loadUpgradeImg();
         loadRoadDirArr();
         loadTowerBuffsImg();
+        loadTowerSideImg();
     }
 
+
     public void draw(Graphics g) {
+        animationIndex++;
         for (Tower t : towers) {
             g.drawImage(towerImg[t.getTowerType()], t.getX(), t.getY(), null);
             if (t.getTowerType() == FROST_MAGE) {
@@ -64,9 +68,23 @@ public class TowerManager {
                     }
                 }
             }
+            if (t.getTowerType() == SCARECROW) {
+                g.drawImage(towersSideImg[animationIndex], t.getX() - 64, t.getY() - 64, null);
+            }
             if (t.isStun()) {
                 g.drawImage(BuffsImg[0], t.getX(), t.getY(), null);
             }
+        }
+        if (animationIndex >= TowersSideImgNumber - 1) {
+            animationIndex = 0;
+        }
+    }
+
+    private void loadTowerSideImg() {
+        BufferedImage atlas = LoadSave.getImg("scarecrowBirds");
+        towersSideImg = new BufferedImage[TowersSideImgNumber];
+        for (int i = 0; i < TowersSideImgNumber; i++) {
+            towersSideImg[i] = getRotImg(atlas, i * 2);
         }
     }
 
@@ -132,6 +150,9 @@ public class TowerManager {
             case LASER_TOWER:
                 towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, this, road));
                 break;
+            case SCARECROW:
+                towers.add(new Scarecrow(x, y, towerAmount++, SCARECROW, this, road));
+                break;
             default:
                 break;
         }
@@ -156,16 +177,16 @@ public class TowerManager {
                     hurtAllEnemyIfClose(t, 100);
                 }
             } else if (t.getTowerType() == BOOM_VOLCANO) {
-                boomTowerAtack(t);
+                boomTowerAttack(t);
             } else if (t.getTowerType() == SCARECROW) {
-                boomTowerAtack(t);
+                boomTowerAttack(t);
             } else {
                 attackEnemyIfClose(t);
             }
         }
     }
 
-    private void boomTowerAtack(Tower t) {
+    private void boomTowerAttack(Tower t) {
         if (t.isCoolDownOver()) {
             hurtAllEnemyIfClose(t, 100);
             t.resetCoolDown();
@@ -224,57 +245,52 @@ public class TowerManager {
     private void attackEnemyIfClose(Tower t) {
         try {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                if (t.isCoolDownOver()) {
-                    if (e.isAlive()) {
-                        if (e.isTargetable()) {
-                            if (t.getTowerType() == SNIPER) {
+                if (t.isCoolDownOver() && e.isAlive() && e.isTargetable()) {
+                    if (t.getTowerType() == SNIPER) {
+                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                        if (Card39) {
+                            attackEnemyIfClose(t, e);
+                        }
+                        t.resetCoolDown();
+                    } else if (isTowerTargetingEnemy(t, e)) {
+                        if (isEnemyInRange(t, e)) {
+                            if (t.getTowerType() == LASER_TOWER) {
                                 e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                if (Card39) {
+                                if (Card40) {
                                     attackEnemyIfClose(t, e);
                                 }
-                                t.resetCoolDown();
-                            } else if (isTowerTargetingEnemy(t, e)) {
-                                if (isEnemyInRange(t, e)) {
-                                    if (t.getTowerType() == LASER_TOWER) {
-                                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
-                                        if (Card40) {
-                                            attackEnemyIfClose(t, e);
-                                        }
-                                        playing.beamEnemy(t, e);
-                                    } else {
-                                        playing.shootEnemy(t, e);
-                                    }
-                                    if (Constants.TowerType.isSlow(t.getTowerType())) {
-                                        float slow = t.getSlow();
-                                        e.slow(slow);
-                                    }
-                                    t.resetCoolDown();
-                                }
+                                playing.beamEnemy(t, e);
+                            } else {
+                                playing.shootEnemy(t, e);
                             }
+                            if (Constants.TowerType.isSlow(t.getTowerType())) {
+                                float slow = t.getSlow();
+                                e.slow(slow);
+                            }
+                            t.resetCoolDown();
                         }
                     }
                 }
             }
-
         } catch (Exception e) {
             System.out.println("ConcurrentModificationException attackEnemyIfClose");
         }
     }
 
 
-    private void attackEnemyIfClose(Tower t, Enemy hurted) {
+    private void attackEnemyIfClose(Tower t, Enemy gotHurt) {
         for (Enemy e : playing.getEnemyManager().getEnemies()) {
             if (e.isAlive()) {
                 if (e.isTargetable()) {
                     if (t.getTowerType() == SNIPER) {
-                        if (hurted != e) {
+                        if (gotHurt != e) {
                             e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                             return;
                         }
                     }
                     if (isEnemyInRange(t, e)) {
                         if (t.getTowerType() == LASER_TOWER) {
-                            if (hurted != e) {
+                            if (gotHurt != e) {
                                 e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
                                 playing.beamEnemy(t, e);
                                 return;

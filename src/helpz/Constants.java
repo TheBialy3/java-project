@@ -5,6 +5,8 @@ public class Constants {
     public static class NumbersOf {
         public static final int NUMBER_OF_ENEMIES = 12;
         public static final int NUMBER_OF_TOWERS = 11;
+        public static final int NUMBER_OF_PROJECTILE =6;
+
     }
 
     public static class Direction {
@@ -41,7 +43,7 @@ public class Constants {
             return 0;
         }
 
-        public static boolean isRorating(int projectileType) {
+        public static boolean isRotating(int projectileType) {
             switch (projectileType) {
                 case ARROW:
                     return true;
@@ -222,7 +224,7 @@ public class Constants {
             return 0;
         }
 
-        public static int getHeightOfHitbox(int enemyType) {
+        public static int getHeightOfHitBox(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 50;
@@ -254,7 +256,7 @@ public class Constants {
             }
         }
 
-        public static int getWightOfHitbox(int enemyType) {
+        public static int getWightOfHitBox(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 44;
@@ -638,7 +640,7 @@ public class Constants {
                 case LASER_TOWER:
                     return 325;
                 case SCARECROW:
-                    return 220;
+                    return 96;
                 default:
                     return 0;
             }
@@ -667,7 +669,7 @@ public class Constants {
                 case LASER_TOWER:
                     return 1;
                 case SCARECROW:
-                    return 10;
+                    return 50;
                 default:
                     return 0;
             }

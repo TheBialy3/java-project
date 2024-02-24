@@ -12,7 +12,9 @@ public class Tentacle extends Enemy{
         super(x, y, ID, TENTACLE, em, wm,tm);
     }
 
+
     public void heal(int heal) {
         this.healThis(heal);
     }
+
 }
