@@ -118,6 +118,7 @@ public class Playing extends GameScene implements SceneMethods {
                                 cardSelectStart();
                             }
                             waveManager.increaseWaveIndex();
+                            towerManager.updateBanks();
                             enemyManager.getEnemies();
                             waveManager.resetEnemyIndex();
                         }
@@ -834,6 +835,15 @@ public class Playing extends GameScene implements SceneMethods {
         if (e.getKeyCode() == KeyEvent.VK_F) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
                 selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, towerManager, road);
+            }
+        }if (e.getKeyCode() == KeyEvent.VK_G) {
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(SCARECROW))) {
+                selectedTower = new Scarecrow(1555, 15555, 0, SCARECROW, towerManager, road);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_H) {
+            if (playingBar.isEnoughGold(Constants.TowerType.getCost(BANK))) {
+                selectedTower = new Bank(1555, 15555, 0, BANK, towerManager, road);
             }
         }
     }

@@ -363,7 +363,11 @@ public class PlayingBar extends Bar {
 
     private void sellTowerClicked() {
         playing.removeTower(displayedTower);
-        gold += getTowerCost() * 0.8;
+        if (displayedTower.getTowerType()!=BANK){
+            gold += getTowerCost() * 0.8;
+        }else {
+            gold += getTowerCost();
+        }
         displayedTower = null;
     }
 
@@ -444,6 +448,9 @@ public class PlayingBar extends Bar {
                             break;
                         case SCARECROW:
                             selectedTower = new Scarecrow(x, y, 0, b.getId(), towerManager, road);
+                            break;
+                        case BANK:
+                            selectedTower = new Bank(x, y, 0, b.getId(), towerManager, road);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);

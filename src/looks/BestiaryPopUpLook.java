@@ -61,7 +61,7 @@ public class BestiaryPopUpLook {
             g.setColor(new Color(124, 6, 6));
             g.drawImage(background, x, y, width, height, null);
             g.drawString(enemy.getName(), x + centerW, y + centerH);
-            g.drawString(enemy.getHP(), x + centerW * 3, y + centerH+ nextLineH);
+            g.drawString(enemy.getHP(), x + centerW * 3, y + centerH + nextLineH);
             g.drawString(enemy.getArmor(), x + centerW * 3, y + centerH + nextLineH * 2);
             g.drawString(enemy.getMr(), x + centerW * 3, y + centerH + nextLineH * 3);
             g.drawString(enemy.getGoldWorth(), x + centerW, y + centerH + nextLineH * 2);
@@ -80,7 +80,10 @@ public class BestiaryPopUpLook {
             g.drawString(tower.getDmg(), x + centerW, y + centerH + nextLineH);
             g.drawString(tower.getDamageTypeName(), x + centerW * 3, y + centerH + nextLineH);
             g.drawString(tower.getRangeName(), x + centerW, y + centerH + nextLineH * 5);
-            g.drawString(tower.getTargetMoveTypeName(), x + centerW * 3, y + centerH + nextLineH * 2);
+            g.drawString(tower.getTargetMoveTypeName(), x + centerW * 3, y + centerH + nextLineH * 3);
+            if (tower.getSpecialTowerString()!= null) {
+                g.drawString(tower.getSpecialTowerString(), x + centerW * 3, y + centerH + nextLineH * 2);
+            }
             if (tower.getIsAOE() != null) {
                 g.drawString(tower.getIsAOE(), x + centerW, y + centerH + nextLineH * 2);
             }
