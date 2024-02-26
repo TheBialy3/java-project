@@ -4,8 +4,8 @@ public class Constants {
 
     public static class NumbersOf {
         public static final int NUMBER_OF_ENEMIES = 12;
-        public static final int NUMBER_OF_TOWERS = 11;
-        public static final int NUMBER_OF_PROJECTILE =6;
+        public static final int NUMBER_OF_TOWERS = 12;
+        public static final int NUMBER_OF_PROJECTILE = 6;
 
     }
 
@@ -125,9 +125,9 @@ public class Constants {
         public static final int GHOST = 7;
         public static final int ROCK = 8;
         public static final int CREEPY_CAT = 9;
-        public static final int BIRD_SKELETON =10;
+        public static final int BIRD_SKELETON = 10;
         public static final int BANSHEE = 11;
-        
+
 
         public static String getName(int enemyType) {
             switch (enemyType) {
@@ -407,6 +407,7 @@ public class Constants {
             }
             return 0;
         }
+
         public static boolean isRegainHP(int enemyType) {
             switch (enemyType) {
                 case ORC:
@@ -452,6 +453,8 @@ public class Constants {
         public static final int SNIPER = 8;
         public static final int LASER_TOWER = 9;
         public static final int SCARECROW = 10;
+        public static final int BANK = 11;
+
 
         public static String getName(int towerType) {
             switch (towerType) {
@@ -477,11 +480,44 @@ public class Constants {
                     return "Eye laser Tower";
                 case SCARECROW:
                     return "Scarecrow";
+                case BANK:
+                    return "Bank";
                 default:
                     return "";
             }
         }
 
+
+        public static String getSpecialString(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return null;
+                case CANNON:
+                    return null;
+                case FROST_MAGE:
+                    return "Slows without damage";
+                case MINES_FACTORY:
+                    return "Sets immobile mines";
+                case POISON_TOWER:
+                    return null;
+                case BOOM_VOLCANO:
+                    return null;
+                case CROSSBOW:
+                    return null;
+                case MOUSE_FOLLOWS_TOWER:
+                    return "Aiming at the mouse";
+                case SNIPER:
+                    return null;
+                case LASER_TOWER:
+                    return "Constant single target damage";
+                case SCARECROW:
+                    return null;
+                case BANK:
+                    return "Can't attack but u can sell it with interest";
+                default:
+                    return null;
+            }
+        }
         public static boolean isSlow(int towerType) {
             switch (towerType) {
                 case ARCHER:
@@ -506,6 +542,8 @@ public class Constants {
                     return true;
                 case SCARECROW:
                     return true;
+                case BANK:
+                    return false;
                 default:
                     return false;
             }
@@ -553,6 +591,8 @@ public class Constants {
                     return false;
                 case SCARECROW:
                     return false;
+                case BANK:
+                    return false;
                 default:
                     return false;
             }
@@ -582,6 +622,8 @@ public class Constants {
                     return 800;
                 case SCARECROW:
                     return 500;
+                case BANK:
+                    return 1000;
                 default:
                     return 0;
             }
@@ -611,6 +653,8 @@ public class Constants {
                     return 2;
                 case SCARECROW:
                     return 10;
+                case BANK:
+                    return 0;
                 default:
                     return 0;
             }
@@ -641,6 +685,9 @@ public class Constants {
                     return 325;
                 case SCARECROW:
                     return 96;
+                case BANK:
+                    return 0;
+
                 default:
                     return 0;
             }
@@ -670,6 +717,8 @@ public class Constants {
                     return 1;
                 case SCARECROW:
                     return 50;
+                case BANK:
+                    return 0;
                 default:
                     return 0;
             }
@@ -679,6 +728,7 @@ public class Constants {
         public static final int TRUE = 0;
         public static final int PHYSICAL = 1;
         public static final int MAGIC = 2;
+        public static final int NONE = 3;
 
 
         public static int getDmgType(int towerType) {
@@ -705,6 +755,8 @@ public class Constants {
                     return TRUE;
                 case SCARECROW:
                     return MAGIC;
+                case BANK:
+                    return 0;
                 default:
                     return 0;
             }

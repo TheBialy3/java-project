@@ -64,7 +64,7 @@ public class TowerBestiaryLook {
 
     private String getSlowString() {
         if (slow) {
-            return "Can slowFor "+slow+"%";
+            return "Can slowFor " + slow + "%";
         } else {
             return null;
         }
@@ -83,9 +83,15 @@ public class TowerBestiaryLook {
             return "Attacks: Ground and Flying Units";
         } else if (targetMoveType == FLYING) {
             return "Attacks: Flying Units";
+        } else if (damageType == NONE) {
+            return null;
         } else {
             return "Attacks: Ground Units";
         }
+    }
+
+    public String getSpecialTowerString() {
+            return getSpecialString(towerType);
     }
 
     private String getDamageTypeString() {
@@ -93,6 +99,8 @@ public class TowerBestiaryLook {
             return "True damage";
         } else if (damageType == PHYSICAL) {
             return "Physical damage";
+        } else if (damageType == NONE) {
+            return "Dont do damage";
         } else {
             return "Magic damage";
         }
@@ -105,6 +113,8 @@ public class TowerBestiaryLook {
             return "Range: Big";
         } else if (range < 129) {
             return "Range: Small";
+        } else if (range < 1) {
+            return "";
         } else {
             return "Range: Average";
         }
@@ -146,6 +156,7 @@ public class TowerBestiaryLook {
         return targetMoveTypeName;
     }
 
+
     public String getRangeName() {
         return rangeName;
     }
@@ -159,11 +170,11 @@ public class TowerBestiaryLook {
     }
 
     public String getCost() {
-        return "Cost: "+cost;
+        return "Cost: " + cost;
     }
 
     public String getDmg() {
-        return "DMG: "+dmg;
+        return "DMG: " + dmg;
     }
 
     public int getTowerType() {

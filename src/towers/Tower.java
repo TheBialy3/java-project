@@ -55,6 +55,8 @@ public abstract class Tower {
         }
     }
 
+
+
     private void setStandardCD() {
         coolDown=standardCD;
     }

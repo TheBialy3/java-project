@@ -153,6 +153,9 @@ public class TowerManager {
             case SCARECROW:
                 towers.add(new Scarecrow(x, y, towerAmount++, SCARECROW, this, road));
                 break;
+            case BANK:
+                towers.add(new Bank(x, y, towerAmount++, BANK, this, road));
+                break;
             default:
                 break;
         }
@@ -205,14 +208,12 @@ public class TowerManager {
                 if (e.isAlive()) {
                     if (isEnemyInRange(t, e)) {
                         if (t.getTowerType() == SCARECROW) {
-                            if (e.isTargetable()) {
+                            if (getTargetMoveType(t.getTowerType())==getMoveType(e.getEnemyType())) {
                                 e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
                             }
                         } else {
                             e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
                         }
-                    } else {
-                        //nothing
                     }
                 }
             }
@@ -322,10 +323,12 @@ public class TowerManager {
         float closeDistance = 2000;
         float distance;
         for (Tower tower : towers) {
-            distance = getDistance(x, y, tower);
-            if (closeDistance > distance) {
-                closeTower = tower.getId();
-                closeDistance = distance;
+            if(tower.getTowerType()!=BANK){
+                distance = getDistance(x, y, tower);
+                if (closeDistance > distance) {
+                    closeTower = tower.getId();
+                    closeDistance = distance;
+                }
             }
         }
         towers.get(closeTower).setStun(2);
@@ -839,6 +842,14 @@ public class TowerManager {
                         t.setDmg(duration);
                     }
                 }
+            }
+        }
+    }
+
+    public void updateBanks() {
+        for(Tower tower:towers){
+            if(tower.getTowerType()==BANK){
+                tower.updateTowerWorthGold((int) (tower.getWorthGold()*1.1));
             }
         }
     }
