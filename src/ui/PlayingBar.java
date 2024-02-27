@@ -366,7 +366,7 @@ public class PlayingBar extends Bar {
         if (displayedTower.getTowerType()!=BANK){
             gold += getTowerCost() * 0.8;
         }else {
-            gold += getTowerCost();
+            gold += getTowerCost()* 0.9;
         }
         displayedTower = null;
     }
