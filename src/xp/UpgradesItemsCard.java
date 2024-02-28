@@ -71,9 +71,19 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Double Laser", "Laser eye will now shoot 2 targets", true, 9));
         cards.add(new Card(id++, "Global Laser", "Laser eye will now have bigger radius", true, 9));
         cards.add(new Card(id++, "Hot Laser", "Laser eye will now do more damage", true, 9));
+        //SCARECROW   id 43↓
+        cards.add(new Card(id++, "Bigger crows", "SCARECROW will now do more damage", true, 10));
+        cards.add(new Card(id++, "Ground crows", "SCARECROW will now damage ground enemy as well", true, 10));
+        cards.add(new Card(id++, "Faster crows", "SCARECROW will now have more attack speed", true, 10));
+
+        //BANK   id 46↓
+        cards.add(new Card(id++, "High percent", "Bank will gain bigger interest", true, 11));
+        cards.add(new Card(id++, "Fast action", "Bank will gain interest faster", true, 11));
+        cards.add(new Card(id++, "Smaller Banks", "Bank will now have lower cost", true, 11));
+
         System.out.println(id + "unlocked cards");
         //unlocked
-        //locked id 43↓
+        //locked 49↓
         //ALL
         cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
         cards.add(new Card(id++, "Merchant", "There will be e chance to merchant appearance", false, -1));
