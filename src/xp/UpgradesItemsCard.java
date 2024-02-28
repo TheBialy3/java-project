@@ -81,7 +81,6 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Fast action", "Bank will gain interest faster", true, 11));
         cards.add(new Card(id++, "Smaller Banks", "Bank will now have lower cost", true, 11));
 
-
         System.out.println(id + "unlocked cards");
         //unlocked
         //locked 49↓
