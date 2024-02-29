@@ -94,7 +94,7 @@ public class UpgradesItemsCard {
         //ENEMY
         cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));
         cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
-        cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
+       // cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 
         //ARCHER
         cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 0));
@@ -111,7 +111,7 @@ public class UpgradesItemsCard {
 
         //MINES_FACTORY
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
-        cards.add(new Card(id++, "Triple Mines", "Mines will now be triggered tree timer", false, 3));
+        cards.add(new Card(id++, "Triple Mines", "Mines will now be triggered tree times", false, 3));
         cards.add(new Card(id++, "Minefield", "Set mines everywhere", false, 3));
 
         //POISON_TOWER
@@ -119,7 +119,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Stinky Poison", "Poison Tower will spawn flies that will attack enemy", false, 4));
 
         //BOOM_VOLCANO
-        cards.add(new Card(id++, "Volcano Power", "Volcano will now bust random stats of near towers", false, 5));
+        cards.add(new Card(id++, "Volcano Power", "Volcano will now boost random stats of near towers", false, 5));
         cards.add(new Card(id++, "", "", false, 5));
 
 
@@ -127,13 +127,21 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Pricing Cross", "CrossBow will now Price first enemy", false, 6));
 
         //MOUSE_FOLLOWS_TOWER
-        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 7));
+       // cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 7));
 
 
         //SNIPER
 
 
         //LASER_TOWER
+        cards.add(new Card(id++, "Double Laser", "Laser eye will now shoot 2 targets", false, 9));
+
+        //SCARECROW
+        cards.add(new Card(id++, "Crow commando", "SCARECROW will now additionally send a craw that attack enemies", false, 10));
+
+        //BANK
+
+
 
         System.out.println(id + "locked cards");
 
