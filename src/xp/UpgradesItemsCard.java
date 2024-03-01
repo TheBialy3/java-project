@@ -131,10 +131,10 @@ public class UpgradesItemsCard {
 
 
         //SNIPER
-
+        cards.add(new Card(id++, "Long Shot", "Damage is increase with the distance traveled by bullet", false, 8));
 
         //LASER_TOWER
-        cards.add(new Card(id++, "Double Laser", "Laser eye will now shoot 2 targets", false, 9));
+        cards.add(new Card(id++, "Focus Laser", "Laser eye will now increase damage with time it shoot the target", false, 9));
 
         //SCARECROW
         cards.add(new Card(id++, "Crow commando", "SCARECROW will now additionally send a craw that attack enemies", false, 10));
