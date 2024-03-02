@@ -26,7 +26,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Longer duration", "All your towers that do Damage over time (DOT) do it longer", true, -1));
         //ENEMY id7↓
         cards.add(new Card(id++, "Greed Is Good", "Killing enemies grands more Gold, but they have More HP", true, -2));
-        cards.add(new Card(id++, "Greed curse", "Killing enemies grands more Gold, but they are Faster", true, -2));
+        cards.add(new Card(id++, "Greed Curse", "Killing enemies grands more Gold, but they are Faster", true, -2));
         cards.add(new Card(id++, "Greed Fast Passive", "Passive income grands 2 times more Gold, but enemies are Faster", true, -2));
         cards.add(new Card(id++, "Greed BIG Passive", "Passive income grands 2 times more more Gold, but enemies have More HP", true, -2));
         cards.add(new Card(id++, "True POWER", "All towers deal true damage, but enemies have More HP", true, -2));
@@ -44,7 +44,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Frost Damage", "Frost Mage will now deal a little magic damage", true, 2));
         cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", true, 2));
         //MINES_FACTORY id22↓
-        cards.add(new Card(id++, "Long live the Mine", "Mines will now stay for 2 waves", true, 3));
+        cards.add(new Card(id++, "Long Live the Mine", "Mines will now stay for 2 waves", true, 3));
         cards.add(new Card(id++, "Two for One", "Mines Factory will now sets 2 times more mines at the time", true, 3));
         cards.add(new Card(id++, "Big Mines", "Mines Factory will now sets mines that du more damage", true, 3));
         //POISON_TOWER id25↓
@@ -72,13 +72,13 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Global Laser", "Laser eye will now have bigger radius", true, 9));
         cards.add(new Card(id++, "Hot Laser", "Laser eye will now do more damage", true, 9));
         //SCARECROW   id 43↓
-        cards.add(new Card(id++, "Bigger crows", "SCARECROW will now do more damage", true, 10));
-        cards.add(new Card(id++, "Ground crows", "SCARECROW will now damage ground enemy as well", true, 10));
-        cards.add(new Card(id++, "Faster crows", "SCARECROW will now have more attack speed", true, 10));
+        cards.add(new Card(id++, "Bigger Crows", "SCARECROW will now do more damage", true, 10));
+        cards.add(new Card(id++, "Ground Crows", "SCARECROW will now damage ground enemy as well", true, 10));
+        cards.add(new Card(id++, "Faster Crows", "SCARECROW will now have more attack speed", true, 10));
 
         //BANK   id 46↓
-        cards.add(new Card(id++, "High percent", "Bank will gain bigger interest", true, 11));
-        cards.add(new Card(id++, "Fast action", "Bank will gain interest faster", true, 11));
+        cards.add(new Card(id++, "High Percent", "Bank will gain bigger interest", true, 11));
+        cards.add(new Card(id++, "Fast Action", "Bank will gain interest faster", true, 11));
         cards.add(new Card(id++, "Smaller Banks", "Bank will now have lower cost", true, 11));
 
         System.out.println(id + "unlocked cards");
@@ -104,10 +104,12 @@ public class UpgradesItemsCard {
         //CANNON
         cards.add(new Card(id++, "Bombs Everywhere", "Bombs will now explode in neighboring squares", false, 1));
         cards.add(new Card(id++, "Slow Bombs", "Bombs will now Slow enemy", false, 1));
-        cards.add(new Card(id++, "Molotov cocktail", "Bombs will now set enemies on fire", false, 1));
+        cards.add(new Card(id++, "Molotov Cocktail", "Bombs will now set enemies on fire", false, 1));
 
         //FROST_MAGE
         cards.add(new Card(id++, "Frost Nova", "Frost Mage will now stun enemies in low range", false, 2));
+        cards.add(new Card(id++, "Brain Freeze", "Frost Mage will now take control of one random close enemy", false, 2));
+
 
         //MINES_FACTORY
         cards.add(new Card(id++, "Bomb Mines", "Mines will now explode", false, 3));
@@ -127,7 +129,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Pricing Cross", "CrossBow will now Price first enemy", false, 6));
 
         //MOUSE_FOLLOWS_TOWER
-       // cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 7));
+        cards.add(new Card(id++, "Flame Archer", "Archer will now set enemies on fire", false, 7));
 
 
         //SNIPER
@@ -137,7 +139,7 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Focus Laser", "Laser eye will now increase damage with time it shoot the target", false, 9));
 
         //SCARECROW
-        cards.add(new Card(id++, "Crow commando", "SCARECROW will now additionally send a craw that attack enemies", false, 10));
+        cards.add(new Card(id++, "Crow Commando", "SCARECROW will now additionally send a craw that attack enemies", false, 10));
 
         //BANK
 
