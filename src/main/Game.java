@@ -218,14 +218,14 @@ public class Game extends JFrame implements Runnable {
                 lastUpdate = now;
                 updates++;
             }
-            if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
+
                 if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 //                    System.out.println("FPS: " + frames + "| UPS:" + updates);
                     fps = frames;
                     frames = 0;
                     updates = 0;
                     lastTimeCheck = System.currentTimeMillis();
-                }
+
             }
         }
     }

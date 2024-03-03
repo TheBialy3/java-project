@@ -117,7 +117,6 @@ public class Editing extends GameScene implements SceneMethods {
             int tileX = x / 64;
             int tileY = y / 64;
             if (selectedTile.getId() >= 0) {
-
                 if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
                     return;
                 }

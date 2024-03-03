@@ -37,11 +37,11 @@ public class GameOver extends GameScene implements SceneMethods {
 
     protected void updateTick() {
         tick++;
-        if(tick>=ANIMATION_SPEED){
-            tick=0;
+        if (tick >= ANIMATION_SPEED) {
+            tick = 0;
             animationIndex++;
-            if(animationIndex>=64){
-                animationIndex=0;
+            if (animationIndex >= 64) {
+                animationIndex = 0;
             }
         }
     }
@@ -71,7 +71,6 @@ public class GameOver extends GameScene implements SceneMethods {
                 }
             }
         }
-
 
 
         drawGameOver(g);
@@ -113,7 +112,7 @@ public class GameOver extends GameScene implements SceneMethods {
         if (bMenu.getBounds().contains(x, y)) {
             SetGameState(MENU);
         } else if (bReplay.getBounds().contains(x, y)) {
-             replayGame();
+            replayGame();
         }
     }
 
@@ -127,10 +126,11 @@ public class GameOver extends GameScene implements SceneMethods {
         bMenu.setMouseOver(false);
 
         if (bMenu.getBounds().contains(x, y)) {
-            bMenu.setMouseOver(true);}
+            bMenu.setMouseOver(true);
+        }
 
         bReplay.setMouseOver(false);
-         if (bReplay.getBounds().contains(x, y)) {
+        if (bReplay.getBounds().contains(x, y)) {
             bReplay.setMouseOver(true);
         }
     }
@@ -149,13 +149,13 @@ public class GameOver extends GameScene implements SceneMethods {
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePressed(true);
-        }else if (bReplay.getBounds().contains(x, y)) {
+        } else if (bReplay.getBounds().contains(x, y)) {
             bReplay.setMousePressed(true);
         }
     }
 
     @Override
     public void mouseDragged(int x, int y) {
-        mouseClicked(x,y);
+        mouseClicked(x, y);
     }
 }
