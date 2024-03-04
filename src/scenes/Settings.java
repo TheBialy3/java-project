@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static main.GameStates.*;
 
-public class Settings extends GameScene implements SceneMethods {
+public class  Settings extends GameScene implements SceneMethods {
 
 
     private int[][] lvl;
