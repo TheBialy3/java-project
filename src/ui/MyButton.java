@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class MyButton {
 
-    public int x, y, width, height, id;
+    public int x, y, width, height, id, percent;
     private String text;
     private boolean mouseOver, mousePressed, mouseReleased;
     private Rectangle bounds;
@@ -22,6 +22,8 @@ public class MyButton {
         this.id = -1;
         initBounds();
     }
+
+
 
 
     //TileButtons
