@@ -4,6 +4,7 @@ import helpz.LevelBuild;
 import main.Game;
 import managers.TileManager;
 import ui.MyButton;
+import ui.MySlider;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,7 +19,8 @@ public class  Settings extends GameScene implements SceneMethods {
     private int[][] lvl;
 
 
-    private MyButton bMusic, bSound, bMenu;
+    private MyButton  bMenu;
+    private MySlider bMusic, bSound;
 
     public Settings(Game game) {
         super(game);
@@ -39,8 +41,8 @@ public class  Settings extends GameScene implements SceneMethods {
         int y = 300;
         int yOffset = 200;
 
-        bMusic = new MyButton("Music", x, y, w, h);
-        bSound = new MyButton("Sound", x, y + yOffset, w, h);
+        bMusic = new MySlider("Music", x, y, w, h,50);
+        bSound = new MySlider("Sound", x, y + yOffset, w, h,50);
         bMenu = new MyButton("Menu", x, y + yOffset + yOffset, w, h);
     }
 

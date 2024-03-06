@@ -9,6 +9,8 @@ public class MySlider {
     private String text;
     private Rectangle bounds;
 
+    private boolean mouseOver, mousePressed, mouseReleased;
+
     private BufferedImage img;
 
     //Slider
@@ -23,9 +25,50 @@ public class MySlider {
         initBounds();
     }
 
+    public void draw(Graphics g) {
+
+        //Body
+        drawLine(g);
+        //Border
+        drawSlider(g);
+        //Text
+        drawText(g);
+
+    }
+
+    private void drawLine(Graphics g) {
+    }
+
+    private void drawSlider(Graphics g) {
+        
+    }
+
+    private void drawText(Graphics g) {
+        Font stringFont = new Font("SansSerif", Font.PLAIN, 24);
+        g.setFont(stringFont);
+        int w = g.getFontMetrics().stringWidth(text);
+        int h = g.getFontMetrics().getHeight();
+        g.drawString(text, x - (w / 2) + width / 2, y + (h / 4) + height / (2));
+    }
+    
     private void initBounds() {
         this.bounds = new Rectangle(x, y, width, height);
     }
 
+    public Rectangle getBounds() {
+        return bounds;
+    }
 
+    public void setMouseOver(boolean mouseOver) {
+        this.mouseOver = mouseOver;
+    }
+
+    public void resetBooleans() {
+        this.mousePressed = false;
+        this.mouseOver = false;
+    }
+
+    public void setMousePressed(boolean mousePressed) {
+        this.mousePressed = mousePressed;
+    }
 }
