@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class MySlider {
 
-    public int x, y, width, height, id, percent;
+    public int x, y, width, height, percent;
     private String text;
     private Rectangle bounds;
 
@@ -17,11 +17,10 @@ public class MySlider {
     public MySlider(String text, int x, int y, int width, int height,int percent) {
         this.text = text;
         this.x = x;
-        this.percent=percent;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.id = -1;
+        this.percent=percent;
         initBounds();
     }
 
@@ -37,10 +36,17 @@ public class MySlider {
     }
 
     private void drawLine(Graphics g) {
+        g.setColor(new Color(49, 49, 49));
+        g.fillRect(x,y+(height/2)-10,width,20);
+        g.setColor(new Color(33, 33, 33));
+        g.drawRect(x,y+(height/2)-10,width,20);
     }
 
     private void drawSlider(Graphics g) {
-        
+        g.setColor(new Color(49, 49, 49));
+        g.fillRect(x+(width/100*percent),y,30,height);
+        g.setColor(new Color(33, 33, 33));
+        g.drawRect(x+(width/100*percent),y,30,height);
     }
 
     private void drawText(Graphics g) {
@@ -48,7 +54,7 @@ public class MySlider {
         g.setFont(stringFont);
         int w = g.getFontMetrics().stringWidth(text);
         int h = g.getFontMetrics().getHeight();
-        g.drawString(text, x - (w / 2) + width / 2, y + (h / 4) + height / (2));
+        g.drawString(text, x - (w / 2) + width / 2, y );
     }
     
     private void initBounds() {
