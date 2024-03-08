@@ -45,6 +45,7 @@ public class GameScreen extends JPanel {
         super.paintComponent(g);
         game.getRender().render(g);
         game.drawsFps(g);
+        game.drawBirds(g);
     }
 
 }
