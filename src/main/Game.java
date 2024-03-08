@@ -2,11 +2,13 @@ package main;
 
 import managers.TileManager;
 import objects.Card;
+import objects.DecoratedBirds;
 import scenes.*;
 import scenes.Menu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static helpz.LoadSave.*;
@@ -15,14 +17,17 @@ import static helpz.LoadSave.*;
 public class Game extends JFrame implements Runnable {
 
     public static int xp = 0;
+
     private ArrayList<Integer> save;
     ArrayList<Boolean> cardSave = new ArrayList<>();
+
     private GameScreen gameScreen;
     private Thread threadGame;
 
     private final double FPS_SET = 60;
     private final double UPS_SET = 60;
     public int fps = 0;
+    public int x = -555, y, indexOfAnimation;
     public ImageIcon img;
 
     //Classes
@@ -35,6 +40,7 @@ public class Game extends JFrame implements Runnable {
     private Bestiary bestiary;
     private TileManager tileManager;
     private GameOver gameOver;
+    private DecoratedBirds decoratedBirds;
     private ArrayList<Card> cards = new ArrayList<>();
     private ArrayList<Card> winCards = new ArrayList<>();
 
@@ -106,11 +112,11 @@ public class Game extends JFrame implements Runnable {
         }
         drawInConsol(winCards);
 
-        if (areTheseCardsActive(32, 17, 14)) {
-            unlock(43);
-       // }else if (areTheseCardsActive(32, 17, 14)) {
-            //            unlock(43);
-        }
+//        if (areTheseCardsActive(32, 17, 14)) {
+//            unlock(43);
+//        }else if (areTheseCardsActive(32, 17, 14)) {
+//                        unlock(43);
+//        }
     }
 
     private void drawInConsol(ArrayList<Card> winCards) {
@@ -133,7 +139,10 @@ public class Game extends JFrame implements Runnable {
         upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
         bestiary = new Bestiary(this);
+        decoratedBirds = new DecoratedBirds(0);
+
     }
+
 
     //for lvl chose, not added yet
     public void initClasses(int lvl) {
@@ -219,12 +228,12 @@ public class Game extends JFrame implements Runnable {
                 updates++;
             }
 
-                if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
+            if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
 //                    System.out.println("FPS: " + frames + "| UPS:" + updates);
-                    fps = frames;
-                    frames = 0;
-                    updates = 0;
-                    lastTimeCheck = System.currentTimeMillis();
+                fps = frames;
+                frames = 0;
+                updates = 0;
+                lastTimeCheck = System.currentTimeMillis();
 
             }
         }
@@ -286,5 +295,19 @@ public class Game extends JFrame implements Runnable {
     private boolean areTheseCardsActive(int id1, int id2, int id3, int id4) {
         return cards.get(id1).isActive() && cards.get(id2).isActive() && cards.get(id3).isActive() && cards.get(id4).isActive();
 
+    }
+
+    public void drawBirds(Graphics g) {
+        indexOfAnimation++;
+        decoratedBirds.xUp();
+        if (indexOfAnimation / 6 == 1) {
+            decoratedBirds.animationIndexUp();
+            indexOfAnimation = 0;
+        }
+        if (decoratedBirds.getX() > 15555) {
+            decoratedBirds.setX(-555);
+            decoratedBirds.keyUp();
+        }
+        decoratedBirds.draw(g);
     }
 }
