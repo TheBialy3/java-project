@@ -32,6 +32,14 @@ public abstract class Enemy {
     public float slowPower = 1f, distancePast = 0;
     protected boolean power=false;
     protected boolean targetable = true;
+    EnemyStatus enemyStatus= EnemyStatus.WALK;
+
+    protected enum EnemyStatus{
+        WALK,
+        STAY,
+        STUN,
+        FIGHT
+    }
 
 
     public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager,TowerManager towerManager ) {
@@ -52,8 +60,11 @@ public abstract class Enemy {
         setResists(enemyType);
     }
 
-    public void move(float speed, int dir) {
+
+
+    public void move(int dir) {
         lastDir = dir;
+        float speed=getSpeed(enemyType);
         if (enemyManager.isCard8()) {
             speed = speed + 0.1f;
         }

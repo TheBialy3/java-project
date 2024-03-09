@@ -100,7 +100,7 @@ public class Playing extends GameScene implements SceneMethods {
         PLAY_START_OF_GAME,
         PLAY_WIN,
         PLAY_CARD_SELECT,
-        PLAY_BESTIARY;
+        PLAY_BESTIARY
     }
 
 
