@@ -139,7 +139,7 @@ public class Game extends JFrame implements Runnable {
         upgrade = new Upgrade(this);
         gameOver = new GameOver(this);
         bestiary = new Bestiary(this);
-        decoratedBirds = new DecoratedBirds(0);
+        decoratedBirds = new DecoratedBirds();
 
     }
 
