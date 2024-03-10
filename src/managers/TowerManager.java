@@ -26,7 +26,7 @@ public class TowerManager {
 
     private ArrayList<Tower> towers = new ArrayList<>();
     private ArrayList<Integer> arrForMineTower = new ArrayList<>();
-    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 4, BuffsImgNumber = 1, TowersSideImgNumber = 180, animationIndex;
+    private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 5, BuffsImgNumber = 1, TowersSideImgNumber = 180, animationIndex;
     private Random random = new Random();
     private PathPoint e;
     private int[][] road;

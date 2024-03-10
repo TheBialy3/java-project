@@ -30,11 +30,11 @@ public abstract class Enemy {
     protected int lastDir;
     protected boolean alive = false, poisoned = false;
     public float slowPower = 1f, distancePast = 0;
-    protected boolean power=false;
+    protected boolean power = false;
     protected boolean targetable = true;
-    EnemyStatus enemyStatus= EnemyStatus.WALK;
+    EnemyStatus enemyStatus = EnemyStatus.WALK;
 
-    protected enum EnemyStatus{
+    protected enum EnemyStatus {
         WALK,
         STAY,
         STUN,
@@ -42,14 +42,14 @@ public abstract class Enemy {
     }
 
 
-    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager,TowerManager towerManager ) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
         this.enemyManager = enemyManager;
         this.waveManager = waveManager;
-        this.towerManager=towerManager;
+        this.towerManager = towerManager;
         if (enemyType != CAMEL_JUNIOR) {
             alive = true;
         }
@@ -61,10 +61,24 @@ public abstract class Enemy {
     }
 
 
+    public void update(int dir) {
+        switch (enemyStatus) {
+            case STAY:
+                break;
+            case WALK:
+                move(dir);
+                break;
+            case STUN:
+                break;
+            case FIGHT:
+                break;
+
+        }
+    }
 
     public void move(int dir) {
         lastDir = dir;
-        float speed=getSpeed(enemyType);
+        float speed = getSpeed(enemyType);
         if (enemyManager.isCard8()) {
             speed = speed + 0.1f;
         }
@@ -94,29 +108,30 @@ public abstract class Enemy {
         if (poisoned) {
             poisonDamage();
         }
-        if(isRegainHP(enemyType)){
+        if (isRegainHP(enemyType)) {
             regenHp();
         }
     }
 
     private void regenHp() {
         if (this instanceof Orc) {
-            ((Orc) this).heal(2);}
-        else if (this instanceof Tentacle) {
-            ((Tentacle) this).heal(3);}
-        else if (this instanceof Slime) {
-            ((Slime) this).heal(2);}
-        else if (this instanceof Bird) {
-            ((Bird) this).heal(1);}
+            ((Orc) this).heal(2);
+        } else if (this instanceof Tentacle) {
+            ((Tentacle) this).heal(3);
+        } else if (this instanceof Slime) {
+            ((Slime) this).heal(2);
+        } else if (this instanceof Bird) {
+            ((Bird) this).heal(1);
+        }
 
     }
 
     public void healThis(int heal) {
-       if(health+heal>maxHealth){
-           health=maxHealth;
-       }else {
-           health+=heal;
-       }
+        if (health + heal > maxHealth) {
+            health = maxHealth;
+        } else {
+            health += heal;
+        }
     }
 
     private void setBounds(int enemyType) {
@@ -170,7 +185,6 @@ public abstract class Enemy {
     }
 
 
-
     private void updateHitbox() {
         bounds.x = (int) x;
         bounds.y = (int) y;
@@ -220,7 +234,7 @@ public abstract class Enemy {
             } else if (enemyType == CAMEL) {
                 enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
             } else if (enemyType == BANSHEE) {
-                towerManager.stunCloseTower(x,y);
+                towerManager.stunCloseTower(x, y);
             }
             enemyManager.rewardPlayer(enemyType);
             Game.addXp();
@@ -248,7 +262,7 @@ public abstract class Enemy {
 
 
     private void startCountdown(int countdownTime) {
-        countdown =countdownTime;
+        countdown = countdownTime;
     }
 
     private int calculateDMG(int dmg, int dmgType) {

@@ -190,7 +190,7 @@ public class EnemyManager {
         PathPoint currTile = getEnemyTile(e);
         int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
 
-        e.move( dir);
+        e.update(dir);
 
         PathPoint newTile = getEnemyTile(e);
 
