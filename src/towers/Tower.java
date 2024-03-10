@@ -458,8 +458,8 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(1);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(1);
-//            }else if (this instanceof BoomTower) {
-//                ((BoomTower) this).upgrade(1);
+            }else if (this instanceof Scarecrow) {
+                ((Scarecrow) this).upgrade(1);
             }
 
         }
@@ -489,8 +489,8 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(2);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(2);
-//            }else if (this instanceof BoomTower) {
-//                ((BoomTower) this).upgrade(1);
+            }else if (this instanceof Scarecrow) {
+                ((Scarecrow) this).upgrade(2);
             }
         }
         Upgrade2 = true;
@@ -519,8 +519,8 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(3);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(3);
-//            }else if (this instanceof BoomTower) {
-//                ((BoomTower) this).upgrade(1);
+            }else if (this instanceof Scarecrow) {
+                ((Scarecrow) this).upgrade(3);
             }
         }
         Upgrade3 = true;

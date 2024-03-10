@@ -795,7 +795,7 @@ public class Constants {
             }
         }
 
-        //0=range, 1=dmg, 2=attackSpeed, 3=duration,
+        //0=range, 1=dmg, 2=attackSpeed, 3=duration,4= Invest
         public static int getUpgradeTowerImage(int towerType, int upgrade) {
             switch (towerType) {
                 case ARCHER:
@@ -906,6 +906,16 @@ public class Constants {
                             return 0;
                         case 3:
                             return 0;
+                    }
+                    return 1;
+                case BANK:
+                    switch (upgrade) {
+                        case 1:
+                            return 4;
+                        case 2:
+                            return 4;
+                        case 3:
+                            return 4;
                     }
                     return 1;
                 default:
