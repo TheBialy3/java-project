@@ -38,7 +38,8 @@ public abstract class Enemy {
         WALK,
         STAY,
         STUN,
-        FIGHT
+        FIGHT,
+        DEAD
     }
 
 
@@ -64,13 +65,16 @@ public abstract class Enemy {
     public void update(int dir) {
         switch (enemyStatus) {
             case STAY:
+
                 break;
             case WALK:
                 move(dir);
                 break;
             case STUN:
+
                 break;
             case FIGHT:
+
                 break;
 
         }
