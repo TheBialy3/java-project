@@ -440,6 +440,18 @@ public class Constants {
 
         }
     }
+    public static class AllyType{
+        public static final int KNIGHT=0;
+        public static final int HUNTER=1;
+        public static final int PALADIN=2;
+        public static final int DRUID=3;
+        public static final int MAGE=4;
+        public static final int PRIEST=5;
+        public static final int ZOMBIE_SOLDIER=6;
+        public static final int COMMANDO=7;
+
+
+    }
 
     public static class TowerType {
         public static final int ARCHER = 0;
