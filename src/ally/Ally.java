@@ -1,6 +1,13 @@
 package ally;
 
+import enemies.Enemy;
+
 public abstract class Ally {
+    int x, y, allyType, lvl;
+    int hp, attack;
+    float speed;
+    Enemy enemyToAttack;
+
     protected enum AllyStatus {
         WALK,
         STAY,
@@ -8,12 +15,31 @@ public abstract class Ally {
         FIGHT,
         DEAD
     }
-    AllyStatus allyStatus=AllyStatus.WALK;
 
-    public Ally() {
+    AllyStatus allyStatus = AllyStatus.WALK;
+
+    public Ally(int x, int y, int allyType, int lvl) {
+        this.x = x;
+        this.y = y;
+        this.allyType = allyType;
+        this.lvl = lvl;
+        getStartingHP();
+        getStartingAttack();
+        getStartingSpeed();
     }
 
-    public void update(int dir) {
+    private void getStartingHP() {
+       // hp=
+    }
+
+    private void getStartingAttack() {
+    }
+
+    private void getStartingSpeed() {
+    }
+
+
+    public void update() {
         switch (allyStatus) {
             case STAY:
 
@@ -34,7 +60,7 @@ public abstract class Ally {
         }
     }
 
-    public void  move(){
+    public void move() {
 
     }
 }
