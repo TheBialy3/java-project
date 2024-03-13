@@ -24,7 +24,7 @@ public abstract class Enemy {
     protected int dmg, duration = 0;
     protected int slowTickLimit = 10, slowTick = slowTickLimit;
     protected int countdown = 0;
-    protected int maxHealth, health, mr, armor;
+    protected int maxHealth, health, mr, armor,attack;
     protected int ID;
     protected int enemyType, damageType;
     protected int lastDir;
@@ -57,9 +57,12 @@ public abstract class Enemy {
         setBounds(enemyType);
         lastDir = -1;
         setStartHealth();
+        setStartingAttack();
         setPower();
         setResists(enemyType);
     }
+
+
 
 
     public void update(int dir) {
@@ -128,6 +131,9 @@ public abstract class Enemy {
             ((Bird) this).heal(1);
         }
 
+    }
+    private void setStartingAttack() {
+        attack=getAttack(enemyType);
     }
 
     public void healThis(int heal) {
