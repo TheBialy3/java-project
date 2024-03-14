@@ -290,31 +290,68 @@ public class Constants {
         public static int getAttack(int enemyType) {
             switch (enemyType) {
                 case ORC:
-                    return 40;
+                    return 30;
                 case ORK_ZOMBIE:
-                    return 20;
+                    return 40;
                 case TENTACLE:
-                    return 0;
+                    return 30;
                 case SLIME:
-                    return 80;
+                    return 20;
                 case CAMEL:
-                    return 60;
+                    return 20;
                 case CAMEL_JUNIOR:
                     return 20;
                 case BIRD:
                     return 20;
                 case GHOST:
-                    return 100;
+                    return 50;
                 case ROCK:
-                    return 40;
+                    return 50;
                 case CREEPY_CAT:
-                    return 20;
+                    return 30;
                 case BIRD_SKELETON:
-                    return 0;
+                    return 30;
                 case BANSHEE:
-                    return 60;
+                    return 30;
             }
             return 0;
+        }
+
+        public static final int TRUE = 0;
+        public static final int PHYSICAL = 1;
+        public static final int MAGIC = 2;
+        public static final int NONE = 3;
+
+
+        public static int getDmgType(int towerType) {
+            switch (towerType) {
+                case ORC:
+                    return PHYSICAL;
+                case ORK_ZOMBIE:
+                    return PHYSICAL;
+                case TENTACLE:
+                    return MAGIC;
+                case SLIME:
+                    return PHYSICAL;
+                case POISON_TOWER:
+                    return MAGIC;
+                case BOOM_VOLCANO:
+                    return PHYSICAL;
+                case CROSSBOW:
+                    return PHYSICAL;
+                case MOUSE_FOLLOWS_TOWER:
+                    return PHYSICAL;
+                case SNIPER:
+                    return TRUE;
+                case LASER_TOWER:
+                    return TRUE;
+                case SCARECROW:
+                    return MAGIC;
+                case BANK:
+                    return 0;
+                default:
+                    return 0;
+            }
         }
 
         public static int getStartHealth(int enemyType) {
@@ -514,150 +551,186 @@ public class Constants {
         }
         public static float getSpeed(int enemyType) {
             switch (enemyType) {
-                case ORC:
+                case KNIGHT:
                     return 0.35f;
-                case ORK_ZOMBIE:
+                case HUNTER:
                     return 0.3f;
-                case TENTACLE:
+                case PALADIN:
                     return 0.4f;
-                case SLIME:
+                case DRUID:
                     return 0.7f;
-                case CAMEL:
+                case MAGE:
                     return 0.25f;
-                case CAMEL_JUNIOR:
+                case PRIEST:
                     return 1f;
-                case BIRD:
+                case ZOMBIE_SOLDIER:
                     return 0.75f;
-                case GHOST:
+                case COMMANDO:
                     return 0.4f;
-                case ROCK:
-                    return 0.25f;
-                case CREEPY_CAT:
-                    return 0.65f;
-                case BIRD_SKELETON:
-                    return 0.8f;
-                case BANSHEE:
-                    return 0.7f;
+//                case ROCK:
+//                    return 0.25f;
+//                case CREEPY_CAT:
+//                    return 0.65f;
+//                case BIRD_SKELETON:
+//                    return 0.8f;
+//                case BANSHEE:
+//                    return 0.7f;
             }
             return 0;
         }
         public static int getStartHealth(int enemyType) {
             switch (enemyType) {
-                case ORC:
-                    return 300;
-                case ORK_ZOMBIE:
-                    return 200;
-                case TENTACLE:
-                    return 150;
-                case SLIME:
-                    return 70;
-                case CAMEL:
+                case KNIGHT:
+                    return 1000;
+                case HUNTER:
                     return 500;
-                case CAMEL_JUNIOR:
-                    return 50;
-                case BIRD:
-                    return 100;
-                case GHOST:
-                    return 250;
-                case ROCK:
-                    return 450;
-                case CREEPY_CAT:
-                    return 300;
-                case BIRD_SKELETON:
-                    return 200;
-                case BANSHEE:
-                    return 350;
+                case PALADIN:
+                    return 800;
+                case DRUID:
+                    return 900;
+                case MAGE:
+                    return 400;
+                case PRIEST:
+                    return 600;
+                case ZOMBIE_SOLDIER:
+                    return 700;
+                case COMMANDO:
+                    return 750;
+//                case ROCK:
+//                    return 450;
+//                case CREEPY_CAT:
+//                    return 300;
+//                case BIRD_SKELETON:
+//                    return 200;
+//                case BANSHEE:
+//                    return 350;
             }
             return 0;
         }
 
         public static int getMR(int enemyType) {
             switch (enemyType) {
-                case ORC:
-                    return 0;
-                case ORK_ZOMBIE:
+                case KNIGHT:
                     return 20;
-                case TENTACLE:
-                    return 80;
-                case SLIME:
+                case HUNTER:
                     return 20;
-                case CAMEL:
-                    return 0;
-                case CAMEL_JUNIOR:
+                case PALADIN:
                     return 60;
-                case BIRD:
-                    return 0;
-                case GHOST:
-                    return 40;
-                case ROCK:
-                    return 100;
-                case CREEPY_CAT:
-                    return 40;
-                case BIRD_SKELETON:
+                case DRUID:
+                    return 80;
+                case MAGE:
+                    return 80;
+                case PRIEST:
+                    return 60;
+                case ZOMBIE_SOLDIER:
                     return 20;
-                case BANSHEE:
-                    return 20;
+                case COMMANDO:
+                    return 40;
+//                case ROCK:
+//                    return 100;
+//                case CREEPY_CAT:
+//                    return 40;
+//                case BIRD_SKELETON:
+//                    return 20;
+//                case BANSHEE:
+//                    return 20;
             }
             return 0;
         }
 
         public static int getArmor(int enemyType) {
             switch (enemyType) {
-                case ORC:
-                    return 40;
-                case ORK_ZOMBIE:
-                    return 20;
-                case TENTACLE:
-                    return 0;
-                case SLIME:
+                case KNIGHT:
                     return 80;
-                case CAMEL:
+                case HUNTER:
+                    return 20;
+                case PALADIN:
                     return 60;
-                case CAMEL_JUNIOR:
-                    return 20;
-                case BIRD:
-                    return 20;
-                case GHOST:
-                    return 100;
-                case ROCK:
+                case DRUID:
                     return 40;
-                case CREEPY_CAT:
+                case MAGE:
                     return 20;
-                case BIRD_SKELETON:
-                    return 0;
-                case BANSHEE:
-                    return 60;
+                case PRIEST:
+                    return 40;
+                case ZOMBIE_SOLDIER:
+                    return 20;
+                case COMMANDO:
+                    return 80;
+//                case ROCK:
+//                    return 40;
+//                case CREEPY_CAT:
+//                    return 20;
+//                case BIRD_SKELETON:
+//                    return 0;
+//                case BANSHEE:
+//                    return 60;
             }
             return 0;
         }
         public static int getAttack(int enemyType) {
             switch (enemyType) {
-                case ORC:
-                    return 40;
-                case ORK_ZOMBIE:
-                    return 20;
-                case TENTACLE:
-                    return 0;
-                case SLIME:
-                    return 80;
-                case CAMEL:
+                case KNIGHT:
                     return 60;
-                case CAMEL_JUNIOR:
-                    return 20;
-                case BIRD:
-                    return 20;
-                case GHOST:
+                case HUNTER:
                     return 100;
-                case ROCK:
-                    return 40;
-                case CREEPY_CAT:
-                    return 20;
-                case BIRD_SKELETON:
-                    return 0;
-                case BANSHEE:
+                case PALADIN:
+                    return 70;
+                case DRUID:
+                    return 80;
+                case MAGE:
+                    return 100;
+                case PRIEST:
+                    return 50;
+                case ZOMBIE_SOLDIER:
                     return 60;
+                case COMMANDO:
+                    return 100;
+//                case ROCK:
+//                    return 40;
+//                case CREEPY_CAT:
+//                    return 20;
+//                case BIRD_SKELETON:
+//                    return 0;
+//                case BANSHEE:
+//                    return 60;
             }
             return 0;
+        }
+        public static final int TRUE = 0;
+        public static final int PHYSICAL = 1;
+        public static final int MAGIC = 2;
+        public static final int NONE = 3;
+
+
+        public static int getDmgType(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return PHYSICAL;
+                case CANNON:
+                    return PHYSICAL;
+                case FROST_MAGE:
+                    return MAGIC;
+                case MINES_FACTORY:
+                    return PHYSICAL;
+                case POISON_TOWER:
+                    return MAGIC;
+                case BOOM_VOLCANO:
+                    return PHYSICAL;
+                case CROSSBOW:
+                    return PHYSICAL;
+                case MOUSE_FOLLOWS_TOWER:
+                    return PHYSICAL;
+                case SNIPER:
+                    return TRUE;
+                case LASER_TOWER:
+                    return TRUE;
+                case SCARECROW:
+                    return MAGIC;
+                case BANK:
+                    return 0;
+                default:
+                    return 0;
+            }
         }
     }
 
