@@ -208,11 +208,11 @@ public class TowerManager {
                 if (e.isAlive()) {
                     if (isEnemyInRange(t, e)) {
                         if (t.getTowerType() == SCARECROW) {
-                            if (getTargetMoveType(t.getTowerType())==getMoveType(e.getEnemyType())) {
-                                e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
+                            if (getTargetMoveTypeTower(t.getTowerType())==getMoveType(e.getEnemyType())) {
+                                e.hurt(t.getDmg() * percent / 100, getDmgTypeTower(t.getTowerType()));
                             }
                         } else {
-                            e.hurt(t.getDmg() * percent / 100, getDmgType(t.getTowerType()));
+                            e.hurt(t.getDmg() * percent / 100, getDmgTypeTower(t.getTowerType()));
                         }
                     }
                 }
@@ -248,7 +248,7 @@ public class TowerManager {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
                 if (t.isCoolDownOver() && e.isAlive() && e.isTargetable()) {
                     if (t.getTowerType() == SNIPER) {
-                        e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                        e.hurt(t.getDmg(), getDmgTypeTower(t.getTowerType()));
                         if (Card39) {
                             attackEnemyIfClose(t, e);
                         }
@@ -256,7 +256,7 @@ public class TowerManager {
                     } else if (isTowerTargetingEnemy(t, e)) {
                         if (isEnemyInRange(t, e)) {
                             if (t.getTowerType() == LASER_TOWER) {
-                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                e.hurt(t.getDmg(), getDmgTypeTower(t.getTowerType()));
                                 if (Card40) {
                                     attackEnemyIfClose(t, e);
                                 }
@@ -264,7 +264,7 @@ public class TowerManager {
                             } else {
                                 playing.shootEnemy(t, e);
                             }
-                            if (Constants.TowerType.isSlow(t.getTowerType())) {
+                            if (Constants.TowerType.isSlowTower(t.getTowerType())) {
                                 float slow = t.getSlow();
                                 e.slow(slow);
                             }
@@ -285,14 +285,14 @@ public class TowerManager {
                 if (e.isTargetable()) {
                     if (t.getTowerType() == SNIPER) {
                         if (gotHurt != e) {
-                            e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                            e.hurt(t.getDmg(), getDmgTypeTower(t.getTowerType()));
                             return;
                         }
                     }
                     if (isEnemyInRange(t, e)) {
                         if (t.getTowerType() == LASER_TOWER) {
                             if (gotHurt != e) {
-                                e.hurt(t.getDmg(), getDmgType(t.getTowerType()));
+                                e.hurt(t.getDmg(), getDmgTypeTower(t.getTowerType()));
                                 playing.beamEnemy(t, e);
                                 return;
                             }
@@ -309,10 +309,10 @@ public class TowerManager {
         if (Card12) {
             return true;
         }
-        if (getTargetMoveType(t.getTowerType()) == BOTH) {
+        if (getTargetMoveTypeTower(t.getTowerType()) == BOTH) {
             return true;
         }
-        if (getTargetMoveType(t.getTowerType()) == getMoveType(e.getEnemyType())) {
+        if (getTargetMoveTypeTower(t.getTowerType()) == getMoveType(e.getEnemyType())) {
             return true;
         }
         return false;
@@ -817,7 +817,7 @@ public class TowerManager {
     public void durationUp(int percent) {
         int duration = 0;
         for (Tower t : towers) {
-            if (Constants.TowerType.isDOT(t.getTowerType())) {
+            if (Constants.TowerType.isDOTTower(t.getTowerType())) {
                 duration = t.getDuration();
                 if (duration < 10) {
                     t.setDmg(duration + percent / 10);
@@ -832,7 +832,7 @@ public class TowerManager {
     public void durationUp(int percent, int towerType) {
         int duration = 0;
         for (Tower t : towers) {
-            if (Constants.TowerType.isDOT(t.getTowerType())) {
+            if (Constants.TowerType.isDOTTower(t.getTowerType())) {
                 if (t.getTowerType() == towerType) {
                     duration = t.getDuration();
                     if (duration < 10) {

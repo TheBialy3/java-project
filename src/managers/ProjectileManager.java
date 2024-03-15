@@ -115,14 +115,14 @@ public class ProjectileManager {
             projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, t.getDuration(), this));
             return;
         }
-        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, getDmgType(t.getTowerType()), this));
+        projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, xSpeed, ySpeed, t.getDmg(), rotate, proj_id++, type, getDmgTypeTower(t.getTowerType()), this));
     }
 
     public void newMine(Tower t, PathPoint e) {
         int type = getProjType(t);
         ranx = random.nextInt(44);
         rany = random.nextInt(44);
-        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type, getDmgType(t.getTowerType()), this));
+        projectiles.add(new Projectile(e.getxCord() + 10 + ranx, e.getyCord() + 10 + rany, 0, 0, t.getDmg(), 0, proj_id++, type, getDmgTypeTower(t.getTowerType()), this));
     }
 
     public void update() {
@@ -307,7 +307,7 @@ public class ProjectileManager {
             } else {
                 neg = 1;
             }
-            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgType(t.getTowerType()), this));
+            projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * ((1 + i) % 2) * neg, Speed * (i % 2) * neg, t.getDmg(), 90 * i, proj_id++, type, getDmgTypeTower(t.getTowerType()), this));
 
         }
         if (Card33) {
@@ -327,7 +327,7 @@ public class ProjectileManager {
                     negX = 1;
                     negY = -1;
                 }
-                projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * negY, Speed * negX, t.getDmg(), 90 * i + 45, proj_id++, type, getDmgType(t.getTowerType()), this));
+                projectiles.add(new Projectile(t.getX() + halfTilePixelNumber, t.getY() + halfTilePixelNumber, Speed * negY, Speed * negX, t.getDmg(), 90 * i + 45, proj_id++, type, getDmgTypeTower(t.getTowerType()), this));
 
             }
         }

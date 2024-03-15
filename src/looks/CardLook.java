@@ -23,7 +23,7 @@ public class CardLook {
         } else if (towerType==-2) {
             this.towerType = "Enemies";
         } else {
-            this.towerType = Constants.TowerType.getName(towerType);
+            this.towerType = Constants.TowerType.getNameTower(towerType);
         }
 
     }
