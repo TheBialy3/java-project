@@ -11,6 +11,8 @@ import java.awt.*;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
+import static helpz.Constants.EnemyType.MAGIC;
+import static helpz.Constants.EnemyType.PHYSICAL;
 import static helpz.Constants.TowerType.*;
 
 public abstract class Enemy {

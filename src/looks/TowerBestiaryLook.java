@@ -32,19 +32,19 @@ public class TowerBestiaryLook {
     }
 
     private void getNumbers() {
-        targetMoveType = Constants.TowerType.getTargetMoveType(towerType);
-        range = Constants.TowerType.getDefaultRange(towerType);
-        aoe = Constants.TowerType.isAoe(towerType);
-        slow = Constants.TowerType.isSlow(towerType);
-        dot = Constants.TowerType.isDOT(towerType);
-        damageType = Constants.TowerType.getDmgType(towerType);
+        targetMoveType = Constants.TowerType.getTargetMoveTypeTower(towerType);
+        range = Constants.TowerType.getDefaultRangeTower(towerType);
+        aoe = Constants.TowerType.isAoeTower(towerType);
+        slow = Constants.TowerType.isSlowTower(towerType);
+        dot = Constants.TowerType.isDOTTower(towerType);
+        damageType = Constants.TowerType.getDmgTypeTower(towerType);
         cost = Constants.TowerType.getCost(towerType);
-        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
+        coolDown = Constants.TowerType.getDefaultCoolDownTower(towerType);
         dmg = Constants.TowerType.getDefaultDmg(towerType);
     }
 
     private void getStrings() {
-        name = Constants.TowerType.getName(towerType);
+        name = Constants.TowerType.getNameTower(towerType);
         isAOE = getAoeString();
         isSlow = getSlowString();
         isDot = getDotString();
@@ -91,7 +91,7 @@ public class TowerBestiaryLook {
     }
 
     public String getSpecialTowerString() {
-            return getSpecialString(towerType);
+            return getSpecialStringTower(towerType);
     }
 
     private String getDamageTypeString() {

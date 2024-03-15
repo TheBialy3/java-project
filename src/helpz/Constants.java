@@ -287,7 +287,7 @@ public class Constants {
             }
         }
 
-        public static int getAttack(int enemyType) {
+        public static int getAttackEnemy(int enemyType) {
             switch (enemyType) {
                 case ORC:
                     return 30;
@@ -316,6 +316,37 @@ public class Constants {
             }
             return 0;
         }
+        public static float getDefaultRangeEnemy(int towerType) {
+            switch (towerType) {
+                case ARCHER:
+                    return 300;
+                case CANNON:
+                    return 250;
+                case FROST_MAGE:
+                    return 100;
+                case MINES_FACTORY:
+                    return 96;
+                case POISON_TOWER:
+                    return 250;
+                case BOOM_VOLCANO:
+                    return 200;
+                case CROSSBOW:
+                    return 2000;
+                case MOUSE_FOLLOWS_TOWER:
+                    return 2000;
+                case SNIPER:
+                    return 2000;
+                case LASER_TOWER:
+                    return 325;
+                case SCARECROW:
+                    return 96;
+                case BANK:
+                    return 0;
+
+                default:
+                    return 0;
+            }
+        }
 
         public static final int TRUE = 0;
         public static final int PHYSICAL = 1;
@@ -323,7 +354,7 @@ public class Constants {
         public static final int NONE = 3;
 
 
-        public static int getDmgType(int towerType) {
+        public static int getDmgTypeEnemy(int towerType) {
             switch (towerType) {
                 case ORC:
                     return PHYSICAL;
@@ -332,23 +363,23 @@ public class Constants {
                 case TENTACLE:
                     return MAGIC;
                 case SLIME:
-                    return PHYSICAL;
-                case POISON_TOWER:
                     return MAGIC;
-                case BOOM_VOLCANO:
-                    return PHYSICAL;
-                case CROSSBOW:
-                    return PHYSICAL;
-                case MOUSE_FOLLOWS_TOWER:
-                    return PHYSICAL;
-                case SNIPER:
-                    return TRUE;
-                case LASER_TOWER:
-                    return TRUE;
-                case SCARECROW:
+                case CAMEL:
                     return MAGIC;
-                case BANK:
-                    return 0;
+                case CAMEL_JUNIOR:
+                    return PHYSICAL;
+                case BIRD:
+                    return PHYSICAL;
+                case GHOST:
+                    return MAGIC;
+                case ROCK:
+                    return PHYSICAL;
+                case CREEPY_CAT:
+                    return MAGIC;
+                case BIRD_SKELETON:
+                    return PHYSICAL;
+                case BANSHEE:
+                    return TRUE;
                 default:
                     return 0;
             }
@@ -704,30 +735,61 @@ public class Constants {
 
         public static int getDmgType(int towerType) {
             switch (towerType) {
+                case KNIGHT:
+                    return PHYSICAL;
+                case HUNTER:
+                    return PHYSICAL;
+                case PALADIN:
+                    return PHYSICAL;
+                case DRUID:
+                    return MAGIC;
+                case MAGE:
+                    return MAGIC;
+                case PRIEST:
+                    return MAGIC;
+                case ZOMBIE_SOLDIER:
+                    return PHYSICAL;
+                case COMMANDO:
+                    return PHYSICAL;
+//                case SNIPER:
+//                    return TRUE;
+//                case LASER_TOWER:
+//                    return TRUE;
+//                case SCARECROW:
+//                    return MAGIC;
+//                case BANK:
+//                    return 0;
+                default:
+                    return 0;
+            }
+        }
+        public static float getDefaultRangeAlly(int towerType) {
+            switch (towerType) {
                 case ARCHER:
-                    return PHYSICAL;
+                    return 300;
                 case CANNON:
-                    return PHYSICAL;
+                    return 250;
                 case FROST_MAGE:
-                    return MAGIC;
+                    return 100;
                 case MINES_FACTORY:
-                    return PHYSICAL;
+                    return 96;
                 case POISON_TOWER:
-                    return MAGIC;
+                    return 250;
                 case BOOM_VOLCANO:
-                    return PHYSICAL;
+                    return 200;
                 case CROSSBOW:
-                    return PHYSICAL;
+                    return 2000;
                 case MOUSE_FOLLOWS_TOWER:
-                    return PHYSICAL;
+                    return 2000;
                 case SNIPER:
-                    return TRUE;
+                    return 2000;
                 case LASER_TOWER:
-                    return TRUE;
+                    return 325;
                 case SCARECROW:
-                    return MAGIC;
+                    return 96;
                 case BANK:
                     return 0;
+
                 default:
                     return 0;
             }
@@ -749,7 +811,7 @@ public class Constants {
         public static final int BANK = 11;
 
 
-        public static String getName(int towerType) {
+        public static String getNameTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return "Archer";
@@ -781,7 +843,7 @@ public class Constants {
         }
 
 
-        public static String getSpecialString(int towerType) {
+        public static String getSpecialStringTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return null;
@@ -811,7 +873,7 @@ public class Constants {
                     return null;
             }
         }
-        public static boolean isSlow(int towerType) {
+        public static boolean isSlowTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return false;
@@ -842,8 +904,8 @@ public class Constants {
             }
         }
 
-        public static float getPowerOfSlow(int towerType) {
-            if (isSlow(towerType)) {
+        public static float getPowerOfSlowTower(int towerType) {
+            if (isSlowTower(towerType)) {
                 switch (towerType) {
                     case FROST_MAGE:
                         return 0.5f;
@@ -860,7 +922,7 @@ public class Constants {
             return 1f;
         }
 
-        public static boolean isAoe(int projectileType) {
+        public static boolean isAoeTower(int projectileType) {
             switch (projectileType) {
                 case ARCHER:
                     return false;
@@ -922,7 +984,7 @@ public class Constants {
             }
         }
 
-        public static float getDefaultCoolDown(int towerType) {
+        public static float getDefaultCoolDownTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return 30;
@@ -954,7 +1016,7 @@ public class Constants {
 
         }
 
-        public static float getDefaultRange(int towerType) {
+        public static float getDefaultRangeTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return 300;
@@ -1024,7 +1086,7 @@ public class Constants {
         public static final int NONE = 3;
 
 
-        public static int getDmgType(int towerType) {
+        public static int getDmgTypeTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return PHYSICAL;
@@ -1059,7 +1121,7 @@ public class Constants {
         public static final int FLYING = 1;
         public static final int WALKING = 2;
 
-        public static int getTargetMoveType(int towerType) {
+        public static int getTargetMoveTypeTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return BOTH;
@@ -1083,6 +1145,8 @@ public class Constants {
                     return BOTH;
                 case SCARECROW:
                     return FLYING;
+                case BANK:
+                    return NONE;
                 default:
                     return 0;
             }
@@ -1217,7 +1281,7 @@ public class Constants {
         }
 
         //dot - damage over time
-        public static boolean isDOT(int towerType) {
+        public static boolean isDOTTower(int towerType) {
             switch (towerType) {
                 case ARCHER:
                     return false;
@@ -1246,8 +1310,8 @@ public class Constants {
             }
         }
 
-        public static int getDuration(int towerType) {
-            if (isSlow(towerType)) {
+        public static int getDurationTower(int towerType) {
+            if (isSlowTower(towerType)) {
                 switch (towerType) {
                     case FROST_MAGE:
                         return 10;

@@ -129,7 +129,7 @@ public class PlayingBar extends Bar {
     }
 
     private String getTowerName(int towerCostId) {
-        return Constants.TowerType.getName(towerCostId);
+        return Constants.TowerType.getNameTower(towerCostId);
     }
 
     private void drawWaveInfo(Graphics g) {
@@ -184,24 +184,24 @@ public class PlayingBar extends Bar {
             g.setFont(new Font("Serif", Font.BOLD, 20));
             g.setColor(new Color(15, 15, 15));
             if (displayedTower == null) {
-                g.drawString("" + Constants.TowerType.getName(towerCostId), 1375, 1018);
-                if (Constants.TowerType.getDefaultRange(towerCostId) > 1200) {
+                g.drawString("" + Constants.TowerType.getNameTower(towerCostId), 1375, 1018);
+                if (Constants.TowerType.getDefaultRangeTower(towerCostId) > 1200) {
                     g.drawString("Range: Infinite", 1375, 1038);
                 } else {
-                    g.drawString("Range:" + Constants.TowerType.getDefaultRange(towerCostId), 1375, 1038);
+                    g.drawString("Range:" + Constants.TowerType.getDefaultRangeTower(towerCostId), 1375, 1038);
                 }
                 if (towerCostId == FROST_MAGE) {
-                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(towerCostId) + "%", 1375, 1058);
+                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlowTower(towerCostId) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + Constants.TowerType.getDefaultDmg(towerCostId), 1375, 1058);
 
-                    g.drawString("AS:" + decfor.format(60 / Constants.TowerType.getDefaultCoolDown(towerCostId)), 1375, 1078);
+                    g.drawString("AS:" + decfor.format(60 / Constants.TowerType.getDefaultCoolDownTower(towerCostId)), 1375, 1078);
                 }
             } else {
-                g.drawString("" + Constants.TowerType.getName(displayedTower.getTowerType()), 1375, 1018);
+                g.drawString("" + Constants.TowerType.getNameTower(displayedTower.getTowerType()), 1375, 1018);
                 g.drawString("Range:" + displayedTower.getRange(), 1375, 1038);
                 if (displayedTower.getTowerType() == FROST_MAGE) {
-                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlow(displayedTower.getTowerType()) + "%", 1375, 1058);
+                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlowTower(displayedTower.getTowerType()) + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
                     g.drawString("AS:" + decfor.format(60 / displayedTower.getCoolDown()), 1375, 1078);

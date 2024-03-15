@@ -109,8 +109,8 @@ public abstract class Tower {
     }
 
     private void setDefaultSlow() {
-        if (Constants.TowerType.isSlow(towerType)) {
-            slow = Constants.TowerType.getPowerOfSlow(towerType);
+        if (Constants.TowerType.isSlowTower(towerType)) {
+            slow = Constants.TowerType.getPowerOfSlowTower(towerType);
             if (towerManager.isCard19()) {
                 if (this instanceof FrostMage) {
                     slow = slow * 160 / 100;
@@ -131,8 +131,8 @@ public abstract class Tower {
 
 
     private void setDefaultDuration() {
-        if (Constants.TowerType.isDOT(towerType)) {
-            duration = Constants.TowerType.getDuration(towerType);
+        if (Constants.TowerType.isDOTTower(towerType)) {
+            duration = Constants.TowerType.getDurationTower(towerType);
             if (towerManager.isCard6()) {
                 DurationUp(10);
             }
@@ -150,7 +150,7 @@ public abstract class Tower {
 
 
     private void setDefaultCoolDown() {
-        coolDown = Constants.TowerType.getDefaultCoolDown(towerType);
+        coolDown = Constants.TowerType.getDefaultCoolDownTower(towerType);
         if (towerManager.isCard1()) {
             CoolDown(10);
         }
@@ -199,7 +199,7 @@ public abstract class Tower {
     }
 
     private void setDefaultRange() {
-        range = Constants.TowerType.getDefaultRange(towerType);
+        range = Constants.TowerType.getDefaultRangeTower(towerType);
         if (towerManager.isCard2()) {
             RangeUp(10);
         }
