@@ -316,32 +316,35 @@ public class Constants {
             }
             return 0;
         }
+        public static final int MELEE = 0;
+        public static final int NONE = -1;
+
         public static float getDefaultRangeEnemy(int towerType) {
             switch (towerType) {
-                case ARCHER:
-                    return 300;
-                case CANNON:
-                    return 250;
-                case FROST_MAGE:
-                    return 100;
-                case MINES_FACTORY:
-                    return 96;
-                case POISON_TOWER:
-                    return 250;
-                case BOOM_VOLCANO:
-                    return 200;
-                case CROSSBOW:
-                    return 2000;
-                case MOUSE_FOLLOWS_TOWER:
-                    return 2000;
-                case SNIPER:
-                    return 2000;
-                case LASER_TOWER:
-                    return 325;
-                case SCARECROW:
-                    return 96;
-                case BANK:
-                    return 0;
+                case ORC:
+                    return MELEE;
+                case ORK_ZOMBIE:
+                    return MELEE;
+                case TENTACLE:
+                    return 80;
+                case SLIME:
+                    return MELEE;
+                case CAMEL:
+                    return MELEE;
+                case CAMEL_JUNIOR:
+                    return MELEE;
+                case BIRD:
+                    return NONE;
+                case GHOST:
+                    return MELEE;
+                case ROCK:
+                    return MELEE;
+                case CREEPY_CAT:
+                    return MELEE;
+                case BIRD_SKELETON:
+                    return NONE;
+                case BANSHEE:
+                    return 70;
 
                 default:
                     return 0;
@@ -351,7 +354,7 @@ public class Constants {
         public static final int TRUE = 0;
         public static final int PHYSICAL = 1;
         public static final int MAGIC = 2;
-        public static final int NONE = 3;
+
 
 
         public static int getDmgTypeEnemy(int towerType) {
@@ -730,7 +733,7 @@ public class Constants {
         public static final int TRUE = 0;
         public static final int PHYSICAL = 1;
         public static final int MAGIC = 2;
-        public static final int NONE = 3;
+
 
 
         public static int getDmgType(int towerType) {
@@ -763,32 +766,27 @@ public class Constants {
                     return 0;
             }
         }
+
+        public static final int MELEE = 0;
+        public static final int NONE = -1;
         public static float getDefaultRangeAlly(int towerType) {
             switch (towerType) {
-                case ARCHER:
-                    return 300;
-                case CANNON:
-                    return 250;
-                case FROST_MAGE:
+                case KNIGHT:
+                    return MELEE;
+                case HUNTER:
+                    return 90;
+                case PALADIN:
+                    return MELEE;
+                case DRUID:
+                    return MELEE;
+                case MAGE:
                     return 100;
-                case MINES_FACTORY:
-                    return 96;
-                case POISON_TOWER:
-                    return 250;
-                case BOOM_VOLCANO:
-                    return 200;
-                case CROSSBOW:
-                    return 2000;
-                case MOUSE_FOLLOWS_TOWER:
-                    return 2000;
-                case SNIPER:
-                    return 2000;
-                case LASER_TOWER:
-                    return 325;
-                case SCARECROW:
-                    return 96;
-                case BANK:
-                    return 0;
+                case PRIEST:
+                    return 50;
+                case ZOMBIE_SOLDIER:
+                    return MELEE;
+                case COMMANDO:
+                    return MELEE;
 
                 default:
                     return 0;

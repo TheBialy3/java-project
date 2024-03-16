@@ -135,7 +135,7 @@ public abstract class Enemy {
 
     }
     private void setStartingAttack() {
-        attack=getAttack(enemyType);
+        attack=getAttackEnemy(enemyType);
     }
 
     public void healThis(int heal) {
