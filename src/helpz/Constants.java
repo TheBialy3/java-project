@@ -774,7 +774,7 @@ public class Constants {
                 case KNIGHT:
                     return MELEE;
                 case HUNTER:
-                    return 90;
+                    return 80;
                 case PALADIN:
                     return MELEE;
                 case DRUID:
