@@ -16,7 +16,7 @@ public abstract class Ally {
         DEAD
     }
 
-    AllyStatus allyStatus = AllyStatus.WALK;
+    AllyStatus allyStatus = AllyStatus.STAY;
 
     public Ally(int x, int y, int allyType, int lvl) {
         this.x = x;
@@ -29,7 +29,7 @@ public abstract class Ally {
     }
 
     private void getStartingHP() {
-       // hp=
+        // hp=
     }
 
     private void getStartingAttack() {
@@ -62,5 +62,30 @@ public abstract class Ally {
 
     public void move() {
 
+    }
+
+    public void setAllyStatus(int stat) {
+        switch (stat) {
+            case 0:
+                this.allyStatus = AllyStatus.DEAD;
+                break;
+            case 1:
+                this.allyStatus = AllyStatus.WALK;
+                break;
+            case 2:
+                this.allyStatus = AllyStatus.STAY;
+                break;
+            case 3:
+                this.allyStatus = AllyStatus.FIGHT;
+                break;
+            case 4:
+                this.allyStatus = AllyStatus.STUN;
+                break;
+
+        }
+    }
+
+    public AllyStatus getAllyStatus() {
+        return allyStatus;
     }
 }
