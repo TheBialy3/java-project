@@ -2,8 +2,14 @@ package ally;
 
 import enemies.Enemy;
 
+import static helpz.Constants.Direction.*;
+import static helpz.Constants.Direction.DOWN;
+import static helpz.Constants.EnemyType.getSpeed;
+import static helpz.Constants.EnemyType.isRegainHP;
+
 public abstract class Ally {
     int x, y, allyType, lvl;
+    int dir,lastDir,distancePast;
     int hp, attack;
     float speed;
     Enemy enemyToAttack;
@@ -61,7 +67,30 @@ public abstract class Ally {
     }
 
     public void move() {
-
+        lastDir = dir;
+        float speed = getSpeed(allyType);
+        switch (dir) {
+            case LEFT:
+                this.x -= speed;
+                break;
+            case UP:
+                this.y -= speed;
+                break;
+            case RIGHT:
+                this.x += speed;
+                break;
+            case DOWN:
+                this.y += speed;
+                break;
+        }
+        distancePast += speed;
+//        updateHitbox();
+//        if (poisoned) {
+//            poisonDamage();
+//        }
+//        if (isRegainHP(enemyType)) {
+//            regenHp();
+//        }
     }
 
     public void setAllyStatus(int stat) {
