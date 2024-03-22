@@ -1,14 +1,16 @@
 package ally;
 
 import enemies.Enemy;
+import helpz.Constants;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.Direction.DOWN;
-import static helpz.Constants.EnemyType.getSpeed;
-import static helpz.Constants.EnemyType.isRegainHP;
+
 
 public abstract class Ally {
     int x, y, allyType, lvl;
+    int passiveX,passiveY;
+    
     int dir,lastDir,distancePast;
     int hp, attack;
     float speed;
@@ -35,15 +37,28 @@ public abstract class Ally {
     }
 
     private void getStartingHP() {
-        // hp=
+         hp= Constants.AllyType.getStartHealth(allyType);
     }
 
     private void getStartingAttack() {
+        attack=Constants.AllyType.getAttack(allyType);
     }
 
     private void getStartingSpeed() {
+        speed=Constants.AllyType.getSpeed(allyType);
     }
 
+    public void lvlUp() {
+        hpUp();
+        atackUp();
+        lvl++;
+    }
+
+    private void atackUp() {
+    }
+
+    private void hpUp() {
+    }
 
     public void update() {
         switch (allyStatus) {
@@ -57,7 +72,7 @@ public abstract class Ally {
 
                 break;
             case FIGHT:
-
+                fight();
                 break;
             case DEAD:
 
@@ -66,9 +81,11 @@ public abstract class Ally {
         }
     }
 
+    private void fight() {
+    }
+
     public void move() {
         lastDir = dir;
-        float speed = getSpeed(allyType);
         switch (dir) {
             case LEFT:
                 this.x -= speed;
