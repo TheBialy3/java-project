@@ -55,9 +55,11 @@ public abstract class Ally {
     }
 
     private void atackUp() {
+        attack*= (int) 1.1;
     }
 
     private void hpUp() {
+        hp*= (int) 1.1;
     }
 
     public void update() {
