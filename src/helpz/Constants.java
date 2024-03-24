@@ -553,8 +553,8 @@ public class Constants {
         public static final int ZOMBIE_SOLDIER=6;
         public static final int COMMANDO=7;
 
-        public static String getName(int towerType) {
-            switch (towerType) {
+        public static String getName(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return "Knight";
                 case HUNTER:
@@ -583,8 +583,8 @@ public class Constants {
                     return "";
             }
         }
-        public static float getSpeed(int enemyType) {
-            switch (enemyType) {
+        public static float getSpeed(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return 0.35f;
                 case HUNTER:
@@ -612,8 +612,8 @@ public class Constants {
             }
             return 0;
         }
-        public static int getStartHealth(int enemyType) {
-            switch (enemyType) {
+        public static int getStartHealth(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return 1000;
                 case HUNTER:
@@ -642,8 +642,8 @@ public class Constants {
             return 0;
         }
 
-        public static int getMR(int enemyType) {
-            switch (enemyType) {
+        public static int getMR(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return 20;
                 case HUNTER:
@@ -672,8 +672,8 @@ public class Constants {
             return 0;
         }
 
-        public static int getArmor(int enemyType) {
-            switch (enemyType) {
+        public static int getArmor(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return 80;
                 case HUNTER:
@@ -701,8 +701,8 @@ public class Constants {
             }
             return 0;
         }
-        public static int getAttack(int enemyType) {
-            switch (enemyType) {
+        public static int getAttack(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return 60;
                 case HUNTER:
@@ -736,8 +736,8 @@ public class Constants {
 
 
 
-        public static int getDmgType(int towerType) {
-            switch (towerType) {
+        public static int getDmgType(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return PHYSICAL;
                 case HUNTER:
@@ -769,8 +769,8 @@ public class Constants {
 
         public static final int MELEE = 0;
         public static final int NONE = -1;
-        public static float getDefaultRangeAlly(int towerType) {
-            switch (towerType) {
+        public static float getDefaultRangeAlly(int allyType) {
+            switch (allyType) {
                 case KNIGHT:
                     return MELEE;
                 case HUNTER:
