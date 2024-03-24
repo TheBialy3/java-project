@@ -9,6 +9,7 @@ import static helpz.Constants.Direction.DOWN;
 
 public abstract class Ally {
     int x, y, allyType, lvl;
+    int attackAnimation=0;
     int passiveX,passiveY;
     
     int dir,lastDir,distancePast;
@@ -84,6 +85,7 @@ public abstract class Ally {
     }
 
     private void fight() {
+
     }
 
     public void move() {
@@ -112,8 +114,8 @@ public abstract class Ally {
 //        }
     }
 
-    public void setAllyStatus(int stat) {
-        switch (stat) {
+    public void setAllyStatus(int statusOfAlly) {
+        switch (statusOfAlly) {
             case 0:
                 this.allyStatus = AllyStatus.DEAD;
                 break;
