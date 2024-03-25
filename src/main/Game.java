@@ -57,7 +57,7 @@ public class Game extends JFrame implements Runnable {
         setTitle("Biały Precel TD");
         img = new ImageIcon("res/rest/logo.png");
         setIconImage(img.getImage());
-        //setUndecorated(true);
+//        setUndecorated(true);
         setResizable(false);
         add(gameScreen);
         pack();
@@ -65,6 +65,7 @@ public class Game extends JFrame implements Runnable {
 
         getCardSave();
     }
+    //JComboBox<String> comboBox
 
     private void getCardSave() {
         try {
