@@ -13,7 +13,8 @@ public class GameScreen extends JPanel {
 
 
     private Game game;
-    private Dimension size;
+    private Dimension size,sizeMax,sizeMin;
+
 
     private MyMouseListener myMouseListener;
     private KeyboardListener keyboardListener;
@@ -36,9 +37,11 @@ public class GameScreen extends JPanel {
 
     private void setPanelSize() {
         size=new Dimension(1536,1280);//1296, 1320
-        setMaximumSize(size);
+        sizeMax=new Dimension(2560,1440);
+        sizeMin=new Dimension(536,480);
+        setMaximumSize(sizeMax);
         setPreferredSize(size);
-        setMaximumSize(size);
+        setMinimumSize(sizeMin);
     }
 
     public void paintComponent(Graphics g) {
