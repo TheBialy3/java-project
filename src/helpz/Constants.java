@@ -586,21 +586,21 @@ public class Constants {
         public static float getSpeed(int allyType) {
             switch (allyType) {
                 case KNIGHT:
-                    return 0.35f;
+                    return 0.45f;
                 case HUNTER:
-                    return 0.3f;
+                    return 1f;
                 case PALADIN:
-                    return 0.4f;
+                    return 0.5f;
                 case DRUID:
                     return 0.7f;
                 case MAGE:
-                    return 0.25f;
+                    return 0.1f;
                 case PRIEST:
-                    return 1f;
+                    return 0.3f;
                 case ZOMBIE_SOLDIER:
-                    return 0.75f;
+                    return 0.25f;
                 case COMMANDO:
-                    return 0.4f;
+                    return 0.7f;
 //                case ROCK:
 //                    return 0.25f;
 //                case CREEPY_CAT:
@@ -610,6 +610,36 @@ public class Constants {
 //                case BANSHEE:
 //                    return 0.7f;
             }
+            return 0;
+        }
+
+        public static int getAttackAnimationLimit(int allyType) {
+//            switch (allyType) {
+//                case KNIGHT:
+//                    return 0.45f;
+//                case HUNTER:
+//                    return 1f;
+//                case PALADIN:
+//                    return 0.5f;
+//                case DRUID:
+//                    return 0.7f;
+//                case MAGE:
+//                    return 0.1f;
+//                case PRIEST:
+//                    return 0.3f;
+//                case ZOMBIE_SOLDIER:
+//                    return 0.25f;
+//                case COMMANDO:
+//                    return 0.7f;
+////                case ROCK:
+////                    return 0.25f;
+////                case CREEPY_CAT:
+////                    return 0.65f;
+////                case BIRD_SKELETON:
+////                    return 0.8f;
+////                case BANSHEE:
+////                    return 0.7f;
+//            }
             return 0;
         }
         public static int getStartHealth(int allyType) {
