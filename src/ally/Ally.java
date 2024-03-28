@@ -20,6 +20,7 @@ public abstract class Ally {
     float xSpeed;
     float ySpeed;
 
+
     protected enum AllyStatus {
         WALK,
         STAY,
@@ -249,4 +250,13 @@ public abstract class Ally {
     public AllyStatus getAllyStatus() {
         return allyStatus;
     }
+
+    public boolean isAlive() {
+        if (allyStatus != AllyStatus.DEAD) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

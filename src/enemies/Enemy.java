@@ -1,5 +1,6 @@
 package enemies;
 
+import ally.Ally;
 import helpz.Constants;
 import main.Game;
 import managers.EnemyManager;
@@ -26,7 +27,9 @@ public abstract class Enemy {
     protected int dmg, duration = 0;
     protected int slowTickLimit = 10, slowTick = slowTickLimit;
     protected int countdown = 0;
-    protected int maxHealth, health, mr, armor,attack;
+    protected int maxHealth, health, mr, armor,attack,attackType;
+    protected Ally allyToAttack=null;
+    protected int attackAnimation ,attackAnimationLimit;
     protected int ID;
     protected int enemyType, damageType;
     protected int lastDir;
@@ -79,9 +82,22 @@ public abstract class Enemy {
 
                 break;
             case FIGHT:
-
+                fight();
                 break;
 
+        }
+    }
+
+    private void fight() {
+        attackAnimation++;
+        if (attackAnimation >= attackAnimationLimit) {
+            allyToAttack.hurt(attack, attackType);
+            attackAnimation = 0;
+        }
+        if (!allyToAttack.isAlive()) {
+            allyToAttack = null;
+            attackAnimation = 0;
+            enemyStatus=EnemyStatus.WALK;
         }
     }
 
@@ -136,6 +152,7 @@ public abstract class Enemy {
     }
     private void setStartingAttack() {
         attack=getAttackEnemy(enemyType);
+        attackType=getDmgTypeEnemy(enemyType);
     }
 
     public void healThis(int heal) {

@@ -316,6 +316,7 @@ public class Constants {
             }
             return 0;
         }
+
         public static final int MELEE = 0;
         public static final int NONE = -1;
 
