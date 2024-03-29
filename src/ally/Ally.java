@@ -96,9 +96,11 @@ public abstract class Ally {
 
     public void lvlUp() {
         hpUp();
-        atackUp();
+        attackUp();
         coolDownUp();
         lvl++;
+        xp=0;
+        xpToLvlUp*= (int) 1.1;
     }
 
     private void coolDownUp() {
@@ -111,7 +113,7 @@ public abstract class Ally {
         setAllyStatus(1);
     }
 
-    private void atackUp() {
+    private void attackUp() {
         attack *= (int) 1.1;
     }
 

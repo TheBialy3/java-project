@@ -9,6 +9,7 @@ public abstract class Tower {
 
     private int tickSlow=0, tickStun=0, cdTick, standardCD;
     private int x, y, id, towerType, dmg, worthGold, duration;
+    private int lvl, xp = 0, xpToLvlUp = 100;
     private float range, coolDown, slow;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
@@ -66,6 +67,18 @@ public abstract class Tower {
         tickStun=(int)time*60;
         stun=true;}
     }
+
+    public void lvlUp() {
+        attackUp();
+        lvl++;
+        xp=0;
+        xpToLvlUp*= (int) 1.1;
+    }
+
+    private void attackUp() {
+        dmg *= (int) 1.1;
+    }
+
 //    public void setSlow(float time,int percent){
 //
 //            tickSlow = (int) time * 60;
