@@ -60,7 +60,7 @@ public class Playing extends GameScene implements SceneMethods {
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         towerManager = new TowerManager(this);
-        enemyManager = new EnemyManager(this, start, end, waveManager,towerManager);
+        enemyManager = new EnemyManager(this, start, end, waveManager, towerManager);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         bestiary = game.getBestiary();
         initCardButtons();
@@ -90,7 +90,7 @@ public class Playing extends GameScene implements SceneMethods {
         bCard1 = new MyButton("Card1", cardX, cardY, cardW, cardH);
         bCard2 = new MyButton("Card2", cardX, cardY + diffCard, cardW, cardH);
         bCard3 = new MyButton("Card3", cardX, cardY + diffCard + diffCard, cardW, cardH);
-        reshuffle = new MyButton("Shuffle ("+shuffles+")", shuffleX, shuffleY, shuffleW, shuffleH);
+        reshuffle = new MyButton("Shuffle (" + shuffles + ")", shuffleX, shuffleY, shuffleW, shuffleH);
     }
 
     public enum PlayGameState {
@@ -161,32 +161,47 @@ public class Playing extends GameScene implements SceneMethods {
 
     @Override
     public void render(Graphics g) {
+        // Always render
         drawLevel(g);
+        playingBar.draw(g);
 
         enemyManager.draw(g);
         towerManager.draw(g);
-
-        drawSelectedTower(g);
-        drawHighlight(g);
-
-        playingBar.draw(g);
         projectileManager.draw(g);
         drawBeam(g);
 
-        if (playState.equals(PlayGameState.PLAY_CARD_SELECT)) {
-            drawCardsToSelect(g);
-        }
-        if (playState.equals(PlayGameState.PLAY_WIN)) {
-            drawWinScreen(g);
-        }
-        if (playState.equals(PlayGameState.PLAY_PAUSED)) {
-            drawPause(g);
-        }
-        if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
-            bestiary.drawIconsImg(g);
-            bReturn.draw(g);
-        }
+        switch (playState) {
+            case PLAY_PLAY:
 
+                projectileManager.draw(g);
+                drawBeam(g);
+
+                drawSelectedTower(g);
+                drawHighlight(g);
+
+                break;
+            case PLAY_WIN:
+
+                drawWinScreen(g);
+
+                break;
+            case PLAY_PAUSED:
+
+                drawPause(g);
+
+                break;
+            case PLAY_BESTIARY:
+
+                bestiary.drawIconsImg(g);
+                bReturn.draw(g);
+
+                break;
+            case PLAY_CARD_SELECT:
+
+                drawCardsToSelect(g);
+
+                break;
+        }
     }
 
     private void cardSelectStart() {
@@ -194,7 +209,7 @@ public class Playing extends GameScene implements SceneMethods {
         getCards();
         choose3RandomCards();
         createLookOfCards();
-      playState = PlayGameState.PLAY_CARD_SELECT;
+        playState = PlayGameState.PLAY_CARD_SELECT;
     }
 
     private void createLookOfCards() {
@@ -465,7 +480,7 @@ public class Playing extends GameScene implements SceneMethods {
         threeCards.clear();
         choose3RandomCards();
         createLookOfCards();
-        reshuffle.setText("Shuffle ("+shuffles+")");
+        reshuffle.setText("Shuffle (" + shuffles + ")");
     }
 
     public void Finish() {
@@ -574,22 +589,23 @@ public class Playing extends GameScene implements SceneMethods {
         cardLook2.draw(g, bCard2.isMouseOver());
         cardLook3.draw(g, bCard3.isMouseOver());
 
-        if(shuffles>0){
+        if (shuffles > 0) {
             reshuffle.draw(g);
-        }else {
+        } else {
             reshuffle.drawUnActive(g);
         }
     }
 
     private void drawBeam(Graphics g) {
-        try{
-        for (Beam beam : beams) {
-            if (beam.getActive()) {
-                g.setColor(new Color(255, 0, 0));
-                g.drawLine(beam.getxStart(), beam.getyStart(), beam.getxEnd(), beam.getyEnd());
-                beam.timerDown();
+        try {
+            for (Beam beam : beams) {
+                if (beam.getActive()) {
+                    g.setColor(new Color(255, 0, 0));
+                    g.drawLine(beam.getxStart(), beam.getyStart(), beam.getxEnd(), beam.getyEnd());
+                    beam.timerDown();
+                }
             }
-        }}catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ConcurrentModificationException beam");
         }
     }
@@ -657,7 +673,7 @@ public class Playing extends GameScene implements SceneMethods {
             } else if (bCard3.getBounds().contains(x, y)) {
                 cardSelected(2);
             } else if (reshuffle.getBounds().contains(x, y)) {
-                if(shuffles>0) {
+                if (shuffles > 0) {
                     shuffleCards();
                 }
             }
@@ -685,7 +701,6 @@ public class Playing extends GameScene implements SceneMethods {
         }
 
     }
-
 
 
     @Override
@@ -736,9 +751,9 @@ public class Playing extends GameScene implements SceneMethods {
             bCard2.resetBooleans();
             bCard3.resetBooleans();
             reshuffle.resetBooleans();
-        }else if (playState.equals(PlayGameState.PLAY_WIN)) {
+        } else if (playState.equals(PlayGameState.PLAY_WIN)) {
             bReplay.resetBooleans();
-        }else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+        } else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
             bReturn.resetBooleans();
         }
         if (x >= 1280) {
@@ -766,7 +781,7 @@ public class Playing extends GameScene implements SceneMethods {
             if (bReplay.getBounds().contains(x, y)) {
                 bReplay.setMousePressed(true);
             }
-        }else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
+        } else if (playState.equals(PlayGameState.PLAY_BESTIARY)) {
             if (bReturn.getBounds().contains(x, y)) {
                 bReturn.setMousePressed(true);
             }
@@ -836,7 +851,8 @@ public class Playing extends GameScene implements SceneMethods {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
                 selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, towerManager, road);
             }
-        }if (e.getKeyCode() == KeyEvent.VK_G) {
+        }
+        if (e.getKeyCode() == KeyEvent.VK_G) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(SCARECROW))) {
                 selectedTower = new Scarecrow(1555, 15555, 0, SCARECROW, towerManager, road);
             }
@@ -874,7 +890,6 @@ public class Playing extends GameScene implements SceneMethods {
     }
 
 
-
     public void setMine(Tower t, PathPoint e) {
         projectileManager.newMine(t, e);
     }
@@ -897,6 +912,7 @@ public class Playing extends GameScene implements SceneMethods {
         }
         winCards.clear();
     }
+
     public ProjectileManager getProjectileManager() {
         return projectileManager;
     }
