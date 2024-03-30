@@ -4,9 +4,12 @@ import enemies.Enemy;
 import helpz.Constants;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static helpz.Constants.EnemyType.MAGIC;
 import static helpz.Constants.EnemyType.PHYSICAL;
+import static helpz.LoadSave.getImg;
 
 
 public abstract class Ally {
@@ -19,9 +22,10 @@ public abstract class Ally {
     Enemy enemyToAttack;
     float xSpeed;
     float ySpeed;
+    private ArrayList<BufferedImage> animationOfWalk,animationOfStay,animationOfStun,animationOfFight,animationOfDead;
 
 
-    protected enum AllyStatus {
+    public enum AllyStatus {
         WALK,
         STAY,
         STUN,
@@ -29,7 +33,7 @@ public abstract class Ally {
         DEAD
     }
 
-    AllyStatus allyStatus = AllyStatus.WALK;
+    public AllyStatus allyStatus = AllyStatus.WALK;
 
     public Ally(int x, int y, int allyType, int lvl, float passiveX, float passiveY) {
         this.x = x;
@@ -43,7 +47,10 @@ public abstract class Ally {
         getStartingAttack();
         getStartingSpeed();
         getAttackAnimationLimit();
+        getImgAnimationOf();
     }
+
+
 
 
     public void update() {
@@ -61,14 +68,44 @@ public abstract class Ally {
                 fight();
                 break;
             case DEAD:
-                respownCoolDown();
+                respawnCoolDown();
                 break;
 
         }
     }
 
     public void draw(Graphics g) {
+        switch (allyStatus) {
+            case STAY:
+                g.drawImage(animationOfStay.get(0),x,y,null);
+                break;
+            case WALK:
+                g.drawImage(animationOfWalk.get(0),x,y,null);
+                break;
+            case STUN:
+                g.drawImage(animationOfStun.get(0),x,y,null);
+                break;
+            case FIGHT:
+                g.drawImage(animationOfFight.get(0),x,y,null);
+                break;
+            case DEAD:
+                g.drawImage(animationOfDead.get(0),x,y,null);
+                break;
 
+        }
+    }
+
+    private void getImgAnimationOf() {
+//  WALK
+        animationOfWalk.add(getImg(""));
+//  STAY
+        animationOfStay.add(getImg(""));
+//  STUN
+        animationOfStun.add(getImg(""));
+//  FIGHT
+        animationOfFight.add(getImg(""));
+//  DEAD
+        animationOfDead.add(getImg(""));
     }
 
     private void getResists() {
@@ -99,8 +136,8 @@ public abstract class Ally {
         attackUp();
         coolDownUp();
         lvl++;
-        xp=0;
-        xpToLvlUp*= (int) 1.1;
+        xp = 0;
+        xpToLvlUp *= (int) 1.1;
     }
 
     private void coolDownUp() {
@@ -122,7 +159,7 @@ public abstract class Ally {
     }
 
 
-    private void respownCoolDown() {
+    private void respawnCoolDown() {
         deadCoolDown++;
         if (isCoolDownOver()) {
             setAllyStatus(2);
@@ -132,10 +169,7 @@ public abstract class Ally {
     }
 
     private boolean isCoolDownOver() {
-        if (coolDown <= deadCoolDown) {
-            return true;
-        }
-        return false;
+        return coolDown <= deadCoolDown;
     }
 
     private void fight() {
@@ -204,10 +238,8 @@ public abstract class Ally {
         int yDist;
         xDist = (int) (x - toX + 30);
         yDist = (int) (y - toY);
-        if (xDist > xDist + xSpeed || yDist > yDist + ySpeed) {
-            return true;
-        }
-        return false;
+        return (xDist > xDist + xSpeed || yDist > yDist + ySpeed);
+
     }
 
     public void setAllyStatus(int statusOfAlly) {
@@ -254,11 +286,8 @@ public abstract class Ally {
     }
 
     public boolean isAlive() {
-        if (allyStatus != AllyStatus.DEAD) {
-            return true;
-        } else {
-            return false;
-        }
+        return (allyStatus != AllyStatus.DEAD);
+
     }
 
 }

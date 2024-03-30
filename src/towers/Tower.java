@@ -69,13 +69,13 @@ public abstract class Tower {
     }
 
     public void lvlUp() {
-        attackUp();
+        attackLvlUp();
         lvl++;
         xp=0;
         xpToLvlUp*= (int) 1.1;
     }
 
-    private void attackUp() {
+    private void attackLvlUp() {
         dmg *= (int) 1.1;
     }
 

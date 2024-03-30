@@ -1,7 +1,9 @@
 package towers;
 
 import ally.Ally;
+import ally.Hunter;
 import ally.Knight;
+import ally.Mage;
 import managers.TowerManager;
 
 import java.util.ArrayList;
@@ -21,17 +23,19 @@ public class Barracks extends Tower {
                 allys.add(new Knight(this.getX() * 64, this.getY() * 64, KNIGHT, 1));
                 break;
             case 2:
-                allys.add(new Knight(this.getX() * 64, this.getY() * 64, MAGE, 1));
+                allys.add(new Mage(this.getX() * 64, this.getY() * 64, MAGE, 1));
                 break;
             case 3:
-                allys.add(new Knight(this.getX() * 64, this.getY() * 64, HUNTER, 1));
+                allys.add(new Hunter(this.getX() * 64, this.getY() * 64, HUNTER, 1));
                 break;
         }
         return;
     }
 
-    public void cooldownOnAlly() {
-
+    public void update(){
+        for(Ally myAlly:allys){
+            myAlly.update();
+        }
     }
 
     public int getCost(int upgrade) {
