@@ -9,7 +9,7 @@ public abstract class Tower {
 
     private int tickSlow=0, tickStun=0, cdTick, standardCD;
     private int x, y, id, towerType, dmg, worthGold, duration;
-    private int lvl, xp = 0, xpToLvlUp = 100;
+    public int lvl=0, xp = 0, xpToLvlUp = 100;
     private float range, coolDown, slow;
     private ArrayList<Integer> arr = new ArrayList<>();
     private int[][] road;
