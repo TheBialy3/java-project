@@ -22,7 +22,6 @@ public abstract class Ally {
     Enemy enemyToAttack;
     float xSpeed;
     float ySpeed;
-    private ArrayList<BufferedImage> animationOfWalk,animationOfStay,animationOfStun,animationOfFight,animationOfDead;
 
 
     public enum AllyStatus {
@@ -47,7 +46,6 @@ public abstract class Ally {
         getStartingAttack();
         getStartingSpeed();
         getAttackAnimationLimit();
-        getImgAnimationOf();
     }
 
 
@@ -74,39 +72,7 @@ public abstract class Ally {
         }
     }
 
-    public void draw(Graphics g) {
-        switch (allyStatus) {
-            case STAY:
-                g.drawImage(animationOfStay.get(0),x,y,null);
-                break;
-            case WALK:
-                g.drawImage(animationOfWalk.get(0),x,y,null);
-                break;
-            case STUN:
-                g.drawImage(animationOfStun.get(0),x,y,null);
-                break;
-            case FIGHT:
-                g.drawImage(animationOfFight.get(0),x,y,null);
-                break;
-            case DEAD:
-                g.drawImage(animationOfDead.get(0),x,y,null);
-                break;
 
-        }
-    }
-
-    private void getImgAnimationOf() {
-//  WALK
-        animationOfWalk.add(getImg(""));
-//  STAY
-        animationOfStay.add(getImg(""));
-//  STUN
-        animationOfStun.add(getImg(""));
-//  FIGHT
-        animationOfFight.add(getImg(""));
-//  DEAD
-        animationOfDead.add(getImg(""));
-    }
 
     private void getResists() {
         mr = Constants.AllyType.getMR(allyType);

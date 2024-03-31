@@ -20,13 +20,13 @@ public class Barracks extends Tower {
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                allys.add(new Knight(this.getX() * 64, this.getY() * 64, KNIGHT, 1));
+                allys.add(new Knight(this.getX() * 64, this.getY() * 64, KNIGHT, lvl,this.getX() * 64, this.getY() * 64));
                 break;
             case 2:
-                allys.add(new Mage(this.getX() * 64, this.getY() * 64, MAGE, 1));
+                allys.add(new Knight(this.getX() * 64, this.getY() * 64, KNIGHT, lvl,this.getX() * 64, this.getY() * 64));
                 break;
             case 3:
-                allys.add(new Hunter(this.getX() * 64, this.getY() * 64, HUNTER, 1));
+                allys.add(new Knight(this.getX() * 64, this.getY() * 64, KNIGHT, lvl,this.getX() * 64, this.getY() * 64));
                 break;
         }
         return;
