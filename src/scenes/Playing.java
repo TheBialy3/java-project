@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static helpz.Constants.Tiles.GRASS_TILE;
+import static helpz.Constants.Tiles.*;
 import static helpz.Constants.TowerType.*;
 import static helpz.LoadSave.getCardChooseSprite;
 import static helpz.LoadSave.getCardSprite;
@@ -170,6 +170,9 @@ public class Playing extends GameScene implements SceneMethods {
         projectileManager.draw(g);
         drawBeam(g);
 
+        if (selectedTower != null) {
+            drawColoredTiles(g);
+        }
         switch (playState) {
             case PLAY_PLAY:
 
@@ -201,6 +204,26 @@ public class Playing extends GameScene implements SceneMethods {
                 drawCardsToSelect(g);
 
                 break;
+        }
+    }
+
+    private void drawColoredTiles(Graphics g) {
+        for (int y = 0; y < lvl.length; y++) {
+            for (int x = 0; x < lvl[y].length; x++) {
+                if (isTileGrass(x* tilePixelNumber, y* tilePixelNumber) && getTowerAt(x* tilePixelNumber, y* tilePixelNumber) == null) {
+                    g.setColor(new Color(1, 242, 1, 50));
+                } else {
+                    g.setColor(new Color(242, 1, 1, 50));
+                }
+                g.fillRect(x * tilePixelNumber, y * tilePixelNumber, tilePixelNumber, tilePixelNumber);
+
+            }
+        }
+    }
+
+    private void drawSelectedTower(Graphics g) {
+        if (selectedTower != null && mouseY < lvl.length && mouseX < lvl[0].length) {
+            g.drawImage(towerManager.getTowerImg()[selectedTower.getTowerType()], mouseX, mouseY, null);
         }
     }
 
@@ -618,11 +641,6 @@ public class Playing extends GameScene implements SceneMethods {
         }
     }
 
-    private void drawSelectedTower(Graphics g) {
-        if (selectedTower != null) {
-            g.drawImage(towerManager.getTowerImg()[selectedTower.getTowerType()], mouseX, mouseY, null);
-        }
-    }
 
     private void drawLevel(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {

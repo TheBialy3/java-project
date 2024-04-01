@@ -208,7 +208,7 @@ public class TowerManager {
                 if (e.isAlive()) {
                     if (isEnemyInRange(t, e)) {
                         if (t.getTowerType() == SCARECROW) {
-                            if (getTargetMoveTypeTower(t.getTowerType())==getMoveType(e.getEnemyType())) {
+                            if (getTargetMoveTypeTower(t.getTowerType()) == getMoveType(e.getEnemyType())) {
                                 e.hurt(t.getDmg() * percent / 100, getDmgTypeTower(t.getTowerType()));
                             }
                         } else {
@@ -323,7 +323,7 @@ public class TowerManager {
         float closeDistance = 2000;
         float distance;
         for (Tower tower : towers) {
-            if(tower.getTowerType()!=BANK){
+            if (tower.getTowerType() != BANK) {
                 distance = getDistance(x, y, tower);
                 if (closeDistance > distance) {
                     closeTower = tower.getId();
@@ -415,10 +415,8 @@ public class TowerManager {
 
     public Tower getTowerAt(int x, int y) {
         for (Tower t : towers) {
-            if (t.getX() == x) {
-                if (t.getY() == y) {
-                    return t;
-                }
+            if (t.getX() == x && t.getY() == y) {
+                return t;
             }
         }
         return null;
@@ -847,9 +845,9 @@ public class TowerManager {
     }
 
     public void updateBanks() {
-        for(Tower tower:towers){
-            if(tower.getTowerType()==BANK){
-                tower.updateTowerWorthGold((int) (tower.getWorthGold()*1.1));
+        for (Tower tower : towers) {
+            if (tower.getTowerType() == BANK) {
+                tower.updateTowerWorthGold((int) (tower.getWorthGold() * 1.1));
             }
         }
     }
