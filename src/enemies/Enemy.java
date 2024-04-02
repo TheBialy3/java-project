@@ -6,9 +6,11 @@ import main.Game;
 import managers.EnemyManager;
 import managers.TowerManager;
 import managers.WaveManager;
+import objects.PathPoint;
 
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
@@ -27,16 +29,19 @@ public abstract class Enemy {
     protected int dmg, duration = 0;
     protected int slowTickLimit = 10, slowTick = slowTickLimit;
     protected int countdown = 0;
-    protected int maxHealth, health, mr, armor,attack,attackType;
-    protected Ally allyToAttack=null;
-    protected int attackAnimation ,attackAnimationLimit;
-    protected int ID;
+    protected int maxHealth, health, mr, armor, attack, attackType;
+    protected Ally allyToAttack = null;
+    protected int attackAnimation, attackAnimationLimit;
+    protected int ID,pathPointLimit;
     protected int enemyType, damageType;
-    protected int lastDir;
+    protected int lastDir,nextPointId=0;
     protected boolean alive = false, poisoned = false;
     public float slowPower = 1f, distancePast = 0;
     protected boolean power = false;
     protected boolean targetable = true;
+    protected float speed, xSpeed, ySpeed;
+    protected PathPoint nextPathPoint;
+    protected ArrayList<PathPoint> wayForEnemies = new ArrayList<>();
     EnemyStatus enemyStatus = EnemyStatus.WALK;
 
     protected enum EnemyStatus {
@@ -56,6 +61,7 @@ public abstract class Enemy {
         this.enemyManager = enemyManager;
         this.waveManager = waveManager;
         this.towerManager = towerManager;
+        float speed = getSpeed(enemyType);
         if (enemyType != CAMEL_JUNIOR) {
             alive = true;
         }
@@ -66,8 +72,29 @@ public abstract class Enemy {
         setPower();
         setResists(enemyType);
     }
+    public Enemy(float x, float y, int ID, int enemyType,ArrayList<PathPoint> wayForEnemies, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
+        this.x = x;
+        this.y = y;
+        this.ID = ID;
+        this.enemyType = enemyType;
+        this.enemyManager = enemyManager;
+        this.waveManager = waveManager;
+        this.towerManager = towerManager;
+        moveSet(wayForEnemies);
+        alive = true;
+        setBounds(enemyType);
+        lastDir = -1;
+        setStartHealth();
+        setStartingAttack();
+        setPower();
+        setResists(enemyType);
+    }
 
-
+    private void moveSet(ArrayList<PathPoint> wayForEnemies) {
+        speed = getSpeed(enemyType);
+        pathPointLimit =wayForEnemies.size();
+        this.wayForEnemies=wayForEnemies;
+    }
 
 
     public void update(int dir) {
@@ -77,6 +104,7 @@ public abstract class Enemy {
                 break;
             case WALK:
                 move(dir);
+               // updateEnemyMove();
                 break;
             case STUN:
 
@@ -97,13 +125,63 @@ public abstract class Enemy {
         if (!allyToAttack.isAlive()) {
             allyToAttack = null;
             attackAnimation = 0;
-            enemyStatus=EnemyStatus.WALK;
+            enemyStatus = EnemyStatus.WALK;
         }
+    }
+
+    public void setNextMove() {
+        int xDist;
+        int yDist;
+
+        xDist = (int) (x - nextPathPoint.getxCord());
+        yDist = (int) (y - nextPathPoint.getyCord());
+
+
+        int totDist = Math.abs(xDist) + Math.abs(yDist);
+        float xPer = (float) Math.abs(xDist) / totDist;
+
+        xSpeed = xPer * Constants.EnemyType.getSpeed(enemyType);
+        ySpeed = Constants.EnemyType.getSpeed(enemyType) - xSpeed;
+
+        if (x > nextPathPoint.getxCord()) {
+            xSpeed *= -1;
+        }
+        if (y > nextPathPoint.getyCord()) {
+            ySpeed *= -1;
+        }
+    }
+
+    private void updateEnemyMove() {
+        x += xSpeed;
+        y += ySpeed;
+        if (didAllyPass(nextPathPoint.getxCord(), nextPathPoint.getyCord())) {
+            getNextPathPoint();
+            setNextMove();
+        }
+    }
+
+    private void getNextPathPoint() {
+        if (pathPointLimit==nextPointId){
+            kill();
+            enemyManager.playingRemoveOneLive();
+            return;
+        }
+        nextPathPoint=wayForEnemies.get(nextPointId);
+        nextPointId++;
+    }
+
+    private boolean didAllyPass(float toX, float toY) {
+        int xDist;
+        int yDist;
+        xDist = (int) (x - toX + 30);
+        yDist = (int) (y - toY);
+        return (xDist > xDist + xSpeed || yDist > yDist + ySpeed);
+
     }
 
     public void move(int dir) {
         lastDir = dir;
-        float speed = getSpeed(enemyType);
+
         if (enemyManager.isCard8()) {
             speed = speed + 0.1f;
         }
@@ -150,9 +228,10 @@ public abstract class Enemy {
         }
 
     }
+
     private void setStartingAttack() {
-        attack=getAttackEnemy(enemyType);
-        attackType=getDmgTypeEnemy(enemyType);
+        attack = getAttackEnemy(enemyType);
+        attackType = getDmgTypeEnemy(enemyType);
     }
 
     public void healThis(int heal) {
@@ -189,6 +268,14 @@ public abstract class Enemy {
         this.x = x;
         this.y = y;
         this.alive = true;
+        setStartHealth();
+        this.distancePast = distancePast;
+    }
+    public void reuse(float x, float y, float distancePast,int nextPointId) {
+        this.x = x;
+        this.y = y;
+        this.alive = true;
+        this.nextPointId=nextPointId;
         setStartHealth();
         this.distancePast = distancePast;
     }
