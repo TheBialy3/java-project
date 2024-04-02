@@ -25,6 +25,7 @@ public class EnemyManager {
     private Playing playing;
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> wayForEnemies = new ArrayList<>();
     private PathPoint start, end;
     private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
 
@@ -186,6 +187,7 @@ public class EnemyManager {
         }
     }
 
+
     private void updateEnemyMoveNew(Enemy e) {
         PathPoint currTile = getEnemyTile(e);
         int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
@@ -207,6 +209,9 @@ public class EnemyManager {
             }
         }
 
+    }
+    public void playingRemoveOneLive(){
+        playing.removeOneLive();
     }
 
     private boolean isTilesTheSame(PathPoint currTile, PathPoint newTile) {
