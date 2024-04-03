@@ -25,7 +25,7 @@ public class EnemyManager {
     private Playing playing;
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
-    private ArrayList<Enemy> wayForEnemies = new ArrayList<>();
+    private ArrayList<PathPoint> wayForEnemies = new ArrayList<>();
     private PathPoint start, end;
     private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
 
@@ -44,6 +44,15 @@ public class EnemyManager {
         this.start = start;
         this.end = end;
         loadRoadDirArr();
+        loadEnemyImages();
+        loadEffectsImages();
+    }
+    public EnemyManager(Playing playing,ArrayList<PathPoint> wayForEnemies, WaveManager waveManager ,TowerManager towerManager) {
+        this.waveManager = waveManager;
+        this.towerManager=towerManager;
+        this.playing = playing;
+        this.start = wayForEnemies.get(0);
+        this.end = wayForEnemies.get(wayForEnemies.size()-1);
         loadEnemyImages();
         loadEffectsImages();
     }
