@@ -187,6 +187,10 @@ public class MyButton {
         return mousePressed;
     }
 
+    public String getText() {
+        return text;
+    }
+
     public void setX(int x) {
         this.x = x;
         initBounds();
