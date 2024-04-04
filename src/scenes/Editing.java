@@ -17,11 +17,11 @@ public class Editing extends GameScene implements SceneMethods {
 
     private static int[][] lvl;
     private static int[][] dirArr;
-    private ArrayList<PathPoint> enemyPathRoad =new ArrayList<>();
+    private ArrayList<PathPoint> enemyPathRoad = new ArrayList<>();
     private Tile selectedTile;
 
     private int mouseX, mouseY;
-    private boolean drawSelect;
+    private boolean drawSelect, PathRoad = false;
     private int tileXLast, tileYLast, lastTileId;
     private static int chosenLvl = 1;
 
@@ -72,11 +72,14 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void drawPathPoint(Graphics g) {
-        if (start != null) {
-            g.drawImage(toolBar.getPathStartImg(), start.getxCord() * 64, start.getyCord() * 64, 64, 64, null);
-        }
-        if (end != null) {
-            g.drawImage(toolBar.getPathEndImg(), end.getxCord() * 64, end.getyCord() * 64, 64, 64, null);
+        int i = 0;
+        if (!enemyPathRoad.isEmpty()) {
+            for (PathPoint point : enemyPathRoad) {
+                g.setColor(new Color(100,100,100));
+                g.drawOval(point.getxCord(), point.getyCord(), 40, 40);
+                g.drawString(i + "", point.getxCord(), point.getyCord());
+                i++;
+            }
         }
     }
 
@@ -104,7 +107,6 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void saveLevel() {
         LoadSave.SaveLevel("level" + chosenLvl, lvl, start, end, dirArr);
-        game.getPlaying().resetEverything();
         game.initClasses();
     }
 
@@ -114,7 +116,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void changedTile(int x, int y) {
-        if (selectedTile != null) {
+
             int tileX = x / 64;
             int tileY = y / 64;
             if (selectedTile.getId() >= 0) {
@@ -139,7 +141,7 @@ public class Editing extends GameScene implements SceneMethods {
                     }
                 }
             }
-        }
+
     }
 
 
@@ -148,7 +150,11 @@ public class Editing extends GameScene implements SceneMethods {
         if (x >= 1280) {
             toolBar.mouseClicked(x, y);
         } else {
-            changedTile(mouseX, mouseY);
+            if (selectedTile != null) {
+            changedTile(mouseX, mouseY);}
+            else if(PathRoad){
+                enemyPathRoad.add(new PathPoint(x,y));
+            }
         }
     }
 
@@ -190,7 +196,20 @@ public class Editing extends GameScene implements SceneMethods {
                 break;
             case KeyEvent.VK_1:
                 break;
+            case KeyEvent.VK_ESCAPE:
+                setPathRoad(false);
+                break;
         }
+    }
+
+    public void setPathRoad(Boolean b) {
+        PathRoad = b;
+    }
+    public Boolean getPathRoad() {
+       return PathRoad ;
+    }
+    public void resetEnemyPathRoad() {
+        enemyPathRoad.clear();
     }
 
 
