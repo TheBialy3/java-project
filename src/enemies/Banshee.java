@@ -3,14 +3,16 @@ package enemies;
 import managers.EnemyManager;
 import managers.TowerManager;
 import managers.WaveManager;
+import objects.PathPoint;
+
+import java.util.ArrayList;
 
 import static helpz.Constants.EnemyType.BANSHEE;
 
 
 public class Banshee extends Enemy{
-    public Banshee(float x, float y, int ID, EnemyManager em, WaveManager wm, TowerManager tm) {
-        super(x, y, ID, BANSHEE, em, wm,tm);
-
+    public Banshee(float x, float y, int ID, int enemyType, ArrayList<PathPoint> wayForEnemies, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
+        super(x, y, ID, enemyType, wayForEnemies, enemyManager, waveManager, towerManager);
     }
 
     public void heal(int heal) {

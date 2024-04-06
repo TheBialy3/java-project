@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public abstract class Tower {
 
-    private int tickSlow=0, tickStun=0, cdTick, standardCD;
+    private int tickSlow = 0, tickStun = 0, cdTick, standardCD;
     private int x, y, id, towerType, dmg, worthGold, duration;
-    public int lvl=0, xp = 0, xpToLvlUp = 100;
+    public int lvl = 0, xp = 0, xpToLvlUp = 100;
     private float range, coolDown, slow;
     private ArrayList<Integer> arr = new ArrayList<>();
-    private int[][] road;
-    private boolean stun= false,attackSlow= false;
+
+    private boolean stun = false, attackSlow = false;
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
     private TowerManager towerManager;
 
 
-    public Tower(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
+    public Tower(int x, int y, int id, int towerType, TowerManager towerManager) {
         this.x = x;
         this.y = y;
         this.id = id;
@@ -28,7 +28,6 @@ public abstract class Tower {
         setDefaultRange();
         setDefaultCoolDown();
         this.worthGold = Constants.TowerType.getCost(towerType);
-        this.road = road;
         setDefaultSlow();
         setDefaultDuration();
         if (this.towerManager.isCard3()) {
@@ -39,56 +38,60 @@ public abstract class Tower {
     }
 
     public void update() {
-        if(!stun){
-        cdTick++;
+        if (!stun) {
+            cdTick++;
         }
-        if(tickStun>0){
+        if (tickStun > 0) {
             tickStun--;
-        }else if(tickStun<=0){
-           stun=false;
+        } else if (tickStun <= 0) {
+            stun = false;
         }
 
-        if(tickSlow>0){
+        if (tickSlow > 0) {
             tickSlow--;
-        }else if(tickSlow<=0){
-            attackSlow=false;
+        } else if (tickSlow <= 0) {
+            attackSlow = false;
             setStandardCD();
         }
+        if (isCoolDownOver() && this instanceof MineFactory) {
+            ((MineFactory) this).addAmmo();
+        }
     }
-
 
 
     private void setStandardCD() {
-        coolDown=standardCD;
+        coolDown = standardCD;
     }
 
-    public void setStun(float time){
-        if(tickStun<(int)time*60){
-        tickStun=(int)time*60;
-        stun=true;}
+    public void setStun(float time) {
+        if (tickStun < (int) time * 60) {
+            tickStun = (int) time * 60;
+            stun = true;
+        }
     }
 
     public void lvlUp() {
         attackLvlUp();
         lvl++;
-        xp=0;
-        xpToLvlUp*= (int) 1.1;
+        xp = 0;
+        xpToLvlUp *= (int) 1.1;
     }
 
     private void attackLvlUp() {
         dmg *= (int) 1.1;
     }
 
-//    public void setSlow(float time,int percent){
+    //    public void setSlow(float time,int percent){
 //
 //            tickSlow = (int) time * 60;
 //            setBiggerCD(percent);
 //            attackSlow = true;
 //
 //    }
-    public void setBiggerCD(int percent){
+    public void setBiggerCD(int percent) {
 
     }
+
     public int getWorthGold() {
         return worthGold;
     }
@@ -200,7 +203,7 @@ public abstract class Tower {
                 CoolDown(30);
             }
         }
-        standardCD=(int) coolDown;
+        standardCD = (int) coolDown;
     }
 
     private void CoolDown(int percent) {
@@ -329,65 +332,6 @@ public abstract class Tower {
         return towerType;
     }
 
-    public void isRoadNextTot() {
-        try {
-            if (road[y / 64 - 1][x / 64 - 1] != 17) {
-                arr.add(1);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 1");
-        }
-        try {
-            if (road[y / 64 - 1][x / 64] != 17) {
-                arr.add(2);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 2");
-        }
-        try {
-            if (road[y / 64 - 1][x / 64 + 1] != 17) {
-                arr.add(3);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 3");
-        }
-        try {
-            if (road[y / 64][x / 64 - 1] != 17) {
-                arr.add(4);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 4");
-        }
-        try {
-            if (road[y / 64][x / 64 + 1] != 17) {
-                arr.add(5);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 5");
-        }
-        try {
-            if (road[y / 64 + 1][x / 64 - 1] != 17) {
-                arr.add(6);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 6");
-        }
-        try {
-            if (road[y / 64 + 1][x / 64] != 17) {
-                arr.add(7);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 7");
-        }
-        try {
-            if (road[y / 64 + 1][x / 64 + 1] != 17) {
-                arr.add(8);
-            }
-        } catch (Exception e) {
-            System.out.println("Out of bound 8");
-        }
-
-    }
 
     public ArrayList<Integer> getArr() {
         return arr;
@@ -471,7 +415,7 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(1);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(1);
-            }else if (this instanceof Scarecrow) {
+            } else if (this instanceof Scarecrow) {
                 ((Scarecrow) this).upgrade(1);
             }
 
@@ -502,7 +446,7 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(2);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(2);
-            }else if (this instanceof Scarecrow) {
+            } else if (this instanceof Scarecrow) {
                 ((Scarecrow) this).upgrade(2);
             }
         }
@@ -532,7 +476,7 @@ public abstract class Tower {
                 ((Sniper) this).upgrade(3);
             } else if (this instanceof LaserTower) {
                 ((LaserTower) this).upgrade(3);
-            }else if (this instanceof Scarecrow) {
+            } else if (this instanceof Scarecrow) {
                 ((Scarecrow) this).upgrade(3);
             }
         }

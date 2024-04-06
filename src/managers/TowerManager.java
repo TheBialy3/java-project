@@ -25,11 +25,9 @@ public class TowerManager {
     private BufferedImage[] towerImg, upgradeImg, BuffsImg, towersSideImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
-    private ArrayList<Integer> arrForMineTower = new ArrayList<>();
     private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 5, BuffsImgNumber = 1, TowersSideImgNumber = 180, animationIndex;
     private Random random = new Random();
     private PathPoint e;
-    private int[][] road;
 
     private boolean Card0 = false, Card1 = false, Card2 = false, Card3 = false, Card4 = false, Card5 = false, Card6 = false, Card12 = false;
     private boolean Card14 = false, Card15 = false, Card17 = false, Card18 = false, Card19 = false, Card20 = false, Card21 = false;
@@ -42,7 +40,6 @@ public class TowerManager {
         this.playing = playing;
         loadTowerImages();
         loadUpgradeImg();
-        loadRoadDirArr();
         loadTowerBuffsImg();
         loadTowerSideImg();
     }
@@ -104,10 +101,6 @@ public class TowerManager {
         }
     }
 
-    private void loadRoadDirArr() {
-        road = LoadSave.GetLevelDir();
-    }
-
     private void loadTowerImages() {
         BufferedImage atlas = LoadSave.getSpriteAtlas();
         int imageInRow = 9;
@@ -120,41 +113,40 @@ public class TowerManager {
     public void addTower(Tower selectedTower, int x, int y) {
         switch (selectedTower.getTowerType()) {
             case ARCHER:
-                towers.add(new Archer(x, y, towerAmount++, ARCHER, this, road));
+                towers.add(new Archer(x, y, towerAmount++, ARCHER, this));
                 break;
             case CANNON:
-                towers.add(new Cannon(x, y, towerAmount++, CANNON, this, road));
+                towers.add(new Cannon(x, y, towerAmount++, CANNON, this));
                 break;
             case FROST_MAGE:
-                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, this, road));
+                towers.add(new FrostMage(x, y, towerAmount++, FROST_MAGE, this));
                 break;
             case MINES_FACTORY:
-                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, this, road));
-                towers.get(towers.size() - 1).isRoadNextTot();
+                towers.add(new MineFactory(x, y, towerAmount++, MINES_FACTORY, this));
                 break;
             case POISON_TOWER:
-                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, this, road));
+                towers.add(new PoisonTower(x, y, towerAmount++, POISON_TOWER, this));
                 break;
             case BOOM_VOLCANO:
-                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, this, road));
+                towers.add(new BoomTower(x, y, towerAmount++, BOOM_VOLCANO, this));
                 break;
             case CROSSBOW:
-                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW, this, road));
+                towers.add(new Crossbow(x, y, towerAmount++, CROSSBOW, this));
                 break;
             case MOUSE_FOLLOWS_TOWER:
-                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, this, road));
+                towers.add(new MauseFollowsTower(x, y, towerAmount++, MOUSE_FOLLOWS_TOWER, this));
                 break;
             case SNIPER:
-                towers.add(new Sniper(x, y, towerAmount++, SNIPER, this, road));
+                towers.add(new Sniper(x, y, towerAmount++, SNIPER, this));
                 break;
             case LASER_TOWER:
-                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, this, road));
+                towers.add(new LaserTower(x, y, towerAmount++, LASER_TOWER, this));
                 break;
             case SCARECROW:
-                towers.add(new Scarecrow(x, y, towerAmount++, SCARECROW, this, road));
+                towers.add(new Scarecrow(x, y, towerAmount++, SCARECROW, this));
                 break;
             case BANK:
-                towers.add(new Bank(x, y, towerAmount++, BANK, this, road));
+                towers.add(new Bank(x, y, towerAmount++, BANK, this));
                 break;
             default:
                 break;
@@ -172,9 +164,7 @@ public class TowerManager {
     public void update() {
         for (Tower t : towers) {
             t.update();
-            if (t.getTowerType() == MINES_FACTORY) {
-                setMine(t);
-            } else if (t.getTowerType() == FROST_MAGE) {
+            if (t.getTowerType() == FROST_MAGE) {
                 slowEnemyIfClose(t);
                 if (Card20) {
                     hurtAllEnemyIfClose(t, 100);
@@ -342,61 +332,7 @@ public class TowerManager {
         return (float) sqrt(xDiff * xDiff + yDiff * yDiff);
     }
 
-    private void setMine(Tower t) {
-        int a = t.arrSize();
-        if (a != 0) {
-            if (!playing.isAllEnemyDead()) {
-                if (t.isCoolDownOver()) {
-                    int mineNumber = 3;
-                    if (Card23) {
-                        mineNumber *= 2;
-                    }
-                    for (int i = mineNumber; i > 0; i--) {
-                        arrForMineTower = t.getArr();
-                        ran = random.nextInt(a);
-                        switch (arrForMineTower.get(ran)) {
-                            case 1:
-                                PathPoint a1 = new PathPoint(t.getX() - 64, t.getY() - 64);
-                                e = a1;
-                                break;
-                            case 2:
-                                PathPoint a2 = new PathPoint(t.getX(), t.getY() - 64);
-                                e = a2;
-                                break;
-                            case 3:
-                                PathPoint a3 = new PathPoint(t.getX() + 64, t.getY() - 64);
-                                e = a3;
-                                break;
-                            case 4:
-                                PathPoint a4 = new PathPoint(t.getX() - 64, t.getY());
-                                e = a4;
-                                break;
-                            case 5:
-                                PathPoint a5 = new PathPoint(t.getX() + 64, t.getY());
-                                e = a5;
-                                break;
-                            case 6:
-                                PathPoint a6 = new PathPoint(t.getX() - 64, t.getY() + 64);
-                                e = a6;
-                                break;
-                            case 7:
-                                PathPoint a7 = new PathPoint(t.getX(), t.getY() + 64);
-                                e = a7;
-                                break;
-                            case 8:
-                                PathPoint a8 = new PathPoint(t.getX() + 64, t.getY() + 64);
-                                e = a8;
-                                break;
-                        }
-                        playing.setMine(t, e);
-                    }
-                    t.resetCoolDown();
-                }
-            }
-        } else {
-            System.out.print(a);
-        }
-    }
+
 
 
     private boolean isEnemyInRange(Tower t, Enemy e) {

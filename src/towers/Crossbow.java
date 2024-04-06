@@ -3,8 +3,8 @@ package towers;
 import managers.TowerManager;
 
 public class Crossbow  extends Tower {
-    public Crossbow(int x, int y, int id, int towerType , TowerManager towerManager, int[][] road) {
-        super(x, y, id, towerType,  towerManager,road);
+    public Crossbow(int x, int y, int id, int towerType , TowerManager towerManager) {
+        super(x, y, id, towerType,  towerManager);
 
     }
 

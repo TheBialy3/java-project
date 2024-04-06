@@ -31,7 +31,7 @@ public class EnemyManager {
 
     private int ranL = random.nextInt(25), ranR = random.nextInt(25);
     private BufferedImage[] enemyEffects;
-    private int[][] roadDirArr;
+
     protected WaveManager waveManager;
     protected TowerManager towerManager;
 
@@ -72,7 +72,7 @@ public class EnemyManager {
     }
 
     private void loadRoadDirArr() {
-        roadDirArr = LoadSave.GetLevelDir();
+        wayForEnemies = LoadSave.GetLevelDir();
     }
 
     private void loadEffectsImages() {
@@ -101,41 +101,41 @@ public class EnemyManager {
         int y = start.getyCord() * tilePixelNumber;
         switch (enemyType) {
             case ORC:
-                enemies.add(new Orc(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Orc(x, y, 0, ORC,wayForEnemies,this, waveManager, towerManager));
                 break;
             case SLIME:
-                enemies.add(new Slime(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Slime(x, y, 0,SLIME ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case TENTACLE:
-                enemies.add(new Tentacle(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Tentacle(x, y, 0,TENTACLE ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case ORK_ZOMBIE:
-                enemies.add(new OrcZombie(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new OrcZombie(x, y, 0,ORK_ZOMBIE ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case CAMEL:
-                enemies.add(new Camel(x, y, 0, this, waveManager, towerManager));
-                enemies.add(new CamelJunior(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Camel(x, y, 0,CAMEL ,wayForEnemies,this, waveManager, towerManager));
+                enemies.add(new CamelJunior(x, y, 0, CAMEL_JUNIOR,wayForEnemies,this, waveManager, towerManager));
                 break;
             case CAMEL_JUNIOR:
-                enemies.add(new CamelJunior(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new CamelJunior(x, y, 0,CAMEL_JUNIOR ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case BIRD:
-                enemies.add(new Bird(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Bird(x, y, 0,BIRD ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case GHOST:
-                enemies.add(new Ghost(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Ghost(x, y, 0,GHOST ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case ROCK:
-                enemies.add(new Rock(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Rock(x, y, 0,ROCK ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case CREEPY_CAT:
-                enemies.add(new CreepyCat(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new CreepyCat(x, y, 0,CREEPY_CAT ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case BIRD_SKELETON:
-                enemies.add(new BirdSkeleton(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new BirdSkeleton(x, y, 0,BIRD_SKELETON ,wayForEnemies,this, waveManager, towerManager));
                 break;
             case BANSHEE:
-                enemies.add(new Banshee(x, y, 0, this, waveManager, towerManager));
+                enemies.add(new Banshee(x, y, 0, BANSHEE,wayForEnemies,this, waveManager, towerManager));
                 break;
 
         }
@@ -146,7 +146,7 @@ public class EnemyManager {
         try {
             for (Enemy e : enemies) {
                 if (e.isAlive()) {
-                    updateEnemyMoveNew(e);
+                    e.update();
                     e.updateEnemyCountdown();
                 }
             }
@@ -197,28 +197,6 @@ public class EnemyManager {
     }
 
 
-    private void updateEnemyMoveNew(Enemy e) {
-        PathPoint currTile = getEnemyTile(e);
-        int dir = roadDirArr[currTile.getyCord()][currTile.getxCord()];
-
-        e.update(dir);
-
-        PathPoint newTile = getEnemyTile(e);
-
-        if (!isTilesTheSame(currTile, newTile)) {
-            if (isTilesTheSame(newTile, end)) {
-                e.kill();
-                playing.removeOneLive();
-                return;
-            }
-            int newDir = roadDirArr[newTile.getyCord()][newTile.getxCord()];
-            if (newDir != dir) {
-                e.setPos(newTile.getxCord() * tilePixelNumber, newTile.getyCord() * tilePixelNumber);
-                e.setLastDir(newDir);
-            }
-        }
-
-    }
     public void playingRemoveOneLive(){
         playing.removeOneLive();
     }
@@ -332,10 +310,6 @@ public class EnemyManager {
         Card10 = false;
         Card11 = false;
         Card12 = false;
-    }
-
-    public int[][] getRoadDirArr() {
-        return roadDirArr;
     }
 
 

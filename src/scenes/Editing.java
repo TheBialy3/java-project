@@ -16,7 +16,7 @@ public class Editing extends GameScene implements SceneMethods {
 
 
     private static int[][] lvl;
-    private static int[][] dirArr;
+
     private ArrayList<PathPoint> enemyPathRoad = new ArrayList<>();
     private Tile selectedTile;
 
@@ -39,7 +39,7 @@ public class Editing extends GameScene implements SceneMethods {
         ArrayList<PathPoint> points = LoadSave.getPathPoints();
         start = points.get(0);
         end = points.get(1);
-        dirArr = LoadSave.GetLevelDir();
+        enemyPathRoad = LoadSave.GetLevelDir();
     }
 
 
@@ -52,30 +52,15 @@ public class Editing extends GameScene implements SceneMethods {
         drawLevel(g);
         toolBar.draw(g);
         drawSelectedTile(g);
-        drawDirArr(g);
         drawPathPoint(g);
     }
 
-    private void drawDirArr(Graphics g) {
-        if (dirArr != null) {
-            for (int y = 0; y < lvl.length; y++) {
-                for (int x = 0; x < lvl[y].length; x++) {
-                    int id = dirArr[y][x];
-                    if (isAnimation(id)) {
-                        g.drawImage(getSprite(id, animationIndex), x * 64, y * 64, null);
-                    } else {
-                        g.drawImage(getSprite(id), x * 64, y * 64, null);
-                    }
-                }
-            }
-        }
-    }
 
     private void drawPathPoint(Graphics g) {
         int i = 0;
         if (!enemyPathRoad.isEmpty()) {
             for (PathPoint point : enemyPathRoad) {
-                g.setColor(new Color(100,100,100));
+                g.setColor(new Color(100, 100, 100));
                 g.drawOval(point.getxCord(), point.getyCord(), 40, 40);
                 g.drawString(i + "", point.getxCord(), point.getyCord());
                 i++;
@@ -106,7 +91,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("level" + chosenLvl, lvl, start, end, dirArr);
+        LoadSave.SaveLevel("level" + chosenLvl, lvl, enemyPathRoad);
         game.initClasses();
     }
 
@@ -117,30 +102,26 @@ public class Editing extends GameScene implements SceneMethods {
 
     private void changedTile(int x, int y) {
 
-            int tileX = x / 64;
-            int tileY = y / 64;
-            if (selectedTile.getId() >= 0) {
-                if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
-                    return;
-                }
-                tileXLast = tileX;
-                tileYLast = tileY;
-                lastTileId = selectedTile.getId();
-                if (selectedTile.getId() > 16) {
-                    dirArr[tileY][tileX] = selectedTile.getId();
-                } else {
-                    lvl[tileY][tileX] = selectedTile.getId();
-                }
-            } else {
-                int id = lvl[tileY][tileX];
-                if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
-                    if (selectedTile.getId() == -1) {
-                        start = new PathPoint(tileX, tileY);
-                    } else if (selectedTile.getId() == -2) {
-                        end = new PathPoint(tileX, tileY);
-                    }
+        int tileX = x / 64;
+        int tileY = y / 64;
+        if (selectedTile.getId() >= 0) {
+            if (tileXLast == tileX && tileYLast == tileY && lastTileId == selectedTile.getId()) {
+                return;
+            }
+            tileXLast = tileX;
+            tileYLast = tileY;
+            lastTileId = selectedTile.getId();
+            lvl[tileY][tileX] = selectedTile.getId();
+        } else {
+            int id = lvl[tileY][tileX];
+            if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
+                if (selectedTile.getId() == -1) {
+                    start = new PathPoint(tileX, tileY);
+                } else if (selectedTile.getId() == -2) {
+                    end = new PathPoint(tileX, tileY);
                 }
             }
+        }
 
     }
 
@@ -151,9 +132,9 @@ public class Editing extends GameScene implements SceneMethods {
             toolBar.mouseClicked(x, y);
         } else {
             if (selectedTile != null) {
-            changedTile(mouseX, mouseY);}
-            else if(PathRoad){
-                enemyPathRoad.add(new PathPoint(x,y));
+                changedTile(mouseX, mouseY);
+            } else if (PathRoad) {
+                enemyPathRoad.add(new PathPoint(x, y));
             }
         }
     }
@@ -205,9 +186,11 @@ public class Editing extends GameScene implements SceneMethods {
     public void setPathRoad(Boolean b) {
         PathRoad = b;
     }
+
     public Boolean getPathRoad() {
-       return PathRoad ;
+        return PathRoad;
     }
+
     public void resetEnemyPathRoad() {
         enemyPathRoad.clear();
     }

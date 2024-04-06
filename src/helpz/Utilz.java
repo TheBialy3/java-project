@@ -1,5 +1,7 @@
 package helpz;
 
+import objects.PathPoint;
+
 import java.util.ArrayList;
 
 public class Utilz {
@@ -17,12 +19,13 @@ public class Utilz {
         return newArr;
 
     }
+
     public static int[][] ArrayListTo2DintStartAt(ArrayList<Integer> list, int ySize, int xSize, int startIndex) {
         int[][] newArr = new int[ySize][xSize];
 
         for (int j = 0; j < newArr.length; j++)
             for (int i = 0; i < newArr[j].length; i++) {
-                int index = j * ySize + i+startIndex;
+                int index = j * ySize + i + startIndex;
                 newArr[j][i] = list.get(index);
             }
 
@@ -52,4 +55,17 @@ public class Utilz {
 
     }
 
+    public static int[] PathPointArrayForSave(ArrayList<PathPoint> enemyPathRoad) {
+        int[] oneArr = new int[enemyPathRoad.size() * 2];
+        for (int i = 0; i < enemyPathRoad.size(); i++) {
+            int index = enemyPathRoad.size() + i;
+            oneArr[index] = enemyPathRoad.get(i).getxCord();
+        }
+        for (int i = 0; i < enemyPathRoad.size(); i++) {
+            int index = enemyPathRoad.size() + i;
+            oneArr[index] = enemyPathRoad.get(i).getyCord();
+        }
+
+        return oneArr;
+    }
 }

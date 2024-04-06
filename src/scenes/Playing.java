@@ -30,25 +30,21 @@ import static helpz.LoadSave.getCardSprite;
 public class Playing extends GameScene implements SceneMethods {
     private CardLook cardLook1, cardLook2, cardLook3;
     private static int[][] lvl;
-    private int[][] road;
     private PlayingBar playingBar;
-    private int mouseX, mouseY, mX, mY, tilePixelNumber = 64;
+    private int mouseX, mouseY, mX, mY, tilePixelNumber = 64,shuffles = 2;
     private EnemyManager enemyManager;
     private ProjectileManager projectileManager;
     private TowerManager towerManager;
     private WaveManager waveManager;
     private Bestiary bestiary;
-    private MyButton bReturn;
-    private MyButton bReplay;
-    private int shuffles = 2;
+    private MyButton bReturn,bReplay;
+
     private MyButton reshuffle;
     private MyButton bCard1, bCard2, bCard3;
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = loadLogos();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
-    private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Card> winCards = new ArrayList<>();
-    private ArrayList<Card> threeCards = new ArrayList<>();
+    private ArrayList<Card> cards = new ArrayList<>(),winCards = new ArrayList<>(), threeCards = new ArrayList<>();
     private Random random = new Random();
     private Tower selectedTower;
     private int goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
@@ -822,62 +818,62 @@ public class Playing extends GameScene implements SceneMethods {
         }
         if (e.getKeyCode() == KeyEvent.VK_Q) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(ARCHER))) {
-                selectedTower = new Archer(1555, 15555, 0, ARCHER, towerManager, road);
+                selectedTower = new Archer(1555, 15555, 0, ARCHER, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_W) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CANNON))) {
-                selectedTower = new Cannon(1555, 15555, 0, CANNON, towerManager, road);
+                selectedTower = new Cannon(1555, 15555, 0, CANNON, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_E) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(FROST_MAGE))) {
-                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE, towerManager, road);
+                selectedTower = new FrostMage(1555, 15555, 0, FROST_MAGE, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MINES_FACTORY))) {
-                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY, towerManager, road);
+                selectedTower = new MineFactory(1555, 15555, 0, MINES_FACTORY, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_T) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(POISON_TOWER))) {
-                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER, towerManager, road);
+                selectedTower = new PoisonTower(1555, 15555, 0, POISON_TOWER, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_Y) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(BOOM_VOLCANO))) {
-                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO, towerManager, road);
+                selectedTower = new BoomTower(1555, 15555, 0, BOOM_VOLCANO, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_A) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(CROSSBOW))) {
-                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW, towerManager, road);
+                selectedTower = new Crossbow(1555, 15555, 0, CROSSBOW, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(MOUSE_FOLLOWS_TOWER))) {
-                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, towerManager, road);
+                selectedTower = new MauseFollowsTower(1555, 15555, 0, MOUSE_FOLLOWS_TOWER, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(SNIPER))) {
-                selectedTower = new Sniper(1555, 15555, 0, SNIPER, towerManager, road);
+                selectedTower = new Sniper(1555, 15555, 0, SNIPER, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_F) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(LASER_TOWER))) {
-                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, towerManager, road);
+                selectedTower = new LaserTower(1555, 15555, 0, LASER_TOWER, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_G) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(SCARECROW))) {
-                selectedTower = new Scarecrow(1555, 15555, 0, SCARECROW, towerManager, road);
+                selectedTower = new Scarecrow(1555, 15555, 0, SCARECROW, towerManager);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_H) {
             if (playingBar.isEnoughGold(Constants.TowerType.getCost(BANK))) {
-                selectedTower = new Bank(1555, 15555, 0, BANK, towerManager, road);
+                selectedTower = new Bank(1555, 15555, 0, BANK, towerManager);
             }
         }
     }
@@ -951,10 +947,6 @@ public class Playing extends GameScene implements SceneMethods {
         return waveManager;
     }
 
-    public int[][] getRoadDirArr() {
-        road = enemyManager.getRoadDirArr();
-        return road;
-    }
 
     public int getMouseX() {
         return mX;

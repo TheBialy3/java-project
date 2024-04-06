@@ -68,17 +68,14 @@ public class LoadSave {
 
 
 
-    private static void WriteToFile(File f, int[] idArr, PathPoint start, PathPoint end, int[] directionArr) {//
+    private static void WriteToFile(File f, int[] idArr,int[] enemyPathRoad,int sizeOfEnemyPathRoad) {//
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
                 pw.println(i);
             }
-            pw.println(start.getxCord());
-            pw.println(start.getyCord());
-            pw.println(end.getxCord());
-            pw.println(end.getyCord());
-            for (Integer i : directionArr) {
+            pw.println(sizeOfEnemyPathRoad);
+            for (Integer i : enemyPathRoad) {
                 pw.println(i);
             }
             pw.close();
@@ -183,11 +180,17 @@ public class LoadSave {
         }
     }
 
-    public static int[][] GetLevelDir() {
+    public static ArrayList<PathPoint> GetLevelDir() {
         File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
-            return Utilz.ArrayListTo2DintStartAt(list, 20, 20, 404);
+            ArrayList<PathPoint> pathForEnemies=new ArrayList<>();
+             int startIndex=400;
+            int j=list.get(startIndex);
+            for(int i =0 ;i<j;i++){
+                pathForEnemies.add(new PathPoint(list.get(startIndex+i), startIndex+i+j));
+            }
+            return pathForEnemies;
         } else {
             System.out.println("File: level1.txt nieistnieje");
             return null;
@@ -239,10 +242,10 @@ public class LoadSave {
         }
     }
 
-    public static void SaveLevel(String name, int[][] idArr, PathPoint start, PathPoint end, int[][] dirArr) {
+    public static void SaveLevel(String name, int[][] idArr, ArrayList<PathPoint> enemyPathRoad ) {
         File lvlFile = new File("res/textFile/" + name + ".txt");
         if (lvlFile.exists()) {
-            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), start, end, Utilz.TwoDto1DintArr(dirArr));
+            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr),  Utilz.PathPointArrayForSave(enemyPathRoad),enemyPathRoad.size());
         } else {
             System.out.println("file " + name + " does not exists");
             return;

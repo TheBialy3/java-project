@@ -2,10 +2,26 @@ package towers;
 
 import managers.TowerManager;
 
-public class MineFactory extends Tower {
-    public MineFactory(int x, int y, int id, int towerType , TowerManager towerManager, int[][] road) {
-        super(x, y, id, towerType,  towerManager,road);
+import java.util.ArrayList;
 
+public class MineFactory extends Tower {
+int ammo=0;
+int attackSpeed;
+    public MineFactory(int x, int y, int id, int towerType , TowerManager towerManager) {
+        super(x, y, id, towerType,  towerManager);
+
+    }
+
+    public void addAmmo(){
+        ammo+=3;
+    }
+
+    public void useAmmo(){
+        ammo--;
+    }
+
+    public int getAmmo(){
+        return ammo;
     }
 
     public void upgrade(int upgrade) {
@@ -48,4 +64,5 @@ public class MineFactory extends Tower {
         }
         return "";
     }
+
 }
