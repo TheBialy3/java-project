@@ -53,25 +53,10 @@ public abstract class Enemy {
     }
 
 
-    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
-        this.x = x;
-        this.y = y;
-        this.ID = ID;
-        this.enemyType = enemyType;
-        this.enemyManager = enemyManager;
-        this.waveManager = waveManager;
-        this.towerManager = towerManager;
+    private void setSpeed() {
         float speed = getSpeed(enemyType);
-        if (enemyType != CAMEL_JUNIOR) {
-            alive = true;
-        }
-        setBounds(enemyType);
-        lastDir = -1;
-        setStartHealth();
-        setStartingAttack();
-        setPower();
-        setResists(enemyType);
     }
+
     public Enemy(float x, float y, int ID, int enemyType,ArrayList<PathPoint> wayForEnemies, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
         this.x = x;
         this.y = y;
@@ -97,14 +82,13 @@ public abstract class Enemy {
     }
 
 
-    public void update(int dir) {
+    public void update() {
         switch (enemyStatus) {
             case STAY:
 
                 break;
             case WALK:
-                move(dir);
-               // updateEnemyMove();
+                updateEnemyMove();
                 break;
             case STUN:
 
@@ -140,8 +124,8 @@ public abstract class Enemy {
         int totDist = Math.abs(xDist) + Math.abs(yDist);
         float xPer = (float) Math.abs(xDist) / totDist;
 
-        xSpeed = xPer * Constants.EnemyType.getSpeed(enemyType);
-        ySpeed = Constants.EnemyType.getSpeed(enemyType) - xSpeed;
+        xSpeed = xPer * speed;
+        ySpeed = speed - xSpeed;
 
         if (x > nextPathPoint.getxCord()) {
             xSpeed *= -1;

@@ -416,41 +416,40 @@ public class PlayingBar extends Bar {
                 if (isEnoughGold(Constants.TowerType.getCost(b.getId()))) {
                     switch (b.getId()) {
                         case ARCHER:
-                            selectedTower = new Archer(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Archer(x, y, 0, b.getId(), towerManager);
                             break;
                         case CANNON:
-                            selectedTower = new Cannon(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Cannon(x, y, 0, b.getId(), towerManager);
                             break;
                         case FROST_MAGE:
-                            selectedTower = new FrostMage(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new FrostMage(x, y, 0, b.getId(), towerManager);
                             break;
                         case MINES_FACTORY:
-                            road = playing.getRoadDirArr();
-                            selectedTower = new MineFactory(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new MineFactory(x, y, 0, b.getId(), towerManager);
                             break;
                         case POISON_TOWER:
-                            selectedTower = new PoisonTower(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new PoisonTower(x, y, 0, b.getId(), towerManager);
                             break;
                         case BOOM_VOLCANO:
-                            selectedTower = new BoomTower(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new BoomTower(x, y, 0, b.getId(), towerManager);
                             break;
                         case CROSSBOW:
-                            selectedTower = new Crossbow(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Crossbow(x, y, 0, b.getId(), towerManager);
                             break;
                         case MOUSE_FOLLOWS_TOWER:
-                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new MauseFollowsTower(x, y, 0, b.getId(), towerManager);
                             break;
                         case SNIPER:
-                            selectedTower = new Sniper(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Sniper(x, y, 0, b.getId(), towerManager);
                             break;
                         case LASER_TOWER:
-                            selectedTower = new LaserTower(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new LaserTower(x, y, 0, b.getId(), towerManager);
                             break;
                         case SCARECROW:
-                            selectedTower = new Scarecrow(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Scarecrow(x, y, 0, b.getId(), towerManager);
                             break;
                         case BANK:
-                            selectedTower = new Bank(x, y, 0, b.getId(), towerManager, road);
+                            selectedTower = new Bank(x, y, 0, b.getId(), towerManager);
                             break;
                     }
                     playing.setSelectedTower(selectedTower);

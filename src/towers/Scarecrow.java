@@ -4,8 +4,8 @@ import managers.TowerManager;
 
 public class Scarecrow extends Tower {
 
-    public Scarecrow(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
-        super(x, y, id, towerType, towerManager, road);
+    public Scarecrow(int x, int y, int id, int towerType, TowerManager towerManager ){
+        super(x, y, id, towerType, towerManager);
     }
 
     public void upgrade(int upgrade) {

@@ -13,8 +13,8 @@ import static helpz.Constants.AllyType.*;
 public class Barracks extends Tower {
     ArrayList<Ally> allys = new ArrayList<>();
 
-    public Barracks(int x, int y, int id, int towerType, TowerManager towerManager, int[][] road) {
-        super(x, y, id, towerType, towerManager, road);
+    public Barracks(int x, int y, int id, int towerType, TowerManager towerManager) {
+        super(x, y, id, towerType, towerManager);
     }
 
     public void upgrade(int upgrade) {

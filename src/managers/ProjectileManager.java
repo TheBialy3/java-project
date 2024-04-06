@@ -259,7 +259,7 @@ public class ProjectileManager {
             if (e.getExploType() == BOMB) {
                 if (e.getIndex() < 10) {
                     g2d.drawImage(explo_imgs[e.getIndex()], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
-                }//else if (e.getIndex() == 10){ aoeExplosionsdamageSet =false; }
+                }//else if (e.getIndex() == 10){ aoeExplosionsDamageSet =false; }
             } else {
                 if (e.getIndex() < 10) {
                     g2d.drawImage(splash_imgs[0], (int) e.getPos().x - halfTilePixelNumber, (int) e.getPos().y - halfTilePixelNumber, null);
