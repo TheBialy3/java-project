@@ -202,6 +202,9 @@ public class ToolBar extends Bar {
         bMenu.setMouseOver(false);
         bSave.setMouseOver(false);
         bWater.setMouseOver(false);
+        bPoints.setMouseOver(false);
+        bResetPoints.setMouseOver(false);
+
         for (MyButton b : map.keySet()) {
             b.setMouseOver(false);
         }

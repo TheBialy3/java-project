@@ -26,7 +26,6 @@ public class EnemyManager {
     private BufferedImage[] enemyImages;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<PathPoint> wayForEnemies = new ArrayList<>();
-    private PathPoint start, end;
     private int HPBarWidth = 50, indexOfPoisonAnimation = 0, tilePixelNumber = 64;
 
     private int ranL = random.nextInt(25), ranR = random.nextInt(25);
@@ -37,26 +36,33 @@ public class EnemyManager {
 
     private boolean Card7 = false, Card8 = false, Card9 = false, Card10 = false, Card11 = false, Card12 = false;
 
-    public EnemyManager(Playing playing, PathPoint start, PathPoint end, WaveManager waveManager ,TowerManager towerManager) {
+    public EnemyManager(Playing playing, WaveManager waveManager ,TowerManager towerManager) {
         this.waveManager = waveManager;
         this.towerManager=towerManager;
         this.playing = playing;
-        this.start = start;
-        this.end = end;
         loadRoadDirArr();
         loadEnemyImages();
         loadEffectsImages();
     }
-    public EnemyManager(Playing playing,ArrayList<PathPoint> wayForEnemies, WaveManager waveManager ,TowerManager towerManager) {
-        this.waveManager = waveManager;
-        this.towerManager=towerManager;
-        this.playing = playing;
-        this.start = wayForEnemies.get(0);
-        this.end = wayForEnemies.get(wayForEnemies.size()-1);
-        loadEnemyImages();
-        loadEffectsImages();
-    }
 
+    public void update() {
+        indexOfPoisonAnimation++;
+//        try {
+            for (Enemy e : enemies) {
+                if (e.isAlive()) {
+                    e.update();
+                    e.updateEnemyCountdown();
+                }
+            }
+//        } catch (Exception e) {
+//            System.out.println("ConcurrentModificationException update enemy");
+//        }
+        if (indexOfPoisonAnimation > 150) {
+            enemyReorder();
+            indexOfPoisonAnimation = 0;
+            resetRand();
+        }
+    }
     public void draw(Graphics g) {
         try {
             for (Enemy e : enemies) {
@@ -97,8 +103,8 @@ public class EnemyManager {
     }
 
     public void addEnemy(int enemyType) {///modify wave manager
-        int x = start.getxCord() * tilePixelNumber;
-        int y = start.getyCord() * tilePixelNumber;
+        int x = wayForEnemies.get(0).getxCord() ;
+        int y = wayForEnemies.get(0).getyCord() ;
         switch (enemyType) {
             case ORC:
                 enemies.add(new Orc(x, y, 0, ORC,wayForEnemies,this, waveManager, towerManager));
@@ -141,24 +147,7 @@ public class EnemyManager {
         }
     }
 
-    public void update() {
-        indexOfPoisonAnimation++;
-        try {
-            for (Enemy e : enemies) {
-                if (e.isAlive()) {
-                    e.update();
-                    e.updateEnemyCountdown();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("ConcurrentModificationException update");
-        }
-        if (indexOfPoisonAnimation > 150) {
-            enemyReorder();
-            indexOfPoisonAnimation = 0;
-            resetRand();
-        }
-    }
+
 
     private void enemyReorder() {
         Collections.sort(enemies, new Comparator<Enemy>() {
@@ -208,26 +197,12 @@ public class EnemyManager {
         return false;
     }
 
-    private PathPoint getEnemyTile(Enemy e) {
-
-        switch (e.getLastDir()) {
-            case LEFT:
-                return new PathPoint((int) ((e.getX() + 63) / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
-            case UP:
-                return new PathPoint((int) (e.getX() / tilePixelNumber), (int) ((e.getY() + 63) / tilePixelNumber));
-            case RIGHT:
-            case DOWN:
-                return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
-        }
-        return new PathPoint((int) (e.getX() / tilePixelNumber), (int) (e.getY() / tilePixelNumber));
-    }
-
-    public void spawnJuniors(float x, float y, int type, float distancePast) {
+    public void spawnJuniors(float x, float y, int type, float distancePast, PathPoint nextPathPoint) {
         int shift = 0;
         for (Enemy e : enemies) {
             if (e.getEnemyType() == type) {
                 if (!e.isAlive()) {
-                    e.reuse(x + shift, y + shift, distancePast);
+                    e.reuse(x + shift, y + shift, distancePast, nextPathPoint);
                     shift++;
                 }
             }

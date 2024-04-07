@@ -55,17 +55,4 @@ public class Utilz {
 
     }
 
-    public static int[] PathPointArrayForSave(ArrayList<PathPoint> enemyPathRoad) {
-        int[] oneArr = new int[enemyPathRoad.size() * 2];
-        for (int i = 0; i < enemyPathRoad.size(); i++) {
-            int index = enemyPathRoad.size() + i;
-            oneArr[index] = enemyPathRoad.get(i).getxCord();
-        }
-        for (int i = 0; i < enemyPathRoad.size(); i++) {
-            int index = enemyPathRoad.size() + i;
-            oneArr[index] = enemyPathRoad.get(i).getyCord();
-        }
-
-        return oneArr;
-    }
 }

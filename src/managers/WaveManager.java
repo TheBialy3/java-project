@@ -24,7 +24,6 @@ public class WaveManager {
     public WaveManager(Playing playing) {
         createWaves();
         this.playing = playing;
-
         this.projectileManager = playing.getProjectileManager();
     }
 

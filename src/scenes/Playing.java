@@ -56,7 +56,7 @@ public class Playing extends GameScene implements SceneMethods {
         projectileManager = new ProjectileManager(this);
         waveManager = new WaveManager(this);
         towerManager = new TowerManager(this);
-        enemyManager = new EnemyManager(this, start, end, waveManager, towerManager);
+        enemyManager = new EnemyManager(this, waveManager, towerManager);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         bestiary = game.getBestiary();
         initCardButtons();
@@ -592,10 +592,6 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void LoadDefaultLevel() {
         lvl = LoadSave.GetLevelData();
-        ArrayList<PathPoint> points = LoadSave.getPathPoints();
-        start = points.get(0);
-        end = points.get(1);
-
     }
 
 
