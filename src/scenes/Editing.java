@@ -36,9 +36,6 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData();
-        ArrayList<PathPoint> points = LoadSave.getPathPoints();
-        start = points.get(0);
-        end = points.get(1);
         enemyPathRoad = LoadSave.GetLevelDir();
     }
 
@@ -60,9 +57,9 @@ public class Editing extends GameScene implements SceneMethods {
         int i = 0;
         if (!enemyPathRoad.isEmpty()) {
             for (PathPoint point : enemyPathRoad) {
-                g.setColor(new Color(100, 100, 100));
-                g.drawOval(point.getxCord(), point.getyCord(), 40, 40);
-                g.drawString(i + "", point.getxCord(), point.getyCord());
+                g.setColor(new Color(6, 51, 143));
+                g.drawOval(point.getxCord()-20, point.getyCord()-20, 40, 40);
+                g.drawString(i + "", point.getxCord()-10, point.getyCord()+5);
                 i++;
             }
         }
@@ -112,17 +109,7 @@ public class Editing extends GameScene implements SceneMethods {
             tileYLast = tileY;
             lastTileId = selectedTile.getId();
             lvl[tileY][tileX] = selectedTile.getId();
-        } else {
-            int id = lvl[tileY][tileX];
-            if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
-                if (selectedTile.getId() == -1) {
-                    start = new PathPoint(tileX, tileY);
-                } else if (selectedTile.getId() == -2) {
-                    end = new PathPoint(tileX, tileY);
-                }
-            }
         }
-
     }
 
 

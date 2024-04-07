@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class LoadSave {
 
 
-
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/final.png");
@@ -26,7 +25,7 @@ public class LoadSave {
 
     public static BufferedImage getImg(String name) {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/"+name+".png");
+        InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/" + name + ".png");
         try {
             img = ImageIO.read(is);
         } catch (IOException e) {
@@ -34,6 +33,7 @@ public class LoadSave {
         }
         return img;
     }
+
     public static BufferedImage getBackgroundImg() {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/back.png");
@@ -55,6 +55,7 @@ public class LoadSave {
         }
         return img;
     }
+
     public static BufferedImage getCardChooseSprite() {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getClassLoader().getResourceAsStream("pngFile/cardLongChoose.png");
@@ -67,16 +68,18 @@ public class LoadSave {
     }
 
 
-
-    private static void WriteToFile(File f, int[] idArr,int[] enemyPathRoad,int sizeOfEnemyPathRoad) {//
+    private static void WriteToFile(File f, int[] idArr, ArrayList<PathPoint> enemyPathRoad, int sizeOfEnemyPathRoad) {//
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
                 pw.println(i);
             }
             pw.println(sizeOfEnemyPathRoad);
-            for (Integer i : enemyPathRoad) {
-                pw.println(i);
+            for (PathPoint i : enemyPathRoad) {
+                pw.println(i.getxCord());
+            }
+            for (PathPoint i : enemyPathRoad) {
+                pw.println(i.getyCord());
             }
             pw.close();
         } catch (IOException e) {
@@ -107,6 +110,25 @@ public class LoadSave {
             }
             while (sc.hasNextLine()) {
                 list.add(Boolean.parseBoolean(sc.nextLine()));
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    private static ArrayList<Boolean> ReadSaveFile(File file, int startOfReading, int amountOfLines) {
+        ArrayList<Boolean> list = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(file);
+            for (int i = 0; i < startOfReading; i++) {
+                sc.nextLine();
+            }
+            for (int i = 0; i < amountOfLines; i++) {
+                if (sc.hasNextLine()) {
+                    list.add(Boolean.parseBoolean(sc.nextLine()));
+                }
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -166,29 +188,16 @@ public class LoadSave {
         return list;
     }
 
-    public static ArrayList<PathPoint> getPathPoints() {
-        File lvlFile = new File("res/textFile/level1.txt");
-        if (lvlFile.exists()) {
-            ArrayList<Integer> list = ReadFromFile(lvlFile);
-            ArrayList<PathPoint> points = new ArrayList<>();
-            points.add(new PathPoint(list.get(400), list.get(401)));
-            points.add(new PathPoint(list.get(402), list.get(403)));
-            return points;
-        } else {
-            System.out.println("File:  newlevel nieistnieje");
-            return null;
-        }
-    }
 
     public static ArrayList<PathPoint> GetLevelDir() {
         File lvlFile = new File("res/textFile/level1.txt");
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
-            ArrayList<PathPoint> pathForEnemies=new ArrayList<>();
-             int startIndex=400;
-            int j=list.get(startIndex);
-            for(int i =0 ;i<j;i++){
-                pathForEnemies.add(new PathPoint(list.get(startIndex+i), startIndex+i+j));
+            ArrayList<PathPoint> pathForEnemies = new ArrayList<>();
+            int startIndex = 400;
+            int j = list.get(startIndex);
+            for (int i = 0; i < j; i++) {
+                pathForEnemies.add(new PathPoint(list.get(startIndex + 1 + i), list.get(startIndex + i + j + 1)));
             }
             return pathForEnemies;
         } else {
@@ -224,6 +233,7 @@ public class LoadSave {
 
         }
     }
+
     //can be used in future
     public static void CreateLevel(String name, int[] idArr) {
         File newLvl = new File("res/" + name + ".txt");
@@ -242,10 +252,10 @@ public class LoadSave {
         }
     }
 
-    public static void SaveLevel(String name, int[][] idArr, ArrayList<PathPoint> enemyPathRoad ) {
+    public static void SaveLevel(String name, int[][] idArr, ArrayList<PathPoint> enemyPathRoad) {
         File lvlFile = new File("res/textFile/" + name + ".txt");
         if (lvlFile.exists()) {
-            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr),  Utilz.PathPointArrayForSave(enemyPathRoad),enemyPathRoad.size());
+            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), enemyPathRoad, enemyPathRoad.size());
         } else {
             System.out.println("file " + name + " does not exists");
             return;

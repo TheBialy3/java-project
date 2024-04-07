@@ -16,7 +16,6 @@ import static helpz.Constants.Direction.*;
 import static helpz.Constants.EnemyType.*;
 import static helpz.Constants.EnemyType.MAGIC;
 import static helpz.Constants.EnemyType.PHYSICAL;
-import static helpz.Constants.TowerType.*;
 
 public abstract class Enemy {
 
@@ -32,9 +31,9 @@ public abstract class Enemy {
     protected int maxHealth, health, mr, armor, attack, attackType;
     protected Ally allyToAttack = null;
     protected int attackAnimation, attackAnimationLimit;
-    protected int ID,pathPointLimit;
+    protected int ID, pathPointLimit;
     protected int enemyType, damageType;
-    protected int lastDir,nextPointId=0;
+    protected int nextPointId = 0;
     protected boolean alive = false, poisoned = false;
     public float slowPower = 1f, distancePast = 0;
     protected boolean power = false;
@@ -57,7 +56,7 @@ public abstract class Enemy {
         float speed = getSpeed(enemyType);
     }
 
-    public Enemy(float x, float y, int ID, int enemyType,ArrayList<PathPoint> wayForEnemies, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
+    public Enemy(float x, float y, int ID, int enemyType, ArrayList<PathPoint> wayForEnemies, EnemyManager enemyManager, WaveManager waveManager, TowerManager towerManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
@@ -68,7 +67,6 @@ public abstract class Enemy {
         moveSet(wayForEnemies);
         alive = true;
         setBounds(enemyType);
-        lastDir = -1;
         setStartHealth();
         setStartingAttack();
         setPower();
@@ -77,8 +75,10 @@ public abstract class Enemy {
 
     private void moveSet(ArrayList<PathPoint> wayForEnemies) {
         speed = getSpeed(enemyType);
-        pathPointLimit =wayForEnemies.size();
-        this.wayForEnemies=wayForEnemies;
+        pathPointLimit = wayForEnemies.size();
+        this.wayForEnemies = wayForEnemies;
+        getNextPathPoint();
+        setNextMove();
     }
 
 
@@ -89,6 +89,7 @@ public abstract class Enemy {
                 break;
             case WALK:
                 updateEnemyMove();
+
                 break;
             case STUN:
 
@@ -138,80 +139,79 @@ public abstract class Enemy {
     private void updateEnemyMove() {
         x += xSpeed;
         y += ySpeed;
-        if (didAllyPass(nextPathPoint.getxCord(), nextPathPoint.getyCord())) {
+        System.out.println(ySpeed);
+        System.out.println(xSpeed);
+        if (didPassPoint(nextPathPoint.getxCord(), nextPathPoint.getyCord())) {
             getNextPathPoint();
             setNextMove();
         }
     }
 
     private void getNextPathPoint() {
-        if (pathPointLimit==nextPointId){
+        nextPathPoint = wayForEnemies.get(++nextPointId);
+        if (pathPointLimit - 1 == nextPointId) {
             kill();
             enemyManager.playingRemoveOneLive();
-            return;
         }
-        nextPathPoint=wayForEnemies.get(nextPointId);
-        nextPointId++;
     }
 
-    private boolean didAllyPass(float toX, float toY) {
+    private boolean didPassPoint(float toX, float toY) {
         int xDist;
         int yDist;
-        xDist = (int) (x - toX + 30);
+        xDist = (int) (x - toX);
         yDist = (int) (y - toY);
-        return (xDist > xDist + xSpeed || yDist > yDist + ySpeed);
-
+        return (Math.abs(xDist) < 10 && Math.abs(yDist) < 10);
     }
 
-    public void move(int dir) {
-        lastDir = dir;
+//    public void move(int dir) {
+//        lastDir = dir;
+//
+//        if (enemyManager.isCard8()) {
+//            speed = speed + 0.1f;
+//        }
+//        if (enemyManager.isCard9()) {
+//            speed = speed + 0.1f;
+//        }
+//        if (slowTick < slowTickLimit) {
+//            slowTick++;
+//            speed *= slowPower;
+//        }
+//        switch (dir) {
+//            case LEFT:
+//                this.x -= speed;
+//                break;
+//            case UP:
+//                this.y -= speed;
+//                break;
+//            case RIGHT:
+//                this.x += speed;
+//                break;
+//            case DOWN:
+//                this.y += speed;
+//                break;
+//        }
+//        distancePast += speed;
+//        updateHitbox();
+//        if (poisoned) {
+//            poisonDamage();
+//        }
+//        if (isRegainHP(enemyType)) {
+//            regenHp();
+//        }
+//    }
 
-        if (enemyManager.isCard8()) {
-            speed = speed + 0.1f;
-        }
-        if (enemyManager.isCard9()) {
-            speed = speed + 0.1f;
-        }
-        if (slowTick < slowTickLimit) {
-            slowTick++;
-            speed *= slowPower;
-        }
-        switch (dir) {
-            case LEFT:
-                this.x -= speed;
-                break;
-            case UP:
-                this.y -= speed;
-                break;
-            case RIGHT:
-                this.x += speed;
-                break;
-            case DOWN:
-                this.y += speed;
-                break;
-        }
-        distancePast += speed;
-        updateHitbox();
-        if (poisoned) {
-            poisonDamage();
-        }
-        if (isRegainHP(enemyType)) {
-            regenHp();
-        }
-    }
-
-    private void regenHp() {
-        if (this instanceof Orc) {
-            ((Orc) this).heal(2);
-        } else if (this instanceof Tentacle) {
-            ((Tentacle) this).heal(3);
-        } else if (this instanceof Slime) {
-            ((Slime) this).heal(2);
-        } else if (this instanceof Bird) {
-            ((Bird) this).heal(1);
-        }
-
-    }
+//    private void regenHp() {
+//        if (this instanceof Orc) {
+//            ((Orc) this).heal(2);
+//        } else if (this instanceof Tentacle) {
+//            ((Tentacle) this).heal(3);
+//        } else if (this instanceof Slime) {
+//            ((Slime) this).heal(2);
+//        } else if (this instanceof Bird) {
+//            ((Bird) this).heal(1);
+//        }
+//
+//    }
 
     private void setStartingAttack() {
         attack = getAttackEnemy(enemyType);
@@ -248,18 +248,20 @@ public abstract class Enemy {
 
     }
 
-    public void reuse(float x, float y, float distancePast) {
+    public void reuse(float x, float y, float distancePast, PathPoint nextPathPoint) {
         this.x = x;
         this.y = y;
+        this.nextPathPoint = nextPathPoint;
         this.alive = true;
         setStartHealth();
         this.distancePast = distancePast;
     }
-    public void reuse(float x, float y, float distancePast,int nextPointId) {
+
+    public void reuse(float x, float y, float distancePast, int nextPointId) {
         this.x = x;
         this.y = y;
         this.alive = true;
-        this.nextPointId=nextPointId;
+        this.nextPointId = nextPointId;
         setStartHealth();
         this.distancePast = distancePast;
     }
@@ -329,10 +331,10 @@ public abstract class Enemy {
             if (enemyType == ORK_ZOMBIE) {
                 if (this.power) {
                     power = false;
-                    reuse(this.x, this.y, distancePast);
+                    reuse(this.x, this.y, distancePast, nextPathPoint);
                 }
             } else if (enemyType == CAMEL) {
-                enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast);
+                enemyManager.spawnJuniors(this.x, this.y, (this.enemyType + 1), distancePast, nextPathPoint);
             } else if (enemyType == BANSHEE) {
                 towerManager.stunCloseTower(x, y);
             }
@@ -418,9 +420,6 @@ public abstract class Enemy {
         return enemyType;
     }
 
-    public int getLastDir() {
-        return lastDir;
-    }
 
     public boolean isAlive() {
         return alive;
@@ -438,9 +437,6 @@ public abstract class Enemy {
         return distancePast;
     }
 
-    public void setLastDir(int newDir) {
-        this.lastDir = newDir;
-    }
 
     public boolean isTargetable() {
         return targetable;

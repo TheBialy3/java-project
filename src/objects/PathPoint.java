@@ -19,9 +19,6 @@ public class PathPoint {
 
     @Override
     public String toString() {
-        return "PathPoint{" +
-                "xCord=" + xCord +
-                ", yCord=" + yCord +
-                '}';
+        return xCord +" "+ yCord ;
     }
 }
