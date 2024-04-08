@@ -139,8 +139,6 @@ public abstract class Enemy {
     private void updateEnemyMove() {
         x += xSpeed;
         y += ySpeed;
-        System.out.println(ySpeed);
-        System.out.println(xSpeed);
         if (didPassPoint(nextPathPoint.getxCord(), nextPathPoint.getyCord())) {
             getNextPathPoint();
             setNextMove();
