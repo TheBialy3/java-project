@@ -48,7 +48,22 @@ public class Playing extends GameScene implements SceneMethods {
     private Random random = new Random();
     private Tower selectedTower;
     private int goldTick = 0, goldTickLimit = 60 * 13, passiveIncomeGold = 5, afterEveryThisNumberOfWaveIsCardSelect = 5;
+    public enum PlayGameState {
+        PLAY_PLAY,
+        PLAY_PAUSED,
+        PLAY_GAME_OVER,
+        PLAY_START_OF_GAME,
+        PLAY_WIN,
+        PLAY_CARD_SELECT,
+        PLAY_BESTIARY
+    }
+    public enum GameMode {
+        STANDARD,
+        CARD_MODE,
+
+    }
     PlayGameState playState = PlayGameState.PLAY_PLAY;
+    GameMode gameMode=GameMode.STANDARD;
 
     public Playing(Game game) {
         super(game);
@@ -61,6 +76,32 @@ public class Playing extends GameScene implements SceneMethods {
         bestiary = game.getBestiary();
         initCardButtons();
         initBestiaryButton();
+    }
+
+    public Playing(Game game,int gameMode) {
+        super(game);
+        setGameMode(gameMode);
+        LoadDefaultLevel();
+        afterEveryThisNumberOfWaveIsCardSelect=1;
+        projectileManager = new ProjectileManager(this);
+        waveManager = new WaveManager(this);
+        towerManager = new TowerManager(this);
+        enemyManager = new EnemyManager(this, waveManager, towerManager);
+        playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
+        bestiary = game.getBestiary();
+        initCardButtons();
+        initBestiaryButton();
+    }
+
+    private void setGameMode(int gameMode) {
+        switch (gameMode){
+            case 0:
+                this.gameMode=GameMode.STANDARD;
+                break;
+            case 1:
+                this.gameMode=GameMode.CARD_MODE;
+                break;
+        }
     }
 
     private void initBestiaryButton() {
@@ -89,15 +130,7 @@ public class Playing extends GameScene implements SceneMethods {
         reshuffle = new MyButton("Shuffle (" + shuffles + ")", shuffleX, shuffleY, shuffleW, shuffleH);
     }
 
-    public enum PlayGameState {
-        PLAY_PLAY,
-        PLAY_PAUSED,
-        PLAY_GAME_OVER,
-        PLAY_START_OF_GAME,
-        PLAY_WIN,
-        PLAY_CARD_SELECT,
-        PLAY_BESTIARY
-    }
+
 
 
     public void update() {
@@ -110,7 +143,7 @@ public class Playing extends GameScene implements SceneMethods {
                     if (isThereMoreWaves()) {
                         waveManager.startWaveTimer();
                         if (isWaveTimerOver()) {
-                            if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 1) {
+                            if (waveManager.getWaveIndex() % afterEveryThisNumberOfWaveIsCardSelect == 0) {
                                 cardSelectStart();
                             }
                             waveManager.increaseWaveIndex();

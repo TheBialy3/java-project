@@ -1,7 +1,6 @@
 package managers;
 
 import events.Wave;
-import helpz.Constants;
 import scenes.Playing;
 
 import java.util.ArrayList;
