@@ -5,10 +5,10 @@ import objects.Card;
 import objects.DecoratedBirds;
 import scenes.*;
 import scenes.Menu;
+import scenes.Playing;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static helpz.LoadSave.*;

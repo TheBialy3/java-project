@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-import static helpz.Constants.Direction.*;
 import static helpz.Constants.NumbersOf.NUMBER_OF_ENEMIES;
 
 public class EnemyManager {
