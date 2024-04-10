@@ -7,11 +7,32 @@ import java.util.ArrayList;
 
 public class UpgradesItemsCard {
     private ArrayList<Card> cards = new ArrayList<>();
+    private ArrayList<Card> cardMode = new ArrayList<>();
     private Upgrade upgrade;
 
     public UpgradesItemsCard(Upgrade upgrade) {
         this.upgrade = upgrade;
         createUpgrades();
+        createUpgradesForCardMode();
+    }
+    public void createUpgradesForCardMode() {
+        int id = -1;
+        cards.add(new Card(id--, "Archer", "Build Archer Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Cannon", "Build Cannon Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Frost Mage", "Build Frost Mage Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Mines Factory", "Build Mines Factory Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Poison Tower", "Build Poison Tower Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Volcano", "Build Volcano Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Crossbow", "Build Crossbow Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Mouse Follower", "Build Mouse Follower Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Sniper", "Build Sniper Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Eye laser Tower", "Build Eye laser Tower Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Scarecrow", "Build Scarecrow Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Bank", "Build Bank Tower at RANDOM Place", true, -1,true));
+
+        cards.add(new Card(id--, "4 4 2", "Sell 2 Random towers get 4 Random towers", true, -1));
+
+
     }
 
     public void createUpgrades() {
@@ -152,5 +173,9 @@ public class UpgradesItemsCard {
     public ArrayList<Card> getCards() {
         return cards;
     }
+    public ArrayList<Card> getCardsForCardMode() {
+        return cardMode;
+    }
+
 
 }

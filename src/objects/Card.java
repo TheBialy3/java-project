@@ -1,23 +1,30 @@
 package objects;
 
 public class Card {
-   private int id,towertype;
+    private int id, towerType;
     private String name, description;
-    private boolean unlocked, active=false;
+    private boolean unlocked, active = false, repeat = false;
 
-    public Card(int id, String name, String description,  boolean unlocked, int towertype) {
-        this.id=id;
-        this.name=name;
-        this.description=description;
+    public Card(int id, String name, String description, boolean unlocked, int towerType) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.unlocked = unlocked;
+        this.towerType = towerType;
+    }
 
-        this.unlocked=unlocked;
-        this.towertype=towertype;
+    public Card(int id, String name, String description, boolean unlocked, int towerType, boolean repeat) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.repeat = repeat;
+        this.unlocked = unlocked;
+        this.towerType = towerType;
     }
 
     public int getId() {
         return id;
     }
-
 
 
     public String getName() {
@@ -44,15 +51,18 @@ public class Card {
         this.active = active;
     }
 
-    public int getTowertype() {
-        return towertype;
+    public int getTowerType() {
+        return towerType;
+    }
+    public boolean getRepeatable(){
+        return repeat;
     }
 
     @Override
     public String toString() {
         return "Card{" +
                 "id=" + id +
-                ", towertype=" + towertype +
+                ", towerType=" + towerType +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", unlocked=" + unlocked +

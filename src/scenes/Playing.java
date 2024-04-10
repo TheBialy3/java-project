@@ -269,9 +269,9 @@ public class Playing extends GameScene implements SceneMethods {
         int cardY = 100;
         int diffCard = 400;
         logos = loadLogos();
-        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), threeCards.get(0).getTowertype(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
-        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), threeCards.get(1).getTowertype(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
-        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), threeCards.get(2).getTowertype(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
+        cardLook1 = new CardLook(threeCards.get(0).getName(), threeCards.get(0).getDescription(), threeCards.get(0).getTowerType(), logos[threeCards.get(0).getId()], card, cardChoose, cardX, cardY);
+        cardLook2 = new CardLook(threeCards.get(1).getName(), threeCards.get(1).getDescription(), threeCards.get(1).getTowerType(), logos[threeCards.get(1).getId()], card, cardChoose, cardX, cardY + diffCard);
+        cardLook3 = new CardLook(threeCards.get(2).getName(), threeCards.get(2).getDescription(), threeCards.get(2).getTowerType(), logos[threeCards.get(2).getId()], card, cardChoose, cardX, cardY + diffCard + diffCard);
     }
 
     private void cardSelected(int cardChosen) {
@@ -502,7 +502,7 @@ public class Playing extends GameScene implements SceneMethods {
         while (true) {
             int ran = random.nextInt(cards.size());
             if (cards.get(ran).isUnlocked()) {
-                if (!cards.get(ran).isActive()) {
+                if (!cards.get(ran).isActive()||cards.get(ran).getRepeatable()) {
                     if (threeCards.size() == 0) {
                         threeCards.add(cards.get(ran));
                     }
