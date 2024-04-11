@@ -65,6 +65,9 @@ public class TowerManager {
                     }
                 }
             }
+            if (t.getTowerType() == MINES_FACTORY) {
+                g.drawString("" + ((MineFactory) t).getAmmo(), t.getX(), t.getY());
+            }
             if (t.getTowerType() == SCARECROW) {
                 g.drawImage(towersSideImg[animationIndex], t.getX() - 64, t.getY() - 64, null);
             }
@@ -173,6 +176,9 @@ public class TowerManager {
                 boomTowerAttack(t);
             } else if (t.getTowerType() == SCARECROW) {
                 boomTowerAttack(t);
+            } else if (t.getTowerType() == MINES_FACTORY) {
+                attackEnemyIfClose(t);
+
             } else {
                 attackEnemyIfClose(t);
             }
@@ -233,10 +239,10 @@ public class TowerManager {
     }
 
 
-    private void attackEnemyIfClose(Tower t) {
+    public void attackEnemyIfClose(Tower t) {
         try {
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                if (t.isCoolDownOver() && e.isAlive() && e.isTargetable()) {
+                if ((t.isCoolDownOver() && e.isAlive() && e.isTargetable()) || (t instanceof MineFactory && e.isAlive() && e.isTargetable())) {
                     if (t.getTowerType() == SNIPER) {
                         e.hurt(t.getDmg(), getDmgTypeTower(t.getTowerType()));
                         if (Card39) {
@@ -252,7 +258,14 @@ public class TowerManager {
                                 }
                                 playing.beamEnemy(t, e);
                             } else {
-                                playing.shootEnemy(t, e);
+                                if (t instanceof MineFactory ){
+                                    if (((MineFactory) t).getAmmo() > 0) {
+                                        ((MineFactory) t).useAmmo();
+                                        playing.shootEnemy(t, e);
+                                    }
+                                } else {
+                                    playing.shootEnemy(t, e);
+                                }
                             }
                             if (Constants.TowerType.isSlowTower(t.getTowerType())) {
                                 float slow = t.getSlow();
@@ -331,8 +344,6 @@ public class TowerManager {
         float yDiff = yTower - y;
         return (float) sqrt(xDiff * xDiff + yDiff * yDiff);
     }
-
-
 
 
     private boolean isEnemyInRange(Tower t, Enemy e) {
@@ -633,6 +644,10 @@ public class TowerManager {
 
     public boolean isCard42() {
         return Card42;
+    }
+
+    public Playing getPlaying() {
+        return playing;
     }
 
     public void slowChange(int percent, int towerType) {

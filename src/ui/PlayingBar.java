@@ -234,13 +234,8 @@ public class PlayingBar extends Bar {
     }
 
     private void drawDisplayedTowerRange(Graphics g) {
-        if (displayedTower.getTowerType() == MINES_FACTORY) {
-            g.setColor(Color.BLACK);
-            g.drawRect((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
-        } else {
             g.setColor(Color.BLACK);
             g.drawOval((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
-        }
     }
 
     private void drawDisplayedTowerRect(Graphics g) {

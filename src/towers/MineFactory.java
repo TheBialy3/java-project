@@ -27,13 +27,13 @@ int attackSpeed;
     public void upgrade(int upgrade) {
         switch (upgrade) {
             case 1:
-                this.reduceCoolDown(10);
+                this.reduceCoolDown(20);
                 break;
             case 2:
                 this.addDmg(5);
                 break;
             case 3:
-                this.reduceCoolDown(20);
+                this.reduceCoolDown(40);
                 break;
             default:
                 break;
