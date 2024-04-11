@@ -34,7 +34,7 @@ public class Constants {
                 case SHORT_BEM:
                     return 10f;
                 case MINES:
-                    return 3f;
+                    return 6f;
                 case POISON_POTION:
                     return 5f;
                 case BULLET:
@@ -52,7 +52,7 @@ public class Constants {
                 case SHORT_BEM:
                     return true;
                 case MINES:
-                    return false;
+                    return true;
                 case POISON_POTION:
                     return false;
                 case BULLET:
@@ -104,7 +104,7 @@ public class Constants {
                 case SHORT_BEM:
                     return WALKING;
                 case MINES:
-                    return WALKING;
+                    return BOTH;
                 case POISON_POTION:
                     return WALKING;
                 case BULLET:
@@ -881,7 +881,7 @@ public class Constants {
                 case FROST_MAGE:
                     return "Slows without damage";
                 case MINES_FACTORY:
-                    return "Sets immobile mines";
+                    return "Produce ammo and fire them rapidly when enemy is in range";
                 case POISON_TOWER:
                     return null;
                 case BOOM_VOLCANO:
@@ -1054,7 +1054,7 @@ public class Constants {
                 case FROST_MAGE:
                     return 100;
                 case MINES_FACTORY:
-                    return 96;
+                    return 150;
                 case POISON_TOWER:
                     return 250;
                 case BOOM_VOLCANO:
@@ -1159,7 +1159,7 @@ public class Constants {
                 case FROST_MAGE:
                     return BOTH;
                 case MINES_FACTORY:
-                    return WALKING;
+                    return BOTH;
                 case POISON_TOWER:
                     return WALKING;
                 case BOOM_VOLCANO:

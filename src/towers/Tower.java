@@ -2,6 +2,7 @@ package towers;
 
 import helpz.Constants;
 import managers.TowerManager;
+import scenes.Playing;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public abstract class Tower {
     private boolean stun = false, attackSlow = false;
     private boolean Upgrade1 = false, Upgrade2 = false, Upgrade3 = false;
     private TowerManager towerManager;
+    private Playing playing;
 
 
     public Tower(int x, int y, int id, int towerType, TowerManager towerManager) {
@@ -24,6 +26,7 @@ public abstract class Tower {
         this.id = id;
         this.towerType = towerType;
         this.towerManager = towerManager;
+        this.playing=this.towerManager.getPlaying();
         setDefaultDmg();
         setDefaultRange();
         setDefaultCoolDown();
@@ -53,8 +56,9 @@ public abstract class Tower {
             attackSlow = false;
             setStandardCD();
         }
-        if (isCoolDownOver() && this instanceof MineFactory) {
-            ((MineFactory) this).addAmmo();
+        if (this instanceof MineFactory&&isCoolDownOver()) {
+                ((MineFactory) this).addAmmo();
+                resetCoolDown();
         }
     }
 
@@ -369,8 +373,8 @@ public abstract class Tower {
         this.duration += duration;
     }
 
-    public void reduceCoolDown(float cooldown) {
-        this.coolDown -= cooldown;
+    public void reduceCoolDown(float coolDown) {
+        this.coolDown -= coolDown;
     }
 
     public void addRange(float range) {
