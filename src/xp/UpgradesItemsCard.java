@@ -107,7 +107,7 @@ public class UpgradesItemsCard {
         //locked 49↓
         //ALL
         cards.add(new Card(id++, "MONEY", "Get 2000 gold", true, -1));
-        cards.add(new Card(id++, "MONEY", "Get 2000 gold", true, -1));
+        cards.add(new Card(id++, "Lvl Up", "Your Ally have +2 lvl", true, -1));
         cards.add(new Card(id++, "MONEY", "Get 2000 gold", true, -1));
 
         cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
