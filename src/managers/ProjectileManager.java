@@ -238,20 +238,24 @@ public class ProjectileManager {
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        for (Projectile p : projectiles) {
-            if (p.isActive()) {
-                if (helpz.Constants.ProjectileType.isRotating(p.getProjectileType())) {
-                    g2d.translate(p.getPos().x, p.getPos().y);
-                    g2d.rotate(Math.toRadians(p.getRotation()));
-                    g2d.drawImage(proj_imgs[p.getProjectileType()], -halfTilePixelNumber, -halfTilePixelNumber, null);
-                    g2d.rotate(-Math.toRadians(p.getRotation()));
-                    g2d.translate(-p.getPos().x, -p.getPos().y);
-                } else {
-                    g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - halfTilePixelNumber, (int) p.getPos().y - halfTilePixelNumber, null);
+       try {
+            for (Projectile p : projectiles) {
+                if (p.isActive()) {
+                    if (helpz.Constants.ProjectileType.isRotating(p.getProjectileType())) {
+                        g2d.translate(p.getPos().x, p.getPos().y);
+                        g2d.rotate(Math.toRadians(p.getRotation()));
+                        g2d.drawImage(proj_imgs[p.getProjectileType()], -halfTilePixelNumber, -halfTilePixelNumber, null);
+                        g2d.rotate(-Math.toRadians(p.getRotation()));
+                        g2d.translate(-p.getPos().x, -p.getPos().y);
+                    } else {
+                        g2d.drawImage(proj_imgs[p.getProjectileType()], (int) p.getPos().x - halfTilePixelNumber, (int) p.getPos().y - halfTilePixelNumber, null);
+                    }
                 }
+                drawExplosions(g2d);
             }
-            drawExplosions(g2d);
-        }
+        }catch (Exception e){
+           System.out.println("pm Exception in thread draw");
+       }
     }
 
     private void drawExplosions(Graphics2D g2d) {
