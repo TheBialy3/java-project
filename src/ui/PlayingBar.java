@@ -201,7 +201,7 @@ public class PlayingBar extends Bar {
                 g.drawString("" + Constants.TowerType.getNameTower(displayedTower.getTowerType()), 1375, 1018);
                 g.drawString("Range:" + displayedTower.getRange(), 1375, 1038);
                 if (displayedTower.getTowerType() == FROST_MAGE) {
-                    g.drawString("Slow:" + 100 * Constants.TowerType.getPowerOfSlowTower(displayedTower.getTowerType()) + "%", 1375, 1058);
+                    g.drawString("Slow:" + 100 * displayedTower.getSlow() + "%", 1375, 1058);
                 } else {
                     g.drawString("DMG:" + displayedTower.getDmg(), 1375, 1058);
                     g.drawString("AS:" + decfor.format(60 / displayedTower.getCoolDown()), 1375, 1078);
