@@ -107,17 +107,14 @@ public class UpgradesItemsCard {
         //locked 49↓
         //ALL
         cards.add(new Card(id++, "MONEY", "Get 2000 gold", true, -1));
-        cards.add(new Card(id++, "Lvl Up", "Your Ally have +2 lvl", true, -1));
-        cards.add(new Card(id++, "MONEY", "Get 2000 gold", true, -1));
-
-        cards.add(new Card(id++, "Fast Projectile", "Projectile travel faster", false, -1));
+        cards.add(new Card(id++, "Lvl Up", "Your Allys have +2 lvl", true, -1));
+        cards.add(new Card(id++, "Hero++", "Spawn Random hero Ally", true, -1));
         cards.add(new Card(id++, "Merchant", "There will be e chance to merchant appearance", false, -1));
         cards.add(new Card(id++, "Tenacity", "Reduce all debuffs from your towers by 50%", false, -1));
         cards.add(new Card(id++, "Unbreakable", "Reduce all debuffs to your towers by 100%", false, -1));
 
 
         //ENEMY
-        cards.add(new Card(id++, "Big enemy", "Enemies are bigger so it is easy to shoot", false, -2));
         cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
        // cards.add(new Card(id++, "Weak and Fast", "Enemies have less HP but cant be slowed", false, -2));
 

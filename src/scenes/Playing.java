@@ -78,7 +78,7 @@ public class Playing extends GameScene implements SceneMethods {
         initBestiaryButton();
     }
 
-    public Playing(Game game,int gameMode) {
+    public Playing(Game game,   int gameMode) {
         super(game);
         setGameMode(gameMode);
         LoadDefaultLevel();
