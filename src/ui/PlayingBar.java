@@ -8,9 +8,11 @@ import scenes.Playing;
 import towers.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
 import static helpz.Constants.TowerType.*;
+import static helpz.LoadSave.getImg;
 import static main.GameStates.*;
 
 public class PlayingBar extends Bar {
@@ -18,6 +20,7 @@ public class PlayingBar extends Bar {
     private Playing playing;
     private Game game;
     private TowerManager towerManager;
+    private BufferedImage background=getImg("side_bar");;
     private MyButton bMenu, bReset;
     private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
@@ -56,8 +59,7 @@ public class PlayingBar extends Bar {
 
     public void draw(Graphics g) {
         //backGround
-        g.setColor(new Color(0, 102, 102));
-        g.fillRect(x, y, width, height);
+        g.drawImage(background,x, y,null);
 
         //buttons
         drawButtons(g);
@@ -82,6 +84,8 @@ public class PlayingBar extends Bar {
 
 
     }
+
+
 
     private void drawTowerSellCost(Graphics g) {
         g.setColor(new Color(7, 43, 186));
