@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static helpz.Constants.Tiles.ROAD_TILE;
+import static helpz.LoadSave.getImg;
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
@@ -24,11 +25,12 @@ public class ToolBar extends Bar {
     private Tile selectedTile;
     private Editing editing;
     private int tilePixelNumber = 64;
-    private int currentIndex = 0;
+    private int currentIndex = 0,lookOfSideBar=2;
     private int currentType = 0;
     private int reszta = 0;
 
     private BufferedImage pathStart, pathEnd, pathDir, pathDirNull;
+    private BufferedImage background = getImg("side_bar");
 
 
     private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
@@ -104,8 +106,17 @@ public class ToolBar extends Bar {
 
     public void draw(Graphics g) {
         //backGround
-        g.setColor(new Color(0, 102, 102));
-        g.fillRect(x, y, width, height);
+        switch (lookOfSideBar) {
+            case 0:
+                g.drawImage(background, x, y, 256, 1280, null);
+                break;
+            case 1:
+                g.drawImage(background, x, y, 256 * 2, 1280 * 2, null);
+                break;
+            case 2:
+                g.drawImage(background, x, y, 256 * 3, 1280 * 3, null);
+                break;
+        }
 
         //buttons
         drawButtons(g);
