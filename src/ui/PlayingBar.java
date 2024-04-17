@@ -20,7 +20,8 @@ public class PlayingBar extends Bar {
     private Playing playing;
     private Game game;
     private TowerManager towerManager;
-    private BufferedImage background=getImg("side_bar");;
+    private BufferedImage background = getImg("side_bar");
+    ;
     private MyButton bMenu, bReset;
     private MyButton bUpgrade1, bUpgrade2, bUpgrade3, bSell;
     private MyButton[] towerButtons;
@@ -32,7 +33,7 @@ public class PlayingBar extends Bar {
 
     private boolean showTowerCost;
 
-    private int towerCostId;
+    private int towerCostId, lookOfSideBar = 2;
 
     private int lives = 5;
 
@@ -59,7 +60,17 @@ public class PlayingBar extends Bar {
 
     public void draw(Graphics g) {
         //backGround
-        g.drawImage(background,x, y,null);
+        switch (lookOfSideBar) {
+            case 0:
+                g.drawImage(background, x, y, 256, 1280, null);
+                break;
+            case 1:
+                g.drawImage(background, x, y, 256 * 2, 1280 * 2, null);
+                break;
+            case 2:
+                g.drawImage(background, x, y, 256 * 3, 1280 * 3, null);
+                break;
+        }
 
         //buttons
         drawButtons(g);
@@ -84,7 +95,6 @@ public class PlayingBar extends Bar {
 
 
     }
-
 
 
     private void drawTowerSellCost(Graphics g) {
@@ -238,8 +248,8 @@ public class PlayingBar extends Bar {
     }
 
     private void drawDisplayedTowerRange(Graphics g) {
-            g.setColor(Color.BLACK);
-            g.drawOval((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
+        g.setColor(Color.BLACK);
+        g.drawOval((int) (displayedTower.getX() - displayedTower.getRange()) + 32, (int) (displayedTower.getY() - displayedTower.getRange()) + 32, (int) (displayedTower.getRange() * 2), (int) (displayedTower.getRange()) * 2);
     }
 
     private void drawDisplayedTowerRect(Graphics g) {
@@ -362,10 +372,10 @@ public class PlayingBar extends Bar {
 
     private void sellTowerClicked() {
         playing.removeTower(displayedTower);
-        if (displayedTower.getTowerType()!=BANK){
+        if (displayedTower.getTowerType() != BANK) {
             gold += getTowerCost() * 0.8;
-        }else {
-            gold += getTowerCost()* 0.9;
+        } else {
+            gold += getTowerCost() * 0.9;
         }
         displayedTower = null;
     }
