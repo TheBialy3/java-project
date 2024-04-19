@@ -18,6 +18,7 @@ public class Editing extends GameScene implements SceneMethods {
     private static int[][] lvl;
 
     private ArrayList<PathPoint> enemyPathRoad = new ArrayList<>();
+    private ArrayList<PathPoint> tower = new ArrayList<>();
     private Tile selectedTile;
 
     private int mouseX, mouseY;
