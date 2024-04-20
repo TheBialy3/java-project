@@ -133,12 +133,12 @@ public class ToolBar extends Bar {
         drawNormalButtons(g, bWater);
         drawSelectedTile(g);
         drawMapButtons(g);
-        drawMesage(g);
+        drawMessage(g);
     }
 
-    private void drawMesage(Graphics g) {
-        if (editing.getPathRoad()) {
-            g.drawString("press esc kay to stop creating path for eemies", 1293, 1000);
+    private void drawMessage(Graphics g) {
+        if (editing.isDrawPath()) {
+            g.drawString("press esc kay to stop creating path for enemies", 1293, 1000);
         }
     }
 
@@ -191,7 +191,7 @@ public class ToolBar extends Bar {
             selectedTile = editing.getGame().getTileManager().getTile(bWater.getId());
             editing.setSelectedTile(selectedTile);
         } else if (bPoints.getBounds().contains(x, y)) {
-            editing.setPathRoad(true);
+            editing.setDrawStateNon();
         } else if (bResetPoints.getBounds().contains(x, y)) {
             editing.resetEnemyPathRoad();
         } else {
