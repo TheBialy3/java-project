@@ -4,6 +4,7 @@ import helpz.LoadSave;
 import main.Game;
 import objects.PathPoint;
 import objects.Tile;
+import objects.TowerPlace;
 import ui.ToolBar;
 
 import java.awt.*;
@@ -18,11 +19,17 @@ public class Editing extends GameScene implements SceneMethods {
     private static int[][] lvl;
 
     private ArrayList<PathPoint> enemyPathRoad = new ArrayList<>();
-    private ArrayList<PathPoint> tower = new ArrayList<>();
+    private ArrayList<TowerPlace> towerPlaces = new ArrayList<>();
     private Tile selectedTile;
 
     private int mouseX, mouseY;
-    private boolean drawSelect, PathRoad = false;
+
+
+
+    private enum DrawState{
+        NON, PATH_POINT,TOWER_PLACE,TILE
+    }
+    DrawState drawState=DrawState.NON;
     private int tileXLast, tileYLast, lastTileId;
     private static int chosenLvl = 1;
 
@@ -81,7 +88,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     private void drawSelectedTile(Graphics g) {
-        if (selectedTile != null && drawSelect) {
+        if (selectedTile != null && drawState==DrawState.TILE) {
             g.drawImage(selectedTile.getSprite(), mouseX, mouseY, 64, 64, null);
             g.setColor(Color.BLACK);
             g.drawRect(mouseX, mouseY, 64, 64);
@@ -95,7 +102,7 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void setSelectedTile(Tile tile) {
         this.selectedTile = tile;
-        drawSelect = true;
+        drawState = DrawState.TILE;
     }
 
     private void changedTile(int x, int y) {
@@ -121,7 +128,7 @@ public class Editing extends GameScene implements SceneMethods {
         } else {
             if (selectedTile != null) {
                 changedTile(mouseX, mouseY);
-            } else if (PathRoad) {
+            } else if (drawState==DrawState.PATH_POINT) {
                 enemyPathRoad.add(new PathPoint(x, y));
             }
         }
@@ -131,9 +138,9 @@ public class Editing extends GameScene implements SceneMethods {
     public void mouseMoved(int x, int y) {
         if (x >= 1280) {
             toolBar.mouseMoved(x, y);
-            drawSelect = false;
+            drawState=DrawState.NON;
         } else {
-            drawSelect = true;
+            drawState=DrawState.TILE;
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
         }
@@ -166,17 +173,17 @@ public class Editing extends GameScene implements SceneMethods {
             case KeyEvent.VK_1:
                 break;
             case KeyEvent.VK_ESCAPE:
-                setPathRoad(false);
+                drawState=DrawState.NON;
                 break;
         }
     }
 
-    public void setPathRoad(Boolean b) {
-        PathRoad = b;
+    public boolean isDrawPath() {
+        return drawState==DrawState.PATH_POINT;
     }
 
-    public Boolean getPathRoad() {
-        return PathRoad;
+    public void setDrawStateNon() {
+        drawState = DrawState.NON;
     }
 
     public void resetEnemyPathRoad() {
