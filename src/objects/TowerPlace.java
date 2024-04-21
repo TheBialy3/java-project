@@ -4,10 +4,9 @@ public class TowerPlace {
     private  int x,y ;
     private  boolean isOccupied=false;
 
-    public TowerPlace(int x, int y, boolean isOccupied) {
+    public TowerPlace(int x, int y) {
         this.x = x;
         this.y = y;
-        this.isOccupied = isOccupied;
     }
 
     public void setOccupied(boolean occupied) {

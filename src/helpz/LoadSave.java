@@ -2,6 +2,7 @@ package helpz;
 
 import objects.Card;
 import objects.PathPoint;
+import objects.TowerPlace;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -194,6 +195,22 @@ public class LoadSave {
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<PathPoint> pathForEnemies = new ArrayList<>();
+            int startIndex = 400;
+            int j = list.get(startIndex);
+            for (int i = 0; i < j; i++) {
+                pathForEnemies.add(new PathPoint(list.get(startIndex + 1 + i), list.get(startIndex + i + j + 1)));
+            }
+            return pathForEnemies;
+        } else {
+            System.out.println("File: level1.txt nieistnieje");
+            return null;
+        }
+    }
+    public static ArrayList<TowerPlace> GetLevelTowerPlaces() {
+        File lvlFile = new File("res/textFile/level1.txt");
+        if (lvlFile.exists()) {
+            ArrayList<Integer> list = ReadFromFile(lvlFile);
+            ArrayList<TowerPlace> pathForEnemies = new ArrayList<>();
             int startIndex = 400;
             int j = list.get(startIndex);
             for (int i = 0; i < j; i++) {

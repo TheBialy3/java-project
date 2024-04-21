@@ -45,6 +45,7 @@ public class Editing extends GameScene implements SceneMethods {
     public void LoadDefoultLevel() {
         lvl = LoadSave.GetLevelData();
         enemyPathRoad = LoadSave.GetLevelDir();
+        towerPlaces= LoadSave.GetLevelTowerPlaces();
     }
 
 
@@ -130,6 +131,8 @@ public class Editing extends GameScene implements SceneMethods {
                 changedTile(mouseX, mouseY);
             } else if (drawState==DrawState.PATH_POINT) {
                 enemyPathRoad.add(new PathPoint(x, y));
+            } else if (drawState==DrawState.TOWER_PLACE) {
+                towerPlaces.add(new TowerPlace(x, y));
             }
         }
     }
@@ -186,9 +189,15 @@ public class Editing extends GameScene implements SceneMethods {
         drawState = DrawState.NON;
     }
 
+
+
     public void resetEnemyPathRoad() {
         enemyPathRoad.clear();
     }
+    public void resetTowerPlaces() {
+        towerPlaces.clear();
+    }
+
 
 
 }
