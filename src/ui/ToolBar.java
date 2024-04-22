@@ -22,6 +22,7 @@ public class ToolBar extends Bar {
     private MyButton currentButton;
     private MyButton bGrass, bWater, bRoadC, bWaterC, bWaterI, bWaterB, bRoad, bRoadDir, bRoadDirNull;
     private MyButton bPoints, bResetPoints;
+    private MyButton bTowerPlace, bResetTowerPlace;
     private Tile selectedTile;
     private Editing editing;
     private int tilePixelNumber = 64;
@@ -77,7 +78,10 @@ public class ToolBar extends Bar {
         initMapButtons(bRoadDir, editing.getGame().getTileManager().getRoadDir(), x, y, diff, w, h, id++, type++);
 
         bPoints = new MyButton("Points", x, y + diff * type, w, h, id++);
-        bResetPoints = new MyButton("ResetPoints", x + diff, y + diff * type, w, h, id++);
+        bResetPoints = new MyButton("RP", x + diff, y + diff * type, w, h, id++);
+        type++;
+        bTowerPlace = new MyButton("TP", x, y + diff * type, w, h, id++);
+        bResetTowerPlace = new MyButton("RTP", x + diff, y + diff * type, w, h, id++);
         type++;
 
 
@@ -128,6 +132,9 @@ public class ToolBar extends Bar {
 
         drawPathButtons(g, bPoints);
         drawPathButtons(g, bResetPoints);
+
+        drawPathButtons(g, bTowerPlace);
+        drawPathButtons(g, bResetTowerPlace);
 
 
         drawNormalButtons(g, bWater);
@@ -191,9 +198,13 @@ public class ToolBar extends Bar {
             selectedTile = editing.getGame().getTileManager().getTile(bWater.getId());
             editing.setSelectedTile(selectedTile);
         } else if (bPoints.getBounds().contains(x, y)) {
-            editing.setDrawStateNon();
+            editing.setDrawStatePathPoint();
         } else if (bResetPoints.getBounds().contains(x, y)) {
             editing.resetEnemyPathRoad();
+        } else if (bTowerPlace.getBounds().contains(x, y)) {
+            editing.setDrawStateTowerPlace();
+        } else if (bResetTowerPlace.getBounds().contains(x, y)) {
+            editing.resetTowerPlaces();
         } else {
             for (MyButton b : map.keySet()) {
                 if (b.getBounds().contains(x, y)) {
@@ -215,6 +226,9 @@ public class ToolBar extends Bar {
         bWater.setMouseOver(false);
         bPoints.setMouseOver(false);
         bResetPoints.setMouseOver(false);
+        bResetTowerPlace.setMouseOver(false);
+        bTowerPlace.setMouseOver(false);
+
 
         for (MyButton b : map.keySet()) {
             b.setMouseOver(false);
@@ -225,6 +239,10 @@ public class ToolBar extends Bar {
             bSave.setMouseOver(true);
         } else if (bWater.getBounds().contains(x, y)) {
             bWater.setMouseOver(true);
+        } else if (bTowerPlace.getBounds().contains(x, y)) {
+            bTowerPlace.setMouseOver(true);
+        } else if (bResetTowerPlace.getBounds().contains(x, y)) {
+            bResetTowerPlace.setMouseOver(true);
         } else if (bResetPoints.getBounds().contains(x, y)) {
             bResetPoints.setMouseOver(true);
         } else if (bPoints.getBounds().contains(x, y)) {
@@ -258,6 +276,10 @@ public class ToolBar extends Bar {
             bResetPoints.setMousePressed(true);
         } else if (bPoints.getBounds().contains(x, y)) {
             bPoints.setMousePressed(true);
+        } else if (bTowerPlace.getBounds().contains(x, y)) {
+            bTowerPlace.setMousePressed(true);
+        } else if (bResetTowerPlace.getBounds().contains(x, y)) {
+            bResetTowerPlace.setMousePressed(true);
         } else {
             for (MyButton b : map.keySet()) {
                 if (b.getBounds().contains(x, y)) {
@@ -276,6 +298,8 @@ public class ToolBar extends Bar {
         bWater.resetBooleans();
         bPoints.resetBooleans();
         bResetPoints.resetBooleans();
+        bResetTowerPlace.resetBooleans();
+        bTowerPlace.resetBooleans();
         for (MyButton b : map.keySet()) {
             b.resetBooleans();
         }
