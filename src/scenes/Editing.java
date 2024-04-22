@@ -9,9 +9,8 @@ import ui.ToolBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
-import static helpz.Constants.Tiles.*;
 
 public class Editing extends GameScene implements SceneMethods {
 
@@ -21,6 +20,8 @@ public class Editing extends GameScene implements SceneMethods {
     private ArrayList<PathPoint> enemyPathRoad = new ArrayList<>();
     private ArrayList<TowerPlace> towerPlaces = new ArrayList<>();
     private Tile selectedTile;
+
+    private BufferedImage TPimg=helpz.LoadSave.getImg("tower_place");
 
     private int mouseX, mouseY;
 
@@ -38,11 +39,11 @@ public class Editing extends GameScene implements SceneMethods {
 
     public Editing(Game game) {
         super(game);
-        LoadDefoultLevel();
+        LoadDefaultLevel();
         toolBar = new ToolBar(1280, 0, 256, 1280, this);
     }
 
-    public void LoadDefoultLevel() {
+    public void LoadDefaultLevel() {
         lvl = LoadSave.GetLevelData();
         enemyPathRoad = LoadSave.GetLevelDir();
         towerPlaces= LoadSave.GetLevelTowerPlaces();
@@ -59,6 +60,8 @@ public class Editing extends GameScene implements SceneMethods {
         toolBar.draw(g);
         drawSelectedTile(g);
         drawPathPoint(g);
+        drawTowerPlaces(g);
+
     }
 
 
@@ -69,6 +72,17 @@ public class Editing extends GameScene implements SceneMethods {
                 g.setColor(new Color(6, 51, 143));
                 g.drawOval(point.getxCord()-20, point.getyCord()-20, 40, 40);
                 g.drawString(i + "", point.getxCord()-10, point.getyCord()+5);
+                i++;
+            }
+        }
+    }
+    private void drawTowerPlaces(Graphics g) {
+        int i = 0;
+        if (!towerPlaces.isEmpty()) {
+            for (TowerPlace point : towerPlaces) {
+                g.setColor(new Color(6, 51, 143));
+                g.drawImage(TPimg,point.getX()-TPimg.getWidth()*2, point.getY()-TPimg.getHeight()*2, TPimg.getWidth()*4,TPimg.getHeight()*4, null);
+                g.drawString(i + "", point.getX()-10, point.getY()+5);
                 i++;
             }
         }
@@ -97,7 +111,7 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
-        LoadSave.SaveLevel("level" + chosenLvl, lvl, enemyPathRoad);
+        LoadSave.SaveLevel("level" + chosenLvl, lvl, enemyPathRoad,towerPlaces);
         game.initClasses();
     }
 
@@ -141,9 +155,7 @@ public class Editing extends GameScene implements SceneMethods {
     public void mouseMoved(int x, int y) {
         if (x >= 1280) {
             toolBar.mouseMoved(x, y);
-            drawState=DrawState.NON;
         } else {
-            drawState=DrawState.TILE;
             mouseX = (x / 64) * 64;
             mouseY = (y / 64) * 64;
         }
@@ -176,7 +188,7 @@ public class Editing extends GameScene implements SceneMethods {
             case KeyEvent.VK_1:
                 break;
             case KeyEvent.VK_ESCAPE:
-                drawState=DrawState.NON;
+                setDrawStateNon();
                 break;
         }
     }
@@ -187,6 +199,12 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void setDrawStateNon() {
         drawState = DrawState.NON;
+    }
+    public void setDrawStatePathPoint() {
+        drawState = DrawState.PATH_POINT;
+    }
+    public void setDrawStateTowerPlace() {
+        drawState = DrawState.TOWER_PLACE;
     }
 
 

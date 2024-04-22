@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class LoadSave {
 
+    protected static int startIndex = 400;
 
     public static BufferedImage getSpriteAtlas() {
         BufferedImage img = null;
@@ -69,7 +70,7 @@ public class LoadSave {
     }
 
 
-    private static void WriteToFile(File f, int[] idArr, ArrayList<PathPoint> enemyPathRoad, int sizeOfEnemyPathRoad) {//
+    private static void WriteToFile(File f, int[] idArr, ArrayList<PathPoint> enemyPathRoad, int sizeOfEnemyPathRoad,ArrayList<TowerPlace> towerPlaces, int sizeOfTowerPlaces) {//
         try {
             PrintWriter pw = new PrintWriter(f);
             for (Integer i : idArr) {
@@ -81,6 +82,13 @@ public class LoadSave {
             }
             for (PathPoint i : enemyPathRoad) {
                 pw.println(i.getyCord());
+            }
+            pw.println(sizeOfTowerPlaces);
+            for (TowerPlace i : towerPlaces) {
+                pw.println(i.getX());
+            }
+            for (TowerPlace i : towerPlaces) {
+                pw.println(i.getY());
             }
             pw.close();
         } catch (IOException e) {
@@ -195,10 +203,9 @@ public class LoadSave {
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<PathPoint> pathForEnemies = new ArrayList<>();
-            int startIndex = 400;
-            int j = list.get(startIndex);
-            for (int i = 0; i < j; i++) {
-                pathForEnemies.add(new PathPoint(list.get(startIndex + 1 + i), list.get(startIndex + i + j + 1)));
+            int sizeOfDirArr = list.get(startIndex);
+            for (int i = 0; i < sizeOfDirArr; i++) {
+                pathForEnemies.add(new PathPoint(list.get(startIndex + 1 + i), list.get(startIndex + i + sizeOfDirArr + 1)));
             }
             return pathForEnemies;
         } else {
@@ -211,10 +218,13 @@ public class LoadSave {
         if (lvlFile.exists()) {
             ArrayList<Integer> list = ReadFromFile(lvlFile);
             ArrayList<TowerPlace> pathForEnemies = new ArrayList<>();
-            int startIndex = 400;
-            int j = list.get(startIndex);
-            for (int i = 0; i < j; i++) {
-                pathForEnemies.add(new PathPoint(list.get(startIndex + 1 + i), list.get(startIndex + i + j + 1)));
+
+            int sizeOfDirArr = list.get(startIndex);
+            int sizeOfTowerPlaceArr = list.get(startIndex+sizeOfDirArr*2+1);
+            int startCountDown=startIndex+sizeOfDirArr*2+2;
+
+            for (int i = 0; i < sizeOfTowerPlaceArr; i++) {
+                pathForEnemies.add(new TowerPlace(list.get(startCountDown  + i), list.get(startCountDown + i + sizeOfTowerPlaceArr )));
             }
             return pathForEnemies;
         } else {
@@ -269,10 +279,10 @@ public class LoadSave {
         }
     }
 
-    public static void SaveLevel(String name, int[][] idArr, ArrayList<PathPoint> enemyPathRoad) {
+    public static void SaveLevel(String name, int[][] idArr, ArrayList<PathPoint> enemyPathRoad, ArrayList<TowerPlace> towerPlaces) {
         File lvlFile = new File("res/textFile/" + name + ".txt");
         if (lvlFile.exists()) {
-            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), enemyPathRoad, enemyPathRoad.size());
+            WriteToFile(lvlFile, Utilz.TwoDto1DintArr(idArr), enemyPathRoad, enemyPathRoad.size(),towerPlaces,towerPlaces.size());
         } else {
             System.out.println("file " + name + " does not exists");
             return;
