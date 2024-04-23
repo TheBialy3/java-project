@@ -12,6 +12,7 @@ import objects.Beam;
 import objects.Card;
 import looks.CardLook;
 import objects.PathPoint;
+import objects.TowerPlace;
 import towers.*;
 import ui.MyButton;
 import ui.PlayingBar;
@@ -44,6 +45,7 @@ public class Playing extends GameScene implements SceneMethods {
     private BufferedImage card = getCardSprite(), cardChoose = getCardChooseSprite(), logos[] = loadLogos();
     private PathPoint start, end;
     private ArrayList<Beam> beams = new ArrayList<>();
+    private ArrayList<TowerPlace> towerPlaces = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>(),winCards = new ArrayList<>(), threeCards = new ArrayList<>();
     private Random random = new Random();
     private Tower selectedTower;
@@ -74,6 +76,7 @@ public class Playing extends GameScene implements SceneMethods {
         enemyManager = new EnemyManager(this, waveManager, towerManager);
         playingBar = new PlayingBar(1280, 0, 256, 1280, this, game, towerManager);
         bestiary = game.getBestiary();
+
         initCardButtons();
         initBestiaryButton();
     }
@@ -625,6 +628,7 @@ public class Playing extends GameScene implements SceneMethods {
 
     public void LoadDefaultLevel() {
         lvl = LoadSave.GetLevelData();
+        towerPlaces= LoadSave.GetLevelTowerPlaces();
     }
 
 
