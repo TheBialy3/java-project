@@ -4,6 +4,7 @@ import enemies.Enemy;
 import helpz.Constants;
 import helpz.LoadSave;
 import objects.PathPoint;
+import objects.TowerPlace;
 import towers.*;
 import scenes.Playing;
 
@@ -25,6 +26,7 @@ public class TowerManager {
     private BufferedImage[] towerImg, upgradeImg, BuffsImg, towersSideImg;
 
     private ArrayList<Tower> towers = new ArrayList<>();
+    private ArrayList<TowerPlace> towerPlaces = new ArrayList<>();
     private int towerAmount = 0, ran, tilePixelNumber = 64, upgradeImgNumber = 5, BuffsImgNumber = 1, TowersSideImgNumber = 180, animationIndex;
     private Random random = new Random();
     private PathPoint e;
