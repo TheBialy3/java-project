@@ -17,20 +17,20 @@ public class UpgradesItemsCard {
     }
     public void createUpgradesForCardMode() {
         int id = -1;
-        cards.add(new Card(id--, "Archer", "Build Archer Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Cannon", "Build Cannon Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Frost Mage", "Build Frost Mage Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Mines Factory", "Build Mines Factory Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Poison Tower", "Build Poison Tower Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Volcano", "Build Volcano Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Crossbow", "Build Crossbow Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Mouse Follower", "Build Mouse Follower Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Sniper", "Build Sniper Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Eye laser Tower", "Build Eye laser Tower Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Scarecrow", "Build Scarecrow Tower at RANDOM Place", true, -1,true));
-        cards.add(new Card(id--, "Bank", "Build Bank Tower at RANDOM Place", true, -1,true));
+        cards.add(new Card(id--, "Archer", "Build Archer Tower ", true, -1,true));
+        cards.add(new Card(id--, "Cannon", "Build Cannon Tower ", true, -1,true));
+        cards.add(new Card(id--, "Frost Mage", "Build Frost Mage Tower ", true, -1,true));
+        cards.add(new Card(id--, "Mines Factory", "Build Mines Factory Tower ", true, -1,true));
+        cards.add(new Card(id--, "Poison Tower", "Build Poison Tower Tower ", true, -1,true));
+        cards.add(new Card(id--, "Volcano", "Build Volcano Tower ", true, -1,true));
+        cards.add(new Card(id--, "Crossbow", "Build Crossbow Tower ", true, -1,true));
+        cards.add(new Card(id--, "Mouse Follower", "Build Mouse Follower Tower ", true, -1,true));
+        cards.add(new Card(id--, "Sniper", "Build Sniper Tower ", true, -1,true));
+        cards.add(new Card(id--, "Eye laser Tower", "Build Eye laser Tower Tower ", true, -1,true));
+        cards.add(new Card(id--, "Scarecrow", "Build Scarecrow Tower ", true, -1,true));
+        cards.add(new Card(id--, "Bank", "Build Bank Tower ", true, -1,true));
 
-        cards.add(new Card(id--, "4 4 2", "Sell 2 Random towers get 4 Random towers", true, -1));
+        cards.add(new Card(id--, "4 4 2", "Sell 2 Random towers get 4 Random towers at RANDOM Places", true, -1));
 
 
     }
@@ -65,9 +65,9 @@ public class UpgradesItemsCard {
         cards.add(new Card(id++, "Frost Damage", "Frost Mage will now deal a little magic damage", true, 2));
         cards.add(new Card(id++, "Frost Arch Mage", "Frost Mage will now have stronger slow", true, 2));
         //MINES_FACTORY id22↓
-        cards.add(new Card(id++, "Long Live the Mine", "Mines will now stay for 2 waves", true, 3));
-        cards.add(new Card(id++, "Two for One", "Mines Factory will now sets 2 times more mines at the time", true, 3));
-        cards.add(new Card(id++, "Big Mines", "Mines Factory will now sets mines that du more damage", true, 3));
+        cards.add(new Card(id++, "Long Live the Ammo", "Ammo will now stay for 2 waves", true, 3));
+        cards.add(new Card(id++, "Two for One", "Ammo Factory will now sets 2 times more mines at the time", true, 3));
+        cards.add(new Card(id++, "Big Ammo", "Ammo Factory will now sets mines that do more damage", true, 3));
         //POISON_TOWER id25↓
         cards.add(new Card(id++, "Bigger Potions", "Poison Tower will now splash in bigger radius", true, 4));
         cards.add(new Card(id++, "Stronger Potions", "Poison Tower will now do more damage", true, 4));
