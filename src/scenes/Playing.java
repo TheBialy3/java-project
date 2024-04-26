@@ -1001,4 +1001,7 @@ public class Playing extends GameScene implements SceneMethods {
         return towerManager;
     }
 
+    public ArrayList<TowerPlace> getTowerPlaces() {
+        return towerPlaces;
+    }
 }
