@@ -47,6 +47,7 @@ public class Editing extends GameScene implements SceneMethods {
     public void LoadDefaultLevel() {
         lvl = LoadSave.GetLevelData();
         enemyPathRoad = LoadSave.GetLevelDir();
+        enemyPathRoad2 = LoadSave.GetLevelDir();
         towerPlaces= LoadSave.GetLevelTowerPlaces();
     }
 
@@ -71,6 +72,15 @@ public class Editing extends GameScene implements SceneMethods {
         if (!enemyPathRoad.isEmpty()) {
             for (PathPoint point : enemyPathRoad) {
                 g.setColor(new Color(6, 51, 143));
+                g.drawOval(point.getxCord()-20, point.getyCord()-20, 40, 40);
+                g.drawString(i + "", point.getxCord()-10, point.getyCord()+5);
+                i++;
+            }
+        }
+        i = 0;
+        if (!enemyPathRoad2.isEmpty()) {
+            for (PathPoint point : enemyPathRoad2) {
+                g.setColor(new Color(36, 143, 6));
                 g.drawOval(point.getxCord()-20, point.getyCord()-20, 40, 40);
                 g.drawString(i + "", point.getxCord()-10, point.getyCord()+5);
                 i++;
@@ -112,6 +122,9 @@ public class Editing extends GameScene implements SceneMethods {
     }
 
     public void saveLevel() {
+        if(!enemyPathRoad2.isEmpty()){
+      //      LoadSave.SaveLevel("level" + chosenLvl, lvl, enemyPathRoad, towerPlaces,enemyPathRoad2);
+        }
         LoadSave.SaveLevel("level" + chosenLvl, lvl, enemyPathRoad,towerPlaces);
         game.initClasses();
     }
@@ -146,6 +159,8 @@ public class Editing extends GameScene implements SceneMethods {
                 changedTile(mouseX, mouseY);
             } else if (drawState==DrawState.PATH_POINT) {
                 enemyPathRoad.add(new PathPoint(x, y));
+          //  } else if (drawState==DrawState.PATH_POINT) {
+                //     enemyPathRoad2.add(new PathPoint(x, y));
             } else if (drawState==DrawState.TOWER_PLACE) {
                 towerPlaces.add(new TowerPlace(x, y));
             }
@@ -212,6 +227,9 @@ public class Editing extends GameScene implements SceneMethods {
 
     public void resetEnemyPathRoad() {
         enemyPathRoad.clear();
+    }
+    public void resetEnemyPathRoad2() {
+        enemyPathRoad2.clear();
     }
     public void resetTowerPlaces() {
         towerPlaces.clear();
