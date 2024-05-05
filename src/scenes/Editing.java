@@ -29,7 +29,12 @@ public class Editing extends GameScene implements SceneMethods {
 
 
     private enum DrawState{
-        NON, PATH_POINT,TOWER_PLACE,TILE
+        NON,
+        PATH_POINT,
+        PATH_POINT_2,
+        TOWER_PLACE,
+        TILE,
+
     }
     DrawState drawState=DrawState.NON;
     private int tileXLast, tileYLast, lastTileId;
@@ -159,8 +164,8 @@ public class Editing extends GameScene implements SceneMethods {
                 changedTile(mouseX, mouseY);
             } else if (drawState==DrawState.PATH_POINT) {
                 enemyPathRoad.add(new PathPoint(x, y));
-          //  } else if (drawState==DrawState.PATH_POINT) {
-                //     enemyPathRoad2.add(new PathPoint(x, y));
+            } else if (drawState==DrawState.PATH_POINT_2) {
+                     enemyPathRoad2.add(new PathPoint(x, y));
             } else if (drawState==DrawState.TOWER_PLACE) {
                 towerPlaces.add(new TowerPlace(x, y));
             }
@@ -212,12 +217,18 @@ public class Editing extends GameScene implements SceneMethods {
     public boolean isDrawPath() {
         return drawState==DrawState.PATH_POINT;
     }
+    public boolean isDrawPath2() {
+        return drawState==DrawState.PATH_POINT_2;
+    }
 
     public void setDrawStateNon() {
         drawState = DrawState.NON;
     }
     public void setDrawStatePathPoint() {
         drawState = DrawState.PATH_POINT;
+    }
+    public void setDrawStatePathPoint2() {
+        drawState = DrawState.PATH_POINT_2;
     }
     public void setDrawStateTowerPlace() {
         drawState = DrawState.TOWER_PLACE;
