@@ -1,6 +1,6 @@
 
 
-This project is what I am currently working on. It is working and playable.
+After careful consideration and evaluation of current priorities, I have decided to temporarily suspend my involvement in this td game. While this decision was not made lightly, I believe it is necessary to ensure the project's success in the long term. 
 The game is written in Java and utilizes only the Swing and Runnable libraries, while the rest of the code is implemented as objects.
 I am trying to write clear, simple, and functional code. This project is a tower defense game with simple graphics that I created using Asprite and Paint.
 
